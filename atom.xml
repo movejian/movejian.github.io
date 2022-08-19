@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-08-19T02:20:53.267Z</updated>
+  <updated>2022-08-19T02:28:33.778Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -21,17 +21,12 @@
     <link href="http://example.com/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/"/>
     <id>http://example.com/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/</id>
     <published>2022-08-19T00:58:36.000Z</published>
-    <updated>2022-08-19T02:20:53.267Z</updated>
+    <updated>2022-08-19T02:28:33.778Z</updated>
     
     
-      
-      
-        
-        
     <summary type="html">&lt;p&gt;vscode+github+picgo 搭建 markdown 图床&lt;/p&gt;
-&lt;p&gt;一、vscode 配置&lt;br&gt;1、安装 Markdown All in One 插件&lt;br&gt;Markdown All in One 插件作为 Markdown</summary>
-        
-      
+&lt;p&gt;一、vscode 配置&lt;br&gt;1、安装 Markdown All in One 插件&lt;br&gt;Markdown All in One 插件作为 Markdown 编辑器非常好用，既可以预览，对语法的支持也非常好。&lt;/p&gt;
+&lt;p&gt;2、安装 markdownlint 插件&lt;br&gt;这是个功能强大的 Markdown 语法检查器，可以帮助你书写出规范的文档，同时避免书写错误导致文档无法渲染。&lt;br&gt;markdownlint 制定了很多书写规范，如果不按照它的规范编写文章，则会提示很多错误或警告。&lt;/p&gt;</summary>
     
     
     
