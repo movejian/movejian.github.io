@@ -60,7 +60,6 @@
 <p>3、安装 picgo 插件<br>可以下载 picgo 客户端来使用，但是这里直接在 vscode 中下载 picgo 插件也是可以的，只需要配置一下，配置方法在文章后面。</p>
 <p>二、GitHub 配置<br>1、创建一个仓库，必须为public</p>
 <p><img src="https://movejian.github.io/images/20220819/picgo1.png"></p>
-<p><img src="https://movejian.github.io/images/20220819/picgo1.png"></p>
 <p>2、获取  Tokens</p>
 <p>① 进入个人设置页面，依次选择 【Developer settings】 –&gt; 【Personal access tokens】，然后点击【Generate new token】来生成新的 tokens，此 token是上传时验证身份用的。</p>
 <p>注意：这个【Developer settings】对新手很不友好,不好找.在设置页面的最下方.</p>
