@@ -127,7 +127,8 @@ var _hmt = _hmt || [];
 <span id="more"></span>
 <p>下面通过 DNS 域名解析将购买的域名指向 github 的二级域名：user­name.github.io，<br>进入阿里云的管理控制台 - 云解析 DNS，进入域名的解析设置，将得到的 IP 地址填到记录值一栏，点击确定就 OK 了。填完以后的解析列表会出现：</p>
 <p><img src="https://movejian.github.io/images/20220819/yumi.png"><br>记录值就是自己 github 的二级域名的 IP 地址。</p>
-<p>方法二（推荐）<br>直接解析域名的 CNAME 记录到你的 Git 二级域名，不要使用方法一中的 A 记录，因为 ip 地址可能会一段时间之后会改变 (由于网络地址转换协议 NAT)，所以建议记录类型选择 CNAME 进行解析，记录值填的就是 user­name.github.io，比如：<br><img src="https://movejian.github.io/images/20220819/yumi2.png"></p>
+<p>方法二（推荐）<br>直接解析域名的 CNAME 记录到你的 Git 二级域名，不要使用方法一中的 A 记录，因为 ip 地址可能会一段时间之后会改变 (由于网络地址转换协议 NAT)，所以建议记录类型选择 CNAME 进行解析，记录值填的就是 user­name.github.io，比如：</p>
+<p><img src="https://movejian.github.io/images/20220819/yumi2.png"></p>
 <p>如果你只用 github 的二级域名作为博客的地址，那么线路类型选择默认就可以了。</p>
 <h2 id="设置CNAME"><a href="#设置CNAME" class="headerlink" title="设置CNAME"></a>设置CNAME</h2><p>在 hexo 项目下，source 文件夹下面创建 CNAME 文件（没有后缀名的），在里面写上购买的域名。比如：<br>test­blog.top</p>
 <p><img src="https://movejian.github.io/images/20220819/CNAME.png"></p>
@@ -218,6 +219,15 @@ var _hmt = _hmt || [];
 
    
   <nav class="article-nav">
+    
+      <a href="/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            vscode配置picgo的github的图床
+          
+        </div>
+      </a>
     
     
       <a href="/2022/08/19/hello-world/" class="article-nav-link">
