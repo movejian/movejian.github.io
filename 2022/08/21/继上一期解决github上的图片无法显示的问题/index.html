@@ -120,6 +120,7 @@ var _hmt = _hmt || [];
   <p>​      <a target="_blank" rel="noopener" href="https://movejian.github.io/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/">继上篇github图床问题</a>无法正常显示，但在<strong>github</strong>上看到正常上传，连接也并非错误，百度了一下说什么<strong>DNS</strong>被污染了。解决方法是修改<strong>hosts</strong>文件或者修改<strong>DNS</strong>。</p>
 <p>​      首先，打开<a target="_blank" rel="noopener" href="https://ping.eu/nslookup">域名解析</a>网站：<a target="_blank" rel="noopener" href="https://ping.eu/nslookup">https://ping.eu/nslookup</a><br>然后输入raw.githubusercontent.com如下图：</p>
 <p><img src="D:\blog\themes\ayer\source\images\20220821\5.png"></p>
+<span id="more"></span>
 <p>​      我们得到图床所用域名解析到的IP(上图红框中的地址)。</p>
 <ul>
 <li>最后打开本机的<strong>host</strong>文件，其路径如下：<br><code>C:\Windows\System32\drivers\etc\hosts</code>, 然后添加如下内容(上图红框中的地址)：</li>
