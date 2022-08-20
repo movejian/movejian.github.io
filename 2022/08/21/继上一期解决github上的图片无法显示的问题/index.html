@@ -11,7 +11,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>categories |  如风网络</title>
+      <title>继上一期解决github上的图片无法显示的问题 |  如风网络</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/favicon.ico" />
@@ -63,12 +63,229 @@ var _hmt = _hmt || [];
       
     <main class="content on">
       <section class="outer">
+  <article
+  id="post-继上一期解决github上的图片无法显示的问题"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  继上一期解决github上的图片无法显示的问题
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/08/21/%E7%BB%A7%E4%B8%8A%E4%B8%80%E6%9C%9F%E8%A7%A3%E5%86%B3github%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/" class="article-date">
+  <time datetime="2022-08-20T19:48:33.000Z" itemprop="datePublished">2022-08-21 03:48:33</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
+  </div>
   
-    <h1 class="page-type-title">分类</h1>
-    <div class="categories-box">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/vscode/">vscode</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BD%AC%E8%BD%BD/">转载</a><span class="category-list-count">1</span></li></ul>
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">280</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">1 分钟</span>
+        </span>
+    </span>
+</div>
+ 
     </div>
+      
+
+
+
   
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>​      <a target="_blank" rel="noopener" href="https://movejian.github.io/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/">继上篇github图床问题</a>无法正常显示，但在<strong>github</strong>上看到正常上传，连接也并非错误，百度了一下说什么<strong>DNS</strong>被污染了。解决方法是修改<strong>hosts</strong>文件或者修改<strong>DNS</strong>。</p>
+<p>​      首先，打开<a target="_blank" rel="noopener" href="https://ping.eu/nslookup">域名解析</a>网站：<a target="_blank" rel="noopener" href="https://ping.eu/nslookup">https://ping.eu/nslookup</a><br>然后输入raw.githubusercontent.com如下图：</p>
+<p><img src="D:\blog\themes\ayer\source\images\20220821\5.png"></p>
+<p>​      我们得到图床所用域名解析到的IP(上图红框中的地址)。</p>
+<ul>
+<li>最后打开本机的<strong>host</strong>文件，其路径如下：<br><code>C:\Windows\System32\drivers\etc\hosts</code>, 然后添加如下内容(上图红框中的地址)：</li>
+</ul>
+<p><img src="D:\blog\themes\ayer\source\images\20220821\6.png"></p>
+<ul>
+<li>打开<strong>CMD</strong>输入命令”ipconfig &#x2F;flushdns” 刷新<strong>DNS</strong>缓存,再次输入”ipconfig&#x2F;displaydns”</li>
+</ul>
+<p>​    如果你的<strong>hosts</strong>的文件不见了,可以通过文件设置显示系统隐藏文件来找到，依然找不到，可能是被误删了，网上有很多是通过新建文本文档解决。也可以通过下面这个命令来生成<strong>hosts</strong>文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">for /f %P in (&#x27;dir %windir%\WinSxS\hosts /b /s&#x27;) do copy %P %windir%\System32\drivers\etc &amp; echo %P &amp; Notepad %P</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>注意</strong>一定要使用管理员身份输入此命令。</li>
+</ul>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          打赏
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2022/08/21/%E7%BB%A7%E4%B8%8A%E4%B8%80%E6%9C%9F%E8%A7%A3%E5%86%B3github%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9B%BE%E5%BA%8A/" rel="tag">图床</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/" rel="tag">问题解决</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+    
+      <a href="/2022/08/21/%E5%8D%81%E5%B9%B4%E4%B9%8B%E7%BA%A6%EF%BC%8C%E4%B8%80%E4%B8%AA%E4%BA%BA%E7%9A%84%E5%AF%82%E5%AF%9E%EF%BC%8C%E4%B8%80%E7%BE%A4%E4%BA%BA%E7%9A%84%E7%8B%82%E6%AC%A2/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">十年之约，一个人的寂寞，一群人的狂欢</div>
+      </a>
+    
+  </nav>
+
+   
+<!-- valine评论 -->
+<div id="vcomments-box">
+  <div id="vcomments"></div>
+</div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="https://cdn.staticfile.org/valine/1.4.16/Valine.min.js"></script>
+<script>
+  new Valine({
+    el: "#vcomments",
+    app_id: "jU6HBwJv66zqFUakJm0aCmJW-gzGzoHsz",
+    app_key: "GYf75ArO1sO3wMNcUN0nuAnh",
+    path: window.location.pathname,
+    avatar: "monsterid",
+    placeholder: "给我的文章加点评论吧~",
+    recordIP: true,
+  });
+  const infoEle = document.querySelector("#vcomments .info");
+  if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+    infoEle.childNodes.forEach(function (item) {
+      item.parentNode.removeChild(item);
+    });
+  }
+</script>
+<style>
+  #vcomments-box {
+    padding: 5px 30px;
+  }
+
+  @media screen and (max-width: 800px) {
+    #vcomments-box {
+      padding: 5px 0px;
+    }
+  }
+
+  #vcomments-box #vcomments {
+    background-color: #fff;
+  }
+
+  .v .vlist .vcard .vh {
+    padding-right: 20px;
+  }
+
+  .v .vlist .vcard {
+    padding-left: 10px;
+  }
+</style>
+
+ 
+   
+    
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
 </section>
       <footer class="footer">
   <div class="outer">
@@ -211,6 +428,22 @@ var _hmt = _hmt || [];
 <script src="/js/lazyload.min.js"></script>
 
 <!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
 
 <script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
 <link

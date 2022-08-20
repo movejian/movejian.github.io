@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-08-20T19:28:29.917Z</updated>
+  <updated>2022-08-20T20:18:37.686Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>继上一期解决github上的图片无法显示的问题</title>
+    <link href="http://example.com/2022/08/21/%E7%BB%A7%E4%B8%8A%E4%B8%80%E6%9C%9F%E8%A7%A3%E5%86%B3github%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/"/>
+    <id>http://example.com/2022/08/21/%E7%BB%A7%E4%B8%8A%E4%B8%80%E6%9C%9F%E8%A7%A3%E5%86%B3github%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/</id>
+    <published>2022-08-20T19:48:33.000Z</published>
+    <updated>2022-08-20T20:18:37.686Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;​      &lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="技术" scheme="http://example.com/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="图床" scheme="http://example.com/tags/%E5%9B%BE%E5%BA%8A/"/>
+    
+    <category term="问题解决" scheme="http://example.com/tags/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/"/>
+    
+  </entry>
   
   <entry>
     <title>十年之约，一个人的寂寞，一群人的狂欢</title>
