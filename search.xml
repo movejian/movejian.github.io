@@ -94,7 +94,7 @@
 <p><img src="https://movejian.github.io/images/20220819/picgo8.png"></p>
 <p>此时，去 GitHub 对应的仓库下查看，可以看到上传成功的图片。</p>
 <p>在 vscode 中插入的图片会上传到 GitHub 的仓库中，如果删除了仓库里面的图片，那你的 Markdown 里面的图片链接就会失效。</p>
-<p><img src="https://movejian.github.io/movejian/images/main/blog/images/20220819100154.png" alt="20220819100154"></p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/20220819100154.png" alt="20220819100154"></p>
 <p>首先不提好用不好用,反正我这样配置失败了,还请高人指点!</p>
 ]]></content>
       <categories>
