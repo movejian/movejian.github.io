@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Hello World</title>
+    <url>/2022/08/19/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
     <title>hexo域名解析的两种方法</title>
     <url>/2022/08/19/hexo%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>想要在浏览器里面输入域名到达某个地址。必不可少的一步就是要告诉全世界的电脑，这个域名现在指向这个地方啦。<br>而这一步就是由 dns 服务器来负责的。<br>我们需要做的就是将域名与固定的 ip 地址绑定起来 (A)，或者是与某已有域名绑定起来（CNAME）.</p>
@@ -30,24 +48,6 @@
       <tags>
         <tag>HEXO</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2022/08/19/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
   </entry>
   <entry>
     <title>vscode配置picgo的github的图床</title>
@@ -111,6 +111,7 @@
     <content><![CDATA[<p>​       在网络逐步转向手机端的今天，web博客网站似乎已经失去了活力，高昂的服务器费用，还需要技术基础以搭建起网站，忙前忙后设计维护着自己的网站，远不如朋友圈一样说发就发，但真相真的如此吗？我原本也这样理解，直到我发现了这样一个组织-十年之约。</p>
 <p>​       <strong>十年之约</strong>是由“十年之约”项目组维护的非营利性、自愿加入的博客活动。加入“十 年之约”可锻炼您的写作能力，进而提升您的思考、观察、记录、分享等能力，是 一项非常有意义的活动。“十年之约”的宗旨是：我们的博客十年不关闭或者更久， 并保持更新和活力。</p>
 <p><img src="https://movejian.github.io/images/20220821/1.png"></p>
+<span id="more"></span>
 <p>​      这是十年之约的官方网站，页面设计很简约，但信息量并不少，经过简单的浏览，我大致了解到”十年之约”所约定的内容–“十年之约，即从加入这个活动起，我们的博客十年不关闭，保持更新和活力！”</p>
 <p><img src="https://movejian.github.io/images/20220821/2.png"></p>
 <p>​       这是十年之约的规则，不多， 守法 平等 互访 互敬 互助 活力 真诚。</p>
