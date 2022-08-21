@@ -64,7 +64,7 @@
     <link href="http://example.com/2022/08/21/Hexo%E8%BF%81%E7%A7%BB%E5%A4%87%E4%BB%BD/"/>
     <id>http://example.com/2022/08/21/Hexo%E8%BF%81%E7%A7%BB%E5%A4%87%E4%BB%BD/</id>
     <published>2022-08-21T05:42:35.000Z</published>
-    <updated>2022-08-21T11:43:48.210Z</updated>
+    <updated>2022-08-21T11:48:08.181Z</updated>
     
     
     <summary type="html">&lt;h3 id=&quot;创建Git分支将Hexo博客迁移到其它电脑&quot;&gt;&lt;a href=&quot;#创建Git分支将Hexo博客迁移到其它电脑&quot; class=&quot;headerlink&quot; title=&quot;创建Git分支将Hexo博客迁移到其它电脑&quot;&gt;&lt;/a&gt;创建Git分支将Hexo博客迁移到其它电脑&lt;/h3&gt;&lt;h3 id=&quot;反省&quot;&gt;&lt;a href=&quot;#反省&quot; class=&quot;headerlink&quot; title=&quot;反省&quot;&gt;&lt;/a&gt;反省&lt;/h3&gt;&lt;p&gt;有时候就会干些蠢事，换电脑忘记吧旧电脑博客的Hexo博客备份到移动硬盘上，一个格式化啥都没了，导致丢失了所有的博客资料。（博客内容要慢慢补） 一定要养成经常备份的好习惯。。。。。。。。&lt;/p&gt;
@@ -82,6 +82,8 @@
     
     
     <category term="学习" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/"/>
+    
+    <category term="Hexo" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/Hexo/"/>
     
     
     <category term="技术" scheme="http://example.com/tags/%E6%8A%80%E6%9C%AF/"/>
