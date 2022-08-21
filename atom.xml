@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-08-21T11:36:29.817Z</updated>
+  <updated>2022-08-21T11:43:35.540Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://example.com/2022/08/21/%E4%BD%BF%E7%94%A8HEXO-GIT-BACKUP%E6%8F%92%E4%BB%B6%E5%A4%87%E4%BB%BD%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/"/>
     <id>http://example.com/2022/08/21/%E4%BD%BF%E7%94%A8HEXO-GIT-BACKUP%E6%8F%92%E4%BB%B6%E5%A4%87%E4%BB%BD%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/</id>
     <published>2022-08-21T11:09:51.000Z</published>
-    <updated>2022-08-21T11:36:29.817Z</updated>
+    <updated>2022-08-21T11:43:35.540Z</updated>
     
     
     <summary type="html">&lt;p&gt;在搭建好hexo博客之后也要给自己的博客进行备份，文章丢失可是很麻烦的一件事情。我的博客的数据都是直接保存在cloudstudio，用的时候总是会感觉有点问题，生怕自己哪天不小心把工作空间给删除了，那就蛮麻烦了。所以我采用了 &lt;a href=&quot;https://github.com/coneycode/hexo-git-backup&quot;&gt;hexo-git-backup&lt;/a&gt; 这个工具进行备份。&lt;/p&gt;
@@ -34,8 +34,6 @@
     
     <category term="学习" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/"/>
     
-    <category term="Hexo" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/Hexo/"/>
-    
     
     <category term="Hexo" scheme="http://example.com/tags/Hexo/"/>
     
@@ -46,7 +44,7 @@
     <link href="http://example.com/2022/08/21/%E8%87%AA%E5%8A%A8%E5%A4%87%E4%BB%BDHexo%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/"/>
     <id>http://example.com/2022/08/21/%E8%87%AA%E5%8A%A8%E5%A4%87%E4%BB%BDHexo%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/</id>
     <published>2022-08-21T06:11:51.000Z</published>
-    <updated>2022-08-21T06:43:25.672Z</updated>
+    <updated>2022-08-21T11:43:39.389Z</updated>
     
     
     <summary type="html">&lt;h3 id=&quot;一、前言&quot;&gt;&lt;a href=&quot;#一、前言&quot; class=&quot;headerlink&quot; title=&quot;一、前言&quot;&gt;&lt;/a&gt;一、前言&lt;/h3&gt;&lt;p&gt;自从接触了Hexo+NexT之后，发现离不开了，以后有能力的时候一定重新架构一下，使得更加个性化，最大程度的满足我们对于软件的需求，大家都知道，如果写东西在本地的话，最怕的应该就是更换电脑，还要重新搭建博客了，所以备份对于我们来说特别重要！备份博客就是本篇博客文章的主旨了，一定要攻下这座城堡。&lt;/p&gt;
@@ -55,8 +53,6 @@
     
     
     <category term="学习" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/"/>
-    
-    <category term="Hexo" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/Hexo/"/>
     
     
     <category term="技术" scheme="http://example.com/tags/%E6%8A%80%E6%9C%AF/"/>
@@ -68,7 +64,7 @@
     <link href="http://example.com/2022/08/21/Hexo%E8%BF%81%E7%A7%BB%E5%A4%87%E4%BB%BD/"/>
     <id>http://example.com/2022/08/21/Hexo%E8%BF%81%E7%A7%BB%E5%A4%87%E4%BB%BD/</id>
     <published>2022-08-21T05:42:35.000Z</published>
-    <updated>2022-08-21T06:30:43.617Z</updated>
+    <updated>2022-08-21T11:43:48.210Z</updated>
     
     
     <summary type="html">&lt;h3 id=&quot;创建Git分支将Hexo博客迁移到其它电脑&quot;&gt;&lt;a href=&quot;#创建Git分支将Hexo博客迁移到其它电脑&quot; class=&quot;headerlink&quot; title=&quot;创建Git分支将Hexo博客迁移到其它电脑&quot;&gt;&lt;/a&gt;创建Git分支将Hexo博客迁移到其它电脑&lt;/h3&gt;&lt;h3 id=&quot;反省&quot;&gt;&lt;a href=&quot;#反省&quot; class=&quot;headerlink&quot; title=&quot;反省&quot;&gt;&lt;/a&gt;反省&lt;/h3&gt;&lt;p&gt;有时候就会干些蠢事，换电脑忘记吧旧电脑博客的Hexo博客备份到移动硬盘上，一个格式化啥都没了，导致丢失了所有的博客资料。（博客内容要慢慢补） 一定要养成经常备份的好习惯。。。。。。。。&lt;/p&gt;
@@ -87,8 +83,6 @@
     
     <category term="学习" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/"/>
     
-    <category term="Hexo" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/Hexo/"/>
-    
     
     <category term="技术" scheme="http://example.com/tags/%E6%8A%80%E6%9C%AF/"/>
     
@@ -99,7 +93,7 @@
     <link href="http://example.com/2022/08/21/Hexo%E5%A6%82%E4%BD%95%E8%BF%81%E7%A7%BB%E5%88%B0%E6%96%B0%E7%94%B5%E8%84%91/"/>
     <id>http://example.com/2022/08/21/Hexo%E5%A6%82%E4%BD%95%E8%BF%81%E7%A7%BB%E5%88%B0%E6%96%B0%E7%94%B5%E8%84%91/</id>
     <published>2022-08-21T04:11:08.000Z</published>
-    <updated>2022-08-21T11:06:04.406Z</updated>
+    <updated>2022-08-21T11:43:44.766Z</updated>
     
     
     <summary type="html">&lt;h3 id=&quot;前言：&quot;&gt;&lt;a href=&quot;#前言：&quot; class=&quot;headerlink&quot; title=&quot;前言：&quot;&gt;&lt;/a&gt;前言：&lt;/h3&gt;&lt;p&gt;这是曾经发生的事情，自己对于数据备份疏忽，导致Hexo的&lt;code&gt;source&lt;/code&gt;丢失，只能重新搭建博客。。。。。&lt;/p&gt;
@@ -116,8 +110,6 @@
     
     
     <category term="学习" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/"/>
-    
-    <category term="Hexo" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/Hexo/"/>
     
     
     <category term="技术" scheme="http://example.com/tags/%E6%8A%80%E6%9C%AF/"/>
@@ -171,7 +163,7 @@
     <link href="http://example.com/2022/08/21/%E5%8D%81%E5%B9%B4%E4%B9%8B%E7%BA%A6%EF%BC%8C%E4%B8%80%E4%B8%AA%E4%BA%BA%E7%9A%84%E5%AF%82%E5%AF%9E%EF%BC%8C%E4%B8%80%E7%BE%A4%E4%BA%BA%E7%9A%84%E7%8B%82%E6%AC%A2/"/>
     <id>http://example.com/2022/08/21/%E5%8D%81%E5%B9%B4%E4%B9%8B%E7%BA%A6%EF%BC%8C%E4%B8%80%E4%B8%AA%E4%BA%BA%E7%9A%84%E5%AF%82%E5%AF%9E%EF%BC%8C%E4%B8%80%E7%BE%A4%E4%BA%BA%E7%9A%84%E7%8B%82%E6%AC%A2/</id>
     <published>2022-08-20T18:46:58.000Z</published>
-    <updated>2022-08-20T19:28:29.917Z</updated>
+    <updated>2022-08-21T11:43:40.961Z</updated>
     
     
     <summary type="html">&lt;p&gt;​       在网络逐步转向手机端的今天，web博客网站似乎已经失去了活力，高昂的服务器费用，还需要技术基础以搭建起网站，忙前忙后设计维护着自己的网站，远不如朋友圈一样说发就发，但真相真的如此吗？我原本也这样理解，直到我发现了这样一个组织-十年之约。&lt;/p&gt;
@@ -215,7 +207,7 @@
     <link href="http://example.com/2022/08/19/hexo%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95/"/>
     <id>http://example.com/2022/08/19/hexo%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95/</id>
     <published>2022-08-18T22:22:34.000Z</published>
-    <updated>2022-08-21T11:38:42.255Z</updated>
+    <updated>2022-08-21T11:43:42.609Z</updated>
     
     
     <summary type="html">&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;想要在浏览器里面输入域名到达某个地址。必不可少的一步就是要告诉全世界的电脑，这个域名现在指向这个地方啦。&lt;br&gt;而这一步就是由 dns 服务器来负责的。&lt;br&gt;我们需要做的就是将域名与固定的 ip 地址绑定起来 (A)，或者是与某已有域名绑定起来（CNAME）.&lt;/p&gt;
@@ -225,8 +217,6 @@
     
     
     <category term="学习" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/"/>
-    
-    <category term="Hexo" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/Hexo/"/>
     
     
     <category term="HEXO" scheme="http://example.com/tags/HEXO/"/>
