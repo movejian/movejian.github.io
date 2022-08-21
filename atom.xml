@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-08-21T06:26:17.060Z</updated>
+  <updated>2022-08-21T06:30:41.355Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://example.com/2022/08/21/%E8%87%AA%E5%8A%A8%E5%A4%87%E4%BB%BDHexo%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/"/>
     <id>http://example.com/2022/08/21/%E8%87%AA%E5%8A%A8%E5%A4%87%E4%BB%BDHexo%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/</id>
     <published>2022-08-21T06:11:51.000Z</published>
-    <updated>2022-08-21T06:26:17.060Z</updated>
+    <updated>2022-08-21T06:30:41.355Z</updated>
     
     
       
@@ -48,7 +48,7 @@
     <link href="http://example.com/2022/08/21/Hexo%E8%BF%81%E7%A7%BB%E5%A4%87%E4%BB%BD/"/>
     <id>http://example.com/2022/08/21/Hexo%E8%BF%81%E7%A7%BB%E5%A4%87%E4%BB%BD/</id>
     <published>2022-08-21T05:42:35.000Z</published>
-    <updated>2022-08-21T06:08:13.355Z</updated>
+    <updated>2022-08-21T06:30:43.617Z</updated>
     
     
     <summary type="html">&lt;h3 id=&quot;创建Git分支将Hexo博客迁移到其它电脑&quot;&gt;&lt;a href=&quot;#创建Git分支将Hexo博客迁移到其它电脑&quot; class=&quot;headerlink&quot; title=&quot;创建Git分支将Hexo博客迁移到其它电脑&quot;&gt;&lt;/a&gt;创建Git分支将Hexo博客迁移到其它电脑&lt;/h3&gt;&lt;h3 id=&quot;反省&quot;&gt;&lt;a href=&quot;#反省&quot; class=&quot;headerlink&quot; title=&quot;反省&quot;&gt;&lt;/a&gt;反省&lt;/h3&gt;&lt;p&gt;有时候就会干些蠢事，换电脑忘记吧旧电脑博客的Hexo博客备份到移动硬盘上，一个格式化啥都没了，导致丢失了所有的博客资料。（博客内容要慢慢补） 一定要养成经常备份的好习惯。。。。。。。。&lt;/p&gt;

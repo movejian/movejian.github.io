@@ -111,10 +111,6 @@
 <td>package.json</td>
 <td>依赖包的名称和版本号</td>
 </tr>
-<tr>
-<td></td>
-<td></td>
-</tr>
 </tbody></table>
 <h3 id="备份流程"><a href="#备份流程" class="headerlink" title="备份流程"></a>备份流程</h3><h5 id="1-拉取已经部署上去的项目"><a href="#1-拉取已经部署上去的项目" class="headerlink" title="1. 拉取已经部署上去的项目"></a>1. 拉取已经部署上去的项目</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/lazyTimes/lazyTimes.github.io.git</span><br></pre></td></tr></table></figure>
 
@@ -352,10 +348,6 @@
 <tr>
 <td>new</td>
 <td>在文章文件建立后发布</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
 </tr>
 </tbody></table>
 <p>于是我们就可以通过监听Hexo的deployAfter事件，待上传完成之后自动运行Git备份命令，从而达到自动备份的目的。</p>
