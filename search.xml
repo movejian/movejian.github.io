@@ -70,6 +70,80 @@
       </tags>
   </entry>
   <entry>
+    <title>Hexo迁移备份</title>
+    <url>/2022/08/21/Hexo%E8%BF%81%E7%A7%BB%E5%A4%87%E4%BB%BD/</url>
+    <content><![CDATA[<h3 id="创建Git分支将Hexo博客迁移到其它电脑"><a href="#创建Git分支将Hexo博客迁移到其它电脑" class="headerlink" title="创建Git分支将Hexo博客迁移到其它电脑"></a>创建Git分支将Hexo博客迁移到其它电脑</h3><h3 id="反省"><a href="#反省" class="headerlink" title="反省"></a>反省</h3><p>有时候就会干些蠢事，换电脑忘记吧旧电脑博客的Hexo博客备份到移动硬盘上，一个格式化啥都没了，导致丢失了所有的博客资料。（博客内容要慢慢补） 一定要养成经常备份的好习惯。。。。。。。。</p>
+<h3 id="迁移前准备："><a href="#迁移前准备：" class="headerlink" title="迁移前准备："></a>迁移前准备：</h3><p>安装hexo博客必要的软件<br>下载安装Git客户端<br>安装node js<br>从git 仓库拉去原来的项目<br>采取方式<br>采取新建仓库的方式<br>分支存放源代码</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone 你的 gitPage 博客地址，这里就不给地址给自己打广告了</span><br></pre></td></tr></table></figure>
+
+<h3 id="必备文件"><a href="#必备文件" class="headerlink" title="必备文件"></a>必备文件</h3><p>文件(夹)</p>
+<p>说明</p>
+<table>
+<thead>
+<tr>
+<th>文件(夹)</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>scaffolds&#x2F;</td>
+<td>博客文章模板</td>
+</tr>
+<tr>
+<td>source&#x2F;</td>
+<td>所有的博客文章</td>
+</tr>
+<tr>
+<td>themes&#x2F;</td>
+<td>网站主题</td>
+</tr>
+<tr>
+<td>.gitignore</td>
+<td>push时需忽略的文件</td>
+</tr>
+<tr>
+<td>package.json</td>
+<td>依赖包的名称和版本号</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="备份流程"><a href="#备份流程" class="headerlink" title="备份流程"></a>备份流程</h3><h5 id="1-拉取已经部署上去的项目"><a href="#1-拉取已经部署上去的项目" class="headerlink" title="1. 拉取已经部署上去的项目"></a>1. 拉取已经部署上去的项目</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/lazyTimes/lazyTimes.github.io.git</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-拷贝需要备份的-原数据"><a href="#2-拷贝需要备份的-原数据" class="headerlink" title="2. 拷贝需要备份的 原数据"></a>2. 拷贝需要备份的 <font color="#000066">原数据</font></h5><p>具体查看上方的必备文件</p>
+<p>参考截图:</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211351777.png" alt="image-20220821135153686"></p>
+<h5 id="3-删除主题的-git-配置"><a href="#3-删除主题的-git-配置" class="headerlink" title="3. 删除主题的.git 配置"></a>3. 删除主题的.git 配置</h5><p>执行如下命令删除不必要的内容</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rm -rf thems/next/.git*</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-创建名为hexo的分支"><a href="#4-创建名为hexo的分支" class="headerlink" title="4. 创建名为hexo的分支"></a>4. 创建名为hexo的分支</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git checkout -b hexo</span><br></pre></td></tr></table></figure>
+
+<h5 id="5-把文件存放到暂存区"><a href="#5-把文件存放到暂存区" class="headerlink" title="5. 把文件存放到暂存区"></a>5. 把文件存放到暂存区</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git add --all</span><br></pre></td></tr></table></figure>
+
+<h5 id="6-提交变更"><a href="#6-提交变更" class="headerlink" title="6. 提交变更"></a>6. 提交变更</h5><p>先提交所有的改动内容</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git commit -m &quot;hexo-2&quot;</span><br></pre></td></tr></table></figure>
+
+<p>然后使用如下命令把内容推送到分支</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git push --set-upstream origin hexo</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果没有在Git config 设置用户名和密码，推送的时候会提示设置，根据提示设置用户名和密码即可</p>
+</blockquote>
+<h5 id="7-源码推到分支上"><a href="#7-源码推到分支上" class="headerlink" title="7. 源码推到分支上"></a>7. 源码推到分支上</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ git add .</span><br><span class="line">$ git commit -m &quot;xxxx&quot;</span><br><span class="line">$ git push origin hexo</span><br></pre></td></tr></table></figure>
+
+<h3 id="更加推荐的方式"><a href="#更加推荐的方式" class="headerlink" title="更加推荐的方式"></a>更加推荐的方式</h3><p>为了保证我们的源码的一些敏感配置不泄露，建议使用私有仓库进行存储，然而，我是无所谓&#x3D;-&#x3D;</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>技术</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hello World</title>
     <url>/2022/08/19/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>

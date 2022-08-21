@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-08-21T05:04:56.475Z</updated>
+  <updated>2022-08-21T05:59:10.516Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Hexo迁移备份</title>
+    <link href="http://example.com/2022/08/21/Hexo%E8%BF%81%E7%A7%BB%E5%A4%87%E4%BB%BD/"/>
+    <id>http://example.com/2022/08/21/Hexo%E8%BF%81%E7%A7%BB%E5%A4%87%E4%BB%BD/</id>
+    <published>2022-08-21T05:42:35.000Z</published>
+    <updated>2022-08-21T05:59:10.516Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;创建Git分支将Hexo博客迁移到其它电脑&quot;&gt;&lt;a href=&quot;#创建Git分支将Hexo博客迁移到其它电脑&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="学习" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/"/>
+    
+    <category term="Hexo" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/Hexo/"/>
+    
+    
+    <category term="技术" scheme="http://example.com/tags/%E6%8A%80%E6%9C%AF/"/>
+    
+  </entry>
   
   <entry>
     <title>Hexo如何迁移到新电脑</title>
