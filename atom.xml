@@ -74,7 +74,7 @@
     <link href="http://example.com/2022/08/21/Hexo%E5%A6%82%E4%BD%95%E8%BF%81%E7%A7%BB%E5%88%B0%E6%96%B0%E7%94%B5%E8%84%91/"/>
     <id>http://example.com/2022/08/21/Hexo%E5%A6%82%E4%BD%95%E8%BF%81%E7%A7%BB%E5%88%B0%E6%96%B0%E7%94%B5%E8%84%91/</id>
     <published>2022-08-21T04:11:08.000Z</published>
-    <updated>2022-08-21T05:04:56.475Z</updated>
+    <updated>2022-08-21T11:06:04.406Z</updated>
     
     
     <summary type="html">&lt;h3 id=&quot;前言：&quot;&gt;&lt;a href=&quot;#前言：&quot; class=&quot;headerlink&quot; title=&quot;前言：&quot;&gt;&lt;/a&gt;前言：&lt;/h3&gt;&lt;p&gt;这是曾经发生的事情，自己对于数据备份疏忽，导致Hexo的&lt;code&gt;source&lt;/code&gt;丢失，只能重新搭建博客。。。。。&lt;/p&gt;
@@ -92,7 +92,7 @@
     
     <category term="学习" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/"/>
     
-    <category term="hexo" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/hexo/"/>
+    <category term="Hexo" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/Hexo/"/>
     
     
     <category term="技术" scheme="http://example.com/tags/%E6%8A%80%E6%9C%AF/"/>
