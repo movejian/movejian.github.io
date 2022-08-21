@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-08-21T06:43:25.672Z</updated>
+  <updated>2022-08-21T11:36:29.817Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>使用HEXO-GIT-BACKUP插件备份博客源文件</title>
+    <link href="http://example.com/2022/08/21/%E4%BD%BF%E7%94%A8HEXO-GIT-BACKUP%E6%8F%92%E4%BB%B6%E5%A4%87%E4%BB%BD%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/"/>
+    <id>http://example.com/2022/08/21/%E4%BD%BF%E7%94%A8HEXO-GIT-BACKUP%E6%8F%92%E4%BB%B6%E5%A4%87%E4%BB%BD%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/</id>
+    <published>2022-08-21T11:09:51.000Z</published>
+    <updated>2022-08-21T11:36:29.817Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;在搭建好hexo博客之后也要给自己的博客进行备份，文章丢失可是很麻烦的一件事情。我的博客的数据都是直接保存在cloudstudio，用的时候总是会感觉有点问题，生怕自己哪天不小心把工作空间给删除了，那就蛮麻烦了。所以我采用了 &lt;a href=&quot;https://github.com/coneycode/hexo-git-backup&quot;&gt;hexo-git-backup&lt;/a&gt; 这个工具进行备份。&lt;/p&gt;
+&lt;p&gt;原文地址：&lt;a href=&quot;https://kaygb.top/posts/20191119-use-hexo-git-backup.html&quot;&gt;使用hexo-git-backup插件备份博客源文件&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;查看HEXO版本&quot;&gt;&lt;a href=&quot;#查看HEXO版本&quot; class=&quot;headerlink&quot; title=&quot;查看HEXO版本&quot;&gt;&lt;/a&gt;查看HEXO版本&lt;/h2&gt;&lt;figure class=&quot;highlight plaintext&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;hexo version&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;第一行的hexo：xxx既为版本</summary>
+    
+    
+    
+    <category term="学习" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/"/>
+    
+    <category term="Hexo" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/Hexo/"/>
+    
+    
+    <category term="Hexo" scheme="http://example.com/tags/Hexo/"/>
+    
+  </entry>
   
   <entry>
     <title>自动备份Hexo博客源文件</title>
