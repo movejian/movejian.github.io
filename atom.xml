@@ -193,7 +193,7 @@
     <link href="http://example.com/2022/08/19/hexo%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95/"/>
     <id>http://example.com/2022/08/19/hexo%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95/</id>
     <published>2022-08-18T22:22:34.000Z</published>
-    <updated>2022-08-22T13:23:17.456Z</updated>
+    <updated>2022-08-22T18:47:49.200Z</updated>
     
     
     <summary type="html">&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;想要在浏览器里面输入域名到达某个地址。必不可少的一步就是要告诉全世界的电脑，这个域名现在指向这个地方啦。&lt;br&gt;而这一步就是由 dns 服务器来负责的。&lt;br&gt;我们需要做的就是将域名与固定的 ip 地址绑定起来 (A)，或者是与某已有域名绑定起来（CNAME）.&lt;/p&gt;
@@ -202,12 +202,8 @@
     
     
     
-    <category term="学习" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/"/>
     
-    <category term="hexo" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/hexo/"/>
-    
-    
-    <category term="HEXO" scheme="http://example.com/tags/HEXO/"/>
+    <category term="域名" scheme="http://example.com/tags/%E5%9F%9F%E5%90%8D/"/>
     
   </entry>
   
