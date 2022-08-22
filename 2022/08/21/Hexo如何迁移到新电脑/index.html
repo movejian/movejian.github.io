@@ -121,6 +121,7 @@ var _hmt = _hmt || [];
        
   <h3 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h3><p>这是曾经发生的事情，自己对于数据备份疏忽，导致Hexo的<code>source</code>丢失，只能重新搭建博客。。。。。</p>
 <p>如何备份后续会更新，一切都是泪。。。。。</p>
+<span id="more"></span> 
 <h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p>迁移到新电脑之后，发现以前的Hexo拉到本地是无法正常使用的，这时候查找资料寻找解决办法</p>
 <p>由于旧电脑操作不当已经被格式化了，所有的源代码数据都已经被清除，所以我现在只能重新搭建博客</p>
 <h3 id="需要做的事情"><a href="#需要做的事情" class="headerlink" title="需要做的事情"></a>需要做的事情</h3><ol>
@@ -129,10 +130,10 @@ var _hmt = _hmt || [];
 <li><p>做好GIT备份</p>
 </li>
 <li><p>定期同步</p>
-<span id="more"></span></li>
+</li>
 </ol>
 <h3 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h3><p>（有source等文件的情况下可以恢复）</p>
-<h4 id="1-GIT上设置秘钥"><a href="#1-GIT上设置秘钥" class="headerlink" title="1. GIT上设置秘钥"></a>1. GIT上设置秘钥</h4><p>  安装git这里就不描述了，安装完成之后，我们在终端执行<code>ssh-keygen -t rsa -C &quot;1097483508@qq.com&quot;</code></p>
+<h4 id="1-GIT上设置秘钥"><a href="#1-GIT上设置秘钥" class="headerlink" title="1. GIT上设置秘钥"></a>1. GIT上设置秘钥</h4><p>  安装git这里就不描述了，安装完成之后，我们在终端执行<code>ssh-keygen -t rsa -C &quot;movejian@qq.com&quot;</code></p>
 <p>然后按三次回车，生成秘钥</p>
 <figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-<span class="attribute">keygen</span> -t rsa -C <span class="string">&quot;xxxx<span class="variable">@qq</span>.com&quot;</span>(你的邮箱地址) Generating public/private rsa key pair. Enter file in which to save the key (/c/Users/xxxxxx/.ssh/id_rsa):</span><br></pre></td></tr></table></figure>
 
