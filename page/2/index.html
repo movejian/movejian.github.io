@@ -145,7 +145,7 @@ var _hmt = _hmt || [];
     
     
     <article
-  id="post-hello-world"
+  id="post-Linux系统无线网卡配置"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -156,8 +156,8 @@ var _hmt = _hmt || [];
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2022/08/19/hello-world/"
-    >Hello World</a> 
+  <a class="article-title" href="/2019/12/16/Linux%E7%B3%BB%E7%BB%9F%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE/"
+    >Linux系统无线网卡配置</a> 
 </h2>
  
 
@@ -165,26 +165,60 @@ var _hmt = _hmt || [];
     </header>
      
     <div class="article-meta">
-      <a href="/2022/08/19/hello-world/" class="article-date">
-  <time datetime="2022-08-18T17:43:13.201Z" itemprop="datePublished">2022-08-19 01:43:13</time>
+      <a href="/2019/12/16/Linux%E7%B3%BB%E7%BB%9F%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE/" class="article-date">
+  <time datetime="2019-12-15T16:44:01.000Z" itemprop="datePublished">2019-12-16 00:44:01</time>
 </a>    
     </div>
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+  <h2 id="无线网卡配置"><a href="#无线网卡配置" class="headerlink" title="无线网卡配置"></a>无线网卡配置</h2><p>本文介绍在Linux 命令行界面中手动配置无线网卡的方法。目前流行的多数发行版都支持用图形界面的<code>network- manager</code>方便地进行配置，而无需使用本文所介绍的原始方法。</p>
+<p>下面介绍使用<code>iwconfig</code>和<code>ifconfig</code>等命令在命令行状态下配置无线网络。前题是无线网卡驱动已经正确安装，并被系统正确识别。</p>
+<h2 id="大体思路"><a href="#大体思路" class="headerlink" title="大体思路"></a>大体思路</h2><p>工作的大体思路如下：</p>
+<ol>
+<li>用<code>iwconfig</code>开启无线网卡的电源，并查找区域内的无线网络</li>
+<li>连接到相应的无线网络</li>
+<li>通过<code>ifconfig</code>启用无线网卡，并获取IP（如果使用DHCP的话）</li>
+</ol>
+<h2 id="具体过程"><a href="#具体过程" class="headerlink" title="具体过程"></a>具体过程</h2><ol>
+<li>打开无线网卡电源</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iwconfig wlan0 txpower on</span><br></pre></td></tr></table></figure>
+<p>   无线网络的信号灯应该亮了。</p>
+<ol start="2">
+<li>列出区域内的无线网络<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iwlist wlan0 scan</span><br></pre></td></tr></table></figure></li>
+<li>假设要连接到网络MyHome（即essid为MyHome的网络），那么输入命令</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iwconfig wlan0 essid <span class="string">&quot;MyHome&quot;</span> </span><br></pre></td></tr></table></figure>
+<p><em>#如果网络是加密的，密码是0123456789，那么就输入命令#</em></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iwconfig wlan0 essid <span class="string">&quot;MyHome&quot;</span> key <span class="number">0123</span><span class="literal">-4567-89</span></span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>如果正常的话，输入</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iwconfig wlan0</span><br></pre></td></tr></table></figure>
+<p>就可以看到连接正常的各项参数了。</p>
+<ol start="5">
+<li>启用无线网卡</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ifconfig wlan0 up</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li>如果是用DHCP获取IP的，那么用dhclient 或dhcpcd获取ip</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dhcpcd wlan0</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dhclient wlan0</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<ol start="7">
+<li>现在无线网卡应该可以正常使用了。</li>
+</ol>
+<h3 id="PS"><a href="#PS" class="headerlink" title="PS:"></a>PS:</h3><p>   如果现在还不能联网。那么点击网络图标。选择链接到隐藏的无线网络。输入找到的网络的名字。<br>      图形化的网络管理程序是<code>System-&gt;Preferences-&gt;Network Connections</code>。打开程序后，点击无线网络项目，点击add增加一个新的无线网络。  给出任意的<code>Connection Name</code>。<code>SSID</code>中输入无限网络的名字。<code>wireless security</code>中选择一种合适的加密类型。key中输入无限网络的密码。 </p>
+<p>   其他字段都不修改。 执行后，应该能够链接无限网络。  可以使用<code>iwconfig wlan0</code>命令查看是否正确连接无线网络。<br>   未正确链接无线网络的输出：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">iwconfig wlan0</span><br><span class="line">wlan0     IEEE <span class="number">802.11</span>abg  ESSID:off/any </span><br><span class="line">          Mode:Managed  Access Point: Not<span class="literal">-Associated</span>   Tx<span class="literal">-Power</span>=<span class="number">0</span> dBm  </span><br><span class="line">          Retry  long limit:<span class="number">7</span>   RTS thr:off   Fragment thr:off</span><br><span class="line">          Power Management:off</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<p>正确链接无线网络后的输出：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">iwconfig wlan0</span><br><span class="line">wlan0     IEEE <span class="number">802.11</span>abg  ESSID:<span class="string">&quot;MyHome&quot;</span> </span><br><span class="line">          Mode:Managed  Frequency:<span class="number">2.437</span> GHz  Access Point: <span class="number">00</span>:<span class="number">26</span>:DS:<span class="number">43</span>:<span class="number">1</span>A:A8  </span><br><span class="line">          Bit Rate=<span class="number">54</span> Mb/s   Tx<span class="literal">-Power</span>=<span class="number">0</span> dBm  </span><br><span class="line">          Retry  long limit:<span class="number">7</span>   RTS thr:off   Fragment thr:off</span><br><span class="line">          Power Management:off</span><br><span class="line">          Link Quality=<span class="number">65</span>/<span class="number">70</span>  Signal level=<span class="literal">-45</span> dBm </span><br><span class="line">          Rx invalid nwid:<span class="number">0</span>  Rx invalid crypt:<span class="number">0</span>  Rx invalid frag:<span class="number">0</span></span><br><span class="line">          Tx excessive retries:<span class="number">0</span>  Invalid misc:<span class="number">0</span>   Missed beacon:<span class="number">0</span></span><br></pre></td></tr></table></figure>
  
       <!-- reward -->
       
@@ -195,6 +229,117 @@ var _hmt = _hmt || [];
     
     <footer class="article-footer">
        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1/" rel="tag">无线网卡</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-Centos7安装时引导错误以及解决方案"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/11/19/Centos7%E5%AE%89%E8%A3%85%E6%97%B6%E5%BC%95%E5%AF%BC%E9%94%99%E8%AF%AF%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"
+    >Centos7安装时引导错误以及解决方案</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/11/19/Centos7%E5%AE%89%E8%A3%85%E6%97%B6%E5%BC%95%E5%AF%BC%E9%94%99%E8%AF%AF%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" class="article-date">
+  <time datetime="2019-11-18T16:39:42.000Z" itemprop="datePublished">2019-11-19 00:39:42</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Centos7安装时引导错误以及解决方案<br>使用U盘刻录方式安装CentOS7.6，但是发现安装初始化时候发生错误，本以为是U盘刻录或者是镜像的问题，但是反复刻录多遍仍然出错。后来在CentOS中文社区，发现使用UltraISO刻录安装时就可能出现初始化引导错误1.一般情况下</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vmlinuz initrd=initrd.img inst.stage2=hd:LABEL=CentOS\x207\x20x86_64 rd.live.check quiet</span><br></pre></td></tr></table></figure> 
+      <a class="article-more-link" href="/2019/11/19/Centos7%E5%AE%89%E8%A3%85%E6%97%B6%E5%BC%95%E5%AF%BC%E9%94%99%E8%AF%AF%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"
+        >阅读更多...</a
+      >
+       
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Centos7/" rel="tag">Centos7</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-愿你编码半生，归来仍是少年"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/10/21/%E6%84%BF%E4%BD%A0%E7%BC%96%E7%A0%81%E5%8D%8A%E7%94%9F%EF%BC%8C%E5%BD%92%E6%9D%A5%E4%BB%8D%E6%98%AF%E5%B0%91%E5%B9%B4/"
+    >愿你编码半生，归来仍是少年</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2019/10/21/%E6%84%BF%E4%BD%A0%E7%BC%96%E7%A0%81%E5%8D%8A%E7%94%9F%EF%BC%8C%E5%BD%92%E6%9D%A5%E4%BB%8D%E6%98%AF%E5%B0%91%E5%B9%B4/" class="article-date">
+  <time datetime="2019-10-20T21:19:04.000Z" itemprop="datePublished">2019-10-21 05:19:04</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h4 id="Hello-World-不巧，我也在等你。"><a href="#Hello-World-不巧，我也在等你。" class="headerlink" title="Hello,World.不巧，我也在等你。"></a>Hello,World.不巧，我也在等你。</h4><p>​      有人说自己被社会磨平了棱角，泯灭了心性，受生活所迫，“都说是为生活所迫，生活缺从来没有被抓过；都说被社会磨去棱角，社会之恶至今无法逃脱”，我们都有权利选择自己想成为的人，并不是由社会说了算，我们都曾年少，我们都曾有棱角，社会的熔炉却在不断的炼化我们，到底是磨平了棱角，还是磨成了钢刀，就让时间来见证吧！</p>
+<p>​      常年混迹于各大网络社区，也曾愤青，如今独爱云淡风轻，只愿在滚滚红尘中揽得风花雪月独醉。</p>
+<h4 id="感谢你的到来。"><a href="#感谢你的到来。" class="headerlink" title="感谢你的到来。"></a>感谢你的到来。</h4> 
+      <a class="article-more-link" href="/2019/10/21/%E6%84%BF%E4%BD%A0%E7%BC%96%E7%A0%81%E5%8D%8A%E7%94%9F%EF%BC%8C%E5%BD%92%E6%9D%A5%E4%BB%8D%E6%98%AF%E5%B0%91%E5%B9%B4/"
+        >阅读更多...</a
+      >
+       
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9A%8F%E5%BF%83/" rel="tag">随心</a></li></ul>
+
     </footer>
   </div>
 

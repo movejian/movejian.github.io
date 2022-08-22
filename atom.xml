@@ -140,25 +140,6 @@
   </entry>
   
   <entry>
-    <title>愿你编码半生，归来仍是少年</title>
-    <link href="http://example.com/2022/08/21/%E6%84%BF%E4%BD%A0%E7%BC%96%E7%A0%81%E5%8D%8A%E7%94%9F%EF%BC%8C%E5%BD%92%E6%9D%A5%E4%BB%8D%E6%98%AF%E5%B0%91%E5%B9%B4/"/>
-    <id>http://example.com/2022/08/21/%E6%84%BF%E4%BD%A0%E7%BC%96%E7%A0%81%E5%8D%8A%E7%94%9F%EF%BC%8C%E5%BD%92%E6%9D%A5%E4%BB%8D%E6%98%AF%E5%B0%91%E5%B9%B4/</id>
-    <published>2022-08-20T21:19:04.000Z</published>
-    <updated>2022-08-20T21:43:24.174Z</updated>
-    
-    
-    <summary type="html">&lt;h4 id=&quot;Hello-World-不巧，我也在等你。&quot;&gt;&lt;a href=&quot;#Hello-World-不巧，我也在等你。&quot; class=&quot;headerlink&quot; title=&quot;Hello,World.不巧，我也在等你。&quot;&gt;&lt;/a&gt;Hello,World.不巧，我也在等你。&lt;/h4&gt;&lt;p&gt;​      有人说自己被社会磨平了棱角，泯灭了心性，受生活所迫，“都说是为生活所迫，生活缺从来没有被抓过；都说被社会磨去棱角，社会之恶至今无法逃脱”，我们都有权利选择自己想成为的人，并不是由社会说了算，我们都曾年少，我们都曾有棱角，社会的熔炉却在不断的炼化我们，到底是磨平了棱角，还是磨成了钢刀，就让时间来见证吧！&lt;/p&gt;
-&lt;p&gt;​      常年混迹于各大网络社区，也曾愤青，如今独爱云淡风轻，只愿在滚滚红尘中揽得风花雪月独醉。&lt;/p&gt;
-&lt;h4 id=&quot;感谢你的到来。&quot;&gt;&lt;a href=&quot;#感谢你的到来。&quot; class=&quot;headerlink&quot; title=&quot;感谢你的到来。&quot;&gt;&lt;/a&gt;感谢你的到来。&lt;/h4&gt;</summary>
-    
-    
-    
-    
-    <category term="随心" scheme="http://example.com/tags/%E9%9A%8F%E5%BF%83/"/>
-    
-  </entry>
-  
-  <entry>
     <title>继上一期解决github上的图片无法显示的问题</title>
     <link href="http://example.com/2022/08/21/%E7%BB%A7%E4%B8%8A%E4%B8%80%E6%9C%9F%E8%A7%A3%E5%86%B3github%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/"/>
     <id>http://example.com/2022/08/21/%E7%BB%A7%E4%B8%8A%E4%B8%80%E6%9C%9F%E8%A7%A3%E5%86%B3github%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/</id>
@@ -266,6 +247,68 @@
     
     
     
+    
+  </entry>
+  
+  <entry>
+    <title>Linux系统无线网卡配置</title>
+    <link href="http://example.com/2019/12/16/Linux%E7%B3%BB%E7%BB%9F%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE/"/>
+    <id>http://example.com/2019/12/16/Linux%E7%B3%BB%E7%BB%9F%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE/</id>
+    <published>2019-12-15T16:44:01.000Z</published>
+    <updated>2022-08-22T16:48:06.717Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;无线网卡配置&quot;&gt;&lt;a href=&quot;#无线网卡配置&quot; class=&quot;headerlink&quot; title=&quot;无线网卡配置&quot;&gt;&lt;/a&gt;无线网卡配置&lt;/h2&gt;&lt;p&gt;本文介绍在Linux</summary>
+        
+      
+    
+    
+    
+    
+    <category term="Linux" scheme="http://example.com/tags/Linux/"/>
+    
+    <category term="无线网卡" scheme="http://example.com/tags/%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Centos7安装时引导错误以及解决方案</title>
+    <link href="http://example.com/2019/11/19/Centos7%E5%AE%89%E8%A3%85%E6%97%B6%E5%BC%95%E5%AF%BC%E9%94%99%E8%AF%AF%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
+    <id>http://example.com/2019/11/19/Centos7%E5%AE%89%E8%A3%85%E6%97%B6%E5%BC%95%E5%AF%BC%E9%94%99%E8%AF%AF%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</id>
+    <published>2019-11-18T16:39:42.000Z</published>
+    <updated>2022-08-22T16:51:32.613Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;Centos7安装时引导错误以及解决方案&lt;br&gt;使用U盘刻录方式安装CentOS7.6，但是发现安装初始化时候发生错误，本以为是U盘刻录或者是镜像的问题，但是反复刻录多遍仍然出错。后来在CentOS中文社区，发现使用UltraISO刻录安装时就可能出现初始化引导错误1.一般情况下&lt;/p&gt;
+&lt;figure class=&quot;highlight powershell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;vmlinuz initrd=initrd.img inst.stage2=hd:LABEL=CentOS\x207\x20x86_64 rd.live.check quiet&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</summary>
+    
+    
+    
+    
+    <category term="Centos7" scheme="http://example.com/tags/Centos7/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>愿你编码半生，归来仍是少年</title>
+    <link href="http://example.com/2019/10/21/%E6%84%BF%E4%BD%A0%E7%BC%96%E7%A0%81%E5%8D%8A%E7%94%9F%EF%BC%8C%E5%BD%92%E6%9D%A5%E4%BB%8D%E6%98%AF%E5%B0%91%E5%B9%B4/"/>
+    <id>http://example.com/2019/10/21/%E6%84%BF%E4%BD%A0%E7%BC%96%E7%A0%81%E5%8D%8A%E7%94%9F%EF%BC%8C%E5%BD%92%E6%9D%A5%E4%BB%8D%E6%98%AF%E5%B0%91%E5%B9%B4/</id>
+    <published>2019-10-20T21:19:04.000Z</published>
+    <updated>2022-08-22T16:49:30.563Z</updated>
+    
+    
+    <summary type="html">&lt;h4 id=&quot;Hello-World-不巧，我也在等你。&quot;&gt;&lt;a href=&quot;#Hello-World-不巧，我也在等你。&quot; class=&quot;headerlink&quot; title=&quot;Hello,World.不巧，我也在等你。&quot;&gt;&lt;/a&gt;Hello,World.不巧，我也在等你。&lt;/h4&gt;&lt;p&gt;​      有人说自己被社会磨平了棱角，泯灭了心性，受生活所迫，“都说是为生活所迫，生活缺从来没有被抓过；都说被社会磨去棱角，社会之恶至今无法逃脱”，我们都有权利选择自己想成为的人，并不是由社会说了算，我们都曾年少，我们都曾有棱角，社会的熔炉却在不断的炼化我们，到底是磨平了棱角，还是磨成了钢刀，就让时间来见证吧！&lt;/p&gt;
+&lt;p&gt;​      常年混迹于各大网络社区，也曾愤青，如今独爱云淡风轻，只愿在滚滚红尘中揽得风花雪月独醉。&lt;/p&gt;
+&lt;h4 id=&quot;感谢你的到来。&quot;&gt;&lt;a href=&quot;#感谢你的到来。&quot; class=&quot;headerlink&quot; title=&quot;感谢你的到来。&quot;&gt;&lt;/a&gt;感谢你的到来。&lt;/h4&gt;</summary>
+    
+    
+    
+    
+    <category term="随心" scheme="http://example.com/tags/%E9%9A%8F%E5%BF%83/"/>
     
   </entry>
   
