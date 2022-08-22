@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-08-22T13:23:17.457Z</updated>
+  <updated>2022-08-22T16:18:43.315Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -21,11 +21,25 @@
     <link href="http://example.com/2022/08/21/%E4%BD%BF%E7%94%A8HEXO-GIT-BACKUP%E6%8F%92%E4%BB%B6%E5%A4%87%E4%BB%BD%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/"/>
     <id>http://example.com/2022/08/21/%E4%BD%BF%E7%94%A8HEXO-GIT-BACKUP%E6%8F%92%E4%BB%B6%E5%A4%87%E4%BB%BD%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/</id>
     <published>2022-08-21T11:09:51.000Z</published>
-    <updated>2022-08-22T13:23:17.457Z</updated>
+    <updated>2022-08-22T16:18:43.315Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;在搭建好hexo博客之后也要给自己的博客进行备份，文章丢失可是很麻烦的一件事情。我的博客的数据都是直接保存在cloudstudio，用的时候总是会感觉有点问题，生怕自己哪天不小心把工作空间给删除了，那就蛮麻烦了。所以我采用了 &lt;a</summary>
+        
+      
     
     
     
+    <category term="技术" scheme="http://example.com/categories/%E6%8A%80%E6%9C%AF/"/>
     
+    <category term="插件" scheme="http://example.com/categories/%E6%8A%80%E6%9C%AF/%E6%8F%92%E4%BB%B6/"/>
+    
+    
+    <category term="插件" scheme="http://example.com/tags/%E6%8F%92%E4%BB%B6/"/>
     
   </entry>
   
@@ -34,12 +48,11 @@
     <link href="http://example.com/2022/08/21/%E8%87%AA%E5%8A%A8%E5%A4%87%E4%BB%BDHexo%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/"/>
     <id>http://example.com/2022/08/21/%E8%87%AA%E5%8A%A8%E5%A4%87%E4%BB%BDHexo%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/</id>
     <published>2022-08-21T06:11:51.000Z</published>
-    <updated>2022-08-22T15:29:09.322Z</updated>
+    <updated>2022-08-22T15:58:41.718Z</updated>
     
     
     <summary type="html">&lt;h3 id=&quot;一、前言&quot;&gt;&lt;a href=&quot;#一、前言&quot; class=&quot;headerlink&quot; title=&quot;一、前言&quot;&gt;&lt;/a&gt;一、前言&lt;/h3&gt;&lt;p&gt;自从接触了Hexo+NexT之后，发现离不开了，以后有能力的时候一定重新架构一下，使得更加个性化，最大程度的满足我们对于软件的需求，大家都知道，如果写东西在本地的话，最怕的应该就是更换电脑，还要重新搭建博客了，所以备份对于我们来说特别重要！备份博客就是本篇博客文章的主旨了，一定要攻下这座城堡。&lt;/p&gt;
-&lt;p&gt;我曾经看过Git备份Hexo博客源文件的方式，这种方式虽然能够备份Hexo博客的源文件，但是对于我这种懒人，每次更新博文都需要输入两三行重复的Git命令真是一件麻烦的事情。况且指不定哪天就搞忘push到github上了。你说是不是，所以这篇文章出现了……&lt;/p&gt;
-&lt;h3 id=&quot;二、原理&quot;&gt;&lt;a href=&quot;#二、原理&quot; class=&quot;headerlink&quot; title=&quot;二、原理&quot;&gt;&lt;/a&gt;二、原理&lt;/h3&gt;</summary>
+&lt;p&gt;我曾经看过Git备份Hexo博客源文件的方式，这种方式虽然能够备份Hexo博客的源文件，但是对于我这种懒人，每次更新博文都需要输入两三行重复的Git命令真是一件麻烦的事情。况且指不定哪天就搞忘push到github上了。你说是不是，所以这篇文章出现了……&lt;/p&gt;</summary>
     
     
     
