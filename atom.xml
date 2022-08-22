@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-08-22T16:18:43.315Z</updated>
+  <updated>2022-08-22T16:25:36.977Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -17,20 +17,27 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>npm安装卸载命令</title>
+    <link href="http://example.com/2022/08/23/npm%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BD%E5%91%BD%E4%BB%A4/"/>
+    <id>http://example.com/2022/08/23/npm%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BD%E5%91%BD%E4%BB%A4/</id>
+    <published>2022-08-22T16:25:36.000Z</published>
+    <updated>2022-08-22T16:25:36.977Z</updated>
+    
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
     <title>使用HEXO-GIT-BACKUP插件备份博客源文件</title>
     <link href="http://example.com/2022/08/21/%E4%BD%BF%E7%94%A8HEXO-GIT-BACKUP%E6%8F%92%E4%BB%B6%E5%A4%87%E4%BB%BD%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/"/>
     <id>http://example.com/2022/08/21/%E4%BD%BF%E7%94%A8HEXO-GIT-BACKUP%E6%8F%92%E4%BB%B6%E5%A4%87%E4%BB%BD%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/</id>
     <published>2022-08-21T11:09:51.000Z</published>
-    <updated>2022-08-22T16:18:43.315Z</updated>
+    <updated>2022-08-22T16:26:56.797Z</updated>
     
     
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;在搭建好hexo博客之后也要给自己的博客进行备份，文章丢失可是很麻烦的一件事情。我的博客的数据都是直接保存在cloudstudio，用的时候总是会感觉有点问题，生怕自己哪天不小心把工作空间给删除了，那就蛮麻烦了。所以我采用了 &lt;a</summary>
-        
-      
+    <summary type="html">&lt;p&gt;在搭建好hexo博客之后也要给自己的博客进行备份，文章丢失可是很麻烦的一件事情。我的博客的数据都是直接保存在cloudstudio，用的时候总是会感觉有点问题，生怕自己哪天不小心把工作空间给删除了，那就蛮麻烦了。所以我采用了 &lt;a href=&quot;https://github.com/coneycode/hexo-git-backup&quot;&gt;hexo-git-backup&lt;/a&gt; 这个工具进行备份。&lt;/p&gt;</summary>
     
     
     
