@@ -11,7 +11,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>使用HEXO-GIT-BACKUP插件备份博客源文件 |  如风网络</title>
+      <title>Linux系统无线网卡配置 |  如风网络</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/favicon.ico" />
@@ -64,7 +64,7 @@ var _hmt = _hmt || [];
     <main class="content on">
       <section class="outer">
   <article
-  id="post-使用HEXO-GIT-BACKUP插件备份博客源文件"
+  id="post-Linux系统无线网卡配置"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -75,7 +75,7 @@ var _hmt = _hmt || [];
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  使用HEXO-GIT-BACKUP插件备份博客源文件
+  Linux系统无线网卡配置
 </h1>
  
 
@@ -83,11 +83,11 @@ var _hmt = _hmt || [];
     </header>
      
     <div class="article-meta">
-      <a href="/2022/08/21/%E4%BD%BF%E7%94%A8HEXO-GIT-BACKUP%E6%8F%92%E4%BB%B6%E5%A4%87%E4%BB%BD%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/" class="article-date">
-  <time datetime="2022-08-21T11:09:51.000Z" itemprop="datePublished">2022-08-21 19:09:51</time>
+      <a href="/2022/08/22/Linux%E7%B3%BB%E7%BB%9F%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE/" class="article-date">
+  <time datetime="2022-08-22T12:50:43.000Z" itemprop="datePublished">2022-08-22 20:50:43</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a> / <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0/Hexo/">Hexo</a>
+    <a class="article-category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
   </div>
   
 <div class="word_count">
@@ -95,7 +95,7 @@ var _hmt = _hmt || [];
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">457</span>
+            <span class="post-count">643</span>
         </span>
     </span>
 
@@ -104,7 +104,7 @@ var _hmt = _hmt || [];
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">1 分钟</span>
+            <span class="post-count">2 分钟</span>
         </span>
     </span>
 </div>
@@ -119,49 +119,54 @@ var _hmt = _hmt || [];
   
     <div class="article-entry" itemprop="articleBody">
        
-  <p>在搭建好hexo博客之后也要给自己的博客进行备份，文章丢失可是很麻烦的一件事情。我的博客的数据都是直接保存在cloudstudio，用的时候总是会感觉有点问题，生怕自己哪天不小心把工作空间给删除了，那就蛮麻烦了。所以我采用了 <a target="_blank" rel="noopener" href="https://github.com/coneycode/hexo-git-backup">hexo-git-backup</a> 这个工具进行备份。</p>
-<p>原文地址：<a target="_blank" rel="noopener" href="https://kaygb.top/posts/20191119-use-hexo-git-backup.html">使用hexo-git-backup插件备份博客源文件</a></p>
-<h2 id="查看HEXO版本"><a href="#查看HEXO版本" class="headerlink" title="查看HEXO版本"></a>查看HEXO版本</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo version</span><br></pre></td></tr></table></figure>
+  <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文介绍在<code>Linux</code>命令行界面中手动配置无线网卡的方法。目前流行的多数发行版都支持用图形界面的<code>network- manager</code>方便地进行配置，而无需使用本文所介绍的原始方法。</p>
+<p>下面介绍使用<code>iwconfig</code>和<code>ifconfig</code>等命令在命令行状态下配置无线网络。前题是无线网卡驱动已经正确安装，并被系统正确识别。</p>
+<h2 id="大体思路"><a href="#大体思路" class="headerlink" title="大体思路"></a>大体思路</h2><p>工作的大体思路如下：</p>
+<ol>
+<li>用<code>iwconfig</code>开启无线网卡的电源，并查找区域内的无线网络</li>
+<li>连接到相应的无线网络</li>
+<li>通过<code>ifconfig</code>启用无线网卡，并获取IP（如果使用DHCP的话）</li>
+</ol>
+<h2 id="具体过程"><a href="#具体过程" class="headerlink" title="具体过程"></a>具体过程</h2> <span id="more"></span>
+<ol>
+<li>打开无线网卡电源</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iwconfig wlan0 txpower on</span><br></pre></td></tr></table></figure>
+<p>无线网络的信号灯应该亮了。</p>
+<ol start="2">
+<li>列出区域内的无线网络<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iwlist wlan0 scan</span><br></pre></td></tr></table></figure></li>
+<li>假设要连接到网络<code>MyHome</code>（即<code>essid</code>为<code>MyHome</code>的网络），那么输入命令</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iwconfig wlan0 essid <span class="string">&quot;MyHome&quot;</span> </span><br></pre></td></tr></table></figure>
+<p>如果网络是加密的，密码是0123456789，那么就输入命令</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iwconfig wlan0 essid <span class="string">&quot;MyHome&quot;</span> key <span class="number">0123</span><span class="literal">-4567-89</span></span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>如果正常的话，输入</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iwconfig wlan0</span><br></pre></td></tr></table></figure>
+<p>就可以看到连接正常的各项参数了。</p>
+<ol start="5">
+<li>启用无线网卡</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ifconfig wlan0 up</span><br></pre></td></tr></table></figure>
 
-<p>第一行的hexo：xxx既为版本<span id="more"></span></p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211914144.png" alt="查看Hexo版本"></p>
-<p>如图，我的版本是6.2.0</p>
-<p>这里我使用</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>如果你的版本是2.x.x使用这条命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-git-backup@0.0.91 --save</span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li>如果是用<code>DHCP</code>获取<code>IP</code>的，那么用<code>dhclient</code>或<code>dhcpcd</code>获取<code>ip</code></li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dhcpcd wlan0</span><br></pre></td></tr></table></figure>
 
-<p>如果你的版本是3.x.x则使用这条命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-git-backup --save</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dhclient wlan0</span><br></pre></td></tr></table></figure>
 
-<p>这里我使用的是第二条命令，因为我的hexo版本为6.2.0</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211919299.png" alt="建立分支"></p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211921232.png" alt="建立分支按钮"></p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211924488.png" alt="给分支取个名称"></p>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>打开博客配置文件_config.yml</p>
-<p>在最下方添加</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">backup:</span><br><span class="line">    type: git</span><br><span class="line">    repository:</span><br><span class="line">       github: git@github.com:xxx/xxx.git,branchName</span><br><span class="line">       coding: git@github.com:xxx/xxx.git,branchName</span><br></pre></td></tr></table></figure>
+<ol start="7">
+<li>现在无线网卡应该可以正常使用了。</li>
+</ol>
+<h2 id="PS"><a href="#PS" class="headerlink" title="PS:"></a>PS:</h2><p>   如果现在还不能联网。那么点击网络图标。选择链接到隐藏的无线网络。输入找到的网络的名字。<br>      图形化的网络管理程序是<code>System-&gt;Preferences-&gt;Network Connections</code>。打开程序后，点击无线网络项目，点击<code>add</code>增加一个新的无线网络。  给出任意的<code>Connection Name。SSID</code>中输入无限网络的名字。<code>reless security</code>中选择一种合适的加密类型。<code>key</code>中输入无限网络的密码。 </p>
+<p>   其他字段都不修改。 执行后，应该能够链接无限网络。  可以使用<code>iwconfig wlan0</code>命令查看是否正确连接无线网络。<br>   未正确链接无线网络的输出：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">iwconfig wlan0</span><br><span class="line">wlan0     IEEE <span class="number">802.11</span>abg  ESSID:off/any </span><br><span class="line">          Mode:Managed  Access Point: Not<span class="literal">-Associated</span>   Tx<span class="literal">-Power</span>=<span class="number">0</span> dBm  </span><br><span class="line">          Retry  long limit:<span class="number">7</span>   RTS thr:off   Fragment thr:off</span><br><span class="line">          Power Management:off</span><br></pre></td></tr></table></figure>
 
-<p>branchName为分支名（你刚才取的名称，我的是blogbak），要和前面的仓库地址用英文逗号隔开。</p>
-<p>下面的coding是极狐的。随便选择如果是gitee同样修改则可以。</p>
-<p>这里就差不多配置完成了</p>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo backup </span><br></pre></td></tr></table></figure>
-
-<p>可以使用简写</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo b</span><br></pre></td></tr></table></figure>
-
-<h2 id="配置项"><a href="#配置项" class="headerlink" title="配置项"></a>配置项</h2><p>如果你只是想备份主题目录，只需要添加theme属性</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">backup:</span><br><span class="line">    type: git</span><br><span class="line">    theme: coney,landscape,xxx</span><br><span class="line">    repository:</span><br><span class="line">       github: git@github.com:xxx/xxx.git,branchName</span><br><span class="line">       gitcafe: git@github.com:xxx/xxx.git,branchName</span><br></pre></td></tr></table></figure>
-
-<p>如果你想自定义提交的message信息，那么只需要添加message属性</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">backup:</span><br><span class="line">    type: git</span><br><span class="line">    message: update xxx</span><br><span class="line">    repository:</span><br><span class="line">       github: git@github.com:xxx/xxx.git,branchName</span><br><span class="line">       gitcafe: git@github.com:xxx/xxx.git,branchName</span><br></pre></td></tr></table></figure>
-
-<p>插件地址</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/coneycode/hexo-git-backup">hexo-git-backup</a></p>
-<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>测试反馈</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211933353.png" alt="backup"></p>
-<p>到分支去查看是否成功。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211935278.png" alt="github分支"></p>
- 
+<p>正确链接无线网络后的输出：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">iwconfig wlan0</span><br><span class="line">wlan0     IEEE <span class="number">802.11</span>abg  ESSID:<span class="string">&quot;MyHome&quot;</span> </span><br><span class="line">          Mode:Managed  Frequency:<span class="number">2.437</span> GHz  Access Point: <span class="number">00</span>:<span class="number">26</span>:DS:<span class="number">43</span>:<span class="number">1</span>A:A8  </span><br><span class="line">          Bit Rate=<span class="number">54</span> Mb/s   Tx<span class="literal">-Power</span>=<span class="number">0</span> dBm  </span><br><span class="line">          Retry  long limit:<span class="number">7</span>   RTS thr:off   Fragment thr:off</span><br><span class="line">          Power Management:off</span><br><span class="line">          Link Quality=<span class="number">65</span>/<span class="number">70</span>  Signal level=<span class="literal">-45</span> dBm </span><br><span class="line">          Rx invalid nwid:<span class="number">0</span>  Rx invalid crypt:<span class="number">0</span>  Rx invalid frag:<span class="number">0</span></span><br><span class="line">          Tx excessive retries:<span class="number">0</span>  Invalid misc:<span class="number">0</span>   Missed beacon:<span class="number">0</span></span><br></pre></td></tr></table></figure> 
       <!-- reward -->
       
       <div id="reword-out">
@@ -231,12 +236,12 @@ var _hmt = _hmt || [];
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2022/08/21/%E4%BD%BF%E7%94%A8HEXO-GIT-BACKUP%E6%8F%92%E4%BB%B6%E5%A4%87%E4%BB%BD%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2022/08/22/Linux%E7%B3%BB%E7%BB%9F%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE/" alt="微信分享二维码">
     </div>
 </div>
 
 <div id="share-mask"></div>  
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%A4%87%E4%BB%BD/" rel="tag">备份</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1/" rel="tag">无线网卡</a></li></ul>
 
     </footer>
   </div>
@@ -244,19 +249,10 @@ var _hmt = _hmt || [];
    
   <nav class="article-nav">
     
+    
       <a href="/2022/08/22/Centos7%E5%AE%89%E8%A3%85%E6%97%B6%E5%BC%95%E5%AF%BC%E9%94%99%E8%AF%AF%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            Centos7安装时引导错误以及解决方案
-          
-        </div>
-      </a>
-    
-    
-      <a href="/2022/08/21/%E8%87%AA%E5%8A%A8%E5%A4%87%E4%BB%BDHexo%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">自动备份Hexo博客源文件</div>
+        <div class="article-nav-title">Centos7安装时引导错误以及解决方案</div>
       </a>
     
   </nav>
