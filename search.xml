@@ -223,57 +223,6 @@
       </tags>
   </entry>
   <entry>
-    <title>使用HEXO-GIT-BACKUP插件备份博客源文件</title>
-    <url>/2022/08/21/%E4%BD%BF%E7%94%A8HEXO-GIT-BACKUP%E6%8F%92%E4%BB%B6%E5%A4%87%E4%BB%BD%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/</url>
-    <content><![CDATA[<p>在搭建好hexo博客之后也要给自己的博客进行备份，文章丢失可是很麻烦的一件事情。我的博客的数据都是直接保存在cloudstudio，用的时候总是会感觉有点问题，生怕自己哪天不小心把工作空间给删除了，那就蛮麻烦了。所以我采用了 <a href="https://github.com/coneycode/hexo-git-backup">hexo-git-backup</a> 这个工具进行备份。</p>
-<span id="more"></span>
-<h2 id="查看HEXO版本"><a href="#查看HEXO版本" class="headerlink" title="查看HEXO版本"></a>查看HEXO版本</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo version</span><br></pre></td></tr></table></figure>
-
-<p>第一行的hexo：xxx既为版本</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211933353.png" alt="查看hexo版本"></p>
-<p>如图，我的版本是6.2.0</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>如果你的版本是2.x.x使用这条命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-git-backup@0.0.91 --save</span><br></pre></td></tr></table></figure>
-
-<p>如果你的版本是3.x.x则使用这条命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-git-backup --save</span><br></pre></td></tr></table></figure>
-
-<p>这里我使用的是第二条命令，因为我的hexo版本为6.2.0</p>
-<h2 id="建立分支"><a href="#建立分支" class="headerlink" title="建立分支"></a>建立分支</h2><p>来到你的github仓库目录或者是coding的仓库目录，选择新建分支，因为我是双线部署，所以两个都要创建分支，我创建的分支名都为backup</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211919299.png" alt="查看所有分支和管理"></p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211921232.png" alt="新建分支"></p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211924488.png" alt="给分支取个名称"></p>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>打开博客配置文件_config.yml</p>
-<p>在最下方添加</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># hexo-git-backup 插件，用来备份的</span><br><span class="line">backup:</span><br><span class="line">    type: git</span><br><span class="line">    repository:</span><br><span class="line">       github: git@github.com:xxx/xxx.git,branchName</span><br><span class="line">       coding: git@github.com:xxx/xxx.git,branchName</span><br><span class="line">12345</span><br></pre></td></tr></table></figure>
-
-<p>branchName为分支名（我的分支名称是blogbak），要和前面的仓库地址用英文逗号隔开。</p>
-<p>“coding: “是gitlag的库。</p>
-<p>这里就差不多配置完成了</p>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo backup </span><br></pre></td></tr></table></figure>
-
-<p>or</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo b</span><br></pre></td></tr></table></figure>
-
-<h2 id="配置项"><a href="#配置项" class="headerlink" title="配置项"></a>配置项</h2><p>如果你只是想备份主题目录，只需要添加theme属性</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">backup:</span><br><span class="line">    type: git</span><br><span class="line">    theme: coney,landscape,xxx</span><br><span class="line">    repository:</span><br><span class="line">       github: git@github.com:xxx/xxx.git,branchName</span><br><span class="line">       gitcafe: git@github.com:xxx/xxx.git,branchName</span><br></pre></td></tr></table></figure>
-
-<p>如果你想自定义提交的message信息，那么只需要添加message属性</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">backup:</span><br><span class="line">    type: git</span><br><span class="line">    message: update xxx</span><br><span class="line">    repository:</span><br><span class="line">       github: git@github.com:xxx/xxx.git,branchName</span><br><span class="line">       gitcafe: git@github.com:xxx/xxx.git,branchName</span><br></pre></td></tr></table></figure>
-
-<p>插件地址</p>
-<p><a href="https://github.com/coneycode/hexo-git-backup">hexo-git-backup</a></p>
-<h2 id="反省"><a href="#反省" class="headerlink" title="反省"></a>反省</h2><p>记得一定要做好备份，千万不要轻易重装系统，欲哭无泪！</p>
-]]></content>
-      <categories>
-        <category>技术</category>
-        <category>插件</category>
-      </categories>
-      <tags>
-        <tag>插件</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>vscode配置picgo的github的图床</title>
     <url>/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/</url>
     <content><![CDATA[<p>vscode+github+picgo 搭建 markdown 图床</p>
@@ -319,6 +268,56 @@
       </tags>
   </entry>
   <entry>
+    <title>使用HEXO-GIT-BACKUP插件备份博客源文件</title>
+    <url>/2022/08/21/%E4%BD%BF%E7%94%A8HEXO-GIT-BACKUP%E6%8F%92%E4%BB%B6%E5%A4%87%E4%BB%BD%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/</url>
+    <content><![CDATA[<p>在搭建好hexo博客之后也要给自己的博客进行备份，文章丢失可是很麻烦的一件事情。我的博客的数据都是直接保存在cloudstudio，用的时候总是会感觉有点问题，生怕自己哪天不小心把工作空间给删除了，那就蛮麻烦了。所以我采用了 <a href="https://github.com/coneycode/hexo-git-backup">hexo-git-backup</a> 这个工具进行备份。</p>
+<h2 id="查看HEXO版本"><a href="#查看HEXO版本" class="headerlink" title="查看HEXO版本"></a>查看HEXO版本</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo version</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<p>第一行的hexo：xxx既为版本</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211933353.png" alt="查看hexo版本"></p>
+<p>如图，我的版本是6.2.0</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>如果你的版本是2.x.x使用这条命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-git-backup@0.0.91 --save</span><br></pre></td></tr></table></figure>
+
+<p>如果你的版本是3.x.x则使用这条命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-git-backup --save</span><br></pre></td></tr></table></figure>
+
+<p>这里我使用的是第二条命令，因为我的hexo版本为6.2.0</p>
+<h2 id="建立分支"><a href="#建立分支" class="headerlink" title="建立分支"></a>建立分支</h2><p>来到你的github仓库目录或者是coding的仓库目录，选择新建分支，因为我是双线部署，所以两个都要创建分支，我创建的分支名都为backup</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211919299.png" alt="查看所有分支和管理"></p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211921232.png" alt="新建分支"></p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211924488.png" alt="给分支取个名称"></p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>打开博客配置文件_config.yml</p>
+<p>在最下方添加</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># hexo-git-backup 插件，用来备份的</span><br><span class="line">backup:</span><br><span class="line">    type: git</span><br><span class="line">    repository:</span><br><span class="line">       github: git@github.com:xxx/xxx.git,branchName</span><br><span class="line">       coding: git@github.com:xxx/xxx.git,branchName</span><br><span class="line">12345</span><br></pre></td></tr></table></figure>
+
+<p>branchName为分支名（我的分支名称是blogbak），要和前面的仓库地址用英文逗号隔开。</p>
+<p>“coding: “是gitlag的库。</p>
+<p>这里就差不多配置完成了</p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo backup </span><br></pre></td></tr></table></figure>
+
+<p>or</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo b</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置项"><a href="#配置项" class="headerlink" title="配置项"></a>配置项</h2><p>如果你只是想备份主题目录，只需要添加theme属性</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">backup:</span><br><span class="line">    type: git</span><br><span class="line">    theme: coney,landscape,xxx</span><br><span class="line">    repository:</span><br><span class="line">       github: git@github.com:xxx/xxx.git,branchName</span><br><span class="line">       gitcafe: git@github.com:xxx/xxx.git,branchName</span><br></pre></td></tr></table></figure>
+
+<p>如果你想自定义提交的message信息，那么只需要添加message属性</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">backup:</span><br><span class="line">    type: git</span><br><span class="line">    message: update xxx</span><br><span class="line">    repository:</span><br><span class="line">       github: git@github.com:xxx/xxx.git,branchName</span><br><span class="line">       gitcafe: git@github.com:xxx/xxx.git,branchName</span><br></pre></td></tr></table></figure>
+
+<p>插件地址</p>
+<p><a href="https://github.com/coneycode/hexo-git-backup">hexo-git-backup</a></p>
+<h2 id="反省"><a href="#反省" class="headerlink" title="反省"></a>反省</h2><p>记得一定要做好备份，千万不要轻易重装系统，欲哭无泪！</p>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>插件</category>
+      </categories>
+      <tags>
+        <tag>插件</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>十年之约，一个人的寂寞，一群人的狂欢</title>
     <url>/2022/08/21/%E5%8D%81%E5%B9%B4%E4%B9%8B%E7%BA%A6%EF%BC%8C%E4%B8%80%E4%B8%AA%E4%BA%BA%E7%9A%84%E5%AF%82%E5%AF%9E%EF%BC%8C%E4%B8%80%E7%BE%A4%E4%BA%BA%E7%9A%84%E7%8B%82%E6%AC%A2/</url>
     <content><![CDATA[<p>​       在网络逐步转向手机端的今天，web博客网站似乎已经失去了活力，高昂的服务器费用，还需要技术基础以搭建起网站，忙前忙后设计维护着自己的网站，远不如朋友圈一样说发就发，但真相真的如此吗？我原本也这样理解，直到我发现了这样一个组织-十年之约。</p>
@@ -359,6 +358,36 @@
 ]]></content>
       <tags>
         <tag>随心</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>继上一期解决github上的图片无法显示的问题</title>
+    <url>/2022/08/21/%E7%BB%A7%E4%B8%8A%E4%B8%80%E6%9C%9F%E8%A7%A3%E5%86%B3github%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>​      <a href="https://movejian.github.io/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/">继上篇github图床问题</a>无法正常显示，但在<strong>github</strong>上看到正常上传，连接也并非错误，百度了一下说什么<strong>DNS</strong>被污染了。解决方法是修改<strong>hosts</strong>文件或者修改<strong>DNS</strong>。</p>
+<p>​      首先，打开<a href="https://ping.eu/nslookup">域名解析</a>网站：<a href="https://ping.eu/nslookup">https://ping.eu/nslookup</a><br>然后输入raw.githubusercontent.com如下图：</p>
+<p><img src="https://movejian.github.io/images/20220821/5.png"></p>
+<span id="more"></span>
+<p>​      我们得到图床所用域名解析到的IP(上图红框中的地址)。</p>
+<ul>
+<li>最后打开本机的<strong>host</strong>文件，其路径如下：<br><code>C:\Windows\System32\drivers\etc\hosts</code>, 然后添加如下内容(上图红框中的地址)：</li>
+</ul>
+<p><img src="https://movejian.github.io/images/20220821/6.png"></p>
+<ul>
+<li>打开<strong>CMD</strong>输入命令”ipconfig &#x2F;flushdns” 刷新<strong>DNS</strong>缓存,再次输入”ipconfig&#x2F;displaydns”</li>
+</ul>
+<p>​    如果你的<strong>hosts</strong>的文件不见了,可以通过文件设置显示系统隐藏文件来找到，依然找不到，可能是被误删了，网上有很多是通过新建文本文档解决。也可以通过下面这个命令来生成<strong>hosts</strong>文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for /f %P in (&#x27;dir %windir%\WinSxS\hosts /b /s&#x27;) do copy %P %windir%\System32\drivers\etc &amp; echo %P &amp; Notepad %P</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>注意</strong>一定要使用管理员身份输入此命令。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>图床</tag>
+        <tag>问题解决</tag>
       </tags>
   </entry>
   <entry>
@@ -425,36 +454,6 @@
       </categories>
       <tags>
         <tag>技术</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>继上一期解决github上的图片无法显示的问题</title>
-    <url>/2022/08/21/%E7%BB%A7%E4%B8%8A%E4%B8%80%E6%9C%9F%E8%A7%A3%E5%86%B3github%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>​      <a href="https://movejian.github.io/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/">继上篇github图床问题</a>无法正常显示，但在<strong>github</strong>上看到正常上传，连接也并非错误，百度了一下说什么<strong>DNS</strong>被污染了。解决方法是修改<strong>hosts</strong>文件或者修改<strong>DNS</strong>。</p>
-<p>​      首先，打开<a href="https://ping.eu/nslookup">域名解析</a>网站：<a href="https://ping.eu/nslookup">https://ping.eu/nslookup</a><br>然后输入raw.githubusercontent.com如下图：</p>
-<p><img src="https://movejian.github.io/images/20220821/5.png"></p>
-<span id="more"></span>
-<p>​      我们得到图床所用域名解析到的IP(上图红框中的地址)。</p>
-<ul>
-<li>最后打开本机的<strong>host</strong>文件，其路径如下：<br><code>C:\Windows\System32\drivers\etc\hosts</code>, 然后添加如下内容(上图红框中的地址)：</li>
-</ul>
-<p><img src="https://movejian.github.io/images/20220821/6.png"></p>
-<ul>
-<li>打开<strong>CMD</strong>输入命令”ipconfig &#x2F;flushdns” 刷新<strong>DNS</strong>缓存,再次输入”ipconfig&#x2F;displaydns”</li>
-</ul>
-<p>​    如果你的<strong>hosts</strong>的文件不见了,可以通过文件设置显示系统隐藏文件来找到，依然找不到，可能是被误删了，网上有很多是通过新建文本文档解决。也可以通过下面这个命令来生成<strong>hosts</strong>文件。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for /f %P in (&#x27;dir %windir%\WinSxS\hosts /b /s&#x27;) do copy %P %windir%\System32\drivers\etc &amp; echo %P &amp; Notepad %P</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><strong>注意</strong>一定要使用管理员身份输入此命令。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>图床</tag>
-        <tag>问题解决</tag>
       </tags>
   </entry>
 </search>
