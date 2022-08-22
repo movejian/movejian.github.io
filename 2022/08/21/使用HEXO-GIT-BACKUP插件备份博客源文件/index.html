@@ -85,17 +85,13 @@ var _hmt = _hmt || [];
     <div class="article-meta">
       <a href="/2022/08/21/%E4%BD%BF%E7%94%A8HEXO-GIT-BACKUP%E6%8F%92%E4%BB%B6%E5%A4%87%E4%BB%BD%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/" class="article-date">
   <time datetime="2022-08-21T11:09:51.000Z" itemprop="datePublished">2022-08-21 19:09:51</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a> / <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0/Hexo/">Hexo</a>
-  </div>
-  
+</a>   
 <div class="word_count">
     <span class="post-time">
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">457</span>
+            <span class="post-count">0</span>
         </span>
     </span>
 
@@ -111,57 +107,13 @@ var _hmt = _hmt || [];
  
     </div>
       
-    <div class="tocbot"></div>
-
 
 
 
   
     <div class="article-entry" itemprop="articleBody">
        
-  <p>在搭建好hexo博客之后也要给自己的博客进行备份，文章丢失可是很麻烦的一件事情。我的博客的数据都是直接保存在cloudstudio，用的时候总是会感觉有点问题，生怕自己哪天不小心把工作空间给删除了，那就蛮麻烦了。所以我采用了 <a target="_blank" rel="noopener" href="https://github.com/coneycode/hexo-git-backup">hexo-git-backup</a> 这个工具进行备份。</p>
-<p>原文地址：<a target="_blank" rel="noopener" href="https://kaygb.top/posts/20191119-use-hexo-git-backup.html">使用hexo-git-backup插件备份博客源文件</a></p>
-<h2 id="查看HEXO版本"><a href="#查看HEXO版本" class="headerlink" title="查看HEXO版本"></a>查看HEXO版本</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo version</span><br></pre></td></tr></table></figure>
-
-<p>第一行的hexo：xxx既为版本<span id="more"></span></p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211914144.png" alt="查看Hexo版本"></p>
-<p>如图，我的版本是6.2.0</p>
-<p>这里我使用</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>如果你的版本是2.x.x使用这条命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-git-backup@0.0.91 --save</span><br></pre></td></tr></table></figure>
-
-<p>如果你的版本是3.x.x则使用这条命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-git-backup --save</span><br></pre></td></tr></table></figure>
-
-<p>这里我使用的是第二条命令，因为我的hexo版本为6.2.0</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211919299.png" alt="建立分支"></p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211921232.png" alt="建立分支按钮"></p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211924488.png" alt="给分支取个名称"></p>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>打开博客配置文件_config.yml</p>
-<p>在最下方添加</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">backup:</span><br><span class="line">    type: git</span><br><span class="line">    repository:</span><br><span class="line">       github: git@github.com:xxx/xxx.git,branchName</span><br><span class="line">       coding: git@github.com:xxx/xxx.git,branchName</span><br></pre></td></tr></table></figure>
-
-<p>branchName为分支名（你刚才取的名称，我的是blogbak），要和前面的仓库地址用英文逗号隔开。</p>
-<p>下面的coding是极狐的。随便选择如果是gitee同样修改则可以。</p>
-<p>这里就差不多配置完成了</p>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo backup </span><br></pre></td></tr></table></figure>
-
-<p>可以使用简写</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo b</span><br></pre></td></tr></table></figure>
-
-<h2 id="配置项"><a href="#配置项" class="headerlink" title="配置项"></a>配置项</h2><p>如果你只是想备份主题目录，只需要添加theme属性</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">backup:</span><br><span class="line">    type: git</span><br><span class="line">    theme: coney,landscape,xxx</span><br><span class="line">    repository:</span><br><span class="line">       github: git@github.com:xxx/xxx.git,branchName</span><br><span class="line">       gitcafe: git@github.com:xxx/xxx.git,branchName</span><br></pre></td></tr></table></figure>
-
-<p>如果你想自定义提交的message信息，那么只需要添加message属性</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">backup:</span><br><span class="line">    type: git</span><br><span class="line">    message: update xxx</span><br><span class="line">    repository:</span><br><span class="line">       github: git@github.com:xxx/xxx.git,branchName</span><br><span class="line">       gitcafe: git@github.com:xxx/xxx.git,branchName</span><br></pre></td></tr></table></figure>
-
-<p>插件地址</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/coneycode/hexo-git-backup">hexo-git-backup</a></p>
-<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>测试反馈</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211933353.png" alt="backup"></p>
-<p>到分支去查看是否成功。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211935278.png" alt="github分支"></p>
- 
+   
       <!-- reward -->
       
       <div id="reword-out">
@@ -236,22 +188,11 @@ var _hmt = _hmt || [];
 </div>
 
 <div id="share-mask"></div>  
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%A4%87%E4%BB%BD/" rel="tag">备份</a></li></ul>
-
     </footer>
   </div>
 
    
   <nav class="article-nav">
-    
-      <a href="/2022/08/22/Centos7%E5%AE%89%E8%A3%85%E6%97%B6%E5%BC%95%E5%AF%BC%E9%94%99%E8%AF%AF%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            Centos7安装时引导错误以及解决方案
-          
-        </div>
-      </a>
     
     
       <a href="/2022/08/21/%E8%87%AA%E5%8A%A8%E5%A4%87%E4%BB%BDHexo%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/" class="article-nav-link">
