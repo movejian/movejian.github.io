@@ -280,6 +280,34 @@
       </tags>
   </entry>
   <entry>
+    <title>npm安装卸载命令</title>
+    <url>/2022/08/23/npm%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BD%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<h2 id="npm安装模块"><a href="#npm安装模块" class="headerlink" title="npm安装模块"></a>npm安装模块</h2><p>利用 npm 安装xxx模块到当前命令行所在目录；</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install xxx</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<p>利用npm安装全局模块xxx；</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install -g xxx</span><br></pre></td></tr></table></figure>
+
+<h2 id="本地安装时将模块写入package-json中："><a href="#本地安装时将模块写入package-json中：" class="headerlink" title="本地安装时将模块写入package.json中："></a>本地安装时将模块写入package.json中：</h2><p>安装但不写入package.json；</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install xxx</span><br></pre></td></tr></table></figure>
+
+<p>安装并写入package.json的”dependencies”中；</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install xxx –save</span><br></pre></td></tr></table></figure>
+
+<p>安装并写入package.json的”devDependencies”中。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install xxx –save-dev</span><br></pre></td></tr></table></figure>
+
+<h2 id="npm-删除模块"><a href="#npm-删除模块" class="headerlink" title="npm 删除模块"></a>npm 删除模块</h2><p>删除xxx模块；</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm uninstall xxx</span><br></pre></td></tr></table></figure>
+
+<p>删除全局模块xxx；</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm uninstall -g xxx</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>命令</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>vscode配置picgo的github的图床</title>
     <url>/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/</url>
     <content><![CDATA[<p>vscode+github+picgo 搭建 markdown 图床</p>
@@ -322,34 +350,6 @@
       </categories>
       <tags>
         <tag>技术</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>npm安装卸载命令</title>
-    <url>/2022/08/23/npm%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BD%E5%91%BD%E4%BB%A4/</url>
-    <content><![CDATA[<h2 id="npm安装模块"><a href="#npm安装模块" class="headerlink" title="npm安装模块"></a>npm安装模块</h2><p>利用 npm 安装xxx模块到当前命令行所在目录；</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install xxx</span><br></pre></td></tr></table></figure>
-<span id="more"></span>
-<p>利用npm安装全局模块xxx；</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install -g xxx</span><br></pre></td></tr></table></figure>
-
-<h2 id="本地安装时将模块写入package-json中："><a href="#本地安装时将模块写入package-json中：" class="headerlink" title="本地安装时将模块写入package.json中："></a>本地安装时将模块写入package.json中：</h2><p>安装但不写入package.json；</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install xxx</span><br></pre></td></tr></table></figure>
-
-<p>安装并写入package.json的”dependencies”中；</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install xxx –save</span><br></pre></td></tr></table></figure>
-
-<p>安装并写入package.json的”devDependencies”中。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install xxx –save-dev</span><br></pre></td></tr></table></figure>
-
-<h2 id="npm-删除模块"><a href="#npm-删除模块" class="headerlink" title="npm 删除模块"></a>npm 删除模块</h2><p>删除xxx模块；</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm uninstall xxx</span><br></pre></td></tr></table></figure>
-
-<p>删除全局模块xxx；</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm uninstall -g xxx</span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>命令</tag>
       </tags>
   </entry>
   <entry>
@@ -458,7 +458,7 @@
 </ul>
 <p><img src="https://movejian.github.io/images/20220821/6.png"></p>
 <ul>
-<li>打开<strong>CMD</strong>输入命令”ipconfig &#x2F;flushdns” 刷新<strong>DNS</strong>缓存,再次输入”ipconfig&#x2F;displaydns”</li>
+<li>打开<strong>CMD</strong>输入命令<code>ipconfig /flushdns</code>刷新<strong>DNS</strong>缓存,再次输入<code>ipconfig/displaydns</code></li>
 </ul>
 <p>​    如果你的<strong>hosts</strong>的文件不见了,可以通过文件设置显示系统隐藏文件来找到，依然找不到，可能是被误删了，网上有很多是通过新建文本文档解决。也可以通过下面这个命令来生成<strong>hosts</strong>文件。</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for /f %P in (&#x27;dir %windir%\WinSxS\hosts /b /s&#x27;) do copy %P %windir%\System32\drivers\etc &amp; echo %P &amp; Notepad %P</span><br></pre></td></tr></table></figure>
