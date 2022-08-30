@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-08-30T16:57:26.410Z</updated>
+  <updated>2022-08-30T17:33:18.389Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://example.com/2022/08/31/%E7%83%AD%E8%A1%80%E4%BC%A0%E5%A5%87%E5%B9%BB%E5%A2%83%E8%BF%B7%E5%AE%AB%E3%80%81%E5%B1%A0%E9%BE%99%E6%AE%BF%E3%80%81%E5%9C%A3%E5%9F%9F%E5%9C%B0%E5%9B%BE%E8%B5%B0%E6%B3%95%E5%9B%BE%E8%A7%A3/"/>
     <id>http://example.com/2022/08/31/%E7%83%AD%E8%A1%80%E4%BC%A0%E5%A5%87%E5%B9%BB%E5%A2%83%E8%BF%B7%E5%AE%AB%E3%80%81%E5%B1%A0%E9%BE%99%E6%AE%BF%E3%80%81%E5%9C%A3%E5%9F%9F%E5%9C%B0%E5%9B%BE%E8%B5%B0%E6%B3%95%E5%9B%BE%E8%A7%A3/</id>
     <published>2022-08-30T16:47:21.000Z</published>
-    <updated>2022-08-30T16:57:26.410Z</updated>
+    <updated>2022-08-30T17:33:18.389Z</updated>
     
     
     <summary type="html">&lt;p&gt;小编精心总结了热血传奇幻境从幻境一层—幻境迷宫—幻境十层—屠龙殿—圣域之门地图的全部走法攻略，通过图文解说+参考视频进行了详尽的描述，愿可以帮助到您。&lt;/p&gt;
@@ -33,6 +33,8 @@
     
     
     <category term="传奇" scheme="http://example.com/tags/%E4%BC%A0%E5%A5%87/"/>
+    
+    <category term="幻境" scheme="http://example.com/tags/%E5%B9%BB%E5%A2%83/"/>
     
     <category term="攻略" scheme="http://example.com/tags/%E6%94%BB%E7%95%A5/"/>
     

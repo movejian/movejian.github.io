@@ -280,6 +280,34 @@
       </tags>
   </entry>
   <entry>
+    <title>npm安装卸载命令</title>
+    <url>/2022/08/23/npm%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BD%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<h2 id="npm安装模块"><a href="#npm安装模块" class="headerlink" title="npm安装模块"></a>npm安装模块</h2><p>利用 npm 安装xxx模块到当前命令行所在目录；</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install xxx</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<p>利用npm安装全局模块xxx；</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install -g xxx</span><br></pre></td></tr></table></figure>
+
+<h2 id="本地安装时将模块写入package-json中："><a href="#本地安装时将模块写入package-json中：" class="headerlink" title="本地安装时将模块写入package.json中："></a>本地安装时将模块写入package.json中：</h2><p>安装但不写入package.json；</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install xxx</span><br></pre></td></tr></table></figure>
+
+<p>安装并写入package.json的”dependencies”中；</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install xxx –save</span><br></pre></td></tr></table></figure>
+
+<p>安装并写入package.json的”devDependencies”中。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install xxx –save-dev</span><br></pre></td></tr></table></figure>
+
+<h2 id="npm-删除模块"><a href="#npm-删除模块" class="headerlink" title="npm 删除模块"></a>npm 删除模块</h2><p>删除xxx模块；</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm uninstall xxx</span><br></pre></td></tr></table></figure>
+
+<p>删除全局模块xxx；</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm uninstall -g xxx</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>命令</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>vscode配置picgo的github的图床</title>
     <url>/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/</url>
     <content><![CDATA[<p>vscode+github+picgo 搭建 markdown 图床</p>
@@ -322,34 +350,6 @@
       </categories>
       <tags>
         <tag>技术</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>npm安装卸载命令</title>
-    <url>/2022/08/23/npm%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BD%E5%91%BD%E4%BB%A4/</url>
-    <content><![CDATA[<h2 id="npm安装模块"><a href="#npm安装模块" class="headerlink" title="npm安装模块"></a>npm安装模块</h2><p>利用 npm 安装xxx模块到当前命令行所在目录；</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install xxx</span><br></pre></td></tr></table></figure>
-<span id="more"></span>
-<p>利用npm安装全局模块xxx；</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install -g xxx</span><br></pre></td></tr></table></figure>
-
-<h2 id="本地安装时将模块写入package-json中："><a href="#本地安装时将模块写入package-json中：" class="headerlink" title="本地安装时将模块写入package.json中："></a>本地安装时将模块写入package.json中：</h2><p>安装但不写入package.json；</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install xxx</span><br></pre></td></tr></table></figure>
-
-<p>安装并写入package.json的”dependencies”中；</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install xxx –save</span><br></pre></td></tr></table></figure>
-
-<p>安装并写入package.json的”devDependencies”中。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install xxx –save-dev</span><br></pre></td></tr></table></figure>
-
-<h2 id="npm-删除模块"><a href="#npm-删除模块" class="headerlink" title="npm 删除模块"></a>npm 删除模块</h2><p>删除xxx模块；</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm uninstall xxx</span><br></pre></td></tr></table></figure>
-
-<p>删除全局模块xxx；</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm uninstall -g xxx</span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>命令</tag>
       </tags>
   </entry>
   <entry>
@@ -486,6 +486,7 @@
       </categories>
       <tags>
         <tag>传奇</tag>
+        <tag>幻境</tag>
         <tag>攻略</tag>
       </tags>
   </entry>
