@@ -253,6 +253,33 @@
 ]]></content>
   </entry>
   <entry>
+    <title>hexo域名解析的两种方法</title>
+    <url>/2022/08/19/hexo%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>想要在浏览器里面输入域名到达某个地址。必不可少的一步就是要告诉全世界的电脑，这个域名现在指向这个地方啦。<br>而这一步就是由 dns 服务器来负责的。<br>我们需要做的就是将域名与固定的 ip 地址绑定起来 (A)，或者是与某已有域名绑定起来（CNAME）.</p>
+<p>下面我们以阿里云购买的域名为例</p>
+<h2 id="域名解析"><a href="#域名解析" class="headerlink" title="域名解析"></a>域名解析</h2><h3 id="方法一（不推荐）"><a href="#方法一（不推荐）" class="headerlink" title="方法一（不推荐）"></a>方法一（不推荐）</h3><p>首先获取自己 github 的二级域名的 IP 地址，win­dows 下直接在 cmd 里 Ping 一下自己的博客就会得到 IP 地址：</p>
+<span id="more"></span>
+
+<p><img src="https://movejian.github.io/images/20220819/cmd.png"></p>
+<p>我的 ip 是 185.199.111.153</p>
+<p>下面通过 DNS 域名解析将购买的域名指向 github 的二级域名：user­name.github.io，<br>进入阿里云的管理控制台 - 云解析 DNS，进入域名的解析设置，将得到的 IP 地址填到记录值一栏，点击确定就 OK 了。填完以后的解析列表会出现：</p>
+<p><img src="https://movejian.github.io/images/20220819/yumi.png"><br>记录值就是自己 github 的二级域名的 IP 地址。</p>
+<p>方法二（推荐）<br>直接解析域名的 CNAME 记录到你的 Git 二级域名，不要使用方法一中的 A 记录，因为 ip 地址可能会一段时间之后会改变 (由于网络地址转换协议 NAT)，所以建议记录类型选择 CNAME 进行解析，记录值填的就是 user­name.github.io，比如：</p>
+<p><img src="https://movejian.github.io/images/20220819/yumi2.png"></p>
+<p>如果你只用 github 的二级域名作为博客的地址，那么线路类型选择默认就可以了。</p>
+<h2 id="设置CNAME"><a href="#设置CNAME" class="headerlink" title="设置CNAME"></a>设置CNAME</h2><p>在 hexo 项目下，source 文件夹下面创建 CNAME 文件（没有后缀名的），在里面写上购买的域名。比如：<br>test­blog.top</p>
+<p><img src="https://movejian.github.io/images/20220819/CNAME.png"></p>
+<p>在 github 上面，打开 user­name.github.io 项目的（Set­tings）设置，然后在  Pages 选项,点击蓝色的按钮Add a domain 设置里填上购买的域名。比如：</p>
+<p><img src="https://movejian.github.io/images/20220819/domain.png"></p>
+<blockquote>
+<p>现在即可通过原二级域名和新域名访问hexo博客啦。</p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>域名</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>npm安装卸载命令</title>
     <url>/2022/08/23/npm%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BD%E5%91%BD%E4%BB%A4/</url>
     <content><![CDATA[<h2 id="npm安装模块"><a href="#npm安装模块" class="headerlink" title="npm安装模块"></a>npm安装模块</h2><p>利用 npm 安装xxx模块到当前命令行所在目录；</p>
@@ -278,78 +305,6 @@
 ]]></content>
       <tags>
         <tag>命令</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>vscode配置picgo的github的图床</title>
-    <url>/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/</url>
-    <content><![CDATA[<p>vscode+github+picgo 搭建 markdown 图床</p>
-<h2 id="一、vscode-配置"><a href="#一、vscode-配置" class="headerlink" title="一、vscode 配置"></a>一、vscode 配置</h2><h3 id="1、安装-Markdown-All-in-One-插件"><a href="#1、安装-Markdown-All-in-One-插件" class="headerlink" title="1、安装 Markdown All in One 插件"></a>1、安装 Markdown All in One 插件</h3><p>Markdown All in One 插件作为 Markdown 编辑器非常好用，既可以预览，对语法的支持也非常好。</p>
-<h3 id="2、安装-markdownlint-插件"><a href="#2、安装-markdownlint-插件" class="headerlink" title="2、安装 markdownlint 插件"></a>2、安装 markdownlint 插件</h3><p>这是个功能强大的 Markdown 语法检查器，可以帮助你书写出规范的文档，同时避免书写错误导致文档无法渲染。<br>markdownlint 制定了很多书写规范，如果不按照它的规范编写文章，则会提示很多错误或警告。</p>
-<span id="more"></span>
-
-<h3 id="3、安装-picgo-插件"><a href="#3、安装-picgo-插件" class="headerlink" title="3、安装 picgo 插件"></a>3、安装 picgo 插件</h3><p>可以下载 picgo 客户端来使用，但是这里直接在 vscode 中下载 picgo 插件也是可以的，只需要配置一下，配置方法在文章后面。</p>
-<h2 id="二、GitHub-配置"><a href="#二、GitHub-配置" class="headerlink" title="二、GitHub 配置"></a>二、GitHub 配置</h2><h3 id="1、创建一个仓库，必须为public"><a href="#1、创建一个仓库，必须为public" class="headerlink" title="1、创建一个仓库，必须为public"></a>1、创建一个仓库，必须为public</h3><p><img src="https://movejian.github.io/images/20220819/picgo1.png"></p>
-<h3 id="2、获取-Tokens"><a href="#2、获取-Tokens" class="headerlink" title="2、获取  Tokens"></a>2、获取  Tokens</h3><h4 id="①-进入个人设置页面，依次选择-【Developer-settings】-–-gt-【Personal-access-tokens】，然后点击【Generate-new-token】来生成新的-tokens，此-token是上传时验证身份用的。"><a href="#①-进入个人设置页面，依次选择-【Developer-settings】-–-gt-【Personal-access-tokens】，然后点击【Generate-new-token】来生成新的-tokens，此-token是上传时验证身份用的。" class="headerlink" title="① 进入个人设置页面，依次选择 【Developer settings】 –&gt; 【Personal access tokens】，然后点击【Generate new token】来生成新的 tokens，此 token是上传时验证身份用的。"></a>① 进入个人设置页面，依次选择 【Developer settings】 –&gt; 【Personal access tokens】，然后点击【Generate new token】来生成新的 tokens，此 token是上传时验证身份用的。</h4><p>注意：这个【Developer settings】对新手很不友好,不好找.在设置页面的最下方.</p>
-<p><img src="https://movejian.github.io/images/20220819/picgo3.png"></p>
-<h4 id="②-添加描述，然后将-repo-选上"><a href="#②-添加描述，然后将-repo-选上" class="headerlink" title="② 添加描述，然后将 repo 选上"></a>② 添加描述，然后将 repo 选上</h4><p><img src="https://movejian.github.io/images/20220819/picgo4.png"></p>
-<h4 id="③-将生成的字符串保存，关闭页面后将再也无法看到这个字符串了"><a href="#③-将生成的字符串保存，关闭页面后将再也无法看到这个字符串了" class="headerlink" title="③ 将生成的字符串保存，关闭页面后将再也无法看到这个字符串了"></a>③ 将生成的字符串保存，关闭页面后将再也无法看到这个字符串了</h4><p><img src="https://movejian.github.io/images/20220819/picgo5.png"></p>
-<h2 id="三、picgo-配置"><a href="#三、picgo-配置" class="headerlink" title="三、picgo 配置"></a>三、picgo 配置</h2><p>打开 vscode 的设置界面，搜索”picgo”定位到 picgo，具体配置如图：</p>
-<p><img src="https://movejian.github.io/images/20220819/picgo6.png"></p>
-<p>配置picgo</p>
-<p><img src="https://movejian.github.io/images/20220819/picgo7.png"></p>
-<ol>
-<li><h4 id="current-设置为-GitHub"><a href="#current-设置为-GitHub" class="headerlink" title="current 设置为 GitHub"></a>current 设置为 GitHub</h4></li>
-<li><h4 id="Branch-是我们仓库的分支，默认为-main"><a href="#Branch-是我们仓库的分支，默认为-main" class="headerlink" title="Branch 是我们仓库的分支，默认为 main"></a>Branch 是我们仓库的分支，默认为 main</h4></li>
-<li><h4 id="custom-url-使我们图片上传的连接，有两种方式可以使用"><a href="#custom-url-使我们图片上传的连接，有两种方式可以使用" class="headerlink" title="custom url 使我们图片上传的连接，有两种方式可以使用"></a>custom url 使我们图片上传的连接，有两种方式可以使用</h4><ol>
-<li><h5 id="原生方式"><a href="#原生方式" class="headerlink" title="原生方式"></a>原生方式</h5>使用 GitHub 原生连接，格式为： <a href="https://raw.githubusercontent.com/[%E7%94%A8%E6%88%B7%E5%90%8D]/[%E4%BB%93%E5%BA%93%E5%90%8D]/[%E5%88%86%E6%94%AF%E5%90%8D]">https://raw.githubusercontent.com/[用户名]/[仓库名]/[分支名]</a><br>我的例子：<a href="https://raw.githubusercontent.com/misswenzi/gallery/main">https://raw.githubusercontent.com/misswenzi/gallery/main</a><br>原生方式有一个弊端就是，国内速度比较慢</li>
-<li><h5 id="cdn-加速方式"><a href="#cdn-加速方式" class="headerlink" title="cdn 加速方式"></a>cdn 加速方式</h5>格式为：<a href="https://cdn.jsdelivr.net/gh/[%E7%94%A8%E6%88%B7%E5%90%8D]/[%E4%BB%93%E5%BA%93%E5%90%8D]@[%E5%88%86%E6%94%AF%E5%90%8D]">https://cdn.jsdelivr.net/gh/[用户名]/[仓库名]@[分支名]</a><br>我的例子：<a href="https://cdn.jsdelivr.net/gh/misswenzi/gallery@main">https://cdn.jsdelivr.net/gh/misswenzi/gallery@main</a></li>
-</ol>
-</li>
-<li><h4 id="cdn-加速的优点是国内访问速度比较快"><a href="#cdn-加速的优点是国内访问速度比较快" class="headerlink" title="cdn 加速的优点是国内访问速度比较快"></a>cdn 加速的优点是国内访问速度比较快</h4></li>
-<li><h4 id="path-是我们的图片存储在仓库中的路径，比如我的是-blogs-x2F-pictures-x2F-（注意：pictures-后面的-“-x2F-“-要记得加上）Repo-是我们的仓库，比如我的是-misswenzi-x2F-gallery"><a href="#path-是我们的图片存储在仓库中的路径，比如我的是-blogs-x2F-pictures-x2F-（注意：pictures-后面的-“-x2F-“-要记得加上）Repo-是我们的仓库，比如我的是-misswenzi-x2F-gallery" class="headerlink" title="path 是我们的图片存储在仓库中的路径，比如我的是 blogs&#x2F;pictures&#x2F;（注意：pictures 后面的 “&#x2F;“ 要记得加上）Repo 是我们的仓库，比如我的是 misswenzi&#x2F;gallery"></a>path 是我们的图片存储在仓库中的路径，比如我的是 blogs&#x2F;pictures&#x2F;（注意：pictures 后面的 “&#x2F;“ 要记得加上）Repo 是我们的仓库，比如我的是 misswenzi&#x2F;gallery</h4></li>
-<li><h4 id="Token：即-GitHub-中获取的-Tokens"><a href="#Token：即-GitHub-中获取的-Tokens" class="headerlink" title="Token：即 GitHub 中获取的 Tokens"></a>Token：即 GitHub 中获取的 Tokens</h4></li>
-</ol>
-<h2 id="四、测试"><a href="#四、测试" class="headerlink" title="四、测试"></a>四、测试</h2><p>进入 vscode，新建一个 .md 文件，windows 下 【ctrl+alt+U】从剪贴板粘贴图片，【ctrl+alt+E】打开资源管理器，选择图片，如果上传成功，则搭建成功！</p>
-<p><img src="https://movejian.github.io/images/20220819/picgo8.png"></p>
-<p>此时，去 GitHub 对应的仓库下查看，可以看到上传成功的图片。</p>
-<p>在 vscode 中插入的图片会上传到 GitHub 的仓库中，如果删除了仓库里面的图片，那你的 Markdown 里面的图片链接就会失效。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/20220819100154.png" alt="20220819100154"></p>
-<p>首先不提好用不好用,反正我这样配置失败了,还请高人指点！</p>
-]]></content>
-      <categories>
-        <category>学习</category>
-        <category>vscode</category>
-      </categories>
-      <tags>
-        <tag>技术</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hexo域名解析的两种方法</title>
-    <url>/2022/08/19/hexo%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>想要在浏览器里面输入域名到达某个地址。必不可少的一步就是要告诉全世界的电脑，这个域名现在指向这个地方啦。<br>而这一步就是由 dns 服务器来负责的。<br>我们需要做的就是将域名与固定的 ip 地址绑定起来 (A)，或者是与某已有域名绑定起来（CNAME）.</p>
-<p>下面我们以阿里云购买的域名为例</p>
-<h2 id="域名解析"><a href="#域名解析" class="headerlink" title="域名解析"></a>域名解析</h2><h3 id="方法一（不推荐）"><a href="#方法一（不推荐）" class="headerlink" title="方法一（不推荐）"></a>方法一（不推荐）</h3><p>首先获取自己 github 的二级域名的 IP 地址，win­dows 下直接在 cmd 里 Ping 一下自己的博客就会得到 IP 地址：</p>
-<span id="more"></span>
-
-<p><img src="https://movejian.github.io/images/20220819/cmd.png"></p>
-<p>我的 ip 是 185.199.111.153</p>
-<p>下面通过 DNS 域名解析将购买的域名指向 github 的二级域名：user­name.github.io，<br>进入阿里云的管理控制台 - 云解析 DNS，进入域名的解析设置，将得到的 IP 地址填到记录值一栏，点击确定就 OK 了。填完以后的解析列表会出现：</p>
-<p><img src="https://movejian.github.io/images/20220819/yumi.png"><br>记录值就是自己 github 的二级域名的 IP 地址。</p>
-<p>方法二（推荐）<br>直接解析域名的 CNAME 记录到你的 Git 二级域名，不要使用方法一中的 A 记录，因为 ip 地址可能会一段时间之后会改变 (由于网络地址转换协议 NAT)，所以建议记录类型选择 CNAME 进行解析，记录值填的就是 user­name.github.io，比如：</p>
-<p><img src="https://movejian.github.io/images/20220819/yumi2.png"></p>
-<p>如果你只用 github 的二级域名作为博客的地址，那么线路类型选择默认就可以了。</p>
-<h2 id="设置CNAME"><a href="#设置CNAME" class="headerlink" title="设置CNAME"></a>设置CNAME</h2><p>在 hexo 项目下，source 文件夹下面创建 CNAME 文件（没有后缀名的），在里面写上购买的域名。比如：<br>test­blog.top</p>
-<p><img src="https://movejian.github.io/images/20220819/CNAME.png"></p>
-<p>在 github 上面，打开 user­name.github.io 项目的（Set­tings）设置，然后在  Pages 选项,点击蓝色的按钮Add a domain 设置里填上购买的域名。比如：</p>
-<p><img src="https://movejian.github.io/images/20220819/domain.png"></p>
-<blockquote>
-<p>现在即可通过原二级域名和新域名访问hexo博客啦。</p>
-</blockquote>
-]]></content>
-      <tags>
-        <tag>域名</tag>
       </tags>
   </entry>
   <entry>
@@ -400,6 +355,51 @@
       </categories>
       <tags>
         <tag>插件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vscode配置picgo的github的图床</title>
+    <url>/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/</url>
+    <content><![CDATA[<p>vscode+github+picgo 搭建 markdown 图床</p>
+<h2 id="一、vscode-配置"><a href="#一、vscode-配置" class="headerlink" title="一、vscode 配置"></a>一、vscode 配置</h2><h3 id="1、安装-Markdown-All-in-One-插件"><a href="#1、安装-Markdown-All-in-One-插件" class="headerlink" title="1、安装 Markdown All in One 插件"></a>1、安装 Markdown All in One 插件</h3><p>Markdown All in One 插件作为 Markdown 编辑器非常好用，既可以预览，对语法的支持也非常好。</p>
+<h3 id="2、安装-markdownlint-插件"><a href="#2、安装-markdownlint-插件" class="headerlink" title="2、安装 markdownlint 插件"></a>2、安装 markdownlint 插件</h3><p>这是个功能强大的 Markdown 语法检查器，可以帮助你书写出规范的文档，同时避免书写错误导致文档无法渲染。<br>markdownlint 制定了很多书写规范，如果不按照它的规范编写文章，则会提示很多错误或警告。</p>
+<span id="more"></span>
+
+<h3 id="3、安装-picgo-插件"><a href="#3、安装-picgo-插件" class="headerlink" title="3、安装 picgo 插件"></a>3、安装 picgo 插件</h3><p>可以下载 picgo 客户端来使用，但是这里直接在 vscode 中下载 picgo 插件也是可以的，只需要配置一下，配置方法在文章后面。</p>
+<h2 id="二、GitHub-配置"><a href="#二、GitHub-配置" class="headerlink" title="二、GitHub 配置"></a>二、GitHub 配置</h2><h3 id="1、创建一个仓库，必须为public"><a href="#1、创建一个仓库，必须为public" class="headerlink" title="1、创建一个仓库，必须为public"></a>1、创建一个仓库，必须为public</h3><p><img src="https://movejian.github.io/images/20220819/picgo1.png"></p>
+<h3 id="2、获取-Tokens"><a href="#2、获取-Tokens" class="headerlink" title="2、获取  Tokens"></a>2、获取  Tokens</h3><h4 id="①-进入个人设置页面，依次选择-【Developer-settings】-–-gt-【Personal-access-tokens】，然后点击【Generate-new-token】来生成新的-tokens，此-token是上传时验证身份用的。"><a href="#①-进入个人设置页面，依次选择-【Developer-settings】-–-gt-【Personal-access-tokens】，然后点击【Generate-new-token】来生成新的-tokens，此-token是上传时验证身份用的。" class="headerlink" title="① 进入个人设置页面，依次选择 【Developer settings】 –&gt; 【Personal access tokens】，然后点击【Generate new token】来生成新的 tokens，此 token是上传时验证身份用的。"></a>① 进入个人设置页面，依次选择 【Developer settings】 –&gt; 【Personal access tokens】，然后点击【Generate new token】来生成新的 tokens，此 token是上传时验证身份用的。</h4><p>注意：这个【Developer settings】对新手很不友好,不好找.在设置页面的最下方.</p>
+<p><img src="https://movejian.github.io/images/20220819/picgo3.png"></p>
+<h4 id="②-添加描述，然后将-repo-选上"><a href="#②-添加描述，然后将-repo-选上" class="headerlink" title="② 添加描述，然后将 repo 选上"></a>② 添加描述，然后将 repo 选上</h4><p><img src="https://movejian.github.io/images/20220819/picgo4.png"></p>
+<h4 id="③-将生成的字符串保存，关闭页面后将再也无法看到这个字符串了"><a href="#③-将生成的字符串保存，关闭页面后将再也无法看到这个字符串了" class="headerlink" title="③ 将生成的字符串保存，关闭页面后将再也无法看到这个字符串了"></a>③ 将生成的字符串保存，关闭页面后将再也无法看到这个字符串了</h4><p><img src="https://movejian.github.io/images/20220819/picgo5.png"></p>
+<h2 id="三、picgo-配置"><a href="#三、picgo-配置" class="headerlink" title="三、picgo 配置"></a>三、picgo 配置</h2><p>打开 vscode 的设置界面，搜索”picgo”定位到 picgo，具体配置如图：</p>
+<p><img src="https://movejian.github.io/images/20220819/picgo6.png"></p>
+<p>配置picgo</p>
+<p><img src="https://movejian.github.io/images/20220819/picgo7.png"></p>
+<ol>
+<li><h4 id="current-设置为-GitHub"><a href="#current-设置为-GitHub" class="headerlink" title="current 设置为 GitHub"></a>current 设置为 GitHub</h4></li>
+<li><h4 id="Branch-是我们仓库的分支，默认为-main"><a href="#Branch-是我们仓库的分支，默认为-main" class="headerlink" title="Branch 是我们仓库的分支，默认为 main"></a>Branch 是我们仓库的分支，默认为 main</h4></li>
+<li><h4 id="custom-url-使我们图片上传的连接，有两种方式可以使用"><a href="#custom-url-使我们图片上传的连接，有两种方式可以使用" class="headerlink" title="custom url 使我们图片上传的连接，有两种方式可以使用"></a>custom url 使我们图片上传的连接，有两种方式可以使用</h4><ol>
+<li><h5 id="原生方式"><a href="#原生方式" class="headerlink" title="原生方式"></a>原生方式</h5>使用 GitHub 原生连接，格式为： <a href="https://raw.githubusercontent.com/[%E7%94%A8%E6%88%B7%E5%90%8D]/[%E4%BB%93%E5%BA%93%E5%90%8D]/[%E5%88%86%E6%94%AF%E5%90%8D]">https://raw.githubusercontent.com/[用户名]/[仓库名]/[分支名]</a><br>我的例子：<a href="https://raw.githubusercontent.com/misswenzi/gallery/main">https://raw.githubusercontent.com/misswenzi/gallery/main</a><br>原生方式有一个弊端就是，国内速度比较慢</li>
+<li><h5 id="cdn-加速方式"><a href="#cdn-加速方式" class="headerlink" title="cdn 加速方式"></a>cdn 加速方式</h5>格式为：<a href="https://cdn.jsdelivr.net/gh/[%E7%94%A8%E6%88%B7%E5%90%8D]/[%E4%BB%93%E5%BA%93%E5%90%8D]@[%E5%88%86%E6%94%AF%E5%90%8D]">https://cdn.jsdelivr.net/gh/[用户名]/[仓库名]@[分支名]</a><br>我的例子：<a href="https://cdn.jsdelivr.net/gh/misswenzi/gallery@main">https://cdn.jsdelivr.net/gh/misswenzi/gallery@main</a></li>
+</ol>
+</li>
+<li><h4 id="cdn-加速的优点是国内访问速度比较快"><a href="#cdn-加速的优点是国内访问速度比较快" class="headerlink" title="cdn 加速的优点是国内访问速度比较快"></a>cdn 加速的优点是国内访问速度比较快</h4></li>
+<li><h4 id="path-是我们的图片存储在仓库中的路径，比如我的是-blogs-x2F-pictures-x2F-（注意：pictures-后面的-“-x2F-“-要记得加上）Repo-是我们的仓库，比如我的是-misswenzi-x2F-gallery"><a href="#path-是我们的图片存储在仓库中的路径，比如我的是-blogs-x2F-pictures-x2F-（注意：pictures-后面的-“-x2F-“-要记得加上）Repo-是我们的仓库，比如我的是-misswenzi-x2F-gallery" class="headerlink" title="path 是我们的图片存储在仓库中的路径，比如我的是 blogs&#x2F;pictures&#x2F;（注意：pictures 后面的 “&#x2F;“ 要记得加上）Repo 是我们的仓库，比如我的是 misswenzi&#x2F;gallery"></a>path 是我们的图片存储在仓库中的路径，比如我的是 blogs&#x2F;pictures&#x2F;（注意：pictures 后面的 “&#x2F;“ 要记得加上）Repo 是我们的仓库，比如我的是 misswenzi&#x2F;gallery</h4></li>
+<li><h4 id="Token：即-GitHub-中获取的-Tokens"><a href="#Token：即-GitHub-中获取的-Tokens" class="headerlink" title="Token：即 GitHub 中获取的 Tokens"></a>Token：即 GitHub 中获取的 Tokens</h4></li>
+</ol>
+<h2 id="四、测试"><a href="#四、测试" class="headerlink" title="四、测试"></a>四、测试</h2><p>进入 vscode，新建一个 .md 文件，windows 下 【ctrl+alt+U】从剪贴板粘贴图片，【ctrl+alt+E】打开资源管理器，选择图片，如果上传成功，则搭建成功！</p>
+<p><img src="https://movejian.github.io/images/20220819/picgo8.png"></p>
+<p>此时，去 GitHub 对应的仓库下查看，可以看到上传成功的图片。</p>
+<p>在 vscode 中插入的图片会上传到 GitHub 的仓库中，如果删除了仓库里面的图片，那你的 Markdown 里面的图片链接就会失效。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/20220819100154.png" alt="20220819100154"></p>
+<p>首先不提好用不好用,反正我这样配置失败了,还请高人指点！</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+        <category>vscode</category>
+      </categories>
+      <tags>
+        <tag>技术</tag>
       </tags>
   </entry>
   <entry>
@@ -502,90 +502,96 @@
 <h3 id="大图拼接"><a href="#大图拼接" class="headerlink" title="大图拼接"></a>大图拼接</h3><p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/%E9%AD%94%E9%BE%99%E5%85%A8%E5%9B%BE.webp"></p>
 <h3 id="简易图解"><a href="#简易图解" class="headerlink" title="简易图解"></a>简易图解</h3><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310151382.jpg" style="zoom:50%;" />
 
+<h2 id="魔龙东郊到魔龙血域"><a href="#魔龙东郊到魔龙血域" class="headerlink" title="魔龙东郊到魔龙血域"></a>魔龙东郊到魔龙血域</h2><table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">魔龙东郊入口</td>
+<td align="center">471，375</td>
+<td align="center">魔龙东郊&gt;&gt;魔龙城</td>
+<td align="center">35，132</td>
+</tr>
+<tr>
+<td align="center">东郊&gt;&gt;东林间胜地</td>
+<td align="center">164，393</td>
+<td align="center">东林间胜地&gt;&gt;东郊</td>
+<td align="center">28，147</td>
+</tr>
+<tr>
+<td align="center">东林间&gt;&gt;魔龙旧寨</td>
+<td align="center">172，150</td>
+<td align="center">魔龙旧寨&gt;&gt;东林间</td>
+<td align="center">60，467</td>
+</tr>
+<tr>
+<td align="center">魔龙旧寨&gt;&gt;魔龙祭坛</td>
+<td align="center">165，57</td>
+<td align="center">魔龙祭坛&gt;&gt;魔龙旧寨</td>
+<td align="center">47，45</td>
+</tr>
+<tr>
+<td align="center">魔龙祭坛&gt;&gt;魔龙岭</td>
+<td align="center">173，170</td>
+<td align="center">魔龙岭&gt;&gt;魔龙祭坛</td>
+<td align="center">26，368</td>
+</tr>
+<tr>
+<td align="center">魔龙岭&gt;&gt;魔龙沼泽</td>
+<td align="center">258，366</td>
+<td align="center">魔龙沼泽&gt;&gt;魔龙岭</td>
+<td align="center">263，38</td>
+</tr>
+<tr>
+<td align="center">魔龙岭&gt;&gt;东魔龙关</td>
+<td align="center">249，36</td>
+<td align="center">东魔龙关&gt;&gt;魔龙岭</td>
+<td align="center">161，168</td>
+</tr>
+<tr>
+<td align="center">东魔龙关&gt;&gt;魔龙血域</td>
+<td align="center">26，37</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
 <h3 id="东郊走法"><a href="#东郊走法" class="headerlink" title="东郊走法"></a>东郊走法</h3><table>
 <thead>
 <tr>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
 </tr>
 </thead>
 <tbody><tr>
-<td>魔龙东郊入口</td>
-<td>471，375</td>
-<td>魔龙东郊&gt;&gt;魔龙城</td>
-<td>35，132</td>
+<td align="center">入口</td>
+<td align="center">460，66</td>
+<td align="center">魔龙西郊&gt;&gt;魔龙城</td>
+<td align="center">32，46</td>
 </tr>
 <tr>
-<td>东郊&gt;&gt;东林间胜地</td>
-<td>164，393</td>
-<td>东林间胜地&gt;&gt;东郊</td>
-<td>28，147</td>
+<td align="center">西郊&gt;&gt;西林间胜地</td>
+<td align="center">288，284</td>
+<td align="center">西林间胜地&gt;&gt;西郊</td>
+<td align="center">31，117</td>
 </tr>
 <tr>
-<td>东林间&gt;&gt;魔龙旧寨</td>
-<td>172，150</td>
-<td>魔龙旧寨&gt;&gt;东林间</td>
-<td>60，467</td>
+<td align="center">西郊&gt;&gt;魔龙旧寨</td>
+<td align="center">347，53</td>
+<td align="center">魔龙旧寨&gt;&gt;西郊</td>
+<td align="center">135，429</td>
 </tr>
 <tr>
-<td>魔龙旧寨&gt;&gt;魔龙祭坛</td>
-<td>165，57</td>
-<td>魔龙祭坛&gt;&gt;魔龙旧寨</td>
-<td>47，45</td>
-</tr>
-<tr>
-<td>魔龙祭坛&gt;&gt;魔龙岭</td>
-<td>173，170</td>
-<td>魔龙岭&gt;&gt;魔龙祭坛</td>
-<td>26，368</td>
-</tr>
-<tr>
-<td>魔龙岭&gt;&gt;魔龙沼泽</td>
-<td>258，366</td>
-<td>魔龙沼泽&gt;&gt;魔龙岭</td>
-<td>263，38</td>
-</tr>
-<tr>
-<td>魔龙岭&gt;&gt;东魔龙关</td>
-<td>249，36</td>
-<td>东魔龙关&gt;&gt;魔龙岭</td>
-<td>161，168</td>
-</tr>
-<tr>
-<td>东魔龙关&gt;&gt;魔龙血域</td>
-<td>26，37</td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-<h3 id="西郊走法"><a href="#西郊走法" class="headerlink" title="西郊走法"></a>西郊走法</h3><table>
-<thead>
-<tr>
-<th>入口</th>
-<th>460，66</th>
-<th>魔龙西郊&gt;&gt;魔龙城</th>
-<th>32，46</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>西郊&gt;&gt;西林间胜地</td>
-<td>288，284</td>
-<td>西林间胜地&gt;&gt;西郊</td>
-<td>31，117</td>
-</tr>
-<tr>
-<td>西郊&gt;&gt;魔龙旧寨</td>
-<td>347，53</td>
-<td>魔龙旧寨&gt;&gt;西郊</td>
-<td>135，429</td>
-</tr>
-<tr>
-<td>西林间&gt;&gt;魔龙沼泽</td>
-<td>369，140</td>
-<td>魔龙沼泽&gt;&gt;西林间</td>
-<td>33，264</td>
+<td align="center">西林间&gt;&gt;魔龙沼泽</td>
+<td align="center">369，140</td>
+<td align="center">魔龙沼泽&gt;&gt;西林间</td>
+<td align="center">33，264</td>
 </tr>
 </tbody></table>
 <p>魔龙血域走法：魔龙城（472，376）→魔龙东郊（162，390）→东林间胜地（169，148）→魔龙旧寨（161，55）→魔龙祭坛（170，173）→魔龙岭（250，41）→魔龙东关（30，35）→魔龙谷（40，64）→龙源血路（50，161）→魔龙血域。</p>
