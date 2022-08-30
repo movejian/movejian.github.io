@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-08-30T17:33:18.389Z</updated>
+  <updated>2022-08-30T17:58:45.351Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>热血传奇魔龙地图与简易图解</title>
+    <link href="http://example.com/2022/08/31/%E7%83%AD%E8%A1%80%E4%BC%A0%E5%A5%87%E9%AD%94%E9%BE%99%E5%9C%B0%E5%9B%BE%E4%B8%8E%E7%AE%80%E6%98%93%E5%9B%BE%E8%A7%A3/"/>
+    <id>http://example.com/2022/08/31/%E7%83%AD%E8%A1%80%E4%BC%A0%E5%A5%87%E9%AD%94%E9%BE%99%E5%9C%B0%E5%9B%BE%E4%B8%8E%E7%AE%80%E6%98%93%E5%9B%BE%E8%A7%A3/</id>
+    <published>2022-08-30T17:32:42.000Z</published>
+    <updated>2022-08-30T17:58:45.351Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;盟重老兵（325，325）处可以直接传送到魔龙城。 魔龙城的怪物有：魔龙血蛙、魔龙破甲兵、魔龙射手、魔龙教主等。&lt;/p&gt;
+&lt;p&gt;热血传奇每张主城地图都有一段传奇背景故事，而180版本更新的魔龙城地图就没有啥背景故事，后面出来的背景故事也是一些写手编写的各种版本。据说韩版里面魔龙城是上古比奇城，这也是为何传奇中魔龙城只有通过传送才能去的原因。如下图，魔龙城的外观跟比奇城的外观都差不多&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="游戏" scheme="http://example.com/categories/%E6%B8%B8%E6%88%8F/"/>
+    
+    
+    <category term="传奇" scheme="http://example.com/tags/%E4%BC%A0%E5%A5%87/"/>
+    
+    <category term="攻略" scheme="http://example.com/tags/%E6%94%BB%E7%95%A5/"/>
+    
+    <category term="魔龙" scheme="http://example.com/tags/%E9%AD%94%E9%BE%99/"/>
+    
+  </entry>
   
   <entry>
     <title>热血传奇幻境迷宫、屠龙殿、圣域地图走法图解</title>
