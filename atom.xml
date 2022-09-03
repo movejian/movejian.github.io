@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-08-30T18:18:54.265Z</updated>
+  <updated>2022-09-03T08:07:03.675Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>传奇内挂垃圾物品过滤</title>
+    <link href="http://example.com/2022/09/03/%E4%BC%A0%E5%A5%87%E5%86%85%E6%8C%82%E5%9E%83%E5%9C%BE%E7%89%A9%E5%93%81%E8%BF%87%E6%BB%A4/"/>
+    <id>http://example.com/2022/09/03/%E4%BC%A0%E5%A5%87%E5%86%85%E6%8C%82%E5%9E%83%E5%9C%BE%E7%89%A9%E5%93%81%E8%BF%87%E6%BB%A4/</id>
+    <published>2022-09-03T07:52:03.000Z</published>
+    <updated>2022-09-03T08:07:03.675Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt; 传奇内挂过滤垃圾。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/movejian/images/main/movejian/images202209031601159.png&quot; alt=&quot;image-20220903160139387&quot;&gt;&lt;/p&gt;
+&lt;p&gt;先打开传奇目录 &lt;code&gt;D:\传奇私服\Config &lt;/code&gt;   修改DAT档案文件，把下面内容复制粘贴进去保存即可：&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="游戏" scheme="http://example.com/categories/%E6%B8%B8%E6%88%8F/"/>
+    
+    <category term="传奇" scheme="http://example.com/categories/%E6%B8%B8%E6%88%8F/%E4%BC%A0%E5%A5%87/"/>
+    
+    
+    <category term="传奇" scheme="http://example.com/tags/%E4%BC%A0%E5%A5%87/"/>
+    
+    <category term="外挂" scheme="http://example.com/tags/%E5%A4%96%E6%8C%82/"/>
+    
+  </entry>
   
   <entry>
     <title>热血传奇魔龙地图与简易图解</title>
