@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-09-06T10:04:30.082Z</updated>
+  <updated>2022-09-08T11:35:32.161Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -21,11 +21,22 @@
     <link href="http://example.com/2022/09/06/Linux%E6%9F%A5%E7%9C%8B%E7%A1%AC%E4%BB%B6%E4%BF%A1%E6%81%AF%E4%B8%8E%E7%B3%BB%E7%BB%9F%E8%B5%84%E6%BA%90/"/>
     <id>http://example.com/2022/09/06/Linux%E6%9F%A5%E7%9C%8B%E7%A1%AC%E4%BB%B6%E4%BF%A1%E6%81%AF%E4%B8%8E%E7%B3%BB%E7%BB%9F%E8%B5%84%E6%BA%90/</id>
     <published>2022-09-06T10:04:30.000Z</published>
-    <updated>2022-09-06T10:04:30.082Z</updated>
+    <updated>2022-09-08T11:35:32.161Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;Linux下经常需要查看系统资源或硬件资源，与之对应的命令行也是非常多&lt;/p&gt;
+&lt;p&gt;本文将根据使用经验，将常见的查询方法总结罗列一遍以供参考&lt;/p&gt;
+&lt;p&gt;以下指令以Ubuntu1804、Cent7OS作为测试平台&lt;/p&gt;
+&lt;h2 id=&quot;1-系统资源&quot;&gt;&lt;a href=&quot;#1-系统资源&quot; class=&quot;headerlink&quot; title=&quot;1. 系统资源&quot;&gt;&lt;/a&gt;1. 系统资源&lt;/h2&gt;&lt;h3 id=&quot;1-1-Linux发行版与内核&quot;&gt;&lt;a href=&quot;#1-1-Linux发行版与内核&quot; class=&quot;headerlink&quot; title=&quot;1.1. Linux发行版与内核&quot;&gt;&lt;/a&gt;1.1. Linux发行版与内核&lt;/h3&gt;&lt;p&gt;&lt;code&gt;uname -r&lt;/code&gt;命令输出发行版与内核信息，大部分发行版基本均带有此命令，但输出中未必包含发行版全称信息&lt;/p&gt;</summary>
     
     
     
+    <category term="学习" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/"/>
     
+    <category term="Linux" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/Linux/"/>
+    
+    
+    <category term="Linux" scheme="http://example.com/tags/Linux/"/>
     
   </entry>
   

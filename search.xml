@@ -106,7 +106,200 @@
   <entry>
     <title>Linux查看硬件信息与系统资源</title>
     <url>/2022/09/06/Linux%E6%9F%A5%E7%9C%8B%E7%A1%AC%E4%BB%B6%E4%BF%A1%E6%81%AF%E4%B8%8E%E7%B3%BB%E7%BB%9F%E8%B5%84%E6%BA%90/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<p>Linux下经常需要查看系统资源或硬件资源，与之对应的命令行也是非常多</p>
+<p>本文将根据使用经验，将常见的查询方法总结罗列一遍以供参考</p>
+<p>以下指令以Ubuntu1804、Cent7OS作为测试平台</p>
+<h2 id="1-系统资源"><a href="#1-系统资源" class="headerlink" title="1. 系统资源"></a>1. 系统资源</h2><h3 id="1-1-Linux发行版与内核"><a href="#1-1-Linux发行版与内核" class="headerlink" title="1.1. Linux发行版与内核"></a>1.1. Linux发行版与内核</h3><p><code>uname -r</code>命令输出发行版与内核信息，大部分发行版基本均带有此命令，但输出中未必包含发行版全称信息</p>
+<span id="more"></span>
+<p>Cent7OS</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[chancel@localhost ~]$ uname -a</span><br><span class="line">Linux localhost.localdomain 3.10.0-1160.62.1.el7.x86_64 #1 SMP Tue Apr 5 16:57:59 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux</span><br></pre></td></tr></table></figure>
+
+<p>Ubuntu1804</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ uname -a</span><br><span class="line">Linux ubuntu1804 4.15.0-189-generic #200-Ubuntu SMP Wed Jun 22 19:53:37 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux</span><br></pre></td></tr></table></figure>
+
+<p><code>cat /proc/version</code>命令输出内核版本与编译的gcc版本</p>
+<p>Cent7OS</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[chancel@localhost ~]$ cat /proc/version </span><br><span class="line">Linux version 3.10.0-1160.62.1.el7.x86_64 (mockbuild@kbuilder.bsys.centos.org) (gcc version 4.8.5 20150623 (Red Hat 4.8.5-44) (GCC) ) #1 SMP Tue Apr 5 16:57:59 UTC 2022</span><br></pre></td></tr></table></figure>
+
+<p>Ubuntu1804</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ cat /proc/version</span><br><span class="line">Linux version 4.15.0-189-generic (buildd@lcy02-amd64-039) (gcc version 7.5.0 (Ubuntu 7.5.0-3ubuntu1~18.04)) #200-Ubuntu SMP Wed Jun 22 19:53:37 UTC 2022</span><br></pre></td></tr></table></figure>
+
+<p><code>lsb_release -a</code>命令输出发行版信息，但Cent7OS并不包含此命令</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ lsb_release -a</span><br><span class="line">No LSB modules are available.</span><br><span class="line">Distributor ID: Ubuntu</span><br><span class="line">Description:    Ubuntu 18.04.6 LTS</span><br><span class="line">Release:        18.04</span><br><span class="line">Codename:       bionic</span><br></pre></td></tr></table></figure>
+
+<p><code>cat /etc/redhat-release</code>命令是Redhat系列独有的</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[chancel@localhost ~]$ cat /etc/redhat-release</span><br><span class="line">CentOS Linux release 7.9.2009 (Core)</span><br></pre></td></tr></table></figure>
+
+<p><code>cat /etc/*release</code>命令在大部分Linux发行版中都可以使用，是最方便使用的命令</p>
+<p>以Cent7OS为例</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[chancel@localhost ~]$ cat /etc/*release</span><br><span class="line">CentOS Linux release 7.9.2009 (Core)</span><br><span class="line">NAME=&quot;CentOS Linux&quot;</span><br><span class="line">VERSION=&quot;7 (Core)&quot;</span><br><span class="line">ID=&quot;centos&quot;</span><br><span class="line">ID_LIKE=&quot;rhel fedora&quot;</span><br><span class="line">VERSION_ID=&quot;7&quot;</span><br><span class="line">PRETTY_NAME=&quot;CentOS Linux 7 (Core)&quot;</span><br><span class="line">...</span><br><span class="line">CentOS Linux release 7.9.2009 (Core)</span><br><span class="line">CentOS Linux release 7.9.2009 (Core)</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-CPU-x2F-内存占用查看"><a href="#1-2-CPU-x2F-内存占用查看" class="headerlink" title="1.2. CPU&#x2F;内存占用查看"></a>1.2. CPU&#x2F;内存占用查看</h3><p><code>top</code>指令是最常见用于检测CPU占用情况的指令，使用效果如下</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209081929349.png" alt="img"></p>
+<p>此时按<code>P</code>以CPU占用排序，按<code>M</code>以内存占用排序，按<code>I</code>隐藏所有空闲进程，按<code>S</code>以运行时间排序</p>
+<p><code>htop</code>指令则是比<code>top</code>更简洁的显示程序，在部分发行版上需要自行安装，使用效果如下</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209081930961.png" alt="img"></p>
+<p>相较于<code>top</code>的使用，<code>htop</code>界面更清晰易懂，使用方法在界面均有提示，对用户更为友好</p>
+<p>通常情况下，<code>htop</code>需要自行安装</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># Ubuntu</span><br><span class="line">sudo apt install htop</span><br><span class="line"></span><br><span class="line"># Cent</span><br><span class="line">sudo yum install htop</span><br></pre></td></tr></table></figure>
+
+<p><code>glances</code>则是比<code>htop</code>更进一步的资源查看器</p>
+<p>不但包括常见的CPU、内存，甚至还包括当前网速以及硬件温度数据，使用效果如下</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209081931536.png" alt="img"></p>
+<p>通常情况下，<code>glances</code>需要自行安装，由于是使用Python语言开发的，所以资源占用也较大</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># Ubuntu</span><br><span class="line">sudo apt install glances</span><br><span class="line"></span><br><span class="line"># Cent</span><br><span class="line">sudo yum install glances</span><br></pre></td></tr></table></figure>
+
+<p>以上3个是我比较常用的系统资源占用查询工具，大部分情况下都非常够用</p>
+<p>其他的可能还包括<code>nmon</code>、<code>vmstat</code>等，若有兴趣也可自行查询</p>
+<h3 id="1-3-磁盘资源管理"><a href="#1-3-磁盘资源管理" class="headerlink" title="1.3. 磁盘资源管理"></a>1.3. 磁盘资源管理</h3><p><code>df -h</code>通常用于查询硬盘资源使用情况（-h代表使用以1024为单位且易读的方式显示）</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ df -h</span><br><span class="line">Filesystem      Size  Used Avail Use% Mounted on</span><br><span class="line">udev            1.9G     0  1.9G   0% /dev</span><br><span class="line">tmpfs           395M  1.3M  394M   1% /run</span><br><span class="line">/dev/vda2       126G   57G   63G  48% /</span><br><span class="line">tmpfs           2.0G     0  2.0G   0% /dev/shm</span><br><span class="line">tmpfs           5.0M     0  5.0M   0% /run/lock</span><br><span class="line">tmpfs           2.0G     0  2.0G   0% /sys/fs/cgroup</span><br><span class="line">/dev/loop0      114M  114M     0 100% /snap/core/13425</span><br><span class="line">/dev/loop1      114M  114M     0 100% /snap/core/13308</span><br><span class="line">tmpfs           395M     0  395M   0% /run/user/1000</span><br></pre></td></tr></table></figure>
+
+<p><code>fdisk -l</code>则是用于查询物理分区情况</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ sudo fdisk -l</span><br><span class="line">Disk /dev/loop0: 114 MiB, 119525376 bytes, 233448 sectors</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disk /dev/loop1: 113.9 MiB, 119418880 bytes, 233240 sectors</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disk /dev/vda: 128 GiB, 137438953472 bytes, 268435456 sectors</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disklabel type: gpt</span><br><span class="line">Disk identifier: 376C8DD5-F786-4C39-9F4E-1461BE1FA269</span><br><span class="line"></span><br><span class="line">Device     Start       End   Sectors  Size Type</span><br><span class="line">/dev/vda1   2048      4095      2048    1M BIOS boot</span><br><span class="line">/dev/vda2   4096 268433407 268429312  128G Linux filesystem</span><br></pre></td></tr></table></figure>
+
+<p>当然，<code>fdisk</code>命令本身主要还是用于管理硬盘分区，其管理过程是对话式的，类似于下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[chancel@localhost ~]$ sudo fdisk /dev/vda</span><br><span class="line">[sudo] password for chancel: </span><br><span class="line">Welcome to fdisk (util-linux 2.23.2).</span><br><span class="line"></span><br><span class="line">Changes will remain in memory only, until you decide to write them.</span><br><span class="line">Be careful before using the write command.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Command (m for help):</span><br></pre></td></tr></table></figure>
+
+<p>输入<code>m</code>可获得指令帮助，创建过程非常简单易懂</p>
+<p><code>mkfs.[format]</code>命令用于格式化硬盘，<code>[format]</code>代表硬盘格式，常见的格式如下</p>
+<ul>
+<li>mkfs.ext2</li>
+<li>mkfs.ext3</li>
+<li>mkfs.ext4</li>
+<li>mkfs.ntfs</li>
+<li>mkfs.xfs</li>
+</ul>
+<p>在分区成功后，通常需要格式化，使用<code>mkfs.[format] /dev/[device_name]</code>进行格式化</p>
+<h3 id="1-4-网络信息管理"><a href="#1-4-网络信息管理" class="headerlink" title="1.4. 网络信息管理"></a>1.4. 网络信息管理</h3><p><code>ip</code>是常用的网络信息查看工具，是后期Linux用于替换<code>ipconfig</code>的工具</p>
+<p>常见的用法</p>
+<ul>
+<li><code>ip addr show</code>显示网路ip信息（缩写<code>ip a</code>）</li>
+<li><code>ip link show</code>显示网络接口信息（缩写<code>ip l</code>）</li>
+<li><code>ip route list</code>显示网路路由信息（缩写<code>ip r</code>）</li>
+<li><code>ip neigh show</code>显示网路ARP表信息（缩写<code>ip n</code>）</li>
+</ul>
+<p><code>ip addr</code>通常用于设置网卡的网络信息，如</p>
+<ul>
+<li><code>ip addr &#123;add|change|del&#125; 172.16.0.1/24 dev eth0</code>添加&#x2F;更改&#x2F;删除网卡ip</li>
+</ul>
+<p><code>ip link</code>通常用于控制网卡的行为，如</p>
+<ul>
+<li><code>ip link set eth0 &#123;up/down&#125;</code>用于开启关闭网卡</li>
+<li><code>ip link set eth0 promisc &#123;on/off&#125;</code>用于设置网卡混杂模式开启关闭</li>
+</ul>
+<p><code>ip route</code>通常用于设置路由信息，如</p>
+<ul>
+<li><code>ip route &#123;add/del&#125; [ip_address] via [gateway]</code>添加&#x2F;删除网关静态路由</li>
+<li><code>ip route &#123;add/del&#125; [ip_address] dev [interface]</code>添加&#x2F;删除接口静态路由</li>
+</ul>
+<p><code>ip neigh</code>通常用于王路平arp表（替换老旧的<code>arp</code>命令），如</p>
+<ul>
+<li><code>ip neigh &#123;add/dev&#125; [ip_address] dev [interface]</code>添加&#x2F;删除一个arp映射</li>
+</ul>
+<p>比较常用的是<code>ip addr</code>与<code>ip route</code>2个参数</p>
+<p>前者用于查询网络ip信息，其输出如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">~ ➤ ip a</span><br><span class="line">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000</span><br><span class="line">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00</span><br><span class="line">    inet 127.0.0.1/8 scope host lo</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 ::1/128 scope host </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc fq_codel state UP group default qlen 1000</span><br><span class="line">    link/ether 00:16:de:23:94:48 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 209.141.42.231/24 brd 209.141.42.255 scope global dynamic eth0</span><br><span class="line">       valid_lft 2591984sec preferred_lft 2591984sec</span><br><span class="line">    inet6 fe80::216:deff:fe23:9448/64 scope link </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br></pre></td></tr></table></figure>
+
+<p>后者常用于规划路由请求，如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 设置路由走网关172.16.0.1，得到公网IP为4.4.4.4</span><br><span class="line">➜  ~ ip route add 104.160.18.230 via 172.16.0.1</span><br><span class="line">➜  ~ curl https://api.chancel.me/rest/api/v1/ip</span><br><span class="line">&#123;&quot;status&quot;:1,&quot;msg&quot;:&quot;Query success&quot;,&quot;data&quot;:&#123;&quot;ip&quot;:&quot;4.4.4.4&quot;&#125;&#125;</span><br><span class="line"></span><br><span class="line"># 设置路由走网关192.168.1.1，得到公网IP为6.6.6.6</span><br><span class="line">➜  ~ ip route del 104.160.18.230 via 192.168.1.1</span><br><span class="line">➜  ~ curl https://api.chancel.me/rest/api/v1/ip</span><br><span class="line">&#123;&quot;status&quot;:1,&quot;msg&quot;:&quot;Query success&quot;,&quot;data&quot;:&#123;&quot;ip&quot;:&quot;6.6.6.6&quot;&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-硬件资源"><a href="#2-硬件资源" class="headerlink" title="2. 硬件资源"></a>2. 硬件资源</h2><h3 id="2-1-CPU信息"><a href="#2-1-CPU信息" class="headerlink" title="2.1. CPU信息"></a>2.1. CPU信息</h3><p><code>lscpu</code>和<code>cat /proc/cpuinfo</code>都可以输出CPU信息，如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ lscpu   </span><br><span class="line">Architecture:            x86_64</span><br><span class="line">  CPU op-mode(s):        32-bit, 64-bit</span><br><span class="line">  Address sizes:         48 bits physical, 48 bits virtual</span><br><span class="line">  ...</span><br><span class="line">Vulnerabilities:         </span><br><span class="line">  ...</span><br><span class="line">  Tsx async abort:       Not affected</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-内存信息"><a href="#2-2-内存信息" class="headerlink" title="2.2. 内存信息"></a>2.2. 内存信息</h3><p><code>lsmem</code>和<code>cat /proc/meminfo</code>都可以输出内存信息，如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ lsmem       </span><br><span class="line">RANGE                                 SIZE  STATE REMOVABLE  BLOCK</span><br><span class="line">0x0000000000000000-0x00000000bfffffff   3G online       yes   0-23</span><br><span class="line">0x0000000100000000-0x0000000f3fffffff  57G online       yes 32-487</span><br><span class="line"></span><br><span class="line">Memory block size:       128M</span><br><span class="line">Total online memory:      60G</span><br><span class="line">Total offline memory:      0B</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-硬盘信息"><a href="#2-3-硬盘信息" class="headerlink" title="2.3. 硬盘信息"></a>2.3. 硬盘信息</h3><p><code>lsblk</code>用于查看硬盘信息，如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ lsblk       </span><br><span class="line">NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS</span><br><span class="line">loop0         7:0    0     4K  1 loop /var/lib/snapd/snap/bare/5</span><br><span class="line">...</span><br><span class="line">loop8         7:8    0    47M  1 loop /var/lib/snapd/snap/snapd/16292</span><br><span class="line">sda           8:0    0 476.9G  0 disk </span><br><span class="line">└─sda1        8:1    0 476.9G  0 part /mnt/SDA</span><br><span class="line">nvme0n1     259:0    0 931.5G  0 disk </span><br><span class="line">├─nvme0n1p1 259:1    0   300M  0 part /boot/efi</span><br><span class="line">├─nvme0n1p2 259:2    0 866.5G  0 part /</span><br><span class="line">└─nvme0n1p3 259:3    0  64.7G  0 part [SWAP]</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-USB信息"><a href="#2-4-USB信息" class="headerlink" title="2.4. USB信息"></a>2.4. USB信息</h3><p><code>lsusb</code>用于查看USB接口信息，如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ lsusb -t</span><br><span class="line">/:  Bus 04.Port 1: Dev 1, Class=root_hub, Driver=xhci_hcd/2p, 10000M</span><br><span class="line">/:  Bus 03.Port 1: Dev 1, Class=root_hub, Driver=xhci_hcd/4p, 480M</span><br><span class="line">    |__ Port 1: Dev 2, If 0, Class=Human Interface Device, Driver=usbhid, 12M</span><br><span class="line">    |__ Port 1: Dev 2, If 1, Class=Human Interface Device, Driver=usbhid, 12M</span><br><span class="line">    |__ Port 2: Dev 3, If 0, Class=Hub, Driver=hub/4p, 480M</span><br><span class="line">        |__ Port 2: Dev 4, If 0, Class=Human Interface Device, Driver=usbhid, 12M</span><br><span class="line">        |__ Port 2: Dev 4, If 1, Class=Human Interface Device, Driver=usbhid, 12M</span><br><span class="line">        |__ Port 2: Dev 4, If 2, Class=Human Interface Device, Driver=usbhid, 12M</span><br><span class="line">/:  Bus 02.Port 1: Dev 1, Class=root_hub, Driver=xhci_hcd/2p, 10000M</span><br><span class="line">/:  Bus 01.Port 1: Dev 1, Class=root_hub, Driver=xhci_hcd/4p, 480M</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-5-lspci"><a href="#2-5-lspci" class="headerlink" title="2.5. lspci"></a>2.5. lspci</h3><p><code>lspci</code>用于提取主板上所有的硬件信息，如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ lspci</span><br><span class="line">00:00.0 Host bridge: Advanced Micro Devices, Inc. [AMD] Renoir/Cezanne Root Complex</span><br><span class="line">00:00.2 IOMMU: Advanced Micro Devices, Inc. [AMD] Renoir/Cezanne IOMMU</span><br><span class="line">...</span><br><span class="line">03:00.6 Audio device: Advanced Micro Devices, Inc. [AMD] Family 17h/19h HD Audio Controller</span><br><span class="line">04:00.0 SATA controller: Advanced Micro Devices, Inc. [AMD] FCH SATA Controller [AHCI mode] (rev 81)</span><br></pre></td></tr></table></figure>
+
+<p>如果需要更详细的pci信息，可以使用<code>lspci -v</code>或<code>lspci -vv</code></p>
+<p><code>lspci</code>通常配合<code>grep</code>用于筛查硬件信息，如<code>lspci | grep -i eth</code>可查看网络接口情况</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ lspci | grep -i eth</span><br><span class="line">02:00.0 Ethernet controller: Realtek Semiconductor Co., Ltd. RTL8111/8168/8411 PCI Express Gigabit Ethernet Controller (rev 15)</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-高级命令"><a href="#3-高级命令" class="headerlink" title="3. 高级命令"></a>3. 高级命令</h2><p>以下命令相较于上面的命令来说，能更加全面的显示系统资源与硬件信息</p>
+<h3 id="3-1-netstat"><a href="#3-1-netstat" class="headerlink" title="3.1. netstat"></a>3.1. netstat</h3><p><code>netstat</code>用于监控tcp&#x2F;ip连接信息，常用于查找某个端口的占用程序</p>
+<p>如<code>netstat -anp | grep 8384</code>便可以查询出占用8384端口的程序PID</p>
+<p><code>-a</code>代表列出所有，<code>-n</code>代表禁用反向域名解析，<code>-p</code>代表打印程序PID</p>
+<p>效果如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ netstat -atp | grep 8384</span><br><span class="line">(Not all processes could be identified, non-owned process info</span><br><span class="line"> will not be shown, you would have to be root to see it all.)</span><br><span class="line">tcp        0      0 localhost:8384          0.0.0.0:*               LISTEN      817/syncthing</span><br></pre></td></tr></table></figure>
+
+<p>使用<code>-l</code>参数，可以显示所有正在监听端口的服务程序，如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ netstat -tnlp</span><br><span class="line">(Not all processes could be identified, non-owned process info</span><br><span class="line"> will not be shown, you would have to be root to see it all.)</span><br><span class="line">Active Internet connections (only servers)</span><br><span class="line">Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    </span><br><span class="line">tcp        0      0 127.0.0.1:8384          0.0.0.0:*               LISTEN      817/syncthing       </span><br><span class="line">...   </span><br><span class="line">tcp6       0      0 :::42103                :::*                    LISTEN      796/client_linux_am</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注：<code>-p</code>参数打印出PID，但ROOT用户运行的程序普通用户无法探查其PID，故看情况需要决定是否使用<code>sudo</code></p>
+</blockquote>
+<p><code>netstat</code>也可打印网络接口信息，如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ netstat -ie</span><br><span class="line">Kernel Interface table</span><br><span class="line">enp2s0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500</span><br><span class="line">        inet 192.168.4.12  netmask 255.255.240.0  broadcast 192.168.15.255</span><br><span class="line">        inet6 fd1c:b796:b00f:3f00:28a8:42ce:82e2:eda1  prefixlen 64  scopeid 0x0&lt;global&gt;</span><br><span class="line">        inet6 fe80::fea6:9f63:51a6:3dc0  prefixlen 64  scopeid 0x20&lt;link&gt;</span><br><span class="line">        inet6 240e:47c:630:64d9:b23c:f504:1008:88df  prefixlen 64  scopeid 0x0&lt;global&gt;</span><br><span class="line">        ether 5a:bc:da:6d:f1:09  txqueuelen 1000  (Ethernet)</span><br><span class="line">        RX packets 4480503  bytes 2392967850 (2.2 GiB)</span><br><span class="line">        RX errors 0  dropped 1093  overruns 0  frame 0</span><br><span class="line">        TX packets 2206930  bytes 246464482 (235.0 MiB)</span><br><span class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span><br><span class="line"></span><br><span class="line">lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536</span><br><span class="line">        inet 127.0.0.1  netmask 255.0.0.0</span><br><span class="line">        inet6 ::1  prefixlen 128  scopeid 0x10&lt;host&gt;</span><br><span class="line">        loop  txqueuelen 1000  (Local Loopback)</span><br><span class="line">        RX packets 231260  bytes 482760756 (460.3 MiB)</span><br><span class="line">        RX errors 0  dropped 0  overruns 0  frame 0</span><br><span class="line">        TX packets 231260  bytes 482760756 (460.3 MiB)</span><br><span class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span><br></pre></td></tr></table></figure>
+
+<p><code>netstat</code>具备非常多的网络高级操作功能，若有兴趣，可参考<code>man netstat</code>进行学习</p>
+<h3 id="3-2-lsof"><a href="#3-2-lsof" class="headerlink" title="3.2. lsof"></a>3.2. lsof</h3><p>在Linux中，一切皆是文件</p>
+<p><code>lsof</code>(list open files)是一个列出当前操作系统打开文件的工具，所以<code>lsof</code>可以做到非常多的事情</p>
+<p>直接使用<code>lsof</code>会显示当前系统所有正打开的文件，由于长时间运行的操作系统拥有多个进程，单纯使用<code>lsof</code>的操作较少</p>
+<p><code>lsof</code>常用于查询资源占用情况，如</p>
+<ul>
+<li><code>lsof -c syncthing</code>显示进程syncthing正在使用的资源</li>
+<li><code>lsof -c -p 817</code>显示PID为817的进程正在使用的资源</li>
+<li><code>lsof +d /tmp</code>显示正在使用<code>/tmp</code>目录的进程列表</li>
+<li><code>lsof -i :8384</code>显示正在使用端口8384的进程</li>
+</ul>
+<p><code>lsof</code>适用场景非常广泛，如</p>
+<ul>
+<li>无法卸载文件系统时显示<code>/mnt/sda target is busy</code>，可以使用<code>lsof /mnt/sda</code>查看是什么进程正在占用目录</li>
+<li>无法启动监听端口8080程序时，可以使用<code>lsof -i :8080</code>查看是什么进程占用了端口8080</li>
+<li>…</li>
+</ul>
+<h3 id="3-3-lshw"><a href="#3-3-lshw" class="headerlink" title="3.3. lshw"></a>3.3. lshw</h3><p><code>lshw</code>命令常用于输出机器配置摘要，如</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">lshw -html &gt; my-hardware.html</span><br></pre></td></tr></table></figure>
+
+<p>除了html报告可选外，还有<code>-json</code>、<code>-xml</code>等格式可选</p>
+<p><code>-short</code>参数查看简略报告，如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ sudo lshw -short</span><br><span class="line">H/W path              Device          Class       Description</span><br><span class="line">=============================================================</span><br><span class="line">                                      system      To Be Filled By O.E.M. (To Be Filled By O.E.M.)</span><br><span class="line">/0                                    bus         X300M-STX</span><br><span class="line">...</span><br><span class="line">/0/4                                  system      Motherboard registers</span><br><span class="line">/0/5                                  system      Motherboard registers</span><br></pre></td></tr></table></figure>
+
+<p><code>-class</code>参数可指定查看部分硬件信息，如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ sudo lshw -class cpu -class disk</span><br><span class="line">  *-cpu                     </span><br><span class="line">       description: CPU</span><br><span class="line">       product: AMD Ryzen 7 PRO 4750G with Radeon Graphics</span><br><span class="line">       vendor: Advanced Micro Devices [AMD]</span><br><span class="line">       ...</span><br><span class="line">       sectorsize=512 wwid=eui.0025385211918242</span><br><span class="line">  *-disk</span><br><span class="line">       description: ATA Disk</span><br><span class="line">       ...</span><br><span class="line">       logicalsectorsize=512 sectorsize=512</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-4-inxi（推荐）"><a href="#3-4-inxi（推荐）" class="headerlink" title="3.4. inxi（推荐）"></a>3.4. inxi（推荐）</h3><p><code>inxi</code>用于获取所有硬件与系统信息，如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ inxi</span><br><span class="line">CPU: 8-core AMD Ryzen 7 PRO 4750G with Radeon Graphics (-MT MCP-)</span><br><span class="line">speed/min/max: 1594/1400/4454 MHz Kernel: 5.19.0-1-MANJARO x86_64 Up: 6h 43m</span><br><span class="line">Mem: 11918.5/60152.7 MiB (19.8%) Storage: 1.38 TiB (22.2% used) Procs: 416</span><br><span class="line">Shell: Zsh inxi: 3.3.19</span><br></pre></td></tr></table></figure>
+
+<p><code>-M</code>参数可用于获取机器硬件品牌信息</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ inxi -M</span><br><span class="line">Machine:</span><br><span class="line">  Type: Desktop Mobo: ASRock model: X300M-STX serial: &lt;superuser required&gt;</span><br><span class="line">    UEFI: American Megatrends LLC. v: P1.70 date: 07/01/2021</span><br></pre></td></tr></table></figure>
+
+<p>获取单个硬件有以下参数</p>
+<ul>
+<li><code>-C</code>CPU信息</li>
+<li><code>-A</code>声卡信息</li>
+<li><code>-N</code>网卡信息</li>
+<li><code>-D</code>硬盘信息</li>
+<li><code>-s</code>传感器温度与风扇转速</li>
+</ul>
+<p>获取系统资源信息有以下参数</p>
+<ul>
+<li><code>-p</code>硬盘分区信息</li>
+<li><code>-I</code>进程数以及开机时间等信息</li>
+<li><code>-t</code>显示5个最占用CPU&#x2F;内存的应用（使用<code>cm10</code>可修改成前10个）</li>
+<li><code>-n</code>网络接口信息</li>
+<li><code>-r</code>软件仓库信息</li>
+</ul>
+<p>同样<code>inxi</code>也支持输出机器配置报告</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ inxi -b</span><br><span class="line">System:</span><br><span class="line">  Host: KDE-Manjaro-64G Kernel: 5.19.0-1-MANJARO arch: x86_64 bits: 64</span><br><span class="line">    ...</span><br><span class="line">  Shell: Zsh inxi: 3.3.19</span><br></pre></td></tr></table></figure>
+
+<p>下面是比较全面的输出机器硬件与软件信息</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ inxi -Fza           </span><br><span class="line">System:</span><br><span class="line">  Kernel: 5.19.0-1-MANJARO arch: x86_64 bits: 64 compiler: gcc v: 12.1.0</span><br><span class="line">    parameters: BOOT_IMAGE=/boot/vmlinuz-5.19-x86_64</span><br><span class="line">    root=UUID=2ddecb6a-da82-48f6-9f5a-d810b32d623b rw quiet apparmor=1</span><br><span class="line">    security=apparmor resume=UUID=406e14e5-7ca3-4959-bb61-8bf9158da6f9</span><br><span class="line">    udev.log_priority=3</span><br><span class="line">  Desktop: KDE Plasma v: 5.24.6 tk: Qt v: 5.15.5 wm: kwin_x11 vt: 1</span><br><span class="line">    dm: SDDM Distro: Manjaro Linux base: Arch Linux</span><br><span class="line">Machine:</span><br><span class="line">  Type: Desktop Mobo: ASRock model: X300M-STX serial: &lt;superuser required&gt;</span><br><span class="line">    UEFI: American Megatrends LLC. v: P1.70 date: 07/01/2021</span><br><span class="line">CPU:</span><br><span class="line">  Info: model: AMD Ryzen 7 PRO 4750G with Radeon Graphics bits: 64</span><br><span class="line">...</span><br><span class="line">Info:</span><br><span class="line">  Processes: 416 Uptime: 6h 52m wakeups: 0 Memory: 58.74 GiB</span><br><span class="line">  used: 11.55 GiB (19.7%) Init: systemd v: 251 default: graphical</span><br><span class="line">  tool: systemctl Compilers: gcc: 12.1.0 clang: 14.0.6 Packages: 1707</span><br><span class="line">  pacman: 1701 lib: 372 flatpak: 0 snap: 6 Shell: Zsh v: 5.9</span><br><span class="line">  running-in: konsole inxi: 3.3.19</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>学习</category>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
   </entry>
   <entry>
     <title>Hexo迁移备份</title>
@@ -186,6 +379,60 @@
       </tags>
   </entry>
   <entry>
+    <title>Linux系统无线网卡配置</title>
+    <url>/2019/12/16/Linux%E7%B3%BB%E7%BB%9F%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h2 id="无线网卡配置"><a href="#无线网卡配置" class="headerlink" title="无线网卡配置"></a>无线网卡配置</h2><p>本文介绍在Linux 命令行界面中手动配置无线网卡的方法。目前流行的多数发行版都支持用图形界面的<code>network- manager</code>方便地进行配置，而无需使用本文所介绍的原始方法。</p>
+<p>下面介绍使用<code>iwconfig</code>和<code>ifconfig</code>等命令在命令行状态下配置无线网络。前题是无线网卡驱动已经正确安装，并被系统正确识别。</p>
+<span id="more"></span>
+<h2 id="大体思路"><a href="#大体思路" class="headerlink" title="大体思路"></a>大体思路</h2><p>工作的大体思路如下：</p>
+<ol>
+<li>用<code>iwconfig</code>开启无线网卡的电源，并查找区域内的无线网络</li>
+<li>连接到相应的无线网络</li>
+<li>通过<code>ifconfig</code>启用无线网卡，并获取IP（如果使用DHCP的话）</li>
+</ol>
+<h2 id="具体过程"><a href="#具体过程" class="headerlink" title="具体过程"></a>具体过程</h2><ol>
+<li>打开无线网卡电源</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 txpower on</span><br></pre></td></tr></table></figure>
+<h4 id="无线网络的信号灯应该亮了。"><a href="#无线网络的信号灯应该亮了。" class="headerlink" title="无线网络的信号灯应该亮了。"></a>无线网络的信号灯应该亮了。</h4><ol start="2">
+<li>列出区域内的无线网络<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwlist wlan0 scan</span><br></pre></td></tr></table></figure></li>
+<li>假设要连接到网络MyHome（即essid为MyHome的网络），那么输入命令</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 essid <span class="string">&quot;MyHome&quot;</span> </span><br></pre></td></tr></table></figure>
+<p><em>#如果网络是加密的，密码是0123456789，那么就输入命令#</em></p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 essid <span class="string">&quot;MyHome&quot;</span> key <span class="number">0123</span><span class="literal">-4567-89</span></span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>如果正常的话，输入</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br></pre></td></tr></table></figure>
+<h4 id="就可以看到连接正常的各项参数了。"><a href="#就可以看到连接正常的各项参数了。" class="headerlink" title="就可以看到连接正常的各项参数了。"></a>就可以看到连接正常的各项参数了。</h4><ol start="5">
+<li>启用无线网卡</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ifconfig wlan0 up</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>如果是用DHCP获取IP的，那么用dhclient 或dhcpcd获取ip</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">dhcpcd wlan0</span><br></pre></td></tr></table></figure>
+
+<p>或</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">dhclient wlan0</span><br></pre></td></tr></table></figure>
+
+<ol start="7">
+<li>现在无线网卡应该可以正常使用了。</li>
+</ol>
+<h3 id="PS"><a href="#PS" class="headerlink" title="PS:"></a>PS:</h3><p>   如果现在还不能联网。那么点击网络图标。选择链接到隐藏的无线网络。输入找到的网络的名字。<br>      图形化的网络管理程序是<code>System-&gt;Preferences-&gt;Network Connections</code>。打开程序后，点击无线网络项目，点击add增加一个新的无线网络。  给出任意的<code>Connection Name</code>。<code>SSID</code>中输入无限网络的名字。<code>wireless security</code>中选择一种合适的加密类型。key中输入无限网络的密码。 </p>
+<p>   其他字段都不修改。 执行后，应该能够链接无限网络。  可以使用<code>iwconfig wlan0</code>命令查看是否正确连接无线网络。</p>
+<h6 id="未正确链接无线网络的输出："><a href="#未正确链接无线网络的输出：" class="headerlink" title="未正确链接无线网络的输出："></a>未正确链接无线网络的输出：</h6><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br><span class="line">wlan0     IEEE <span class="number">802.11</span>abg  ESSID:off/any </span><br><span class="line">          Mode:Managed  Access Point: Not<span class="literal">-Associated</span>   Tx<span class="literal">-Power</span>=<span class="number">0</span> dBm  </span><br><span class="line">          Retry  long limit:<span class="number">7</span>   RTS thr:off   Fragment thr:off</span><br><span class="line">          Power Management:off</span><br></pre></td></tr></table></figure>
+
+<h6 id="正确链接无线网络后的输出："><a href="#正确链接无线网络后的输出：" class="headerlink" title="正确链接无线网络后的输出："></a>正确链接无线网络后的输出：</h6><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br><span class="line">wlan0     IEEE <span class="number">802.11</span>abg  ESSID:<span class="string">&quot;MyHome&quot;</span> </span><br><span class="line">          Mode:Managed  Frequency:<span class="number">2.437</span> GHz  Access Point: <span class="number">00</span>:<span class="number">26</span>:DS:<span class="number">43</span>:<span class="number">1</span>A:A8  </span><br><span class="line">          Bit Rate=<span class="number">54</span> Mb/s   Tx<span class="literal">-Power</span>=<span class="number">0</span> dBm  </span><br><span class="line">          Retry  long limit:<span class="number">7</span>   RTS thr:off   Fragment thr:off</span><br><span class="line">          Power Management:off</span><br><span class="line">          Link Quality=<span class="number">65</span>/<span class="number">70</span>  Signal level=<span class="literal">-45</span> dBm </span><br><span class="line">          Rx invalid nwid:<span class="number">0</span>  Rx invalid crypt:<span class="number">0</span>  Rx invalid frag:<span class="number">0</span></span><br><span class="line">          Tx excessive retries:<span class="number">0</span>  Invalid misc:<span class="number">0</span>   Missed beacon:<span class="number">0</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>Linux</tag>
+        <tag>无线网卡</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hello World</title>
     <url>/2017/08/10/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
@@ -256,60 +503,6 @@
 ]]></content>
       <tags>
         <tag>命令</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux系统无线网卡配置</title>
-    <url>/2019/12/16/Linux%E7%B3%BB%E7%BB%9F%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<h2 id="无线网卡配置"><a href="#无线网卡配置" class="headerlink" title="无线网卡配置"></a>无线网卡配置</h2><p>本文介绍在Linux 命令行界面中手动配置无线网卡的方法。目前流行的多数发行版都支持用图形界面的<code>network- manager</code>方便地进行配置，而无需使用本文所介绍的原始方法。</p>
-<p>下面介绍使用<code>iwconfig</code>和<code>ifconfig</code>等命令在命令行状态下配置无线网络。前题是无线网卡驱动已经正确安装，并被系统正确识别。</p>
-<span id="more"></span>
-<h2 id="大体思路"><a href="#大体思路" class="headerlink" title="大体思路"></a>大体思路</h2><p>工作的大体思路如下：</p>
-<ol>
-<li>用<code>iwconfig</code>开启无线网卡的电源，并查找区域内的无线网络</li>
-<li>连接到相应的无线网络</li>
-<li>通过<code>ifconfig</code>启用无线网卡，并获取IP（如果使用DHCP的话）</li>
-</ol>
-<h2 id="具体过程"><a href="#具体过程" class="headerlink" title="具体过程"></a>具体过程</h2><ol>
-<li>打开无线网卡电源</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 txpower on</span><br></pre></td></tr></table></figure>
-<h4 id="无线网络的信号灯应该亮了。"><a href="#无线网络的信号灯应该亮了。" class="headerlink" title="无线网络的信号灯应该亮了。"></a>无线网络的信号灯应该亮了。</h4><ol start="2">
-<li>列出区域内的无线网络<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwlist wlan0 scan</span><br></pre></td></tr></table></figure></li>
-<li>假设要连接到网络MyHome（即essid为MyHome的网络），那么输入命令</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 essid <span class="string">&quot;MyHome&quot;</span> </span><br></pre></td></tr></table></figure>
-<p><em>#如果网络是加密的，密码是0123456789，那么就输入命令#</em></p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 essid <span class="string">&quot;MyHome&quot;</span> key <span class="number">0123</span><span class="literal">-4567-89</span></span><br></pre></td></tr></table></figure>
-<ol start="4">
-<li>如果正常的话，输入</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br></pre></td></tr></table></figure>
-<h4 id="就可以看到连接正常的各项参数了。"><a href="#就可以看到连接正常的各项参数了。" class="headerlink" title="就可以看到连接正常的各项参数了。"></a>就可以看到连接正常的各项参数了。</h4><ol start="5">
-<li>启用无线网卡</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ifconfig wlan0 up</span><br></pre></td></tr></table></figure>
-
-<ol start="6">
-<li>如果是用DHCP获取IP的，那么用dhclient 或dhcpcd获取ip</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">dhcpcd wlan0</span><br></pre></td></tr></table></figure>
-
-<p>或</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">dhclient wlan0</span><br></pre></td></tr></table></figure>
-
-<ol start="7">
-<li>现在无线网卡应该可以正常使用了。</li>
-</ol>
-<h3 id="PS"><a href="#PS" class="headerlink" title="PS:"></a>PS:</h3><p>   如果现在还不能联网。那么点击网络图标。选择链接到隐藏的无线网络。输入找到的网络的名字。<br>      图形化的网络管理程序是<code>System-&gt;Preferences-&gt;Network Connections</code>。打开程序后，点击无线网络项目，点击add增加一个新的无线网络。  给出任意的<code>Connection Name</code>。<code>SSID</code>中输入无限网络的名字。<code>wireless security</code>中选择一种合适的加密类型。key中输入无限网络的密码。 </p>
-<p>   其他字段都不修改。 执行后，应该能够链接无限网络。  可以使用<code>iwconfig wlan0</code>命令查看是否正确连接无线网络。</p>
-<h6 id="未正确链接无线网络的输出："><a href="#未正确链接无线网络的输出：" class="headerlink" title="未正确链接无线网络的输出："></a>未正确链接无线网络的输出：</h6><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br><span class="line">wlan0     IEEE <span class="number">802.11</span>abg  ESSID:off/any </span><br><span class="line">          Mode:Managed  Access Point: Not<span class="literal">-Associated</span>   Tx<span class="literal">-Power</span>=<span class="number">0</span> dBm  </span><br><span class="line">          Retry  long limit:<span class="number">7</span>   RTS thr:off   Fragment thr:off</span><br><span class="line">          Power Management:off</span><br></pre></td></tr></table></figure>
-
-<h6 id="正确链接无线网络后的输出："><a href="#正确链接无线网络后的输出：" class="headerlink" title="正确链接无线网络后的输出："></a>正确链接无线网络后的输出：</h6><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br><span class="line">wlan0     IEEE <span class="number">802.11</span>abg  ESSID:<span class="string">&quot;MyHome&quot;</span> </span><br><span class="line">          Mode:Managed  Frequency:<span class="number">2.437</span> GHz  Access Point: <span class="number">00</span>:<span class="number">26</span>:DS:<span class="number">43</span>:<span class="number">1</span>A:A8  </span><br><span class="line">          Bit Rate=<span class="number">54</span> Mb/s   Tx<span class="literal">-Power</span>=<span class="number">0</span> dBm  </span><br><span class="line">          Retry  long limit:<span class="number">7</span>   RTS thr:off   Fragment thr:off</span><br><span class="line">          Power Management:off</span><br><span class="line">          Link Quality=<span class="number">65</span>/<span class="number">70</span>  Signal level=<span class="literal">-45</span> dBm </span><br><span class="line">          Rx invalid nwid:<span class="number">0</span>  Rx invalid crypt:<span class="number">0</span>  Rx invalid frag:<span class="number">0</span></span><br><span class="line">          Tx excessive retries:<span class="number">0</span>  Invalid misc:<span class="number">0</span>   Missed beacon:<span class="number">0</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>Linux</tag>
-        <tag>无线网卡</tag>
       </tags>
   </entry>
   <entry>
