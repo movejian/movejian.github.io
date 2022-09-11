@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-09-11T13:53:30.068Z</updated>
+  <updated>2022-09-11T13:57:56.821Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -21,16 +21,10 @@
     <link href="http://example.com/2022/09/11/%E5%B0%86Windows%E6%89%93%E5%8D%B0%E6%9C%BA%E5%8F%98%E6%88%90%E7%BD%91%E7%BB%9C%E6%89%93%E5%8D%B0%E6%9C%BA/"/>
     <id>http://example.com/2022/09/11/%E5%B0%86Windows%E6%89%93%E5%8D%B0%E6%9C%BA%E5%8F%98%E6%88%90%E7%BD%91%E7%BB%9C%E6%89%93%E5%8D%B0%E6%9C%BA/</id>
     <published>2022-09-11T13:50:04.000Z</published>
-    <updated>2022-09-11T13:53:30.068Z</updated>
+    <updated>2022-09-11T13:57:56.821Z</updated>
     
     
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;大家都知道Windows的打印共享一直属于玄学，2000&amp;#x2F;XP&amp;#x2F;2003（NT 5.x）及以前的时代基本还算正常，经过简单的设置总能搞定，自从Vista开始的NT</summary>
-        
-      
+    <summary type="html">&lt;p&gt;大家都知道Windows的打印共享一直属于玄学，2000&amp;#x2F;XP&amp;#x2F;2003（NT 5.x）及以前的时代基本还算正常，经过简单的设置总能搞定，自从Vista开始的NT 6.x，尤其到了win10&amp;#x2F;win11时代，Windows的打印共享基本上就变成了玄学，姑且不说很难搞定，就算搞定了，一个补丁也可能把它搞残废。另外，Windows的共享服务一直存在各种安全漏洞，曾经一度被勒索病毒利用，尤其是win7（不能打补丁那种），为了安全，我一般都禁用server服务。&lt;/p&gt;</summary>
     
     
     

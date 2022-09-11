@@ -176,20 +176,11 @@ var _hmt = _hmt || [];
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>大家都知道Windows的打印共享一直属于玄学，2000&#x2F;XP&#x2F;2003（NT 5.x）及以前的时代基本还算正常，经过简单的设置总能搞定，自从Vista开始的NT 6.x，尤其到了win10&#x2F;win11时代，Windows的打印共享基本上就变成了玄学，姑且不说很难搞定，就算搞定了，一个补丁也可能把它搞残废。另外，Windows的共享服务一直存在各种安全漏洞，曾经一度被勒索病毒利用，尤其是win7（不能打补丁那种），为了安全，我一般都禁用server服务。</p>
-<p>但自带网络接口的打印机从来没有这么复杂，指定IP（端口基本上就是基于raw的9100），安装驱动即可搞定，完全跳过了复杂的samba协议，直接使用TCP&#x2F;IP。如同在Windows下通过http或者ftp共享文件，完全不需要考虑Windows那复杂的共享机制。</p>
-<p>但并不是所有的打印机都带网络接口，虽然现在可以买一个便宜的可以刷固件的路由器（比如坛子里15块收的优酷路由宝刷Padavan或者OpenWRT）当打印服务器使用，但毕竟硬件都不是现成的，而且，投入再小也得投入不是。</p>
-<p>那能不能将Windows直接变成类似的打印服务器呢？答案是：Raw Print Server。这是一个开源的命令行程序，官方网站：<a target="_blank" rel="noopener" href="https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/">https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/</a> 。注意，下载1.0版本， 不要下载那个beta版。<a target="_blank" rel="noopener" href="https://www.253874.net/attachment?id=72646">RawPrintServer100.zip</a> 也附上了1.0版本的可执行程序及程序源码。</p>
-<p>Github项目链接：<a target="_blank" rel="noopener" href="https://github.com/miso-lims/rawprintserver">https://github.com/miso-lims/rawprintserver</a> (这程序从2006年就停止开发了）。</p>
-<p><strong>基本操作流程：</strong></p>
-<p>1、在作为打印服务器的Windows上安装好打印机，以HP LaserJet P1008为例，装好打印机时，最好给打印机改一个简短的名字，例如叫：HP1008。</p>
-<p>2、将rawprintserver.exe复制到Windows的system32目录。</p>
-<p>3、管理员cmd模式下执行：rawprintserver.exe install “HP1008”。注意，这里的打印机名称一定要跟你Windows控制面板中显示的打印机名称一样。该程序会安装一个rawprintserver服务，如果你在上一步操作中没有将该文件复制到system32目录，那就需要修改下对应服务注册表项中的ImagePath项，将该程序的全路径写入，否则服务启动不了。</p>
-<p>4、在打印客户端按添加网络打印机的流程（自动搜索肯定是搜不到的，所以需要手工操作），指定IP地址，默认raw:9100，然后手工指定打印机驱动安装即可。</p>
-<p>5、搞定！</p>
-<p>6、软件运行的日志强行锁死在c:\PrintServer.log，如果出现什么错误，可以查看该日志。</p>
-<p>我试过在win10下安装rawprintserver，win7_x86和win11都可以正常连接并使用。<br><em>相关地址</em><br><a target="_blank" rel="noopener" href="https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/"><em>https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/</em></a></p>
- 
+  <p>大家都知道Windows的打印共享一直属于玄学，2000&#x2F;XP&#x2F;2003（NT 5.x）及以前的时代基本还算正常，经过简单的设置总能搞定，自从Vista开始的NT 6.x，尤其到了win10&#x2F;win11时代，Windows的打印共享基本上就变成了玄学，姑且不说很难搞定，就算搞定了，一个补丁也可能把它搞残废。另外，Windows的共享服务一直存在各种安全漏洞，曾经一度被勒索病毒利用，尤其是win7（不能打补丁那种），为了安全，我一般都禁用server服务。</p> 
+      <a class="article-more-link" href="/2022/09/11/%E5%B0%86Windows%E6%89%93%E5%8D%B0%E6%9C%BA%E5%8F%98%E6%88%90%E7%BD%91%E7%BB%9C%E6%89%93%E5%8D%B0%E6%9C%BA/"
+        >阅读更多...</a
+      >
+       
       <!-- reward -->
       
     </div>
