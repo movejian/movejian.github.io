@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>Linux查看硬件信息与系统资源 |  如风网络</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+<script>
+var _hmt = _hmt || [];
+(function() {
+	var hm = document.createElement("script");
+	hm.src = "https://hm.baidu.com/hm.js?https://hm.baidu.com/hm.js?c6903c67cf84290660ab35c737e4ef8d";
+	var s = document.getElementsByTagName("script")[0]; 
+	s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    <link rel="alternate" href="/atom.xml" title="如风网络" type="application/atom+xml">
+</head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-Linux查看硬件信息与系统资源"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Linux查看硬件信息与系统资源
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/09/06/Linux%E6%9F%A5%E7%9C%8B%E7%A1%AC%E4%BB%B6%E4%BF%A1%E6%81%AF%E4%B8%8E%E7%B3%BB%E7%BB%9F%E8%B5%84%E6%BA%90/" class="article-date">
+  <time datetime="2022-09-06T10:04:30.000Z" itemprop="datePublished">2022-09-06 18:04:30</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a> / <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0/Linux/">Linux</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">3.6k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">17 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>Linux下经常需要查看系统资源或硬件资源，与之对应的命令行也是非常多</p>
+<p>本文将根据使用经验，将常见的查询方法总结罗列一遍以供参考</p>
+<p>以下指令以Ubuntu1804、Cent7OS作为测试平台</p>
+<h2 id="1-系统资源"><a href="#1-系统资源" class="headerlink" title="1. 系统资源"></a>1. 系统资源</h2><h3 id="1-1-Linux发行版与内核"><a href="#1-1-Linux发行版与内核" class="headerlink" title="1.1. Linux发行版与内核"></a>1.1. Linux发行版与内核</h3><p><code>uname -r</code>命令输出发行版与内核信息，大部分发行版基本均带有此命令，但输出中未必包含发行版全称信息</p>
+<span id="more"></span>
+<p>Cent7OS</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[chancel@localhost ~]$ uname -a</span><br><span class="line">Linux localhost.localdomain 3.10.0-1160.62.1.el7.x86_64 #1 SMP Tue Apr 5 16:57:59 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux</span><br></pre></td></tr></table></figure>
+
+<p>Ubuntu1804</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ uname -a</span><br><span class="line">Linux ubuntu1804 4.15.0-189-generic #200-Ubuntu SMP Wed Jun 22 19:53:37 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux</span><br></pre></td></tr></table></figure>
+
+<p><code>cat /proc/version</code>命令输出内核版本与编译的gcc版本</p>
+<p>Cent7OS</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[chancel@localhost ~]$ cat /proc/version </span><br><span class="line">Linux version 3.10.0-1160.62.1.el7.x86_64 (mockbuild@kbuilder.bsys.centos.org) (gcc version 4.8.5 20150623 (Red Hat 4.8.5-44) (GCC) ) #1 SMP Tue Apr 5 16:57:59 UTC 2022</span><br></pre></td></tr></table></figure>
+
+<p>Ubuntu1804</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ cat /proc/version</span><br><span class="line">Linux version 4.15.0-189-generic (buildd@lcy02-amd64-039) (gcc version 7.5.0 (Ubuntu 7.5.0-3ubuntu1~18.04)) #200-Ubuntu SMP Wed Jun 22 19:53:37 UTC 2022</span><br></pre></td></tr></table></figure>
+
+<p><code>lsb_release -a</code>命令输出发行版信息，但Cent7OS并不包含此命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ lsb_release -a</span><br><span class="line">No LSB modules are available.</span><br><span class="line">Distributor ID: Ubuntu</span><br><span class="line">Description:    Ubuntu 18.04.6 LTS</span><br><span class="line">Release:        18.04</span><br><span class="line">Codename:       bionic</span><br></pre></td></tr></table></figure>
+
+<p><code>cat /etc/redhat-release</code>命令是Redhat系列独有的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[chancel@localhost ~]$ cat /etc/redhat-release</span><br><span class="line">CentOS Linux release 7.9.2009 (Core)</span><br></pre></td></tr></table></figure>
+
+<p><code>cat /etc/*release</code>命令在大部分Linux发行版中都可以使用，是最方便使用的命令</p>
+<p>以Cent7OS为例</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[chancel@localhost ~]$ cat /etc/*release</span><br><span class="line">CentOS Linux release 7.9.2009 (Core)</span><br><span class="line">NAME=&quot;CentOS Linux&quot;</span><br><span class="line">VERSION=&quot;7 (Core)&quot;</span><br><span class="line">ID=&quot;centos&quot;</span><br><span class="line">ID_LIKE=&quot;rhel fedora&quot;</span><br><span class="line">VERSION_ID=&quot;7&quot;</span><br><span class="line">PRETTY_NAME=&quot;CentOS Linux 7 (Core)&quot;</span><br><span class="line">...</span><br><span class="line">CentOS Linux release 7.9.2009 (Core)</span><br><span class="line">CentOS Linux release 7.9.2009 (Core)</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-CPU-x2F-内存占用查看"><a href="#1-2-CPU-x2F-内存占用查看" class="headerlink" title="1.2. CPU&#x2F;内存占用查看"></a>1.2. CPU&#x2F;内存占用查看</h3><p><code>top</code>指令是最常见用于检测CPU占用情况的指令，使用效果如下</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209081929349.png" alt="img"></p>
+<p>此时按<code>P</code>以CPU占用排序，按<code>M</code>以内存占用排序，按<code>I</code>隐藏所有空闲进程，按<code>S</code>以运行时间排序</p>
+<p><code>htop</code>指令则是比<code>top</code>更简洁的显示程序，在部分发行版上需要自行安装，使用效果如下</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209081930961.png" alt="img"></p>
+<p>相较于<code>top</code>的使用，<code>htop</code>界面更清晰易懂，使用方法在界面均有提示，对用户更为友好</p>
+<p>通常情况下，<code>htop</code>需要自行安装</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Ubuntu</span><br><span class="line">sudo apt install htop</span><br><span class="line"></span><br><span class="line"># Cent</span><br><span class="line">sudo yum install htop</span><br></pre></td></tr></table></figure>
+
+<p><code>glances</code>则是比<code>htop</code>更进一步的资源查看器</p>
+<p>不但包括常见的CPU、内存，甚至还包括当前网速以及硬件温度数据，使用效果如下</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209081931536.png" alt="img"></p>
+<p>通常情况下，<code>glances</code>需要自行安装，由于是使用Python语言开发的，所以资源占用也较大</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Ubuntu</span><br><span class="line">sudo apt install glances</span><br><span class="line"></span><br><span class="line"># Cent</span><br><span class="line">sudo yum install glances</span><br></pre></td></tr></table></figure>
+
+<p>以上3个是我比较常用的系统资源占用查询工具，大部分情况下都非常够用</p>
+<p>其他的可能还包括<code>nmon</code>、<code>vmstat</code>等，若有兴趣也可自行查询</p>
+<h3 id="1-3-磁盘资源管理"><a href="#1-3-磁盘资源管理" class="headerlink" title="1.3. 磁盘资源管理"></a>1.3. 磁盘资源管理</h3><p><code>df -h</code>通常用于查询硬盘资源使用情况（-h代表使用以1024为单位且易读的方式显示）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ df -h</span><br><span class="line">Filesystem      Size  Used Avail Use% Mounted on</span><br><span class="line">udev            1.9G     0  1.9G   0% /dev</span><br><span class="line">tmpfs           395M  1.3M  394M   1% /run</span><br><span class="line">/dev/vda2       126G   57G   63G  48% /</span><br><span class="line">tmpfs           2.0G     0  2.0G   0% /dev/shm</span><br><span class="line">tmpfs           5.0M     0  5.0M   0% /run/lock</span><br><span class="line">tmpfs           2.0G     0  2.0G   0% /sys/fs/cgroup</span><br><span class="line">/dev/loop0      114M  114M     0 100% /snap/core/13425</span><br><span class="line">/dev/loop1      114M  114M     0 100% /snap/core/13308</span><br><span class="line">tmpfs           395M     0  395M   0% /run/user/1000</span><br></pre></td></tr></table></figure>
+
+<p><code>fdisk -l</code>则是用于查询物理分区情况</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ sudo fdisk -l</span><br><span class="line">Disk /dev/loop0: 114 MiB, 119525376 bytes, 233448 sectors</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disk /dev/loop1: 113.9 MiB, 119418880 bytes, 233240 sectors</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disk /dev/vda: 128 GiB, 137438953472 bytes, 268435456 sectors</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disklabel type: gpt</span><br><span class="line">Disk identifier: 376C8DD5-F786-4C39-9F4E-1461BE1FA269</span><br><span class="line"></span><br><span class="line">Device     Start       End   Sectors  Size Type</span><br><span class="line">/dev/vda1   2048      4095      2048    1M BIOS boot</span><br><span class="line">/dev/vda2   4096 268433407 268429312  128G Linux filesystem</span><br></pre></td></tr></table></figure>
+
+<p>当然，<code>fdisk</code>命令本身主要还是用于管理硬盘分区，其管理过程是对话式的，类似于下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[chancel@localhost ~]$ sudo fdisk /dev/vda</span><br><span class="line">[sudo] password for chancel: </span><br><span class="line">Welcome to fdisk (util-linux 2.23.2).</span><br><span class="line"></span><br><span class="line">Changes will remain in memory only, until you decide to write them.</span><br><span class="line">Be careful before using the write command.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Command (m for help):</span><br></pre></td></tr></table></figure>
+
+<p>输入<code>m</code>可获得指令帮助，创建过程非常简单易懂</p>
+<p><code>mkfs.[format]</code>命令用于格式化硬盘，<code>[format]</code>代表硬盘格式，常见的格式如下</p>
+<ul>
+<li>mkfs.ext2</li>
+<li>mkfs.ext3</li>
+<li>mkfs.ext4</li>
+<li>mkfs.ntfs</li>
+<li>mkfs.xfs</li>
+</ul>
+<p>在分区成功后，通常需要格式化，使用<code>mkfs.[format] /dev/[device_name]</code>进行格式化</p>
+<h3 id="1-4-网络信息管理"><a href="#1-4-网络信息管理" class="headerlink" title="1.4. 网络信息管理"></a>1.4. 网络信息管理</h3><p><code>ip</code>是常用的网络信息查看工具，是后期Linux用于替换<code>ipconfig</code>的工具</p>
+<p>常见的用法</p>
+<ul>
+<li><code>ip addr show</code>显示网路ip信息（缩写<code>ip a</code>）</li>
+<li><code>ip link show</code>显示网络接口信息（缩写<code>ip l</code>）</li>
+<li><code>ip route list</code>显示网路路由信息（缩写<code>ip r</code>）</li>
+<li><code>ip neigh show</code>显示网路ARP表信息（缩写<code>ip n</code>）</li>
+</ul>
+<p><code>ip addr</code>通常用于设置网卡的网络信息，如</p>
+<ul>
+<li><code>ip addr &#123;add|change|del&#125; 172.16.0.1/24 dev eth0</code>添加&#x2F;更改&#x2F;删除网卡ip</li>
+</ul>
+<p><code>ip link</code>通常用于控制网卡的行为，如</p>
+<ul>
+<li><code>ip link set eth0 &#123;up/down&#125;</code>用于开启关闭网卡</li>
+<li><code>ip link set eth0 promisc &#123;on/off&#125;</code>用于设置网卡混杂模式开启关闭</li>
+</ul>
+<p><code>ip route</code>通常用于设置路由信息，如</p>
+<ul>
+<li><code>ip route &#123;add/del&#125; [ip_address] via [gateway]</code>添加&#x2F;删除网关静态路由</li>
+<li><code>ip route &#123;add/del&#125; [ip_address] dev [interface]</code>添加&#x2F;删除接口静态路由</li>
+</ul>
+<p><code>ip neigh</code>通常用于王路平arp表（替换老旧的<code>arp</code>命令），如</p>
+<ul>
+<li><code>ip neigh &#123;add/dev&#125; [ip_address] dev [interface]</code>添加&#x2F;删除一个arp映射</li>
+</ul>
+<p>比较常用的是<code>ip addr</code>与<code>ip route</code>2个参数</p>
+<p>前者用于查询网络ip信息，其输出如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">~ ➤ ip a</span><br><span class="line">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000</span><br><span class="line">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00</span><br><span class="line">    inet 127.0.0.1/8 scope host lo</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 ::1/128 scope host </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc fq_codel state UP group default qlen 1000</span><br><span class="line">    link/ether 00:16:de:23:94:48 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 209.141.42.231/24 brd 209.141.42.255 scope global dynamic eth0</span><br><span class="line">       valid_lft 2591984sec preferred_lft 2591984sec</span><br><span class="line">    inet6 fe80::216:deff:fe23:9448/64 scope link </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br></pre></td></tr></table></figure>
+
+<p>后者常用于规划路由请求，如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 设置路由走网关172.16.0.1，得到公网IP为4.4.4.4</span><br><span class="line">➜  ~ ip route add 104.160.18.230 via 172.16.0.1</span><br><span class="line">➜  ~ curl https://api.chancel.me/rest/api/v1/ip</span><br><span class="line">&#123;&quot;status&quot;:1,&quot;msg&quot;:&quot;Query success&quot;,&quot;data&quot;:&#123;&quot;ip&quot;:&quot;4.4.4.4&quot;&#125;&#125;</span><br><span class="line"></span><br><span class="line"># 设置路由走网关192.168.1.1，得到公网IP为6.6.6.6</span><br><span class="line">➜  ~ ip route del 104.160.18.230 via 192.168.1.1</span><br><span class="line">➜  ~ curl https://api.chancel.me/rest/api/v1/ip</span><br><span class="line">&#123;&quot;status&quot;:1,&quot;msg&quot;:&quot;Query success&quot;,&quot;data&quot;:&#123;&quot;ip&quot;:&quot;6.6.6.6&quot;&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-硬件资源"><a href="#2-硬件资源" class="headerlink" title="2. 硬件资源"></a>2. 硬件资源</h2><h3 id="2-1-CPU信息"><a href="#2-1-CPU信息" class="headerlink" title="2.1. CPU信息"></a>2.1. CPU信息</h3><p><code>lscpu</code>和<code>cat /proc/cpuinfo</code>都可以输出CPU信息，如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ lscpu   </span><br><span class="line">Architecture:            x86_64</span><br><span class="line">  CPU op-mode(s):        32-bit, 64-bit</span><br><span class="line">  Address sizes:         48 bits physical, 48 bits virtual</span><br><span class="line">  ...</span><br><span class="line">Vulnerabilities:         </span><br><span class="line">  ...</span><br><span class="line">  Tsx async abort:       Not affected</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-内存信息"><a href="#2-2-内存信息" class="headerlink" title="2.2. 内存信息"></a>2.2. 内存信息</h3><p><code>lsmem</code>和<code>cat /proc/meminfo</code>都可以输出内存信息，如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ lsmem       </span><br><span class="line">RANGE                                 SIZE  STATE REMOVABLE  BLOCK</span><br><span class="line">0x0000000000000000-0x00000000bfffffff   3G online       yes   0-23</span><br><span class="line">0x0000000100000000-0x0000000f3fffffff  57G online       yes 32-487</span><br><span class="line"></span><br><span class="line">Memory block size:       128M</span><br><span class="line">Total online memory:      60G</span><br><span class="line">Total offline memory:      0B</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-硬盘信息"><a href="#2-3-硬盘信息" class="headerlink" title="2.3. 硬盘信息"></a>2.3. 硬盘信息</h3><p><code>lsblk</code>用于查看硬盘信息，如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ lsblk       </span><br><span class="line">NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS</span><br><span class="line">loop0         7:0    0     4K  1 loop /var/lib/snapd/snap/bare/5</span><br><span class="line">...</span><br><span class="line">loop8         7:8    0    47M  1 loop /var/lib/snapd/snap/snapd/16292</span><br><span class="line">sda           8:0    0 476.9G  0 disk </span><br><span class="line">└─sda1        8:1    0 476.9G  0 part /mnt/SDA</span><br><span class="line">nvme0n1     259:0    0 931.5G  0 disk </span><br><span class="line">├─nvme0n1p1 259:1    0   300M  0 part /boot/efi</span><br><span class="line">├─nvme0n1p2 259:2    0 866.5G  0 part /</span><br><span class="line">└─nvme0n1p3 259:3    0  64.7G  0 part [SWAP]</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-USB信息"><a href="#2-4-USB信息" class="headerlink" title="2.4. USB信息"></a>2.4. USB信息</h3><p><code>lsusb</code>用于查看USB接口信息，如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ lsusb -t</span><br><span class="line">/:  Bus 04.Port 1: Dev 1, Class=root_hub, Driver=xhci_hcd/2p, 10000M</span><br><span class="line">/:  Bus 03.Port 1: Dev 1, Class=root_hub, Driver=xhci_hcd/4p, 480M</span><br><span class="line">    |__ Port 1: Dev 2, If 0, Class=Human Interface Device, Driver=usbhid, 12M</span><br><span class="line">    |__ Port 1: Dev 2, If 1, Class=Human Interface Device, Driver=usbhid, 12M</span><br><span class="line">    |__ Port 2: Dev 3, If 0, Class=Hub, Driver=hub/4p, 480M</span><br><span class="line">        |__ Port 2: Dev 4, If 0, Class=Human Interface Device, Driver=usbhid, 12M</span><br><span class="line">        |__ Port 2: Dev 4, If 1, Class=Human Interface Device, Driver=usbhid, 12M</span><br><span class="line">        |__ Port 2: Dev 4, If 2, Class=Human Interface Device, Driver=usbhid, 12M</span><br><span class="line">/:  Bus 02.Port 1: Dev 1, Class=root_hub, Driver=xhci_hcd/2p, 10000M</span><br><span class="line">/:  Bus 01.Port 1: Dev 1, Class=root_hub, Driver=xhci_hcd/4p, 480M</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-5-lspci"><a href="#2-5-lspci" class="headerlink" title="2.5. lspci"></a>2.5. lspci</h3><p><code>lspci</code>用于提取主板上所有的硬件信息，如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ lspci</span><br><span class="line">00:00.0 Host bridge: Advanced Micro Devices, Inc. [AMD] Renoir/Cezanne Root Complex</span><br><span class="line">00:00.2 IOMMU: Advanced Micro Devices, Inc. [AMD] Renoir/Cezanne IOMMU</span><br><span class="line">...</span><br><span class="line">03:00.6 Audio device: Advanced Micro Devices, Inc. [AMD] Family 17h/19h HD Audio Controller</span><br><span class="line">04:00.0 SATA controller: Advanced Micro Devices, Inc. [AMD] FCH SATA Controller [AHCI mode] (rev 81)</span><br></pre></td></tr></table></figure>
+
+<p>如果需要更详细的pci信息，可以使用<code>lspci -v</code>或<code>lspci -vv</code></p>
+<p><code>lspci</code>通常配合<code>grep</code>用于筛查硬件信息，如<code>lspci | grep -i eth</code>可查看网络接口情况</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ lspci | grep -i eth</span><br><span class="line">02:00.0 Ethernet controller: Realtek Semiconductor Co., Ltd. RTL8111/8168/8411 PCI Express Gigabit Ethernet Controller (rev 15)</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-高级命令"><a href="#3-高级命令" class="headerlink" title="3. 高级命令"></a>3. 高级命令</h2><p>以下命令相较于上面的命令来说，能更加全面的显示系统资源与硬件信息</p>
+<h3 id="3-1-netstat"><a href="#3-1-netstat" class="headerlink" title="3.1. netstat"></a>3.1. netstat</h3><p><code>netstat</code>用于监控tcp&#x2F;ip连接信息，常用于查找某个端口的占用程序</p>
+<p>如<code>netstat -anp | grep 8384</code>便可以查询出占用8384端口的程序PID</p>
+<p><code>-a</code>代表列出所有，<code>-n</code>代表禁用反向域名解析，<code>-p</code>代表打印程序PID</p>
+<p>效果如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ netstat -atp | grep 8384</span><br><span class="line">(Not all processes could be identified, non-owned process info</span><br><span class="line"> will not be shown, you would have to be root to see it all.)</span><br><span class="line">tcp        0      0 localhost:8384          0.0.0.0:*               LISTEN      817/syncthing</span><br></pre></td></tr></table></figure>
+
+<p>使用<code>-l</code>参数，可以显示所有正在监听端口的服务程序，如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ netstat -tnlp</span><br><span class="line">(Not all processes could be identified, non-owned process info</span><br><span class="line"> will not be shown, you would have to be root to see it all.)</span><br><span class="line">Active Internet connections (only servers)</span><br><span class="line">Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    </span><br><span class="line">tcp        0      0 127.0.0.1:8384          0.0.0.0:*               LISTEN      817/syncthing       </span><br><span class="line">...   </span><br><span class="line">tcp6       0      0 :::42103                :::*                    LISTEN      796/client_linux_am</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注：<code>-p</code>参数打印出PID，但ROOT用户运行的程序普通用户无法探查其PID，故看情况需要决定是否使用<code>sudo</code></p>
+</blockquote>
+<p><code>netstat</code>也可打印网络接口信息，如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ netstat -ie</span><br><span class="line">Kernel Interface table</span><br><span class="line">enp2s0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500</span><br><span class="line">        inet 192.168.4.12  netmask 255.255.240.0  broadcast 192.168.15.255</span><br><span class="line">        inet6 fd1c:b796:b00f:3f00:28a8:42ce:82e2:eda1  prefixlen 64  scopeid 0x0&lt;global&gt;</span><br><span class="line">        inet6 fe80::fea6:9f63:51a6:3dc0  prefixlen 64  scopeid 0x20&lt;link&gt;</span><br><span class="line">        inet6 240e:47c:630:64d9:b23c:f504:1008:88df  prefixlen 64  scopeid 0x0&lt;global&gt;</span><br><span class="line">        ether 5a:bc:da:6d:f1:09  txqueuelen 1000  (Ethernet)</span><br><span class="line">        RX packets 4480503  bytes 2392967850 (2.2 GiB)</span><br><span class="line">        RX errors 0  dropped 1093  overruns 0  frame 0</span><br><span class="line">        TX packets 2206930  bytes 246464482 (235.0 MiB)</span><br><span class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span><br><span class="line"></span><br><span class="line">lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536</span><br><span class="line">        inet 127.0.0.1  netmask 255.0.0.0</span><br><span class="line">        inet6 ::1  prefixlen 128  scopeid 0x10&lt;host&gt;</span><br><span class="line">        loop  txqueuelen 1000  (Local Loopback)</span><br><span class="line">        RX packets 231260  bytes 482760756 (460.3 MiB)</span><br><span class="line">        RX errors 0  dropped 0  overruns 0  frame 0</span><br><span class="line">        TX packets 231260  bytes 482760756 (460.3 MiB)</span><br><span class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span><br></pre></td></tr></table></figure>
+
+<p><code>netstat</code>具备非常多的网络高级操作功能，若有兴趣，可参考<code>man netstat</code>进行学习</p>
+<h3 id="3-2-lsof"><a href="#3-2-lsof" class="headerlink" title="3.2. lsof"></a>3.2. lsof</h3><p>在Linux中，一切皆是文件</p>
+<p><code>lsof</code>(list open files)是一个列出当前操作系统打开文件的工具，所以<code>lsof</code>可以做到非常多的事情</p>
+<p>直接使用<code>lsof</code>会显示当前系统所有正打开的文件，由于长时间运行的操作系统拥有多个进程，单纯使用<code>lsof</code>的操作较少</p>
+<p><code>lsof</code>常用于查询资源占用情况，如</p>
+<ul>
+<li><code>lsof -c syncthing</code>显示进程syncthing正在使用的资源</li>
+<li><code>lsof -c -p 817</code>显示PID为817的进程正在使用的资源</li>
+<li><code>lsof +d /tmp</code>显示正在使用<code>/tmp</code>目录的进程列表</li>
+<li><code>lsof -i :8384</code>显示正在使用端口8384的进程</li>
+</ul>
+<p><code>lsof</code>适用场景非常广泛，如</p>
+<ul>
+<li>无法卸载文件系统时显示<code>/mnt/sda target is busy</code>，可以使用<code>lsof /mnt/sda</code>查看是什么进程正在占用目录</li>
+<li>无法启动监听端口8080程序时，可以使用<code>lsof -i :8080</code>查看是什么进程占用了端口8080</li>
+<li>…</li>
+</ul>
+<h3 id="3-3-lshw"><a href="#3-3-lshw" class="headerlink" title="3.3. lshw"></a>3.3. lshw</h3><p><code>lshw</code>命令常用于输出机器配置摘要，如</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lshw -html &gt; my-hardware.html</span><br></pre></td></tr></table></figure>
+
+<p>除了html报告可选外，还有<code>-json</code>、<code>-xml</code>等格式可选</p>
+<p><code>-short</code>参数查看简略报告，如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ sudo lshw -short</span><br><span class="line">H/W path              Device          Class       Description</span><br><span class="line">=============================================================</span><br><span class="line">                                      system      To Be Filled By O.E.M. (To Be Filled By O.E.M.)</span><br><span class="line">/0                                    bus         X300M-STX</span><br><span class="line">...</span><br><span class="line">/0/4                                  system      Motherboard registers</span><br><span class="line">/0/5                                  system      Motherboard registers</span><br></pre></td></tr></table></figure>
+
+<p><code>-class</code>参数可指定查看部分硬件信息，如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ sudo lshw -class cpu -class disk</span><br><span class="line">  *-cpu                     </span><br><span class="line">       description: CPU</span><br><span class="line">       product: AMD Ryzen 7 PRO 4750G with Radeon Graphics</span><br><span class="line">       vendor: Advanced Micro Devices [AMD]</span><br><span class="line">       ...</span><br><span class="line">       sectorsize=512 wwid=eui.0025385211918242</span><br><span class="line">  *-disk</span><br><span class="line">       description: ATA Disk</span><br><span class="line">       ...</span><br><span class="line">       logicalsectorsize=512 sectorsize=512</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-4-inxi（推荐）"><a href="#3-4-inxi（推荐）" class="headerlink" title="3.4. inxi（推荐）"></a>3.4. inxi（推荐）</h3><p><code>inxi</code>用于获取所有硬件与系统信息，如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ inxi</span><br><span class="line">CPU: 8-core AMD Ryzen 7 PRO 4750G with Radeon Graphics (-MT MCP-)</span><br><span class="line">speed/min/max: 1594/1400/4454 MHz Kernel: 5.19.0-1-MANJARO x86_64 Up: 6h 43m</span><br><span class="line">Mem: 11918.5/60152.7 MiB (19.8%) Storage: 1.38 TiB (22.2% used) Procs: 416</span><br><span class="line">Shell: Zsh inxi: 3.3.19</span><br></pre></td></tr></table></figure>
+
+<p><code>-M</code>参数可用于获取机器硬件品牌信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ inxi -M</span><br><span class="line">Machine:</span><br><span class="line">  Type: Desktop Mobo: ASRock model: X300M-STX serial: &lt;superuser required&gt;</span><br><span class="line">    UEFI: American Megatrends LLC. v: P1.70 date: 07/01/2021</span><br></pre></td></tr></table></figure>
+
+<p>获取单个硬件有以下参数</p>
+<ul>
+<li><code>-C</code>CPU信息</li>
+<li><code>-A</code>声卡信息</li>
+<li><code>-N</code>网卡信息</li>
+<li><code>-D</code>硬盘信息</li>
+<li><code>-s</code>传感器温度与风扇转速</li>
+</ul>
+<p>获取系统资源信息有以下参数</p>
+<ul>
+<li><code>-p</code>硬盘分区信息</li>
+<li><code>-I</code>进程数以及开机时间等信息</li>
+<li><code>-t</code>显示5个最占用CPU&#x2F;内存的应用（使用<code>cm10</code>可修改成前10个）</li>
+<li><code>-n</code>网络接口信息</li>
+<li><code>-r</code>软件仓库信息</li>
+</ul>
+<p>同样<code>inxi</code>也支持输出机器配置报告</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ inxi -b</span><br><span class="line">System:</span><br><span class="line">  Host: KDE-Manjaro-64G Kernel: 5.19.0-1-MANJARO arch: x86_64 bits: 64</span><br><span class="line">    ...</span><br><span class="line">  Shell: Zsh inxi: 3.3.19</span><br></pre></td></tr></table></figure>
+
+<p>下面是比较全面的输出机器硬件与软件信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ inxi -Fza           </span><br><span class="line">System:</span><br><span class="line">  Kernel: 5.19.0-1-MANJARO arch: x86_64 bits: 64 compiler: gcc v: 12.1.0</span><br><span class="line">    parameters: BOOT_IMAGE=/boot/vmlinuz-5.19-x86_64</span><br><span class="line">    root=UUID=2ddecb6a-da82-48f6-9f5a-d810b32d623b rw quiet apparmor=1</span><br><span class="line">    security=apparmor resume=UUID=406e14e5-7ca3-4959-bb61-8bf9158da6f9</span><br><span class="line">    udev.log_priority=3</span><br><span class="line">  Desktop: KDE Plasma v: 5.24.6 tk: Qt v: 5.15.5 wm: kwin_x11 vt: 1</span><br><span class="line">    dm: SDDM Distro: Manjaro Linux base: Arch Linux</span><br><span class="line">Machine:</span><br><span class="line">  Type: Desktop Mobo: ASRock model: X300M-STX serial: &lt;superuser required&gt;</span><br><span class="line">    UEFI: American Megatrends LLC. v: P1.70 date: 07/01/2021</span><br><span class="line">CPU:</span><br><span class="line">  Info: model: AMD Ryzen 7 PRO 4750G with Radeon Graphics bits: 64</span><br><span class="line">...</span><br><span class="line">Info:</span><br><span class="line">  Processes: 416 Uptime: 6h 52m wakeups: 0 Memory: 58.74 GiB</span><br><span class="line">  used: 11.55 GiB (19.7%) Init: systemd v: 251 default: graphical</span><br><span class="line">  tool: systemctl Compilers: gcc: 12.1.0 clang: 14.0.6 Packages: 1707</span><br><span class="line">  pacman: 1701 lib: 372 flatpak: 0 snap: 6 Shell: Zsh v: 5.9</span><br><span class="line">  running-in: konsole inxi: 3.3.19</span><br></pre></td></tr></table></figure>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          打赏
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2022/09/06/Linux%E6%9F%A5%E7%9C%8B%E7%A1%AC%E4%BB%B6%E4%BF%A1%E6%81%AF%E4%B8%8E%E7%B3%BB%E7%BB%9F%E8%B5%84%E6%BA%90/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2022/09/11/%E5%B0%86Windows%E6%89%93%E5%8D%B0%E6%9C%BA%E5%8F%98%E6%88%90%E7%BD%91%E7%BB%9C%E6%89%93%E5%8D%B0%E6%9C%BA/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            将Windows打印机变成网络打印机
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2022/09/03/%E4%BC%A0%E5%A5%87%E5%86%85%E6%8C%82%E5%9E%83%E5%9C%BE%E7%89%A9%E5%93%81%E8%BF%87%E6%BB%A4/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">传奇内挂垃圾物品过滤</div>
+      </a>
+    
+  </nav>
+
+   
+<!-- valine评论 -->
+<div id="vcomments-box">
+  <div id="vcomments"></div>
+</div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="https://cdn.staticfile.org/valine/1.4.16/Valine.min.js"></script>
+<script>
+  new Valine({
+    el: "#vcomments",
+    app_id: "jU6HBwJv66zqFUakJm0aCmJW-gzGzoHsz",
+    app_key: "GYf75ArO1sO3wMNcUN0nuAnh",
+    path: window.location.pathname,
+    avatar: "monsterid",
+    placeholder: "给我的文章加点评论吧~",
+    recordIP: true,
+  });
+  const infoEle = document.querySelector("#vcomments .info");
+  if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+    infoEle.childNodes.forEach(function (item) {
+      item.parentNode.removeChild(item);
+    });
+  }
+</script>
+<style>
+  #vcomments-box {
+    padding: 5px 30px;
+  }
+
+  @media screen and (max-width: 800px) {
+    #vcomments-box {
+      padding: 5px 0px;
+    }
+  }
+
+  #vcomments-box #vcomments {
+    background-color: #fff;
+  }
+
+  .v .vlist .vcard .vh {
+    padding-right: 20px;
+  }
+
+  .v .vlist .vcard {
+    padding-left: 10px;
+  }
+</style>
+
+ 
+   
+    
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2022
+        <i class="ri-heart-fill heart_icon"></i> Move Jian
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/movejian.png" alt="如风网络"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/photos">相册</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/About">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>
