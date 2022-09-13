@@ -102,9 +102,9 @@
     
     <category term="传奇" scheme="http://example.com/tags/%E4%BC%A0%E5%A5%87/"/>
     
-    <category term="攻略" scheme="http://example.com/tags/%E6%94%BB%E7%95%A5/"/>
-    
     <category term="魔龙" scheme="http://example.com/tags/%E9%AD%94%E9%BE%99/"/>
+    
+    <category term="攻略" scheme="http://example.com/tags/%E6%94%BB%E7%95%A5/"/>
     
   </entry>
   
@@ -126,9 +126,9 @@
     
     <category term="传奇" scheme="http://example.com/tags/%E4%BC%A0%E5%A5%87/"/>
     
-    <category term="幻境" scheme="http://example.com/tags/%E5%B9%BB%E5%A2%83/"/>
-    
     <category term="攻略" scheme="http://example.com/tags/%E6%94%BB%E7%95%A5/"/>
+    
+    <category term="幻境" scheme="http://example.com/tags/%E5%B9%BB%E5%A2%83/"/>
     
   </entry>
   
