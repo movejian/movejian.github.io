@@ -181,6 +181,60 @@
       </tags>
   </entry>
   <entry>
+    <title>Linux系统无线网卡配置</title>
+    <url>/2019/12/16/Linux%E7%B3%BB%E7%BB%9F%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h2 id="无线网卡配置"><a href="#无线网卡配置" class="headerlink" title="无线网卡配置"></a>无线网卡配置</h2><p>本文介绍在Linux 命令行界面中手动配置无线网卡的方法。目前流行的多数发行版都支持用图形界面的<code>network- manager</code>方便地进行配置，而无需使用本文所介绍的原始方法。</p>
+<p>下面介绍使用<code>iwconfig</code>和<code>ifconfig</code>等命令在命令行状态下配置无线网络。前题是无线网卡驱动已经正确安装，并被系统正确识别。</p>
+<span id="more"></span>
+<h2 id="大体思路"><a href="#大体思路" class="headerlink" title="大体思路"></a>大体思路</h2><p>工作的大体思路如下：</p>
+<ol>
+<li>用<code>iwconfig</code>开启无线网卡的电源，并查找区域内的无线网络</li>
+<li>连接到相应的无线网络</li>
+<li>通过<code>ifconfig</code>启用无线网卡，并获取IP（如果使用DHCP的话）</li>
+</ol>
+<h2 id="具体过程"><a href="#具体过程" class="headerlink" title="具体过程"></a>具体过程</h2><ol>
+<li>打开无线网卡电源</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 txpower on</span><br></pre></td></tr></table></figure>
+<h4 id="无线网络的信号灯应该亮了。"><a href="#无线网络的信号灯应该亮了。" class="headerlink" title="无线网络的信号灯应该亮了。"></a>无线网络的信号灯应该亮了。</h4><ol start="2">
+<li>列出区域内的无线网络<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwlist wlan0 scan</span><br></pre></td></tr></table></figure></li>
+<li>假设要连接到网络MyHome（即essid为MyHome的网络），那么输入命令</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 essid <span class="string">&quot;MyHome&quot;</span> </span><br></pre></td></tr></table></figure>
+<p><em>#如果网络是加密的，密码是0123456789，那么就输入命令#</em></p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 essid <span class="string">&quot;MyHome&quot;</span> key <span class="number">0123</span><span class="literal">-4567-89</span></span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>如果正常的话，输入</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br></pre></td></tr></table></figure>
+<h4 id="就可以看到连接正常的各项参数了。"><a href="#就可以看到连接正常的各项参数了。" class="headerlink" title="就可以看到连接正常的各项参数了。"></a>就可以看到连接正常的各项参数了。</h4><ol start="5">
+<li>启用无线网卡</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ifconfig wlan0 up</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>如果是用DHCP获取IP的，那么用dhclient 或dhcpcd获取ip</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">dhcpcd wlan0</span><br></pre></td></tr></table></figure>
+
+<p>或</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">dhclient wlan0</span><br></pre></td></tr></table></figure>
+
+<ol start="7">
+<li>现在无线网卡应该可以正常使用了。</li>
+</ol>
+<h3 id="PS"><a href="#PS" class="headerlink" title="PS:"></a>PS:</h3><p>   如果现在还不能联网。那么点击网络图标。选择链接到隐藏的无线网络。输入找到的网络的名字。<br>      图形化的网络管理程序是<code>System-&gt;Preferences-&gt;Network Connections</code>。打开程序后，点击无线网络项目，点击add增加一个新的无线网络。  给出任意的<code>Connection Name</code>。<code>SSID</code>中输入无限网络的名字。<code>wireless security</code>中选择一种合适的加密类型。key中输入无限网络的密码。 </p>
+<p>   其他字段都不修改。 执行后，应该能够链接无限网络。  可以使用<code>iwconfig wlan0</code>命令查看是否正确连接无线网络。</p>
+<h6 id="未正确链接无线网络的输出："><a href="#未正确链接无线网络的输出：" class="headerlink" title="未正确链接无线网络的输出："></a>未正确链接无线网络的输出：</h6><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br><span class="line">wlan0     IEEE <span class="number">802.11</span>abg  ESSID:off/any </span><br><span class="line">          Mode:Managed  Access Point: Not<span class="literal">-Associated</span>   Tx<span class="literal">-Power</span>=<span class="number">0</span> dBm  </span><br><span class="line">          Retry  long limit:<span class="number">7</span>   RTS thr:off   Fragment thr:off</span><br><span class="line">          Power Management:off</span><br></pre></td></tr></table></figure>
+
+<h6 id="正确链接无线网络后的输出："><a href="#正确链接无线网络后的输出：" class="headerlink" title="正确链接无线网络后的输出："></a>正确链接无线网络后的输出：</h6><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br><span class="line">wlan0     IEEE <span class="number">802.11</span>abg  ESSID:<span class="string">&quot;MyHome&quot;</span> </span><br><span class="line">          Mode:Managed  Frequency:<span class="number">2.437</span> GHz  Access Point: <span class="number">00</span>:<span class="number">26</span>:DS:<span class="number">43</span>:<span class="number">1</span>A:A8  </span><br><span class="line">          Bit Rate=<span class="number">54</span> Mb/s   Tx<span class="literal">-Power</span>=<span class="number">0</span> dBm  </span><br><span class="line">          Retry  long limit:<span class="number">7</span>   RTS thr:off   Fragment thr:off</span><br><span class="line">          Power Management:off</span><br><span class="line">          Link Quality=<span class="number">65</span>/<span class="number">70</span>  Signal level=<span class="literal">-45</span> dBm </span><br><span class="line">          Rx invalid nwid:<span class="number">0</span>  Rx invalid crypt:<span class="number">0</span>  Rx invalid frag:<span class="number">0</span></span><br><span class="line">          Tx excessive retries:<span class="number">0</span>  Invalid misc:<span class="number">0</span>   Missed beacon:<span class="number">0</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>Linux</tag>
+        <tag>无线网卡</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Linux查看硬件信息与系统资源</title>
     <url>/2022/09/06/Linux%E6%9F%A5%E7%9C%8B%E7%A1%AC%E4%BB%B6%E4%BF%A1%E6%81%AF%E4%B8%8E%E7%B3%BB%E7%BB%9F%E8%B5%84%E6%BA%90/</url>
     <content><![CDATA[<p>Linux下经常需要查看系统资源或硬件资源，与之对应的命令行也是非常多</p>
@@ -379,24 +433,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Hello World</title>
-    <url>/2017/08/10/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
     <title>hexo域名解析的两种方法</title>
     <url>/2022/08/19/hexo%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>想要在浏览器里面输入域名到达某个地址。必不可少的一步就是要告诉全世界的电脑，这个域名现在指向这个地方啦。<br>而这一步就是由 dns 服务器来负责的。<br>我们需要做的就是将域名与固定的 ip 地址绑定起来 (A)，或者是与某已有域名绑定起来（CNAME）.</p>
@@ -424,6 +460,24 @@
       </tags>
   </entry>
   <entry>
+    <title>Hello World</title>
+    <url>/2017/08/10/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
     <title>npm安装卸载命令</title>
     <url>/2022/08/23/npm%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BD%E5%91%BD%E4%BB%A4/</url>
     <content><![CDATA[<h2 id="npm安装模块"><a href="#npm安装模块" class="headerlink" title="npm安装模块"></a>npm安装模块</h2><p>利用 npm 安装xxx模块到当前命令行所在目录；</p>
@@ -449,60 +503,6 @@
 ]]></content>
       <tags>
         <tag>命令</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux系统无线网卡配置</title>
-    <url>/2019/12/16/Linux%E7%B3%BB%E7%BB%9F%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<h2 id="无线网卡配置"><a href="#无线网卡配置" class="headerlink" title="无线网卡配置"></a>无线网卡配置</h2><p>本文介绍在Linux 命令行界面中手动配置无线网卡的方法。目前流行的多数发行版都支持用图形界面的<code>network- manager</code>方便地进行配置，而无需使用本文所介绍的原始方法。</p>
-<p>下面介绍使用<code>iwconfig</code>和<code>ifconfig</code>等命令在命令行状态下配置无线网络。前题是无线网卡驱动已经正确安装，并被系统正确识别。</p>
-<span id="more"></span>
-<h2 id="大体思路"><a href="#大体思路" class="headerlink" title="大体思路"></a>大体思路</h2><p>工作的大体思路如下：</p>
-<ol>
-<li>用<code>iwconfig</code>开启无线网卡的电源，并查找区域内的无线网络</li>
-<li>连接到相应的无线网络</li>
-<li>通过<code>ifconfig</code>启用无线网卡，并获取IP（如果使用DHCP的话）</li>
-</ol>
-<h2 id="具体过程"><a href="#具体过程" class="headerlink" title="具体过程"></a>具体过程</h2><ol>
-<li>打开无线网卡电源</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 txpower on</span><br></pre></td></tr></table></figure>
-<h4 id="无线网络的信号灯应该亮了。"><a href="#无线网络的信号灯应该亮了。" class="headerlink" title="无线网络的信号灯应该亮了。"></a>无线网络的信号灯应该亮了。</h4><ol start="2">
-<li>列出区域内的无线网络<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwlist wlan0 scan</span><br></pre></td></tr></table></figure></li>
-<li>假设要连接到网络MyHome（即essid为MyHome的网络），那么输入命令</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 essid <span class="string">&quot;MyHome&quot;</span> </span><br></pre></td></tr></table></figure>
-<p><em>#如果网络是加密的，密码是0123456789，那么就输入命令#</em></p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 essid <span class="string">&quot;MyHome&quot;</span> key <span class="number">0123</span><span class="literal">-4567-89</span></span><br></pre></td></tr></table></figure>
-<ol start="4">
-<li>如果正常的话，输入</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br></pre></td></tr></table></figure>
-<h4 id="就可以看到连接正常的各项参数了。"><a href="#就可以看到连接正常的各项参数了。" class="headerlink" title="就可以看到连接正常的各项参数了。"></a>就可以看到连接正常的各项参数了。</h4><ol start="5">
-<li>启用无线网卡</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ifconfig wlan0 up</span><br></pre></td></tr></table></figure>
-
-<ol start="6">
-<li>如果是用DHCP获取IP的，那么用dhclient 或dhcpcd获取ip</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">dhcpcd wlan0</span><br></pre></td></tr></table></figure>
-
-<p>或</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">dhclient wlan0</span><br></pre></td></tr></table></figure>
-
-<ol start="7">
-<li>现在无线网卡应该可以正常使用了。</li>
-</ol>
-<h3 id="PS"><a href="#PS" class="headerlink" title="PS:"></a>PS:</h3><p>   如果现在还不能联网。那么点击网络图标。选择链接到隐藏的无线网络。输入找到的网络的名字。<br>      图形化的网络管理程序是<code>System-&gt;Preferences-&gt;Network Connections</code>。打开程序后，点击无线网络项目，点击add增加一个新的无线网络。  给出任意的<code>Connection Name</code>。<code>SSID</code>中输入无限网络的名字。<code>wireless security</code>中选择一种合适的加密类型。key中输入无限网络的密码。 </p>
-<p>   其他字段都不修改。 执行后，应该能够链接无限网络。  可以使用<code>iwconfig wlan0</code>命令查看是否正确连接无线网络。</p>
-<h6 id="未正确链接无线网络的输出："><a href="#未正确链接无线网络的输出：" class="headerlink" title="未正确链接无线网络的输出："></a>未正确链接无线网络的输出：</h6><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br><span class="line">wlan0     IEEE <span class="number">802.11</span>abg  ESSID:off/any </span><br><span class="line">          Mode:Managed  Access Point: Not<span class="literal">-Associated</span>   Tx<span class="literal">-Power</span>=<span class="number">0</span> dBm  </span><br><span class="line">          Retry  long limit:<span class="number">7</span>   RTS thr:off   Fragment thr:off</span><br><span class="line">          Power Management:off</span><br></pre></td></tr></table></figure>
-
-<h6 id="正确链接无线网络后的输出："><a href="#正确链接无线网络后的输出：" class="headerlink" title="正确链接无线网络后的输出："></a>正确链接无线网络后的输出：</h6><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br><span class="line">wlan0     IEEE <span class="number">802.11</span>abg  ESSID:<span class="string">&quot;MyHome&quot;</span> </span><br><span class="line">          Mode:Managed  Frequency:<span class="number">2.437</span> GHz  Access Point: <span class="number">00</span>:<span class="number">26</span>:DS:<span class="number">43</span>:<span class="number">1</span>A:A8  </span><br><span class="line">          Bit Rate=<span class="number">54</span> Mb/s   Tx<span class="literal">-Power</span>=<span class="number">0</span> dBm  </span><br><span class="line">          Retry  long limit:<span class="number">7</span>   RTS thr:off   Fragment thr:off</span><br><span class="line">          Power Management:off</span><br><span class="line">          Link Quality=<span class="number">65</span>/<span class="number">70</span>  Signal level=<span class="literal">-45</span> dBm </span><br><span class="line">          Rx invalid nwid:<span class="number">0</span>  Rx invalid crypt:<span class="number">0</span>  Rx invalid frag:<span class="number">0</span></span><br><span class="line">          Tx excessive retries:<span class="number">0</span>  Invalid misc:<span class="number">0</span>   Missed beacon:<span class="number">0</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>Linux</tag>
-        <tag>无线网卡</tag>
       </tags>
   </entry>
   <entry>
@@ -841,6 +841,102 @@
       </tags>
   </entry>
   <entry>
+    <title>继上一期解决github上的图片无法显示的问题</title>
+    <url>/2022/08/21/%E7%BB%A7%E4%B8%8A%E4%B8%80%E6%9C%9F%E8%A7%A3%E5%86%B3github%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>​      <a href="https://movejian.github.io/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/">继上篇github图床问题</a>无法正常显示，但在<strong>github</strong>上看到正常上传，连接也并非错误，百度了一下说什么<strong>DNS</strong>被污染了。解决方法是修改<strong>hosts</strong>文件或者修改<strong>DNS</strong>。</p>
+<p>​      首先，打开<a href="https://ping.eu/nslookup">域名解析</a>网站：<a href="https://ping.eu/nslookup">https://ping.eu/nslookup</a><br>然后输入raw.githubusercontent.com如下图：</p>
+<p><img src="https://movejian.github.io/images/20220821/5.png"></p>
+<span id="more"></span>
+<p>​      我们得到图床所用域名解析到的IP(上图红框中的地址)。</p>
+<ul>
+<li>最后打开本机的<strong>host</strong>文件，其路径如下：<br><code>C:\Windows\System32\drivers\etc\hosts</code>, 然后添加如下内容(上图红框中的地址)：</li>
+</ul>
+<p><img src="https://movejian.github.io/images/20220821/6.png"></p>
+<ul>
+<li>打开<strong>CMD</strong>输入命令<code>ipconfig /flushdns</code>刷新<strong>DNS</strong>缓存,再次输入<code>ipconfig/displaydns</code></li>
+</ul>
+<p>​    如果你的<strong>hosts</strong>的文件不见了,可以通过文件设置显示系统隐藏文件来找到，依然找不到，可能是被误删了，网上有很多是通过新建文本文档解决。也可以通过下面这个命令来生成<strong>hosts</strong>文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for /f %P in (&#x27;dir %windir%\WinSxS\hosts /b /s&#x27;) do copy %P %windir%\System32\drivers\etc &amp; echo %P &amp; Notepad %P</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>注意</strong>一定要使用管理员身份输入此命令。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>图床</tag>
+        <tag>问题解决</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>自动备份Hexo博客源文件</title>
+    <url>/2022/08/21/%E8%87%AA%E5%8A%A8%E5%A4%87%E4%BB%BDHexo%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/</url>
+    <content><![CDATA[<h3 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h3><p>自从接触了Hexo+NexT之后，发现离不开了，以后有能力的时候一定重新架构一下，使得更加个性化，最大程度的满足我们对于软件的需求，大家都知道，如果写东西在本地的话，最怕的应该就是更换电脑，还要重新搭建博客了，所以备份对于我们来说特别重要！备份博客就是本篇博客文章的主旨了，一定要攻下这座城堡。</p>
+<p>我曾经看过Git备份Hexo博客源文件的方式，这种方式虽然能够备份Hexo博客的源文件，但是对于我这种懒人，每次更新博文都需要输入两三行重复的Git命令真是一件麻烦的事情。况且指不定哪天就搞忘push到github上了。你说是不是，所以这篇文章出现了……</p>
+<span id="more"></span>
+<h3 id="二、原理"><a href="#二、原理" class="headerlink" title="二、原理"></a>二、原理</h3><p>通过监听Hexo的事件来完成自动执行Git命令进行自动备份，查阅Hexo文档，找到了Hexo的主要事件，见下表：</p>
+<table>
+<thead>
+<tr>
+<th>事件名</th>
+<th>事件发生时间</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>deployBefore</td>
+<td>在部署完成前发布</td>
+</tr>
+<tr>
+<td>deployAfter</td>
+<td>在部署成功后发布</td>
+</tr>
+<tr>
+<td>exit</td>
+<td>在 Hexo 结束前发布</td>
+</tr>
+<tr>
+<td>generateBefore</td>
+<td>在静态文件生成前发布</td>
+</tr>
+<tr>
+<td>generateAfter</td>
+<td>在静态文件生成后发布</td>
+</tr>
+<tr>
+<td>new</td>
+<td>在文章文件建立后发布</td>
+</tr>
+</tbody></table>
+<p>于是我们就可以通过监听Hexo的deployAfter事件，待上传完成之后自动运行Git备份命令，从而达到自动备份的目的。</p>
+<h3 id="三、实现"><a href="#三、实现" class="headerlink" title="三、实现"></a>三、实现</h3><h5 id="1-将Hexo目录加入Git仓库"><a href="#1-将Hexo目录加入Git仓库" class="headerlink" title="1.将Hexo目录加入Git仓库"></a>1.将Hexo目录加入Git仓库</h5><p>本脚本需要提前将Hexo加入Git仓库并与Github或者Gitee远程仓库绑定之后，才能正常工作。如果你不知道该怎样进行操作，可以参考我的另一篇博文：</p>
+<ul>
+<li>Git命令手动备份Hexo博客源文件</li>
+</ul>
+<h5 id="2-安装shelljs模块"><a href="#2-安装shelljs模块" class="headerlink" title="2.安装shelljs模块"></a>2.安装shelljs模块</h5><p>要实现这个自动备份功能，需要依赖NodeJs的一个shelljs模块,该模块重新包装了child_process,调用系统命令更加的方便。（其实就是因为我懒( ╯▽╰)）该模块需要安装后使用。</p>
+<p>在命令中键入以下命令，完成shelljs模块的安装：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install --save shelljs</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-编写自动备份脚本"><a href="#3-编写自动备份脚本" class="headerlink" title="3.编写自动备份脚本"></a>3.编写自动备份脚本</h5><p>shelljs模块安装完成后，在Hexo根目录的scripts文件夹下新建一个js文件，文件名随意取(我的文件名为:auto_backup.js)。如果没有scripts目录，请新建一个。</p>
+<p>然后在脚本中，写入以下内容：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">require(<span class="string">&#x27;shelljs/global&#x27;</span>);</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    hexo.on(<span class="string">&#x27;deployAfter&#x27;</span>, function() &#123;//当deploy完成后执行备份</span><br><span class="line">        run();</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">&#125; catch (e) &#123;</span><br><span class="line">    console.log(<span class="string">&quot;产生了一个错误啊&lt;(￣3￣)&gt; !，错误详情为：&quot;</span> + e.toString());</span><br><span class="line">&#125;</span><br><span class="line">function run() &#123;</span><br><span class="line">    <span class="keyword">if</span> (!which(<span class="string">&#x27;git&#x27;</span>)) &#123;</span><br><span class="line">        echo(<span class="string">&#x27;Sorry, this script requires git&#x27;</span>);</span><br><span class="line">        exit(<span class="number">1</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        echo(<span class="string">&quot;======================Auto Backup Begin===========================&quot;</span>);</span><br><span class="line">        cd(<span class="string">&#x27;E:/work/myblog&#x27;</span>);    //此处修改为Hexo根目录路径</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">exec</span>(<span class="string">&#x27;git add --all&#x27;</span>).code !== <span class="number">0</span>) &#123;</span><br><span class="line">            echo(<span class="string">&#x27;Error: Git add failed&#x27;</span>);</span><br><span class="line">            exit(<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">exec</span>(<span class="string">&#x27;git commit -am &quot;blog auto backup script\&#x27;s commit&quot;&#x27;</span>).code !== <span class="number">0</span>) &#123;</span><br><span class="line">            echo(<span class="string">&#x27;Error: Git commit failed&#x27;</span>);</span><br><span class="line">            exit(<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">exec</span>(<span class="string">&#x27;git push origin master&#x27;</span>).code !== <span class="number">0</span>) &#123;</span><br><span class="line">            echo(<span class="string">&#x27;Error: Git push failed&#x27;</span>);</span><br><span class="line">            exit(<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        echo(<span class="string">&quot;==================Auto Backup Complete============================&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>其中，需要修改第16行的<code>E:/work/myblog</code>路径为Hexo的根目录路径。（脚本中的路径为博主的Hexo路径）</li>
+<li>如果你的Git远程仓库名称不为<code>origin</code>的话，还需要修改第25行执行的push命令，修改成自己的远程仓库名和相应的分支名。</li>
+</ul>
+<h5 id="4-测试结果"><a href="#4-测试结果" class="headerlink" title="4.测试结果"></a>4.测试结果</h5><p>保存脚本并退出，然后执行hexo d命令，在常规结果执行出来后，将会得到类似以下结果:</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>技术</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>热血传奇魔龙地图与简易图解</title>
     <url>/2022/08/31/%E7%83%AD%E8%A1%80%E4%BC%A0%E5%A5%87%E9%AD%94%E9%BE%99%E5%9C%B0%E5%9B%BE%E4%B8%8E%E7%AE%80%E6%98%93%E5%9B%BE%E8%A7%A3/</url>
     <content><![CDATA[<p>盟重老兵（325，325）处可以直接传送到魔龙城。 魔龙城的怪物有：魔龙血蛙、魔龙破甲兵、魔龙射手、魔龙教主等。</p>
@@ -956,99 +1052,81 @@
       </tags>
   </entry>
   <entry>
-    <title>继上一期解决github上的图片无法显示的问题</title>
-    <url>/2022/08/21/%E7%BB%A7%E4%B8%8A%E4%B8%80%E6%9C%9F%E8%A7%A3%E5%86%B3github%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>​      <a href="https://movejian.github.io/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/">继上篇github图床问题</a>无法正常显示，但在<strong>github</strong>上看到正常上传，连接也并非错误，百度了一下说什么<strong>DNS</strong>被污染了。解决方法是修改<strong>hosts</strong>文件或者修改<strong>DNS</strong>。</p>
-<p>​      首先，打开<a href="https://ping.eu/nslookup">域名解析</a>网站：<a href="https://ping.eu/nslookup">https://ping.eu/nslookup</a><br>然后输入raw.githubusercontent.com如下图：</p>
-<p><img src="https://movejian.github.io/images/20220821/5.png"></p>
-<span id="more"></span>
-<p>​      我们得到图床所用域名解析到的IP(上图红框中的地址)。</p>
-<ul>
-<li>最后打开本机的<strong>host</strong>文件，其路径如下：<br><code>C:\Windows\System32\drivers\etc\hosts</code>, 然后添加如下内容(上图红框中的地址)：</li>
-</ul>
-<p><img src="https://movejian.github.io/images/20220821/6.png"></p>
-<ul>
-<li>打开<strong>CMD</strong>输入命令<code>ipconfig /flushdns</code>刷新<strong>DNS</strong>缓存,再次输入<code>ipconfig/displaydns</code></li>
-</ul>
-<p>​    如果你的<strong>hosts</strong>的文件不见了,可以通过文件设置显示系统隐藏文件来找到，依然找不到，可能是被误删了，网上有很多是通过新建文本文档解决。也可以通过下面这个命令来生成<strong>hosts</strong>文件。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for /f %P in (&#x27;dir %windir%\WinSxS\hosts /b /s&#x27;) do copy %P %windir%\System32\drivers\etc &amp; echo %P &amp; Notepad %P</span><br></pre></td></tr></table></figure>
+    <title>Linux中的挂载命令mount</title>
+    <url>/2022/09/21/Linux%E4%B8%AD%E7%9A%84%E6%8C%82%E8%BD%BD%E5%91%BD%E4%BB%A4mount/</url>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在 Linux GUI 中，我们通常理所当然地认为，当我们插入 USB 闪存驱动器、硬盘驱动器甚至 DVD 磁盘时，它们就可以使用了。但是在后台有一个过程，设备被安装（准备好使用）并分配了一个安装点。当使用服务器或远程连接时，并不能确定某个设备是否会自动可用，那么我们如何挂载自己的设备呢？下面我们一起来看一下！</p>
+<h3 id="mount是什么？"><a href="#mount是什么？" class="headerlink" title="mount是什么？"></a>mount是什么？</h3><p>Linux文件系统中的所有文件都以<code>/ </code>为根的大树的形式排列。这些文件可以根据您的分区表分布在各种设备上，最初你的父目录安装（即附加）到这棵树的<code>/</code> ，其他的可以手动挂载使用<code>GUI</code>界面（如果可用）或使用挂载命令。</p>
+<p><code>mount</code>命令用于将设备上找到的文件系统挂载到以 <code>/</code> 为根的大树结构（Linux文件系统）上。相反，另一个命令<code>umount</code>可用于从树中分离这些设备。</p>
+<h3 id="mount的初级用法"><a href="#mount的初级用法" class="headerlink" title="mount的初级用法"></a>mount的初级用法</h3><p><code>mount</code>命令挂载存储设备或文件系统，使其可访问并将其附加到现有目录结构。</p>
+<h4 id="语法："><a href="#语法：" class="headerlink" title="语法："></a>语法：</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mount -t 类型设备目录</span><br></pre></td></tr></table></figure>
 
-<ul>
-<li><strong>注意</strong>一定要使用管理员身份输入此命令。</li>
+<p>这告诉内核将设备上找到的文件系统（类型为type）附加到目录<code>dir</code>。<code>dir</code>之前的内容（如果有）、<code>owner</code>和<code>mode</code>变得不可见，只要这个文件系统保持挂载，路径名dir指的是设备上文件系统的根目录。如果没有提到目标目录，默认情况下，它将设备挂载在 <code>/etc/fstab</code> 文件中。</p>
+<h4 id="其他形式："><a href="#其他形式：" class="headerlink" title="其他形式："></a>其他形式：</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mount [-l|-h|-V]</span><br><span class="line">mount -a [-fFnrsvw] [-t fstype] [-O optlist]</span><br><span class="line">mount [-fnrsvw] [-o options] device|dir</span><br><span class="line">mount [-fnrsvw] [-t fstype] [-o options] device dir</span><br></pre></td></tr></table></figure>
+
+<p>这些命令告诉内核将在设备上找到的文件系统附加到<code>dir</code>。</p>
+<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><p>要将硬盘驱动器的第二个分区挂载到现有目录<code>/media/PHOTOS</code>（挂载点）：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mount /dev/hda2 /media/PHOTOS</span><br></pre></td></tr></table></figure>
+
+<p> 显示所有已安装的分区：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mount</span><br><span class="line">proc on /proc type proc (rw) </span><br><span class="line">sysfs on /sys type sysfs (rw) </span><br><span class="line">devpts on /dev/pts type devpts (rw,gid=5,mode=620) </span><br><span class="line">/dev/sda1 on /boot type ext3 (rw ) </span><br><span class="line">/tmp on /var/tmp type none (rw,noexec,nosuid,bind) </span><br><span class="line">10.4.0.4:/srv/export/setup_server on /nfs/setup_server type nfs (ro,addr=10.4.0.4)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>如果需要卸载刚才的分区：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ umount /dev/hda2</span><br></pre></td></tr></table></figure>
+
+<p>参照挂载点卸载：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ umount /media/PHOTOS</span><br></pre></td></tr></table></figure>
+
+<p>使用特定选项重新挂载分区：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mount -o remount,rw /dev/hda2</span><br></pre></td></tr></table></figure>
+
+<h3 id="umount的初级用法"><a href="#umount的初级用法" class="headerlink" title="umount的初级用法"></a>umount的初级用法</h3><p><code>umount</code>命令从文件层次结构中分离指定的文件系统。一个文件系统是通过给出它被安装的目录来指定的。提供文件系统所在的特殊设备也可以工作，但这是一种过时的方法，主要是因为如果该设备安装在多个目录上，它会失败。</p>
+<p>但是需要注意，文件系统在繁忙时无法卸载 。例如，当它上面有打开的文件时，或者当某个进程在那里有它的工作目录时，或者当它上面的交换文件正在使用时，<code>umount</code>将无法成功。</p>
+<p>有些无法使用<code>umount</code>的进程甚至可能是<code>umount</code>本身——例如，<code>umount</code>打开公共C库，而后者又可能打开了语言环境文件，如果它们在相关设备上，则会阻止它被卸载。即使出现这种冲突，“惰性”卸载（参见下面卸载选项部分中的-l ）也会尝试卸载。</p>
+<h3 id="高级用法"><a href="#高级用法" class="headerlink" title="高级用法"></a>高级用法</h3><ul>
+<li>显示有关已安装文件系统的信息：</li>
 </ul>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210117129.png" alt="在这里插入图片描述"></p>
+<ul>
+<li>挂载文件系统：</li>
+</ul>
+<p><img src="https://img-blog.csdnimg.cn/210c2c3a91db44bcb913914086401a56.png" alt="在这里插入图片描述"></p>
+<ul>
+<li><p>显示版本信息：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210119146.png"></p>
+</li>
+<li><p>卸载文件系统：</p>
+</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210122274.png"></p>
+<h3 id="绑定挂载"><a href="#绑定挂载" class="headerlink" title="绑定挂载"></a>绑定挂载</h3><p>绑定挂载允许将文件系统层次结构或文件挂载到不同的挂载点。与符号链接不同，文件系统本身不存在绑定挂载。在下面的例子中，路径&#x2F;olddir将被挂载在<code>/newdir</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mount --bind /olddir /newdir</span><br></pre></td></tr></table></figure>
+
+<h3 id="如何在-Linux-上挂载和卸载驱动器"><a href="#如何在-Linux-上挂载和卸载驱动器" class="headerlink" title="如何在 Linux 上挂载和卸载驱动器"></a>如何在 Linux 上挂载和卸载驱动器</h3><p>可以使用终端安装 SSD、USB 闪存驱动器、HDD 和 ISO 映像。在终端仿真器中使用命令行界面 (CLI) 可以让我们更好地控制何时安装驱动器以及它们在文件系统中的安装位置。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210123639.png"></p>
+<ol>
+<li>使用<code>lsblk</code>命令识别 USB 驱动器。在结果中，您可能会看到许多标记为“循环”的条目。但是，您正在寻找被列为<code>sda</code>或<code>sdb</code>的结果，以识别连接到您的系统的物理磁盘。比较所连接驱动器的列出容量通常可以帮助您发现目标驱动器的名称。在我们的例子中，我们可以将 USB 驱动器识别为 <code>sdb1</code>。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210123811.png"></p>
+<ol start="2">
+<li>创建一个目录来挂载 USB 驱动器。当外部驱动器自动挂载时，它通常挂载在媒体目录中。但是使用 CLI，我们可以创建并指定一个目录，我们将在其中挂载我们的 <code>pendrive</code>。请注意，我们需要使用<code>sudo</code>来调用<code>root</code>权限，以便在媒体目录中创建一个目录。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo mkdir /media/pendrive</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>使用<code>mount</code>命令将 U 盘挂载到<code>/media/pendrive</code>目录。<code>mount</code>命令具有以下语法；</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo mount /dev/sdb1 /media/pendrive</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li><p>通过重新运行<code>lsblk</code>检查驱动器是否已安装。</p>
+<blockquote>
+<p>请注意， <code>lsblk</code>输出中的最后一列列出了列出设备的挂载点，如果列出了挂载点，则确认该设备已挂载。</p>
+</blockquote>
+</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210124550.png"></p>
+<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>使用<code>mount</code>命令我们可以更好地控制在 Linux 中挂载和卸载磁盘，并掌握一些技巧，在连接的驱动器无法自动正确挂载时可能会有所帮助。</p>
+<p>在探索以前使用的系统的旧备份映像或想要查看 Linux 发行版映像内容以进行探索或学习时，能够使用循环设备挂载磁盘映像非常有用。</p>
 ]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>图床</tag>
-        <tag>问题解决</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>自动备份Hexo博客源文件</title>
-    <url>/2022/08/21/%E8%87%AA%E5%8A%A8%E5%A4%87%E4%BB%BDHexo%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/</url>
-    <content><![CDATA[<h3 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h3><p>自从接触了Hexo+NexT之后，发现离不开了，以后有能力的时候一定重新架构一下，使得更加个性化，最大程度的满足我们对于软件的需求，大家都知道，如果写东西在本地的话，最怕的应该就是更换电脑，还要重新搭建博客了，所以备份对于我们来说特别重要！备份博客就是本篇博客文章的主旨了，一定要攻下这座城堡。</p>
-<p>我曾经看过Git备份Hexo博客源文件的方式，这种方式虽然能够备份Hexo博客的源文件，但是对于我这种懒人，每次更新博文都需要输入两三行重复的Git命令真是一件麻烦的事情。况且指不定哪天就搞忘push到github上了。你说是不是，所以这篇文章出现了……</p>
-<span id="more"></span>
-<h3 id="二、原理"><a href="#二、原理" class="headerlink" title="二、原理"></a>二、原理</h3><p>通过监听Hexo的事件来完成自动执行Git命令进行自动备份，查阅Hexo文档，找到了Hexo的主要事件，见下表：</p>
-<table>
-<thead>
-<tr>
-<th>事件名</th>
-<th>事件发生时间</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>deployBefore</td>
-<td>在部署完成前发布</td>
-</tr>
-<tr>
-<td>deployAfter</td>
-<td>在部署成功后发布</td>
-</tr>
-<tr>
-<td>exit</td>
-<td>在 Hexo 结束前发布</td>
-</tr>
-<tr>
-<td>generateBefore</td>
-<td>在静态文件生成前发布</td>
-</tr>
-<tr>
-<td>generateAfter</td>
-<td>在静态文件生成后发布</td>
-</tr>
-<tr>
-<td>new</td>
-<td>在文章文件建立后发布</td>
-</tr>
-</tbody></table>
-<p>于是我们就可以通过监听Hexo的deployAfter事件，待上传完成之后自动运行Git备份命令，从而达到自动备份的目的。</p>
-<h3 id="三、实现"><a href="#三、实现" class="headerlink" title="三、实现"></a>三、实现</h3><h5 id="1-将Hexo目录加入Git仓库"><a href="#1-将Hexo目录加入Git仓库" class="headerlink" title="1.将Hexo目录加入Git仓库"></a>1.将Hexo目录加入Git仓库</h5><p>本脚本需要提前将Hexo加入Git仓库并与Github或者Gitee远程仓库绑定之后，才能正常工作。如果你不知道该怎样进行操作，可以参考我的另一篇博文：</p>
-<ul>
-<li>Git命令手动备份Hexo博客源文件</li>
-</ul>
-<h5 id="2-安装shelljs模块"><a href="#2-安装shelljs模块" class="headerlink" title="2.安装shelljs模块"></a>2.安装shelljs模块</h5><p>要实现这个自动备份功能，需要依赖NodeJs的一个shelljs模块,该模块重新包装了child_process,调用系统命令更加的方便。（其实就是因为我懒( ╯▽╰)）该模块需要安装后使用。</p>
-<p>在命令中键入以下命令，完成shelljs模块的安装：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install --save shelljs</span><br></pre></td></tr></table></figure>
-
-<h5 id="3-编写自动备份脚本"><a href="#3-编写自动备份脚本" class="headerlink" title="3.编写自动备份脚本"></a>3.编写自动备份脚本</h5><p>shelljs模块安装完成后，在Hexo根目录的scripts文件夹下新建一个js文件，文件名随意取(我的文件名为:auto_backup.js)。如果没有scripts目录，请新建一个。</p>
-<p>然后在脚本中，写入以下内容：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">require(<span class="string">&#x27;shelljs/global&#x27;</span>);</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    hexo.on(<span class="string">&#x27;deployAfter&#x27;</span>, function() &#123;//当deploy完成后执行备份</span><br><span class="line">        run();</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">&#125; catch (e) &#123;</span><br><span class="line">    console.log(<span class="string">&quot;产生了一个错误啊&lt;(￣3￣)&gt; !，错误详情为：&quot;</span> + e.toString());</span><br><span class="line">&#125;</span><br><span class="line">function run() &#123;</span><br><span class="line">    <span class="keyword">if</span> (!which(<span class="string">&#x27;git&#x27;</span>)) &#123;</span><br><span class="line">        echo(<span class="string">&#x27;Sorry, this script requires git&#x27;</span>);</span><br><span class="line">        exit(<span class="number">1</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        echo(<span class="string">&quot;======================Auto Backup Begin===========================&quot;</span>);</span><br><span class="line">        cd(<span class="string">&#x27;E:/work/myblog&#x27;</span>);    //此处修改为Hexo根目录路径</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">exec</span>(<span class="string">&#x27;git add --all&#x27;</span>).code !== <span class="number">0</span>) &#123;</span><br><span class="line">            echo(<span class="string">&#x27;Error: Git add failed&#x27;</span>);</span><br><span class="line">            exit(<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">exec</span>(<span class="string">&#x27;git commit -am &quot;blog auto backup script\&#x27;s commit&quot;&#x27;</span>).code !== <span class="number">0</span>) &#123;</span><br><span class="line">            echo(<span class="string">&#x27;Error: Git commit failed&#x27;</span>);</span><br><span class="line">            exit(<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">exec</span>(<span class="string">&#x27;git push origin master&#x27;</span>).code !== <span class="number">0</span>) &#123;</span><br><span class="line">            echo(<span class="string">&#x27;Error: Git push failed&#x27;</span>);</span><br><span class="line">            exit(<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        echo(<span class="string">&quot;==================Auto Backup Complete============================&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>其中，需要修改第16行的<code>E:/work/myblog</code>路径为Hexo的根目录路径。（脚本中的路径为博主的Hexo路径）</li>
-<li>如果你的Git远程仓库名称不为<code>origin</code>的话，还需要修改第25行执行的push命令，修改成自己的远程仓库名和相应的分支名。</li>
-</ul>
-<h5 id="4-测试结果"><a href="#4-测试结果" class="headerlink" title="4.测试结果"></a>4.测试结果</h5><p>保存脚本并退出，然后执行hexo d命令，在常规结果执行出来后，将会得到类似以下结果:</p>
-]]></content>
-      <categories>
-        <category>学习</category>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>技术</tag>
-      </tags>
   </entry>
 </search>
