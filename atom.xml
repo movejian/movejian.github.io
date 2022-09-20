@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-09-20T16:09:45.565Z</updated>
+  <updated>2022-09-20T16:11:04.865Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -17,22 +17,18 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>如何用区块链技术解决信任问题</title>
+    <title>如何用区块链技术解决信任问题 Fabric 架构深度解读</title>
     <link href="http://example.com/2022/09/21/%E5%A6%82%E4%BD%95%E7%94%A8%E5%8C%BA%E5%9D%97%E9%93%BE%E6%8A%80%E6%9C%AF%E8%A7%A3%E5%86%B3%E4%BF%A1%E4%BB%BB%E9%97%AE%E9%A2%98/"/>
     <id>http://example.com/2022/09/21/%E5%A6%82%E4%BD%95%E7%94%A8%E5%8C%BA%E5%9D%97%E9%93%BE%E6%8A%80%E6%9C%AF%E8%A7%A3%E5%86%B3%E4%BF%A1%E4%BB%BB%E9%97%AE%E9%A2%98/</id>
     <published>2022-09-20T16:07:09.000Z</published>
-    <updated>2022-09-20T16:09:45.565Z</updated>
+    <updated>2022-09-20T16:11:04.865Z</updated>
     
     
-      
-      
-        
-        
     <summary type="html">&lt;blockquote&gt;
 &lt;p&gt;阿里妹导读：区块链技术，随着比特币的兴起而为大家所知。但是具体到技术本身，大家相对熟悉的几个词可能是“数据不可篡改”、“公开链”、“分布式数据”、“共识机制”等。&lt;/p&gt;
-&lt;p&gt;这篇文章将抛砖引玉，通过深度解读Hyperledger</summary>
-        
-      
+&lt;p&gt;这篇文章将抛砖引玉，通过深度解读Hyperledger Project旗下的Fabric，介绍区块链适合的应用场景，如何从技术上去解决实际业务中的问题，希望能和大家一起探讨、学习。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;&lt;strong&gt;前言&lt;/strong&gt;&lt;/h2&gt;&lt;p&gt;Hyperledger Project 由Linux基金会创办于2015年10月，是一个开源的区块链研发孵化项目，致力于提供可协同开发以区块链为底层的分布式账本。旗下的Fabric项目目标为打造一个提供分布式账本解决方案的平台。&lt;/p&gt;</summary>
     
     
     

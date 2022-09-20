@@ -11,7 +11,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>如何用区块链技术解决信任问题 |  如风网络</title>
+      <title>如何用区块链技术解决信任问题 Fabric 架构深度解读 |  如风网络</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/favicon.ico" />
@@ -75,7 +75,7 @@ var _hmt = _hmt || [];
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  如何用区块链技术解决信任问题
+  如何用区块链技术解决信任问题 Fabric 架构深度解读
 </h1>
  
 
@@ -120,6 +120,7 @@ var _hmt = _hmt || [];
 <p>这篇文章将抛砖引玉，通过深度解读Hyperledger Project旗下的Fabric，介绍区块链适合的应用场景，如何从技术上去解决实际业务中的问题，希望能和大家一起探讨、学习。</p>
 </blockquote>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a><strong>前言</strong></h2><p>Hyperledger Project 由Linux基金会创办于2015年10月，是一个开源的区块链研发孵化项目，致力于提供可协同开发以区块链为底层的分布式账本。旗下的Fabric项目目标为打造一个提供分布式账本解决方案的平台。</p>
+<span id="more"></span>
 <p><strong>业务上所期望解决的问题——信用问题</strong></p>
 <p>首先从比特币说起，大家对比特币算力证明（POW）的名词应该不陌生，先不说其耗费大量的资源，从共识机制上来看，拥有超过50%的算力即可掌控整个比特币，无论从技术还是业务的角度都是一个风险极高的机制，但神奇的金融圈没有人会去触碰这样的底线，一旦有人拥有超过50%的算力，比特币可能就玩不下去了：）</p>
 <p>那么实际的业务场景中的需求应该是怎样的呢？比如说，银行结算清算系统，传统的银行交易系统中，如果出现跨行交易，那么交易数据便需要一个清算系统进行定时对账确保双方的交易数据是同步无误的，那么就可能导致跨行转账需要T+1的时长，而主要的原因是因为双方的系统及数据相互独立，数据互不“信任”，所以需要一个清算系统去验证交易数据，而区块链可以说是为了解决这种“信任”问题而产生的技术，在双方进行交易的同时对数据进行了认证，那么便无需交易后再进行清算而达到实时转账等功能。下面来说为了解决“信用”问题，技术上需要哪些手段去满足。</p>
