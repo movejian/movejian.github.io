@@ -116,6 +116,7 @@ var _hmt = _hmt || [];
     <div class="article-entry" itemprop="articleBody">
        
   <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在 Linux GUI 中，我们通常理所当然地认为，当我们插入 USB 闪存驱动器、硬盘驱动器甚至 DVD 磁盘时，它们就可以使用了。但是在后台有一个过程，设备被安装（准备好使用）并分配了一个安装点。当使用服务器或远程连接时，并不能确定某个设备是否会自动可用，那么我们如何挂载自己的设备呢？下面我们一起来看一下！</p>
+<span id="more"></span>
 <h3 id="mount是什么？"><a href="#mount是什么？" class="headerlink" title="mount是什么？"></a>mount是什么？</h3><p>Linux文件系统中的所有文件都以<code>/ </code>为根的大树的形式排列。这些文件可以根据您的分区表分布在各种设备上，最初你的父目录安装（即附加）到这棵树的<code>/</code> ，其他的可以手动挂载使用<code>GUI</code>界面（如果可用）或使用挂载命令。</p>
 <p><code>mount</code>命令用于将设备上找到的文件系统挂载到以 <code>/</code> 为根的大树结构（Linux文件系统）上。相反，另一个命令<code>umount</code>可用于从树中分离这些设备。</p>
 <h3 id="mount的初级用法"><a href="#mount的初级用法" class="headerlink" title="mount的初级用法"></a>mount的初级用法</h3><p><code>mount</code>命令挂载存储设备或文件系统，使其可访问并将其附加到现有目录结构。</p>
