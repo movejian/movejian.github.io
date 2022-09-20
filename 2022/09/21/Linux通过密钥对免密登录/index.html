@@ -11,7 +11,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>Linux中的挂载命令mount |  如风网络</title>
+      <title>Linux通过密钥对免密登录 |  如风网络</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/favicon.ico" />
@@ -64,7 +64,7 @@ var _hmt = _hmt || [];
     <main class="content on">
       <section class="outer">
   <article
-  id="post-Linux中的挂载命令mount"
+  id="post-Linux通过密钥对免密登录"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -75,7 +75,7 @@ var _hmt = _hmt || [];
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  Linux中的挂载命令mount
+  Linux通过密钥对免密登录
 </h1>
  
 
@@ -83,8 +83,8 @@ var _hmt = _hmt || [];
     </header>
      
     <div class="article-meta">
-      <a href="/2022/09/21/Linux%E4%B8%AD%E7%9A%84%E6%8C%82%E8%BD%BD%E5%91%BD%E4%BB%A4mount/" class="article-date">
-  <time datetime="2022-09-20T16:52:41.000Z" itemprop="datePublished">2022-09-21 00:52:41</time>
+      <a href="/2022/09/21/Linux%E9%80%9A%E8%BF%87%E5%AF%86%E9%92%A5%E5%AF%B9%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/" class="article-date">
+  <time datetime="2022-09-20T17:57:09.000Z" itemprop="datePublished">2022-09-21 01:57:09</time>
 </a> 
   <div class="article-category">
     <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a> / <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0/Linux/">Linux</a>
@@ -95,7 +95,7 @@ var _hmt = _hmt || [];
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">1.5k</span>
+            <span class="post-count">512</span>
         </span>
     </span>
 
@@ -104,95 +104,43 @@ var _hmt = _hmt || [];
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">5 分钟</span>
+            <span class="post-count">2 分钟</span>
         </span>
     </span>
 </div>
  
     </div>
       
-    <div class="tocbot"></div>
-
 
 
 
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在 Linux GUI 中，我们通常理所当然地认为，当我们插入 USB 闪存驱动器、硬盘驱动器甚至 DVD 磁盘时，它们就可以使用了。但是在后台有一个过程，设备被安装（准备好使用）并分配了一个安装点。当使用服务器或远程连接时，并不能确定某个设备是否会自动可用，那么我们如何挂载自己的设备呢？下面我们一起来看一下！</p>
-<span id="more"></span>
-<h3 id="mount是什么？"><a href="#mount是什么？" class="headerlink" title="mount是什么？"></a>mount是什么？</h3><p>Linux文件系统中的所有文件都以<code>/ </code>为根的大树的形式排列。这些文件可以根据您的分区表分布在各种设备上，最初你的父目录安装（即附加）到这棵树的<code>/</code> ，其他的可以手动挂载使用<code>GUI</code>界面（如果可用）或使用挂载命令。</p>
-<p><code>mount</code>命令用于将设备上找到的文件系统挂载到以 <code>/</code> 为根的大树结构（Linux文件系统）上。相反，另一个命令<code>umount</code>可用于从树中分离这些设备。</p>
-<h3 id="mount的初级用法"><a href="#mount的初级用法" class="headerlink" title="mount的初级用法"></a>mount的初级用法</h3><p><code>mount</code>命令挂载存储设备或文件系统，使其可访问并将其附加到现有目录结构。</p>
-<h4 id="语法："><a href="#语法：" class="headerlink" title="语法："></a>语法：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount -t 类型设备目录</span><br></pre></td></tr></table></figure>
-
-<p>这告诉内核将设备上找到的文件系统（类型为type）附加到目录<code>dir</code>。<code>dir</code>之前的内容（如果有）、<code>owner</code>和<code>mode</code>变得不可见，只要这个文件系统保持挂载，路径名dir指的是设备上文件系统的根目录。如果没有提到目标目录，默认情况下，它将设备挂载在 <code>/etc/fstab</code> 文件中。</p>
-<h4 id="其他形式："><a href="#其他形式：" class="headerlink" title="其他形式："></a>其他形式：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mount [-l|-h|-V]</span><br><span class="line">mount -a [-fFnrsvw] [-t fstype] [-O optlist]</span><br><span class="line">mount [-fnrsvw] [-o options] device|dir</span><br><span class="line">mount [-fnrsvw] [-t fstype] [-o options] device dir</span><br></pre></td></tr></table></figure>
-
-<p>这些命令告诉内核将在设备上找到的文件系统附加到<code>dir</code>。</p>
-<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><p>要将硬盘驱动器的第二个分区挂载到现有目录<code>/media/PHOTOS</code>（挂载点）：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mount /dev/hda2 /media/PHOTOS</span><br></pre></td></tr></table></figure>
-
-<p> 显示所有已安装的分区：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ mount</span><br><span class="line">proc on /proc type proc (rw) </span><br><span class="line">sysfs on /sys type sysfs (rw) </span><br><span class="line">devpts on /dev/pts type devpts (rw,gid=5,mode=620) </span><br><span class="line">/dev/sda1 on /boot type ext3 (rw ) </span><br><span class="line">/tmp on /var/tmp type none (rw,noexec,nosuid,bind) </span><br><span class="line">10.4.0.4:/srv/export/setup_server on /nfs/setup_server type nfs (ro,addr=10.4.0.4)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>如果需要卸载刚才的分区：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ umount /dev/hda2</span><br></pre></td></tr></table></figure>
-
-<p>参照挂载点卸载：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ umount /media/PHOTOS</span><br></pre></td></tr></table></figure>
-
-<p>使用特定选项重新挂载分区：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mount -o remount,rw /dev/hda2</span><br></pre></td></tr></table></figure>
-
-<h3 id="umount的初级用法"><a href="#umount的初级用法" class="headerlink" title="umount的初级用法"></a>umount的初级用法</h3><p><code>umount</code>命令从文件层次结构中分离指定的文件系统。一个文件系统是通过给出它被安装的目录来指定的。提供文件系统所在的特殊设备也可以工作，但这是一种过时的方法，主要是因为如果该设备安装在多个目录上，它会失败。</p>
-<p>但是需要注意，文件系统在繁忙时无法卸载 。例如，当它上面有打开的文件时，或者当某个进程在那里有它的工作目录时，或者当它上面的交换文件正在使用时，<code>umount</code>将无法成功。</p>
-<p>有些无法使用<code>umount</code>的进程甚至可能是<code>umount</code>本身——例如，<code>umount</code>打开公共C库，而后者又可能打开了语言环境文件，如果它们在相关设备上，则会阻止它被卸载。即使出现这种冲突，“惰性”卸载（参见下面卸载选项部分中的-l ）也会尝试卸载。</p>
-<h3 id="高级用法"><a href="#高级用法" class="headerlink" title="高级用法"></a>高级用法</h3><ul>
-<li>显示有关已安装文件系统的信息：</li>
-</ul>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210149077.png"></p>
-<ul>
-<li>挂载文件系统：</li>
-</ul>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210150279.png"></p>
-<ul>
-<li><p>显示版本信息：</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210151979.png"></p>
-</li>
-<li><p>卸载文件系统：</p>
-</li>
-</ul>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210151025.png"></p>
-<h3 id="绑定挂载"><a href="#绑定挂载" class="headerlink" title="绑定挂载"></a>绑定挂载</h3><p>绑定挂载允许将文件系统层次结构或文件挂载到不同的挂载点。与符号链接不同，文件系统本身不存在绑定挂载。在下面的例子中，路径&#x2F;olddir将被挂载在<code>/newdir</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mount --bind /olddir /newdir</span><br></pre></td></tr></table></figure>
-
-<h3 id="如何在-Linux-上挂载和卸载驱动器"><a href="#如何在-Linux-上挂载和卸载驱动器" class="headerlink" title="如何在 Linux 上挂载和卸载驱动器"></a>如何在 Linux 上挂载和卸载驱动器</h3><p>可以使用终端安装 SSD、USB 闪存驱动器、HDD 和 ISO 映像。在终端仿真器中使用命令行界面 (CLI) 可以让我们更好地控制何时安装驱动器以及它们在文件系统中的安装位置。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210123639.png"></p>
-<ol>
-<li>使用<code>lsblk</code>命令识别 USB 驱动器。在结果中，您可能会看到许多标记为“循环”的条目。但是，您正在寻找被列为<code>sda</code>或<code>sdb</code>的结果，以识别连接到您的系统的物理磁盘。比较所连接驱动器的列出容量通常可以帮助您发现目标驱动器的名称。在我们的例子中，我们可以将 USB 驱动器识别为 <code>sdb1</code>。</li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210123811.png"></p>
-<ol start="2">
-<li>创建一个目录来挂载 USB 驱动器。当外部驱动器自动挂载时，它通常挂载在媒体目录中。但是使用 CLI，我们可以创建并指定一个目录，我们将在其中挂载我们的 <code>pendrive</code>。请注意，我们需要使用<code>sudo</code>来调用<code>root</code>权限，以便在媒体目录中创建一个目录。</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir /media/pendrive</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>使用<code>mount</code>命令将 U 盘挂载到<code>/media/pendrive</code>目录。<code>mount</code>命令具有以下语法；</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mount /dev/sdb1 /media/pendrive</span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li><p>通过重新运行<code>lsblk</code>检查驱动器是否已安装。</p>
+  <p>首先，说明一下我们要做的是，跳板机服务器的<code>usera</code>用户免密码登录B服务器的<code>userb</code>用户。<br>我们先使用<code>usera</code>登录跳板服务器</p>
 <blockquote>
-<p>请注意， <code>lsblk</code>输出中的最后一列列出了列出设备的挂载点，如果列出了挂载点，则确认该设备已挂载。</p>
+<p>首先生成密钥对如果有则跳过这一步</p>
 </blockquote>
-</li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210124550.png"></p>
-<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>使用<code>mount</code>命令我们可以更好地控制在 Linux 中挂载和卸载磁盘，并掌握一些技巧，在连接的驱动器无法自动正确挂载时可能会有所帮助。</p>
-<p>在探索以前使用的系统的旧备份映像或想要查看 Linux 发行版映像内容以进行探索或学习时，能够使用循环设备挂载磁盘映像非常有用。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<p>操作演示</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[sera@serverA ~]$ ssh-keygen -t rsa  <span class="comment">//使用rsa算法加密</span></span><br><span class="line"><span class="title class_">Generating</span> public/private rsa key pair.</span><br><span class="line"><span class="title class_">Enter</span> file <span class="keyword">in</span> which to save the key (<span class="regexp">/home/u</span>sera/.<span class="property">ssh</span>/id_rsa): <span class="comment">//私钥默认保存路径</span></span><br><span class="line"><span class="title class_">Created</span> directory <span class="string">&#x27;/home/usera/.ssh&#x27;</span>.</span><br><span class="line"><span class="title class_">Enter</span> passphrase (empty <span class="keyword">for</span> no passphrase): <span class="comment">//在这里输入密码如果这里输入密码以后登录需要密钥和密码才能登录这里建议直接回车也就是空</span></span><br><span class="line"><span class="title class_">Enter</span> same passphrase <span class="attr">again</span>:</span><br><span class="line"><span class="title class_">Your</span> identification has been saved <span class="keyword">in</span> /home/usera/.<span class="property">ssh</span>/id_rsa.</span><br><span class="line"><span class="title class_">Your</span> public key has been saved <span class="keyword">in</span> /home/usera/.<span class="property">ssh</span>/id_rsa.<span class="property">pub</span>. <span class="comment">//公钥保存路径</span></span><br><span class="line"><span class="title class_">The</span> key fingerprint <span class="attr">is</span>:</span><br><span class="line"><span class="number">39</span>:<span class="attr">f2</span>:<span class="attr">fc</span>:<span class="number">70</span>:<span class="attr">ef</span>:<span class="attr">e9</span>:<span class="attr">bd</span>:<span class="number">05</span>:<span class="number">40</span>:6<span class="attr">e</span>:<span class="number">64</span>:<span class="attr">b0</span>:<span class="number">99</span>:<span class="number">56</span>:6<span class="attr">e</span>:<span class="number">01</span> usera@serverA</span><br><span class="line"><span class="title class_">The</span> key<span class="string">&#x27;s randomart image is:</span></span><br><span class="line"><span class="string">+--[ RSA 2048]----+</span></span><br><span class="line"><span class="string">| Eo* |</span></span><br><span class="line"><span class="string">| @ . |</span></span><br><span class="line"><span class="string">| = * |</span></span><br><span class="line"><span class="string">| o o . |</span></span><br><span class="line"><span class="string">| . S . |</span></span><br><span class="line"><span class="string">| + . . |</span></span><br><span class="line"><span class="string">| + . .|</span></span><br><span class="line"><span class="string">| + . o . |</span></span><br><span class="line"><span class="string">| .o= o. |</span></span><br><span class="line"><span class="string">+-----------------+</span></span><br></pre></td></tr></table></figure>
+
+<p>以下是截图提示</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210216196.png"></p>
+<blockquote>
+<p>id_rsa是私钥，id_rsa.pub是公钥公钥在服务器私钥在自己手上</p>
+</blockquote>
+<p>此时会在<code>/home/usera/.ssh</code>目录下生成密钥对我们使用<code>ls</code>查看一下</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root@<span class="attr">vultr</span>:~#  ls -la .<span class="property">ssh</span></span><br><span class="line">total <span class="number">16</span></span><br><span class="line">drwx------ <span class="number">2</span> root root <span class="number">4096</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> .</span><br><span class="line">drwx------ <span class="number">5</span> root root <span class="number">4096</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">00</span> ..</span><br><span class="line">-rw------- <span class="number">1</span> root root <span class="number">1675</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> id_rsa</span><br><span class="line">-rw-r--r-- <span class="number">1</span> root root  <span class="number">398</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> id_rsa.<span class="property">pub</span></span><br></pre></td></tr></table></figure>
+
+<p>然后将公钥上传到需要登录的服务器，并以<code>userb</code>用户登录<br>至于上传方式可以用<code>scp</code>以及<code>sz</code>命令这里就介绍了<br>可以参考这篇<a target="_blank" rel="noopener" href="https://shagain.club/index.php/archives/111/">文章</a></p>
+<blockquote>
+<p>上传到用户目录下的.ssh文件夹下<code>authorized_keys</code>这个文件是用来存放公钥内容的我们使用<code>cat</code>把公钥追加到<code>authorized_keys</code>这个文件就好了</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat id_rsa.<span class="property">pub</span> &gt;&gt; ~<span class="regexp">/.ssh/</span>authorized_keys    <span class="comment">//cat 公钥路径 &gt;&gt; ~/.ssh/authorized_keys</span></span><br></pre></td></tr></table></figure>
+
+<p>这样子我们就配置好了<br>另外我们要注意，<code>.ssh</code>目录的权限为<code>700</code>，其下文件<code>authorized_keys</code>和私钥的权限为<code>600</code>。否则会因为权限问题导致无法免密码登录。我们可以看到登陆后会有<code>known_hosts</code>文件生成。</p>
  
       <!-- reward -->
       
@@ -263,7 +211,7 @@ var _hmt = _hmt || [];
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2022/09/21/Linux%E4%B8%AD%E7%9A%84%E6%8C%82%E8%BD%BD%E5%91%BD%E4%BB%A4mount/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2022/09/21/Linux%E9%80%9A%E8%BF%87%E5%AF%86%E9%92%A5%E5%AF%B9%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -276,19 +224,10 @@ var _hmt = _hmt || [];
    
   <nav class="article-nav">
     
-      <a href="/2022/09/21/Linux%E9%80%9A%E8%BF%87%E5%AF%86%E9%92%A5%E5%AF%B9%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            Linux通过密钥对免密登录
-          
-        </div>
-      </a>
     
-    
-      <a href="/2022/09/21/%E5%A6%82%E4%BD%95%E7%94%A8%E5%8C%BA%E5%9D%97%E9%93%BE%E6%8A%80%E6%9C%AF%E8%A7%A3%E5%86%B3%E4%BF%A1%E4%BB%BB%E9%97%AE%E9%A2%98/" class="article-nav-link">
+      <a href="/2022/09/21/Linux%E4%B8%AD%E7%9A%84%E6%8C%82%E8%BD%BD%E5%91%BD%E4%BB%A4mount/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">如何用区块链技术解决信任问题 Fabric 架构深度解读</div>
+        <div class="article-nav-title">Linux中的挂载命令mount</div>
       </a>
     
   </nav>
