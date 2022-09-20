@@ -104,6 +104,83 @@
       </tags>
   </entry>
   <entry>
+    <title>Hexo迁移备份</title>
+    <url>/2022/08/21/Hexo%E8%BF%81%E7%A7%BB%E5%A4%87%E4%BB%BD/</url>
+    <content><![CDATA[<h3 id="创建Git分支将Hexo博客迁移到其它电脑"><a href="#创建Git分支将Hexo博客迁移到其它电脑" class="headerlink" title="创建Git分支将Hexo博客迁移到其它电脑"></a>创建Git分支将Hexo博客迁移到其它电脑</h3><h3 id="反省"><a href="#反省" class="headerlink" title="反省"></a>反省</h3><p>有时候就会干些蠢事，换电脑忘记吧旧电脑博客的Hexo博客备份到移动硬盘上，一个格式化啥都没了，导致丢失了所有的博客资料。（博客内容要慢慢补） 一定要养成经常备份的好习惯。。。。。。。。</p>
+<span id="more"></span>
+<h3 id="迁移前准备：安装hexo博客必要的软件"><a href="#迁移前准备：安装hexo博客必要的软件" class="headerlink" title="迁移前准备：安装hexo博客必要的软件"></a>迁移前准备：安装hexo博客必要的软件</h3><ul>
+<li>下载安装Git客户端</li>
+<li>安装node js</li>
+<li>从git 仓库拉去原来的项目</li>
+</ul>
+<h3 id="采取方式"><a href="#采取方式" class="headerlink" title="采取方式"></a>采取方式</h3><ol>
+<li>采取新建仓库的方式</li>
+<li>分支存放源代码</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone 你的 github 博客地址，这里就不给地址给自己打广告了</span><br></pre></td></tr></table></figure>
+
+<h3 id="必备文件"><a href="#必备文件" class="headerlink" title="必备文件"></a>必备文件</h3><table>
+<thead>
+<tr>
+<th>文件(夹)</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>scaffolds&#x2F;</td>
+<td>博客文章模板</td>
+</tr>
+<tr>
+<td>source&#x2F;</td>
+<td>所有的博客文章</td>
+</tr>
+<tr>
+<td>themes&#x2F;</td>
+<td>网站主题</td>
+</tr>
+<tr>
+<td>.gitignore</td>
+<td>push时需忽略的文件</td>
+</tr>
+<tr>
+<td>package.json</td>
+<td>依赖包的名称和版本号</td>
+</tr>
+</tbody></table>
+<h3 id="备份流程"><a href="#备份流程" class="headerlink" title="备份流程"></a>备份流程</h3><h5 id="1-拉取已经部署上去的项目"><a href="#1-拉取已经部署上去的项目" class="headerlink" title="1. 拉取已经部署上去的项目"></a>1. 拉取已经部署上去的项目</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/lazyTimes/lazyTimes.github.io.git</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-拷贝需要备份的-原数据"><a href="#2-拷贝需要备份的-原数据" class="headerlink" title="2. 拷贝需要备份的 原数据"></a>2. 拷贝需要备份的 <font color="#000066">原数据</font></h5><p>具体查看上方的必备文件</p>
+<p>参考截图:</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211351777.png" alt="image-20220821135153686"></p>
+<h5 id="3-删除主题的-git-配置"><a href="#3-删除主题的-git-配置" class="headerlink" title="3. 删除主题的.git 配置"></a>3. 删除主题的.git 配置</h5><p>执行如下命令删除不必要的内容</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rm -rf thems/next/.git*</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-创建名为hexo的分支"><a href="#4-创建名为hexo的分支" class="headerlink" title="4. 创建名为hexo的分支"></a>4. 创建名为hexo的分支</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git checkout -b hexo</span><br></pre></td></tr></table></figure>
+
+<h5 id="5-把文件存放到暂存区"><a href="#5-把文件存放到暂存区" class="headerlink" title="5. 把文件存放到暂存区"></a>5. 把文件存放到暂存区</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git add --all</span><br></pre></td></tr></table></figure>
+
+<h5 id="6-提交变更"><a href="#6-提交变更" class="headerlink" title="6. 提交变更"></a>6. 提交变更</h5><p>先提交所有的改动内容</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git commit -m &quot;hexo-2&quot;</span><br></pre></td></tr></table></figure>
+
+<p>然后使用如下命令把内容推送到分支</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git push --set-upstream origin hexo</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果没有在Git config 设置用户名和密码，推送的时候会提示设置，根据提示设置用户名和密码即可</p>
+</blockquote>
+<h5 id="7-源码推到分支上"><a href="#7-源码推到分支上" class="headerlink" title="7. 源码推到分支上"></a>7. 源码推到分支上</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ git add .</span><br><span class="line">$ git commit -m &quot;xxxx&quot;</span><br><span class="line">$ git push origin hexo</span><br></pre></td></tr></table></figure>
+
+<h3 id="更加推荐的方式"><a href="#更加推荐的方式" class="headerlink" title="更加推荐的方式"></a>更加推荐的方式</h3><p>为了保证我们的源码的一些敏感配置不泄露，建议使用私有仓库进行存储，然而，我是无所谓&#x3D;-&#x3D;</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>技术</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Linux中的挂载命令mount</title>
     <url>/2022/09/21/Linux%E4%B8%AD%E7%9A%84%E6%8C%82%E8%BD%BD%E5%91%BD%E4%BB%A4mount/</url>
     <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在 Linux GUI 中，我们通常理所当然地认为，当我们插入 USB 闪存驱动器、硬盘驱动器甚至 DVD 磁盘时，它们就可以使用了。但是在后台有一个过程，设备被安装（准备好使用）并分配了一个安装点。当使用服务器或远程连接时，并不能确定某个设备是否会自动可用，那么我们如何挂载自己的设备呢？下面我们一起来看一下！</p>
@@ -385,83 +462,6 @@
       </categories>
       <tags>
         <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo迁移备份</title>
-    <url>/2022/08/21/Hexo%E8%BF%81%E7%A7%BB%E5%A4%87%E4%BB%BD/</url>
-    <content><![CDATA[<h3 id="创建Git分支将Hexo博客迁移到其它电脑"><a href="#创建Git分支将Hexo博客迁移到其它电脑" class="headerlink" title="创建Git分支将Hexo博客迁移到其它电脑"></a>创建Git分支将Hexo博客迁移到其它电脑</h3><h3 id="反省"><a href="#反省" class="headerlink" title="反省"></a>反省</h3><p>有时候就会干些蠢事，换电脑忘记吧旧电脑博客的Hexo博客备份到移动硬盘上，一个格式化啥都没了，导致丢失了所有的博客资料。（博客内容要慢慢补） 一定要养成经常备份的好习惯。。。。。。。。</p>
-<span id="more"></span>
-<h3 id="迁移前准备：安装hexo博客必要的软件"><a href="#迁移前准备：安装hexo博客必要的软件" class="headerlink" title="迁移前准备：安装hexo博客必要的软件"></a>迁移前准备：安装hexo博客必要的软件</h3><ul>
-<li>下载安装Git客户端</li>
-<li>安装node js</li>
-<li>从git 仓库拉去原来的项目</li>
-</ul>
-<h3 id="采取方式"><a href="#采取方式" class="headerlink" title="采取方式"></a>采取方式</h3><ol>
-<li>采取新建仓库的方式</li>
-<li>分支存放源代码</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone 你的 github 博客地址，这里就不给地址给自己打广告了</span><br></pre></td></tr></table></figure>
-
-<h3 id="必备文件"><a href="#必备文件" class="headerlink" title="必备文件"></a>必备文件</h3><table>
-<thead>
-<tr>
-<th>文件(夹)</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>scaffolds&#x2F;</td>
-<td>博客文章模板</td>
-</tr>
-<tr>
-<td>source&#x2F;</td>
-<td>所有的博客文章</td>
-</tr>
-<tr>
-<td>themes&#x2F;</td>
-<td>网站主题</td>
-</tr>
-<tr>
-<td>.gitignore</td>
-<td>push时需忽略的文件</td>
-</tr>
-<tr>
-<td>package.json</td>
-<td>依赖包的名称和版本号</td>
-</tr>
-</tbody></table>
-<h3 id="备份流程"><a href="#备份流程" class="headerlink" title="备份流程"></a>备份流程</h3><h5 id="1-拉取已经部署上去的项目"><a href="#1-拉取已经部署上去的项目" class="headerlink" title="1. 拉取已经部署上去的项目"></a>1. 拉取已经部署上去的项目</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/lazyTimes/lazyTimes.github.io.git</span><br></pre></td></tr></table></figure>
-
-<h5 id="2-拷贝需要备份的-原数据"><a href="#2-拷贝需要备份的-原数据" class="headerlink" title="2. 拷贝需要备份的 原数据"></a>2. 拷贝需要备份的 <font color="#000066">原数据</font></h5><p>具体查看上方的必备文件</p>
-<p>参考截图:</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211351777.png" alt="image-20220821135153686"></p>
-<h5 id="3-删除主题的-git-配置"><a href="#3-删除主题的-git-配置" class="headerlink" title="3. 删除主题的.git 配置"></a>3. 删除主题的.git 配置</h5><p>执行如下命令删除不必要的内容</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rm -rf thems/next/.git*</span><br></pre></td></tr></table></figure>
-
-<h5 id="4-创建名为hexo的分支"><a href="#4-创建名为hexo的分支" class="headerlink" title="4. 创建名为hexo的分支"></a>4. 创建名为hexo的分支</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git checkout -b hexo</span><br></pre></td></tr></table></figure>
-
-<h5 id="5-把文件存放到暂存区"><a href="#5-把文件存放到暂存区" class="headerlink" title="5. 把文件存放到暂存区"></a>5. 把文件存放到暂存区</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git add --all</span><br></pre></td></tr></table></figure>
-
-<h5 id="6-提交变更"><a href="#6-提交变更" class="headerlink" title="6. 提交变更"></a>6. 提交变更</h5><p>先提交所有的改动内容</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git commit -m &quot;hexo-2&quot;</span><br></pre></td></tr></table></figure>
-
-<p>然后使用如下命令把内容推送到分支</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git push --set-upstream origin hexo</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>如果没有在Git config 设置用户名和密码，推送的时候会提示设置，根据提示设置用户名和密码即可</p>
-</blockquote>
-<h5 id="7-源码推到分支上"><a href="#7-源码推到分支上" class="headerlink" title="7. 源码推到分支上"></a>7. 源码推到分支上</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ git add .</span><br><span class="line">$ git commit -m &quot;xxxx&quot;</span><br><span class="line">$ git push origin hexo</span><br></pre></td></tr></table></figure>
-
-<h3 id="更加推荐的方式"><a href="#更加推荐的方式" class="headerlink" title="更加推荐的方式"></a>更加推荐的方式</h3><p>为了保证我们的源码的一些敏感配置不泄露，建议使用私有仓库进行存储，然而，我是无所谓&#x3D;-&#x3D;</p>
-]]></content>
-      <categories>
-        <category>学习</category>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>技术</tag>
       </tags>
   </entry>
   <entry>
@@ -963,36 +963,6 @@
       </tags>
   </entry>
   <entry>
-    <title>继上一期解决github上的图片无法显示的问题</title>
-    <url>/2022/08/21/%E7%BB%A7%E4%B8%8A%E4%B8%80%E6%9C%9F%E8%A7%A3%E5%86%B3github%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>​      <a href="https://movejian.github.io/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/">继上篇github图床问题</a>无法正常显示，但在<strong>github</strong>上看到正常上传，连接也并非错误，百度了一下说什么<strong>DNS</strong>被污染了。解决方法是修改<strong>hosts</strong>文件或者修改<strong>DNS</strong>。</p>
-<p>​      首先，打开<a href="https://ping.eu/nslookup">域名解析</a>网站：<a href="https://ping.eu/nslookup">https://ping.eu/nslookup</a><br>然后输入raw.githubusercontent.com如下图：</p>
-<p><img src="https://movejian.github.io/images/20220821/5.png"></p>
-<span id="more"></span>
-<p>​      我们得到图床所用域名解析到的IP(上图红框中的地址)。</p>
-<ul>
-<li>最后打开本机的<strong>host</strong>文件，其路径如下：<br><code>C:\Windows\System32\drivers\etc\hosts</code>, 然后添加如下内容(上图红框中的地址)：</li>
-</ul>
-<p><img src="https://movejian.github.io/images/20220821/6.png"></p>
-<ul>
-<li>打开<strong>CMD</strong>输入命令<code>ipconfig /flushdns</code>刷新<strong>DNS</strong>缓存,再次输入<code>ipconfig/displaydns</code></li>
-</ul>
-<p>​    如果你的<strong>hosts</strong>的文件不见了,可以通过文件设置显示系统隐藏文件来找到，依然找不到，可能是被误删了，网上有很多是通过新建文本文档解决。也可以通过下面这个命令来生成<strong>hosts</strong>文件。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for /f %P in (&#x27;dir %windir%\WinSxS\hosts /b /s&#x27;) do copy %P %windir%\System32\drivers\etc &amp; echo %P &amp; Notepad %P</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><strong>注意</strong>一定要使用管理员身份输入此命令。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>图床</tag>
-        <tag>问题解决</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>热血传奇魔龙地图与简易图解</title>
     <url>/2022/08/31/%E7%83%AD%E8%A1%80%E4%BC%A0%E5%A5%87%E9%AD%94%E9%BE%99%E5%9C%B0%E5%9B%BE%E4%B8%8E%E7%AE%80%E6%98%93%E5%9B%BE%E8%A7%A3/</url>
     <content><![CDATA[<p>盟重老兵（325，325）处可以直接传送到魔龙城。 魔龙城的怪物有：魔龙血蛙、魔龙破甲兵、魔龙射手、魔龙教主等。</p>
@@ -1105,6 +1075,36 @@
         <tag>传奇</tag>
         <tag>攻略</tag>
         <tag>魔龙</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>继上一期解决github上的图片无法显示的问题</title>
+    <url>/2022/08/21/%E7%BB%A7%E4%B8%8A%E4%B8%80%E6%9C%9F%E8%A7%A3%E5%86%B3github%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>​      <a href="https://movejian.github.io/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/">继上篇github图床问题</a>无法正常显示，但在<strong>github</strong>上看到正常上传，连接也并非错误，百度了一下说什么<strong>DNS</strong>被污染了。解决方法是修改<strong>hosts</strong>文件或者修改<strong>DNS</strong>。</p>
+<p>​      首先，打开<a href="https://ping.eu/nslookup">域名解析</a>网站：<a href="https://ping.eu/nslookup">https://ping.eu/nslookup</a><br>然后输入raw.githubusercontent.com如下图：</p>
+<p><img src="https://movejian.github.io/images/20220821/5.png"></p>
+<span id="more"></span>
+<p>​      我们得到图床所用域名解析到的IP(上图红框中的地址)。</p>
+<ul>
+<li>最后打开本机的<strong>host</strong>文件，其路径如下：<br><code>C:\Windows\System32\drivers\etc\hosts</code>, 然后添加如下内容(上图红框中的地址)：</li>
+</ul>
+<p><img src="https://movejian.github.io/images/20220821/6.png"></p>
+<ul>
+<li>打开<strong>CMD</strong>输入命令<code>ipconfig /flushdns</code>刷新<strong>DNS</strong>缓存,再次输入<code>ipconfig/displaydns</code></li>
+</ul>
+<p>​    如果你的<strong>hosts</strong>的文件不见了,可以通过文件设置显示系统隐藏文件来找到，依然找不到，可能是被误删了，网上有很多是通过新建文本文档解决。也可以通过下面这个命令来生成<strong>hosts</strong>文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for /f %P in (&#x27;dir %windir%\WinSxS\hosts /b /s&#x27;) do copy %P %windir%\System32\drivers\etc &amp; echo %P &amp; Notepad %P</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>注意</strong>一定要使用管理员身份输入此命令。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>图床</tag>
+        <tag>问题解决</tag>
       </tags>
   </entry>
   <entry>
