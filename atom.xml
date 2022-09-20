@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-09-11T13:57:56.821Z</updated>
+  <updated>2022-09-20T16:09:45.565Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>如何用区块链技术解决信任问题</title>
+    <link href="http://example.com/2022/09/21/%E5%A6%82%E4%BD%95%E7%94%A8%E5%8C%BA%E5%9D%97%E9%93%BE%E6%8A%80%E6%9C%AF%E8%A7%A3%E5%86%B3%E4%BF%A1%E4%BB%BB%E9%97%AE%E9%A2%98/"/>
+    <id>http://example.com/2022/09/21/%E5%A6%82%E4%BD%95%E7%94%A8%E5%8C%BA%E5%9D%97%E9%93%BE%E6%8A%80%E6%9C%AF%E8%A7%A3%E5%86%B3%E4%BF%A1%E4%BB%BB%E9%97%AE%E9%A2%98/</id>
+    <published>2022-09-20T16:07:09.000Z</published>
+    <updated>2022-09-20T16:09:45.565Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;阿里妹导读：区块链技术，随着比特币的兴起而为大家所知。但是具体到技术本身，大家相对熟悉的几个词可能是“数据不可篡改”、“公开链”、“分布式数据”、“共识机制”等。&lt;/p&gt;
+&lt;p&gt;这篇文章将抛砖引玉，通过深度解读Hyperledger</summary>
+        
+      
+    
+    
+    
+    
+    <category term="区块链" scheme="http://example.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+    
+  </entry>
   
   <entry>
     <title>将Windows打印机变成网络打印机</title>
