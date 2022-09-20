@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-09-20T19:37:32.066Z</updated>
+  <updated>2022-09-20T20:27:49.594Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>实战kali破解wifi密码 全网最详细的保姆级教程</title>
+    <link href="http://example.com/2022/09/21/%E5%AE%9E%E6%88%98kali%E7%A0%B4%E8%A7%A3wifi%E5%AF%86%E7%A0%81/"/>
+    <id>http://example.com/2022/09/21/%E5%AE%9E%E6%88%98kali%E7%A0%B4%E8%A7%A3wifi%E5%AF%86%E7%A0%81/</id>
+    <published>2022-09-20T19:43:19.000Z</published>
+    <updated>2022-09-20T20:27:49.594Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;kali官网&quot;&gt;&lt;a href=&quot;#kali官网&quot; class=&quot;headerlink&quot; title=&quot;kali官网&quot;&gt;&lt;/a&gt;kali官网&lt;/h2&gt;&lt;hr&gt;
+&lt;p&gt;kali是什么？&lt;br&gt; ——kali就是一个专门用于渗透行业的Linux发行版本，里面的工具非常丰富，本文就是建立在kali系统的支持之上的&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.kali.org/get-kali/#kali-virtual-machines&quot;&gt;https://www.kali.org/get-kali/#kali-virtual-machines&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;下载了vm文件后可以直接用VMware打开，开机后&lt;br&gt; &lt;strong&gt;用户名：kali&lt;br&gt; 密码：kali&lt;/strong&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="学习" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+    <category term="kali" scheme="http://example.com/tags/kali/"/>
+    
+  </entry>
   
   <entry>
     <title>HOOK微信获取聊天消息</title>
@@ -429,24 +451,6 @@
     <category term="Linux" scheme="http://example.com/tags/Linux/"/>
     
     <category term="无线网卡" scheme="http://example.com/tags/%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Centos7安装时引导错误以及解决方案</title>
-    <link href="http://example.com/2019/11/19/Centos7%E5%AE%89%E8%A3%85%E6%97%B6%E5%BC%95%E5%AF%BC%E9%94%99%E8%AF%AF%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
-    <id>http://example.com/2019/11/19/Centos7%E5%AE%89%E8%A3%85%E6%97%B6%E5%BC%95%E5%AF%BC%E9%94%99%E8%AF%AF%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</id>
-    <published>2019-11-18T16:39:42.000Z</published>
-    <updated>2022-08-22T16:51:32.613Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;Centos7安装时引导错误以及解决方案&lt;br&gt;使用U盘刻录方式安装CentOS7.6，但是发现安装初始化时候发生错误，本以为是U盘刻录或者是镜像的问题，但是反复刻录多遍仍然出错。后来在CentOS中文社区，发现使用UltraISO刻录安装时就可能出现初始化引导错误1.一般情况下&lt;/p&gt;
-&lt;figure class=&quot;highlight powershell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;vmlinuz initrd=initrd.img inst.stage2=hd:LABEL=CentOS\x207\x20x86_64 rd.live.check quiet&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</summary>
-    
-    
-    
-    
-    <category term="Centos7" scheme="http://example.com/tags/Centos7/"/>
     
   </entry>
   
