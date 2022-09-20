@@ -11,7 +11,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>Linux通过密钥对免密登录 |  如风网络</title>
+      <title>HOOK微信获取聊天消息 |  如风网络</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/favicon.ico" />
@@ -64,7 +64,7 @@ var _hmt = _hmt || [];
     <main class="content on">
       <section class="outer">
   <article
-  id="post-Linux通过密钥对免密登录"
+  id="post-HOOK微信获取聊天消息"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -75,7 +75,7 @@ var _hmt = _hmt || [];
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  Linux通过密钥对免密登录
+  HOOK微信获取聊天消息
 </h1>
  
 
@@ -83,11 +83,11 @@ var _hmt = _hmt || [];
     </header>
      
     <div class="article-meta">
-      <a href="/2022/09/21/Linux%E9%80%9A%E8%BF%87%E5%AF%86%E9%92%A5%E5%AF%B9%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/" class="article-date">
-  <time datetime="2022-09-20T17:57:09.000Z" itemprop="datePublished">2022-09-21 01:57:09</time>
+      <a href="/2022/09/21/HOOK%E5%BE%AE%E4%BF%A1%E8%8E%B7%E5%8F%96%E8%81%8A%E5%A4%A9%E6%B6%88%E6%81%AF/" class="article-date">
+  <time datetime="2022-09-20T18:31:38.000Z" itemprop="datePublished">2022-09-21 02:31:38</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a> / <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0/Linux/">Linux</a>
+    <a class="article-category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
   </div>
   
 <div class="word_count">
@@ -95,7 +95,7 @@ var _hmt = _hmt || [];
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">512</span>
+            <span class="post-count">331</span>
         </span>
     </span>
 
@@ -104,43 +104,35 @@ var _hmt = _hmt || [];
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">2 分钟</span>
+            <span class="post-count">1 分钟</span>
         </span>
     </span>
 </div>
  
     </div>
       
+    <div class="tocbot"></div>
+
 
 
 
   
     <div class="article-entry" itemprop="articleBody">
        
-  <p>首先，说明一下我们要做的是，跳板机服务器的<code>usera</code>用户免密码登录B服务器的<code>userb</code>用户。<br>我们先使用<code>usera</code>登录跳板服务器</p>
-<blockquote>
-<p>首先生成密钥对如果有则跳过这一步</p>
+  <blockquote>
+<table><tr><td bgcolor=#DC143C>警告</td></tr></table>
+网络不是法外之地，本篇文章仅供技术交流，相关具体实现过程我将省略！
 </blockquote>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
+<h2 id="获取微信处理消息的函数"><a href="#获取微信处理消息的函数" class="headerlink" title="获取微信处理消息的函数"></a>获取微信处理消息的函数</h2><p>我们可以反复向通过CE搜索消息，获取消息所在的内存地址，然后下硬件写入断点，在栈里找到相关函数，这里你可以自行按上面方法进行搜索。</p>
 <span id="more"></span>
-<p>操作演示</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[sera@serverA ~]$ ssh-keygen -t rsa  <span class="comment">//使用rsa算法加密</span></span><br><span class="line"><span class="title class_">Generating</span> public/private rsa key pair.</span><br><span class="line"><span class="title class_">Enter</span> file <span class="keyword">in</span> which to save the key (<span class="regexp">/home/u</span>sera/.<span class="property">ssh</span>/id_rsa): <span class="comment">//私钥默认保存路径</span></span><br><span class="line"><span class="title class_">Created</span> directory <span class="string">&#x27;/home/usera/.ssh&#x27;</span>.</span><br><span class="line"><span class="title class_">Enter</span> passphrase (empty <span class="keyword">for</span> no passphrase): <span class="comment">//在这里输入密码如果这里输入密码以后登录需要密钥和密码才能登录这里建议直接回车也就是空</span></span><br><span class="line"><span class="title class_">Enter</span> same passphrase <span class="attr">again</span>:</span><br><span class="line"><span class="title class_">Your</span> identification has been saved <span class="keyword">in</span> /home/usera/.<span class="property">ssh</span>/id_rsa.</span><br><span class="line"><span class="title class_">Your</span> public key has been saved <span class="keyword">in</span> /home/usera/.<span class="property">ssh</span>/id_rsa.<span class="property">pub</span>. <span class="comment">//公钥保存路径</span></span><br><span class="line"><span class="title class_">The</span> key fingerprint <span class="attr">is</span>:</span><br><span class="line"><span class="number">39</span>:<span class="attr">f2</span>:<span class="attr">fc</span>:<span class="number">70</span>:<span class="attr">ef</span>:<span class="attr">e9</span>:<span class="attr">bd</span>:<span class="number">05</span>:<span class="number">40</span>:6<span class="attr">e</span>:<span class="number">64</span>:<span class="attr">b0</span>:<span class="number">99</span>:<span class="number">56</span>:6<span class="attr">e</span>:<span class="number">01</span> usera@serverA</span><br><span class="line"><span class="title class_">The</span> key<span class="string">&#x27;s randomart image is:</span></span><br><span class="line"><span class="string">+--[ RSA 2048]----+</span></span><br><span class="line"><span class="string">| Eo* |</span></span><br><span class="line"><span class="string">| @ . |</span></span><br><span class="line"><span class="string">| = * |</span></span><br><span class="line"><span class="string">| o o . |</span></span><br><span class="line"><span class="string">| . S . |</span></span><br><span class="line"><span class="string">| + . . |</span></span><br><span class="line"><span class="string">| + . .|</span></span><br><span class="line"><span class="string">| + . o . |</span></span><br><span class="line"><span class="string">| .o= o. |</span></span><br><span class="line"><span class="string">+-----------------+</span></span><br></pre></td></tr></table></figure>
+<h2 id="使用MinHook-hook该消息函数"><a href="#使用MinHook-hook该消息函数" class="headerlink" title="使用MinHook hook该消息函数"></a>使用MinHook hook该消息函数</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">// Initialize MinHook.</span><br><span class="line">if (MH_Initialize() != MH_OK)</span><br><span class="line">&#123;</span><br><span class="line">return 1;</span><br><span class="line">&#125;</span><br><span class="line">DWORD windllAddress = (DWORD)GetModuleHandle(L&quot;WeChatWin.dll&quot;);</span><br><span class="line">if (windllAddress == 0) &#123;</span><br><span class="line">printf(&quot;Module Address Get Error: 0x%x\n&quot;, windllAddress);</span><br><span class="line">return 0;</span><br><span class="line">&#125;</span><br><span class="line">DWORD ReceiveHookAddress = windllAddress + 0x*****; // 偏移地址请查看下方</span><br><span class="line"> </span><br><span class="line">// Create a hook for MessageBoxW, in disabled state.</span><br><span class="line">if (MH_CreateHook((LPVOID)ReceiveHookAddress, &amp;ReceiveWxMessage,</span><br><span class="line">reinterpret_cast&lt;LPVOID*&gt;(&amp;_receiveMsgFunc)) != MH_OK)</span><br><span class="line">&#123;</span><br><span class="line">printf(&quot;MH_CreateHook Error: 0x%x\n&quot;, ReceiveHookAddress);</span><br><span class="line">return 0;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 
-<p>以下是截图提示</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210216196.png"></p>
+<h2 id="消息Hook函数"><a href="#消息Hook函数" class="headerlink" title="消息Hook函数"></a>消息Hook函数</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">void ReceiveWxMessage(DWORD r_eax)</span><br><span class="line">&#123;</span><br><span class="line">try</span><br><span class="line">&#123;</span><br><span class="line">// 检查进程是否有权限访问指定的内存块</span><br><span class="line">if (IsBadReadPtr((void*)r_eax, 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgTypeOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgContentOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + WxidOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + GroupMsgSenderOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgSourceOffset), 4)</span><br><span class="line">) &#123;</span><br><span class="line">return;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">// 取出消息内容</span><br><span class="line">LPVOID pContent = *((LPVOID*)(r_eax + MsgContentOffset));</span><br><span class="line"> </span><br><span class="line">// 取出微信ID/群ID</span><br><span class="line">LPVOID pWxid = *((LPVOID*)(r_eax + WxidOffset));</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">if (!wcscmp((wchar_t*)pWxid, L&quot;filehelper&quot;)) &#123;</span><br><span class="line">wprintf(L&quot;Receive Msg\n Wechat ID: %ws \n Content: %ws\n&quot;, (wchar_t*)pWxid, (wchar_t*)pContent);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line">catch (...)</span><br><span class="line">&#123;</span><br><span class="line">OutputDebugStringA(&quot;消息异常&quot;);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h2 id="Hook效果"><a href="#Hook效果" class="headerlink" title="Hook效果"></a>Hook效果</h2><p><img src="https://mcenjoy.cn/wp-content/uploads/2022/06/image-6.png" alt="img"></p>
 <blockquote>
-<p>id_rsa是私钥，id_rsa.pub是公钥公钥在服务器私钥在自己手上</p>
+<p>接收函数具体地址：windllAddress + 0x1086F0;</p>
 </blockquote>
-<p>此时会在<code>/home/usera/.ssh</code>目录下生成密钥对我们使用<code>ls</code>查看一下</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root@<span class="attr">vultr</span>:~#  ls -la .<span class="property">ssh</span></span><br><span class="line">total <span class="number">16</span></span><br><span class="line">drwx------ <span class="number">2</span> root root <span class="number">4096</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> .</span><br><span class="line">drwx------ <span class="number">5</span> root root <span class="number">4096</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">00</span> ..</span><br><span class="line">-rw------- <span class="number">1</span> root root <span class="number">1675</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> id_rsa</span><br><span class="line">-rw-r--r-- <span class="number">1</span> root root  <span class="number">398</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> id_rsa.<span class="property">pub</span></span><br></pre></td></tr></table></figure>
-
-<p>然后将公钥上传到需要登录的服务器，并以<code>userb</code>用户登录<br>至于上传方式可以用<code>scp</code>以及<code>sz</code>命令这里就介绍了<br>可以参考这篇<a target="_blank" rel="noopener" href="https://shagain.club/index.php/archives/111/">文章</a></p>
-<blockquote>
-<p>上传到用户目录下的.ssh文件夹下<code>authorized_keys</code>这个文件是用来存放公钥内容的我们使用<code>cat</code>把公钥追加到<code>authorized_keys</code>这个文件就好了</p>
-</blockquote>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat id_rsa.<span class="property">pub</span> &gt;&gt; ~<span class="regexp">/.ssh/</span>authorized_keys    <span class="comment">//cat 公钥路径 &gt;&gt; ~/.ssh/authorized_keys</span></span><br></pre></td></tr></table></figure>
-
-<p>这样子我们就配置好了<br>另外我们要注意，<code>.ssh</code>目录的权限为<code>700</code>，其下文件<code>authorized_keys</code>和私钥的权限为<code>600</code>。否则会因为权限问题导致无法免密码登录。我们可以看到登陆后会有<code>known_hosts</code>文件生成。</p>
  
       <!-- reward -->
       
@@ -211,12 +203,12 @@ var _hmt = _hmt || [];
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2022/09/21/Linux%E9%80%9A%E8%BF%87%E5%AF%86%E9%92%A5%E5%AF%B9%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2022/09/21/HOOK%E5%BE%AE%E4%BF%A1%E8%8E%B7%E5%8F%96%E8%81%8A%E5%A4%A9%E6%B6%88%E6%81%AF/" alt="微信分享二维码">
     </div>
 </div>
 
 <div id="share-mask"></div>  
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%BE%AE%E4%BF%A1/" rel="tag">微信</a></li></ul>
 
     </footer>
   </div>
@@ -224,19 +216,10 @@ var _hmt = _hmt || [];
    
   <nav class="article-nav">
     
-      <a href="/2022/09/21/HOOK%E5%BE%AE%E4%BF%A1%E8%8E%B7%E5%8F%96%E8%81%8A%E5%A4%A9%E6%B6%88%E6%81%AF/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            HOOK微信获取聊天消息
-          
-        </div>
-      </a>
     
-    
-      <a href="/2022/09/21/Linux%E4%B8%AD%E7%9A%84%E6%8C%82%E8%BD%BD%E5%91%BD%E4%BB%A4mount/" class="article-nav-link">
+      <a href="/2022/09/21/Linux%E9%80%9A%E8%BF%87%E5%AF%86%E9%92%A5%E5%AF%B9%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">Linux中的挂载命令mount</div>
+        <div class="article-nav-title">Linux通过密钥对免密登录</div>
       </a>
     
   </nav>

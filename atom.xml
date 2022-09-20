@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-09-20T18:16:55.274Z</updated>
+  <updated>2022-09-20T18:39:47.545Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>HOOK微信获取聊天消息</title>
+    <link href="http://example.com/2022/09/21/HOOK%E5%BE%AE%E4%BF%A1%E8%8E%B7%E5%8F%96%E8%81%8A%E5%A4%A9%E6%B6%88%E6%81%AF/"/>
+    <id>http://example.com/2022/09/21/HOOK%E5%BE%AE%E4%BF%A1%E8%8E%B7%E5%8F%96%E8%81%8A%E5%A4%A9%E6%B6%88%E6%81%AF/</id>
+    <published>2022-09-20T18:31:38.000Z</published>
+    <updated>2022-09-20T18:39:47.545Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;table&gt;&lt;tr&gt;&lt;td bgcolor=#DC143C&gt;警告&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+网络不是法外之地，本篇文章仅供技术交流，相关具体实现过程我将省略！
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;获取微信处理消息的函数&quot;&gt;&lt;a href=&quot;#获取微信处理消息的函数&quot; class=&quot;headerlink&quot; title=&quot;获取微信处理消息的函数&quot;&gt;&lt;/a&gt;获取微信处理消息的函数&lt;/h2&gt;&lt;p&gt;我们可以反复向通过CE搜索消息，获取消息所在的内存地址，然后下硬件写入断点，在栈里找到相关函数，这里你可以自行按上面方法进行搜索。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="技术" scheme="http://example.com/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="微信" scheme="http://example.com/tags/%E5%BE%AE%E4%BF%A1/"/>
+    
+  </entry>
   
   <entry>
     <title>Linux通过密钥对免密登录</title>
@@ -425,25 +448,6 @@
     
     
     <category term="Centos7" scheme="http://example.com/tags/Centos7/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>愿你编码半生，归来仍是少年</title>
-    <link href="http://example.com/2019/10/21/%E6%84%BF%E4%BD%A0%E7%BC%96%E7%A0%81%E5%8D%8A%E7%94%9F%EF%BC%8C%E5%BD%92%E6%9D%A5%E4%BB%8D%E6%98%AF%E5%B0%91%E5%B9%B4/"/>
-    <id>http://example.com/2019/10/21/%E6%84%BF%E4%BD%A0%E7%BC%96%E7%A0%81%E5%8D%8A%E7%94%9F%EF%BC%8C%E5%BD%92%E6%9D%A5%E4%BB%8D%E6%98%AF%E5%B0%91%E5%B9%B4/</id>
-    <published>2019-10-20T21:19:04.000Z</published>
-    <updated>2022-08-22T16:49:30.563Z</updated>
-    
-    
-    <summary type="html">&lt;h4 id=&quot;Hello-World-不巧，我也在等你。&quot;&gt;&lt;a href=&quot;#Hello-World-不巧，我也在等你。&quot; class=&quot;headerlink&quot; title=&quot;Hello,World.不巧，我也在等你。&quot;&gt;&lt;/a&gt;Hello,World.不巧，我也在等你。&lt;/h4&gt;&lt;p&gt;​      有人说自己被社会磨平了棱角，泯灭了心性，受生活所迫，“都说是为生活所迫，生活缺从来没有被抓过；都说被社会磨去棱角，社会之恶至今无法逃脱”，我们都有权利选择自己想成为的人，并不是由社会说了算，我们都曾年少，我们都曾有棱角，社会的熔炉却在不断的炼化我们，到底是磨平了棱角，还是磨成了钢刀，就让时间来见证吧！&lt;/p&gt;
-&lt;p&gt;​      常年混迹于各大网络社区，也曾愤青，如今独爱云淡风轻，只愿在滚滚红尘中揽得风花雪月独醉。&lt;/p&gt;
-&lt;h4 id=&quot;感谢你的到来。&quot;&gt;&lt;a href=&quot;#感谢你的到来。&quot; class=&quot;headerlink&quot; title=&quot;感谢你的到来。&quot;&gt;&lt;/a&gt;感谢你的到来。&lt;/h4&gt;</summary>
-    
-    
-    
-    
-    <category term="随心" scheme="http://example.com/tags/%E9%9A%8F%E5%BF%83/"/>
     
   </entry>
   
