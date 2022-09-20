@@ -653,26 +653,6 @@
       </tags>
   </entry>
   <entry>
-    <title>传奇内挂垃圾物品过滤</title>
-    <url>/2022/09/03/%E4%BC%A0%E5%A5%87%E5%86%85%E6%8C%82%E5%9E%83%E5%9C%BE%E7%89%A9%E5%93%81%E8%BF%87%E6%BB%A4/</url>
-    <content><![CDATA[<p> 传奇内挂过滤垃圾。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209031601159.png" alt="image-20220903160139387"></p>
-<p>先打开传奇目录 <code>D:\传奇私服\Config </code>   修改DAT档案文件，把下面内容复制粘贴进去保存即可：</p>
-<span id="more"></span>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">金创药(小量),药品类,0,0,0,0</span><br><span class="line">魔法药(小量),药品类,0,0,0,0</span><br><span class="line">肉,其它类,0,0,0,0</span><br><span class="line">布衣(男),服装类,0,0,0,0</span><br><span class="line">布衣(女),服装类,0,0,0,0</span><br><span class="line">木剑,武器类,0,0,0,0</span><br><span class="line">铁剑,武器类,0,0,0,0</span><br><span class="line">青铜剑,武器类,0,0,0,0</span><br><span class="line">轻型盔甲(男),服装类,0,0,0,0</span><br><span class="line">轻型盔甲(女),服装类,0,0,0,0</span><br><span class="line">凝霜,武器类,0,0,0,0</span><br><span class="line">短剑,武器类,0,0,0,0</span><br><span class="line">青铜斧,武器类,0,0,0,0</span><br><span class="line">重盔甲(女),服装类,0,0,0,0</span><br><span class="line">魔法长袍(女),服装类,0,0,0,0</span><br><span class="line">灵魂战衣(女),服装类,0,0,0,0</span><br><span class="line">重盔甲(男),服装类,0,0,0,0</span><br><span class="line">魔法长袍(男),服装类,0,0,0,0</span><br><span class="line">灵魂战衣(男),服装类,0,0,0,0</span><br><span class="line">海魂,武器类,0,0,0,0</span><br><span class="line">修罗,武器类,0,0,0,0</span><br><span class="line">破魂,武器类,0,0,0,0</span><br><span class="line">斩马刀,武器类,0,0,0,0</span><br><span class="line">青铜头盔,首饰类,0,0,0,0</span><br><span class="line">金项链,首饰类,0,0,0,0</span><br><span class="line">铁手镯,首饰类,0,0,0,0</span><br><span class="line">灰色药粉(中量),药品类,0,0,0,0</span><br><span class="line">黄色药粉(中量),药品类,0,0,0,0</span><br><span class="line">八荒,武器类,0,0,0,0</span><br><span class="line">玻璃戒指,首饰类,0,0,0,0</span><br><span class="line">牛角戒指,首饰类,0,0,0,0</span><br><span class="line">蓝色水晶戒指,首饰类,0,0,0,0</span><br><span class="line">黑檀项链,首饰类,0,0,0,0</span><br><span class="line">黄色水晶项链,首饰类,0,0,0,0</span><br><span class="line">黑色水晶项链,首饰类,0,0,0,0</span><br><span class="line">半月,武器类,0,0,0,0</span><br><span class="line">皮制手套,首饰类,0,0,0,0</span><br><span class="line">钢手镯,首饰类,0,0,0,0</span><br><span class="line">生铁戒指,首饰类,0,0,0,0</span><br><span class="line">金戒指,首饰类,0,0,0,0</span><br><span class="line">灯笼项链,首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链,首饰类,1,1,1,0</span><br><span class="line">魅力戒指,首饰类,0,0,0,0</span><br><span class="line">道德戒指,首饰类,0,0,0,0</span><br><span class="line">白金项链,首饰类,0,0,0,0</span><br><span class="line">降妖除魔戒指,首饰类,0,0,0,0</span><br><span class="line">偃月,武器类,0,0,0,0</span><br><span class="line">降魔,武器类,0,0,0,0</span><br><span class="line">小手镯,首饰类,0,0,0,0</span><br><span class="line">银手镯,首饰类,0,0,0,0</span><br><span class="line">大手镯,首饰类,0,0,0,0</span><br><span class="line">金创药(中量),药品类,0,0,0,0</span><br><span class="line">魔法药(中量),药品类,0,0,0,0</span><br><span class="line">黑色水晶戒指,首饰类,0,0,0,0</span><br><span class="line">魔鬼项链,首饰类,0,0,0,0</span><br><span class="line">珊瑚戒指,首饰类,0,0,0,0</span><br><span class="line">蓝翡翠项链,首饰类,0,0,0,0</span><br><span class="line">蛇眼戒指,首饰类,0,0,0,0</span><br><span class="line">琥珀项链,首饰类,0,0,0,0</span><br><span class="line">放大镜,首饰类,0,0,0,0</span><br><span class="line">珍珠戒指,首饰类,0,0,0,0</span><br><span class="line">竹笛,首饰类,0,0,0,0</span><br><span class="line">骷髅戒指,首饰类,0,0,0,0</span><br><span class="line">死神手套,首饰类,0,0,0,0</span><br><span class="line">骷髅头盔,首饰类,0,0,0,0</span><br><span class="line">魔法手镯,首饰类,0,0,0,0</span><br><span class="line">金手镯,首饰类,0,0,0,0</span><br><span class="line">道士头盔,首饰类,0,0,0,0</span><br><span class="line">凤凰明珠,首饰类,0,0,0,0</span><br><span class="line">道士手镯,首饰类,0,0,0,0</span><br><span class="line">黑檀手镯,首饰类,0,0,0,0</span><br><span class="line">铁矿,其它类,0,0,0,0</span><br><span class="line">黑铁矿,其它类,0,0,0,0</span><br><span class="line">困魔咒,其它类,0,0,0,0</span><br><span class="line">召唤骷髅,其它类,0,0,0,0</span><br><span class="line">地狱雷光,其它类,0,0,0,0</span><br><span class="line">半月弯刀,其它类,0,0,0,0</span><br><span class="line">太阳水,药品类,0,1,0,0</span><br><span class="line">强效金创药,药品类,0,1,0,0</span><br><span class="line">强效魔法药,药品类,0,1,0,0</span><br><span class="line">野蛮冲撞,其它类,0,0,0,0</span><br><span class="line">群体治疗术,其它类,0,0,0,0</span><br><span class="line">圣言术,其它类,0,0,0,0</span><br><span class="line">强效太阳水,药品类,0,1,0,0</span><br><span class="line">魔力手镯,首饰类,0,0,0,0</span><br><span class="line">攻击力药水,其它类,0,0,0,0</span><br><span class="line">道术力药水,其它类,0,0,0,0</span><br><span class="line">疾风药水,其它类,0,0,0,0</span><br><span class="line">体力强化水,其它类,0,0,0,0</span><br><span class="line">魔力强化水,其它类,0,0,0,0</span><br><span class="line">战神盔甲(男),服装类,0,0,0,0</span><br><span class="line">战神盔甲(女),服装类,0,0,0,0</span><br><span class="line">幽灵战衣(男),服装类,0,0,0,0</span><br><span class="line">幽灵战衣(女),服装类,0,0,0,0</span><br><span class="line">恶魔长袍(男),服装类,0,0,0,0</span><br><span class="line">恶魔长袍(女),服装类,0,0,0,0</span><br><span class="line">中型盔甲(男),服装类,0,0,0,0</span><br><span class="line">灯笼项链②,首饰类,1,1,1,0</span><br><span class="line">灯笼项链[残],首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链[残],首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链②,首饰类,1,1,1,0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>游戏</category>
-        <category>传奇</category>
-      </categories>
-      <tags>
-        <tag>传奇</tag>
-        <tag>外挂</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>vscode配置picgo的github的图床</title>
     <url>/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/</url>
     <content><![CDATA[<p>vscode+github+picgo 搭建 markdown 图床</p>
@@ -715,6 +695,26 @@
       </categories>
       <tags>
         <tag>技术</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>传奇内挂垃圾物品过滤</title>
+    <url>/2022/09/03/%E4%BC%A0%E5%A5%87%E5%86%85%E6%8C%82%E5%9E%83%E5%9C%BE%E7%89%A9%E5%93%81%E8%BF%87%E6%BB%A4/</url>
+    <content><![CDATA[<p> 传奇内挂过滤垃圾。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209031601159.png" alt="image-20220903160139387"></p>
+<p>先打开传奇目录 <code>D:\传奇私服\Config </code>   修改DAT档案文件，把下面内容复制粘贴进去保存即可：</p>
+<span id="more"></span>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">金创药(小量),药品类,0,0,0,0</span><br><span class="line">魔法药(小量),药品类,0,0,0,0</span><br><span class="line">肉,其它类,0,0,0,0</span><br><span class="line">布衣(男),服装类,0,0,0,0</span><br><span class="line">布衣(女),服装类,0,0,0,0</span><br><span class="line">木剑,武器类,0,0,0,0</span><br><span class="line">铁剑,武器类,0,0,0,0</span><br><span class="line">青铜剑,武器类,0,0,0,0</span><br><span class="line">轻型盔甲(男),服装类,0,0,0,0</span><br><span class="line">轻型盔甲(女),服装类,0,0,0,0</span><br><span class="line">凝霜,武器类,0,0,0,0</span><br><span class="line">短剑,武器类,0,0,0,0</span><br><span class="line">青铜斧,武器类,0,0,0,0</span><br><span class="line">重盔甲(女),服装类,0,0,0,0</span><br><span class="line">魔法长袍(女),服装类,0,0,0,0</span><br><span class="line">灵魂战衣(女),服装类,0,0,0,0</span><br><span class="line">重盔甲(男),服装类,0,0,0,0</span><br><span class="line">魔法长袍(男),服装类,0,0,0,0</span><br><span class="line">灵魂战衣(男),服装类,0,0,0,0</span><br><span class="line">海魂,武器类,0,0,0,0</span><br><span class="line">修罗,武器类,0,0,0,0</span><br><span class="line">破魂,武器类,0,0,0,0</span><br><span class="line">斩马刀,武器类,0,0,0,0</span><br><span class="line">青铜头盔,首饰类,0,0,0,0</span><br><span class="line">金项链,首饰类,0,0,0,0</span><br><span class="line">铁手镯,首饰类,0,0,0,0</span><br><span class="line">灰色药粉(中量),药品类,0,0,0,0</span><br><span class="line">黄色药粉(中量),药品类,0,0,0,0</span><br><span class="line">八荒,武器类,0,0,0,0</span><br><span class="line">玻璃戒指,首饰类,0,0,0,0</span><br><span class="line">牛角戒指,首饰类,0,0,0,0</span><br><span class="line">蓝色水晶戒指,首饰类,0,0,0,0</span><br><span class="line">黑檀项链,首饰类,0,0,0,0</span><br><span class="line">黄色水晶项链,首饰类,0,0,0,0</span><br><span class="line">黑色水晶项链,首饰类,0,0,0,0</span><br><span class="line">半月,武器类,0,0,0,0</span><br><span class="line">皮制手套,首饰类,0,0,0,0</span><br><span class="line">钢手镯,首饰类,0,0,0,0</span><br><span class="line">生铁戒指,首饰类,0,0,0,0</span><br><span class="line">金戒指,首饰类,0,0,0,0</span><br><span class="line">灯笼项链,首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链,首饰类,1,1,1,0</span><br><span class="line">魅力戒指,首饰类,0,0,0,0</span><br><span class="line">道德戒指,首饰类,0,0,0,0</span><br><span class="line">白金项链,首饰类,0,0,0,0</span><br><span class="line">降妖除魔戒指,首饰类,0,0,0,0</span><br><span class="line">偃月,武器类,0,0,0,0</span><br><span class="line">降魔,武器类,0,0,0,0</span><br><span class="line">小手镯,首饰类,0,0,0,0</span><br><span class="line">银手镯,首饰类,0,0,0,0</span><br><span class="line">大手镯,首饰类,0,0,0,0</span><br><span class="line">金创药(中量),药品类,0,0,0,0</span><br><span class="line">魔法药(中量),药品类,0,0,0,0</span><br><span class="line">黑色水晶戒指,首饰类,0,0,0,0</span><br><span class="line">魔鬼项链,首饰类,0,0,0,0</span><br><span class="line">珊瑚戒指,首饰类,0,0,0,0</span><br><span class="line">蓝翡翠项链,首饰类,0,0,0,0</span><br><span class="line">蛇眼戒指,首饰类,0,0,0,0</span><br><span class="line">琥珀项链,首饰类,0,0,0,0</span><br><span class="line">放大镜,首饰类,0,0,0,0</span><br><span class="line">珍珠戒指,首饰类,0,0,0,0</span><br><span class="line">竹笛,首饰类,0,0,0,0</span><br><span class="line">骷髅戒指,首饰类,0,0,0,0</span><br><span class="line">死神手套,首饰类,0,0,0,0</span><br><span class="line">骷髅头盔,首饰类,0,0,0,0</span><br><span class="line">魔法手镯,首饰类,0,0,0,0</span><br><span class="line">金手镯,首饰类,0,0,0,0</span><br><span class="line">道士头盔,首饰类,0,0,0,0</span><br><span class="line">凤凰明珠,首饰类,0,0,0,0</span><br><span class="line">道士手镯,首饰类,0,0,0,0</span><br><span class="line">黑檀手镯,首饰类,0,0,0,0</span><br><span class="line">铁矿,其它类,0,0,0,0</span><br><span class="line">黑铁矿,其它类,0,0,0,0</span><br><span class="line">困魔咒,其它类,0,0,0,0</span><br><span class="line">召唤骷髅,其它类,0,0,0,0</span><br><span class="line">地狱雷光,其它类,0,0,0,0</span><br><span class="line">半月弯刀,其它类,0,0,0,0</span><br><span class="line">太阳水,药品类,0,1,0,0</span><br><span class="line">强效金创药,药品类,0,1,0,0</span><br><span class="line">强效魔法药,药品类,0,1,0,0</span><br><span class="line">野蛮冲撞,其它类,0,0,0,0</span><br><span class="line">群体治疗术,其它类,0,0,0,0</span><br><span class="line">圣言术,其它类,0,0,0,0</span><br><span class="line">强效太阳水,药品类,0,1,0,0</span><br><span class="line">魔力手镯,首饰类,0,0,0,0</span><br><span class="line">攻击力药水,其它类,0,0,0,0</span><br><span class="line">道术力药水,其它类,0,0,0,0</span><br><span class="line">疾风药水,其它类,0,0,0,0</span><br><span class="line">体力强化水,其它类,0,0,0,0</span><br><span class="line">魔力强化水,其它类,0,0,0,0</span><br><span class="line">战神盔甲(男),服装类,0,0,0,0</span><br><span class="line">战神盔甲(女),服装类,0,0,0,0</span><br><span class="line">幽灵战衣(男),服装类,0,0,0,0</span><br><span class="line">幽灵战衣(女),服装类,0,0,0,0</span><br><span class="line">恶魔长袍(男),服装类,0,0,0,0</span><br><span class="line">恶魔长袍(女),服装类,0,0,0,0</span><br><span class="line">中型盔甲(男),服装类,0,0,0,0</span><br><span class="line">灯笼项链②,首饰类,1,1,1,0</span><br><span class="line">灯笼项链[残],首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链[残],首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链②,首饰类,1,1,1,0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>游戏</category>
+        <category>传奇</category>
+      </categories>
+      <tags>
+        <tag>传奇</tag>
+        <tag>外挂</tag>
       </tags>
   </entry>
   <entry>
@@ -795,31 +795,6 @@
       </categories>
       <tags>
         <tag>随笔</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>将Windows打印机变成网络打印机</title>
-    <url>/2022/09/11/%E5%B0%86Windows%E6%89%93%E5%8D%B0%E6%9C%BA%E5%8F%98%E6%88%90%E7%BD%91%E7%BB%9C%E6%89%93%E5%8D%B0%E6%9C%BA/</url>
-    <content><![CDATA[<p>大家都知道Windows的打印共享一直属于玄学，2000&#x2F;XP&#x2F;2003（NT 5.x）及以前的时代基本还算正常，经过简单的设置总能搞定，自从Vista开始的NT 6.x，尤其到了win10&#x2F;win11时代，Windows的打印共享基本上就变成了玄学，姑且不说很难搞定，就算搞定了，一个补丁也可能把它搞残废。另外，Windows的共享服务一直存在各种安全漏洞，曾经一度被勒索病毒利用，尤其是win7（不能打补丁那种），为了安全，我一般都禁用server服务。</p>
-<span id="more"></span>
-<p>但自带网络接口的打印机从来没有这么复杂，指定IP（端口基本上就是基于raw的9100），安装驱动即可搞定，完全跳过了复杂的samba协议，直接使用TCP&#x2F;IP。如同在Windows下通过http或者ftp共享文件，完全不需要考虑Windows那复杂的共享机制。</p>
-<p>但并不是所有的打印机都带网络接口，虽然现在可以买一个便宜的可以刷固件的路由器（比如坛子里15块收的优酷路由宝刷Padavan或者OpenWRT）当打印服务器使用，但毕竟硬件都不是现成的，而且，投入再小也得投入不是。</p>
-<p>那能不能将Windows直接变成类似的打印服务器呢？答案是：Raw Print Server。这是一个开源的命令行程序，官方网站：<a href="https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/">https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/</a> 。注意，下载1.0版本， 不要下载那个beta版。<a href="https://www.253874.net/attachment?id=72646">RawPrintServer100.zip</a> 也附上了1.0版本的可执行程序及程序源码。</p>
-<p>Github项目链接：<a href="https://github.com/miso-lims/rawprintserver">https://github.com/miso-lims/rawprintserver</a> (这程序从2006年就停止开发了）。</p>
-<p><strong>基本操作流程：</strong></p>
-<p>1、在作为打印服务器的Windows上安装好打印机，以HP LaserJet P1008为例，装好打印机时，最好给打印机改一个简短的名字，例如叫：HP1008。</p>
-<p>2、将rawprintserver.exe复制到Windows的system32目录。</p>
-<p>3、管理员cmd模式下执行：rawprintserver.exe install “HP1008”。注意，这里的打印机名称一定要跟你Windows控制面板中显示的打印机名称一样。该程序会安装一个rawprintserver服务，如果你在上一步操作中没有将该文件复制到system32目录，那就需要修改下对应服务注册表项中的ImagePath项，将该程序的全路径写入，否则服务启动不了。</p>
-<p>4、在打印客户端按添加网络打印机的流程（自动搜索肯定是搜不到的，所以需要手工操作），指定IP地址，默认raw:9100，然后手工指定打印机驱动安装即可。</p>
-<p>5、搞定！</p>
-<p>6、软件运行的日志强行锁死在c:\PrintServer.log，如果出现什么错误，可以查看该日志。</p>
-<p>我试过在win10下安装rawprintserver，win7_x86和win11都可以正常连接并使用。<br><em>相关地址</em><br><a href="https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/"><em>https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/</em></a></p>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>技术</tag>
       </tags>
   </entry>
   <entry>
@@ -927,6 +902,31 @@
 ]]></content>
       <tags>
         <tag>区块链</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>将Windows打印机变成网络打印机</title>
+    <url>/2022/09/11/%E5%B0%86Windows%E6%89%93%E5%8D%B0%E6%9C%BA%E5%8F%98%E6%88%90%E7%BD%91%E7%BB%9C%E6%89%93%E5%8D%B0%E6%9C%BA/</url>
+    <content><![CDATA[<p>大家都知道Windows的打印共享一直属于玄学，2000&#x2F;XP&#x2F;2003（NT 5.x）及以前的时代基本还算正常，经过简单的设置总能搞定，自从Vista开始的NT 6.x，尤其到了win10&#x2F;win11时代，Windows的打印共享基本上就变成了玄学，姑且不说很难搞定，就算搞定了，一个补丁也可能把它搞残废。另外，Windows的共享服务一直存在各种安全漏洞，曾经一度被勒索病毒利用，尤其是win7（不能打补丁那种），为了安全，我一般都禁用server服务。</p>
+<span id="more"></span>
+<p>但自带网络接口的打印机从来没有这么复杂，指定IP（端口基本上就是基于raw的9100），安装驱动即可搞定，完全跳过了复杂的samba协议，直接使用TCP&#x2F;IP。如同在Windows下通过http或者ftp共享文件，完全不需要考虑Windows那复杂的共享机制。</p>
+<p>但并不是所有的打印机都带网络接口，虽然现在可以买一个便宜的可以刷固件的路由器（比如坛子里15块收的优酷路由宝刷Padavan或者OpenWRT）当打印服务器使用，但毕竟硬件都不是现成的，而且，投入再小也得投入不是。</p>
+<p>那能不能将Windows直接变成类似的打印服务器呢？答案是：Raw Print Server。这是一个开源的命令行程序，官方网站：<a href="https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/">https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/</a> 。注意，下载1.0版本， 不要下载那个beta版。<a href="https://www.253874.net/attachment?id=72646">RawPrintServer100.zip</a> 也附上了1.0版本的可执行程序及程序源码。</p>
+<p>Github项目链接：<a href="https://github.com/miso-lims/rawprintserver">https://github.com/miso-lims/rawprintserver</a> (这程序从2006年就停止开发了）。</p>
+<p><strong>基本操作流程：</strong></p>
+<p>1、在作为打印服务器的Windows上安装好打印机，以HP LaserJet P1008为例，装好打印机时，最好给打印机改一个简短的名字，例如叫：HP1008。</p>
+<p>2、将rawprintserver.exe复制到Windows的system32目录。</p>
+<p>3、管理员cmd模式下执行：rawprintserver.exe install “HP1008”。注意，这里的打印机名称一定要跟你Windows控制面板中显示的打印机名称一样。该程序会安装一个rawprintserver服务，如果你在上一步操作中没有将该文件复制到system32目录，那就需要修改下对应服务注册表项中的ImagePath项，将该程序的全路径写入，否则服务启动不了。</p>
+<p>4、在打印客户端按添加网络打印机的流程（自动搜索肯定是搜不到的，所以需要手工操作），指定IP地址，默认raw:9100，然后手工指定打印机驱动安装即可。</p>
+<p>5、搞定！</p>
+<p>6、软件运行的日志强行锁死在c:\PrintServer.log，如果出现什么错误，可以查看该日志。</p>
+<p>我试过在win10下安装rawprintserver，win7_x86和win11都可以正常连接并使用。<br><em>相关地址</em><br><a href="https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/"><em>https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/</em></a></p>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>技术</tag>
       </tags>
   </entry>
   <entry>
@@ -1103,6 +1103,36 @@
       </tags>
   </entry>
   <entry>
+    <title>继上一期解决github上的图片无法显示的问题</title>
+    <url>/2022/08/21/%E7%BB%A7%E4%B8%8A%E4%B8%80%E6%9C%9F%E8%A7%A3%E5%86%B3github%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>​      <a href="https://movejian.github.io/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/">继上篇github图床问题</a>无法正常显示，但在<strong>github</strong>上看到正常上传，连接也并非错误，百度了一下说什么<strong>DNS</strong>被污染了。解决方法是修改<strong>hosts</strong>文件或者修改<strong>DNS</strong>。</p>
+<p>​      首先，打开<a href="https://ping.eu/nslookup">域名解析</a>网站：<a href="https://ping.eu/nslookup">https://ping.eu/nslookup</a><br>然后输入raw.githubusercontent.com如下图：</p>
+<p><img src="https://movejian.github.io/images/20220821/5.png"></p>
+<span id="more"></span>
+<p>​      我们得到图床所用域名解析到的IP(上图红框中的地址)。</p>
+<ul>
+<li>最后打开本机的<strong>host</strong>文件，其路径如下：<br><code>C:\Windows\System32\drivers\etc\hosts</code>, 然后添加如下内容(上图红框中的地址)：</li>
+</ul>
+<p><img src="https://movejian.github.io/images/20220821/6.png"></p>
+<ul>
+<li>打开<strong>CMD</strong>输入命令<code>ipconfig /flushdns</code>刷新<strong>DNS</strong>缓存,再次输入<code>ipconfig/displaydns</code></li>
+</ul>
+<p>​    如果你的<strong>hosts</strong>的文件不见了,可以通过文件设置显示系统隐藏文件来找到，依然找不到，可能是被误删了，网上有很多是通过新建文本文档解决。也可以通过下面这个命令来生成<strong>hosts</strong>文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for /f %P in (&#x27;dir %windir%\WinSxS\hosts /b /s&#x27;) do copy %P %windir%\System32\drivers\etc &amp; echo %P &amp; Notepad %P</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>注意</strong>一定要使用管理员身份输入此命令。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>图床</tag>
+        <tag>问题解决</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>自动备份Hexo博客源文件</title>
     <url>/2022/08/21/%E8%87%AA%E5%8A%A8%E5%A4%87%E4%BB%BDHexo%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/</url>
     <content><![CDATA[<h3 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h3><p>自从接触了Hexo+NexT之后，发现离不开了，以后有能力的时候一定重新架构一下，使得更加个性化，最大程度的满足我们对于软件的需求，大家都知道，如果写东西在本地的话，最怕的应该就是更换电脑，还要重新搭建博客了，所以备份对于我们来说特别重要！备份博客就是本篇博客文章的主旨了，一定要攻下这座城堡。</p>
@@ -1166,36 +1196,6 @@
       </categories>
       <tags>
         <tag>技术</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>继上一期解决github上的图片无法显示的问题</title>
-    <url>/2022/08/21/%E7%BB%A7%E4%B8%8A%E4%B8%80%E6%9C%9F%E8%A7%A3%E5%86%B3github%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>​      <a href="https://movejian.github.io/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/">继上篇github图床问题</a>无法正常显示，但在<strong>github</strong>上看到正常上传，连接也并非错误，百度了一下说什么<strong>DNS</strong>被污染了。解决方法是修改<strong>hosts</strong>文件或者修改<strong>DNS</strong>。</p>
-<p>​      首先，打开<a href="https://ping.eu/nslookup">域名解析</a>网站：<a href="https://ping.eu/nslookup">https://ping.eu/nslookup</a><br>然后输入raw.githubusercontent.com如下图：</p>
-<p><img src="https://movejian.github.io/images/20220821/5.png"></p>
-<span id="more"></span>
-<p>​      我们得到图床所用域名解析到的IP(上图红框中的地址)。</p>
-<ul>
-<li>最后打开本机的<strong>host</strong>文件，其路径如下：<br><code>C:\Windows\System32\drivers\etc\hosts</code>, 然后添加如下内容(上图红框中的地址)：</li>
-</ul>
-<p><img src="https://movejian.github.io/images/20220821/6.png"></p>
-<ul>
-<li>打开<strong>CMD</strong>输入命令<code>ipconfig /flushdns</code>刷新<strong>DNS</strong>缓存,再次输入<code>ipconfig/displaydns</code></li>
-</ul>
-<p>​    如果你的<strong>hosts</strong>的文件不见了,可以通过文件设置显示系统隐藏文件来找到，依然找不到，可能是被误删了，网上有很多是通过新建文本文档解决。也可以通过下面这个命令来生成<strong>hosts</strong>文件。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for /f %P in (&#x27;dir %windir%\WinSxS\hosts /b /s&#x27;) do copy %P %windir%\System32\drivers\etc &amp; echo %P &amp; Notepad %P</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><strong>注意</strong>一定要使用管理员身份输入此命令。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>图床</tag>
-        <tag>问题解决</tag>
       </tags>
   </entry>
 </search>
