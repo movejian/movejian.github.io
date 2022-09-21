@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-09-20T20:37:46.790Z</updated>
+  <updated>2022-09-21T12:57:38.465Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Kali的DDoS攻击方法</title>
+    <link href="http://example.com/2022/09/21/Kali%E7%9A%84DDoS%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95/"/>
+    <id>http://example.com/2022/09/21/Kali%E7%9A%84DDoS%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95/</id>
+    <published>2022-09-21T12:44:25.000Z</published>
+    <updated>2022-09-21T12:57:38.465Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212049992.jpeg&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;本文章使用的是Kali Linux的2021-4-installer-amd64版本&lt;/strong&gt; &lt;strong&gt;Kali Linux的安装过程本文章不做过多说明，请自行百度&lt;/strong&gt; &lt;strong&gt;本帖子如果涉及侵权请联系我&lt;/strong&gt;  &lt;/p&gt;</summary>
+    
+    
+    
+    <category term="学习" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+    <category term="Kali" scheme="http://example.com/tags/Kali/"/>
+    
+  </entry>
   
   <entry>
     <title>实战kali破解wifi密码 全网最详细的保姆级教程</title>
@@ -431,26 +451,6 @@
     
     
     <category term="域名" scheme="http://example.com/tags/%E5%9F%9F%E5%90%8D/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux系统无线网卡配置</title>
-    <link href="http://example.com/2019/12/16/Linux%E7%B3%BB%E7%BB%9F%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE/"/>
-    <id>http://example.com/2019/12/16/Linux%E7%B3%BB%E7%BB%9F%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE/</id>
-    <published>2019-12-15T16:44:01.000Z</published>
-    <updated>2022-08-22T18:13:14.498Z</updated>
-    
-    
-    <summary type="html">&lt;h2 id=&quot;无线网卡配置&quot;&gt;&lt;a href=&quot;#无线网卡配置&quot; class=&quot;headerlink&quot; title=&quot;无线网卡配置&quot;&gt;&lt;/a&gt;无线网卡配置&lt;/h2&gt;&lt;p&gt;本文介绍在Linux 命令行界面中手动配置无线网卡的方法。目前流行的多数发行版都支持用图形界面的&lt;code&gt;network- manager&lt;/code&gt;方便地进行配置，而无需使用本文所介绍的原始方法。&lt;/p&gt;
-&lt;p&gt;下面介绍使用&lt;code&gt;iwconfig&lt;/code&gt;和&lt;code&gt;ifconfig&lt;/code&gt;等命令在命令行状态下配置无线网络。前题是无线网卡驱动已经正确安装，并被系统正确识别。&lt;/p&gt;</summary>
-    
-    
-    
-    
-    <category term="Linux" scheme="http://example.com/tags/Linux/"/>
-    
-    <category term="无线网卡" scheme="http://example.com/tags/%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1/"/>
     
   </entry>
   

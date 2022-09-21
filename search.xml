@@ -206,6 +206,38 @@
       </tags>
   </entry>
   <entry>
+    <title>Kali的DDoS攻击方法</title>
+    <url>/2022/09/21/Kali%E7%9A%84DDoS%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212049992.jpeg"></p>
+<p><strong>本文章使用的是Kali Linux的2021-4-installer-amd64版本</strong> <strong>Kali Linux的安装过程本文章不做过多说明，请自行百度</strong> <strong>本帖子如果涉及侵权请联系我</strong>  </p>
+<span id="more"></span>
+
+<p>1**.**首先，打开一个终端然后<code>su root</code>进入<code>root</code></p>
+<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212050035.png" alt="img">  </p>
+<p>2.下载ddos文件包  </p>
+<p>自行百度下载</p>
+<p>3.cd到ddos包下</p>
+<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212050053.png" alt="img"> </p>
+<p> 4.用python执行<code>ddos.py</code>，输入命令：<code>python ddos.py</code></p>
+<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056870.png" alt="img">  </p>
+<p>5.再打开一个终端输入命令:<code> ping www.siediyer.cn</code>  即可获得攻击对象的IP地址。（获取IP后<code>Ctrl+C</code>可以结束<code>ping</code>）   <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212055245.png" alt="img">  </p>
+<p>6.然后回到刚刚的终端，输入<code>ping</code>到的IP地址：</p>
+<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056852.png" alt="img"></p>
+<p>  7.Attack Port即攻击端口，一般服务器默认为80（更多内容请百度）  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056029.png" alt="img"> </p>
+<p> 8.Attack Speed即攻击速度，数值越大越快，最大不能超过1000  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056295.png" alt="img">  </p>
+<p>9.按下回车，如果出现以下界面，即代表已经开始向该IP发起DDos攻击，也就成功了。  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056196.png" alt="img">   </p>
+<p>安全无边疆，努力习知识  </p>
+<p>本文章只供学习交流学习不可用于其他非法用途！！！</p>
+<p> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056473.png" alt="9"></p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>Kali</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Linux中的挂载命令mount</title>
     <url>/2022/09/21/Linux%E4%B8%AD%E7%9A%84%E6%8C%82%E8%BD%BD%E5%91%BD%E4%BB%A4mount/</url>
     <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在 Linux GUI 中，我们通常理所当然地认为，当我们插入 USB 闪存驱动器、硬盘驱动器甚至 DVD 磁盘时，它们就可以使用了。但是在后台有一个过程，设备被安装（准备好使用）并分配了一个安装点。当使用服务器或远程连接时，并不能确定某个设备是否会自动可用，那么我们如何挂载自己的设备呢？下面我们一起来看一下！</p>
@@ -282,6 +314,96 @@
 <p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210124550.png"></p>
 <h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>使用<code>mount</code>命令我们可以更好地控制在 Linux 中挂载和卸载磁盘，并掌握一些技巧，在连接的驱动器无法自动正确挂载时可能会有所帮助。</p>
 <p>在探索以前使用的系统的旧备份映像或想要查看 Linux 发行版映像内容以进行探索或学习时，能够使用循环设备挂载磁盘映像非常有用。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux系统无线网卡配置</title>
+    <url>/2019/12/16/Linux%E7%B3%BB%E7%BB%9F%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h2 id="无线网卡配置"><a href="#无线网卡配置" class="headerlink" title="无线网卡配置"></a>无线网卡配置</h2><p>本文介绍在Linux 命令行界面中手动配置无线网卡的方法。目前流行的多数发行版都支持用图形界面的<code>network- manager</code>方便地进行配置，而无需使用本文所介绍的原始方法。</p>
+<p>下面介绍使用<code>iwconfig</code>和<code>ifconfig</code>等命令在命令行状态下配置无线网络。前题是无线网卡驱动已经正确安装，并被系统正确识别。</p>
+<span id="more"></span>
+<h2 id="大体思路"><a href="#大体思路" class="headerlink" title="大体思路"></a>大体思路</h2><p>工作的大体思路如下：</p>
+<ol>
+<li>用<code>iwconfig</code>开启无线网卡的电源，并查找区域内的无线网络</li>
+<li>连接到相应的无线网络</li>
+<li>通过<code>ifconfig</code>启用无线网卡，并获取IP（如果使用DHCP的话）</li>
+</ol>
+<h2 id="具体过程"><a href="#具体过程" class="headerlink" title="具体过程"></a>具体过程</h2><ol>
+<li>打开无线网卡电源</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 txpower on</span><br></pre></td></tr></table></figure>
+<h4 id="无线网络的信号灯应该亮了。"><a href="#无线网络的信号灯应该亮了。" class="headerlink" title="无线网络的信号灯应该亮了。"></a>无线网络的信号灯应该亮了。</h4><ol start="2">
+<li>列出区域内的无线网络<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwlist wlan0 scan</span><br></pre></td></tr></table></figure></li>
+<li>假设要连接到网络MyHome（即essid为MyHome的网络），那么输入命令</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 essid <span class="string">&quot;MyHome&quot;</span> </span><br></pre></td></tr></table></figure>
+<p><em>#如果网络是加密的，密码是0123456789，那么就输入命令#</em></p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 essid <span class="string">&quot;MyHome&quot;</span> key <span class="number">0123</span><span class="literal">-4567-89</span></span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>如果正常的话，输入</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br></pre></td></tr></table></figure>
+<h4 id="就可以看到连接正常的各项参数了。"><a href="#就可以看到连接正常的各项参数了。" class="headerlink" title="就可以看到连接正常的各项参数了。"></a>就可以看到连接正常的各项参数了。</h4><ol start="5">
+<li>启用无线网卡</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ifconfig wlan0 up</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>如果是用DHCP获取IP的，那么用dhclient 或dhcpcd获取ip</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">dhcpcd wlan0</span><br></pre></td></tr></table></figure>
+
+<p>或</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">dhclient wlan0</span><br></pre></td></tr></table></figure>
+
+<ol start="7">
+<li>现在无线网卡应该可以正常使用了。</li>
+</ol>
+<h3 id="PS"><a href="#PS" class="headerlink" title="PS:"></a>PS:</h3><p>   如果现在还不能联网。那么点击网络图标。选择链接到隐藏的无线网络。输入找到的网络的名字。<br>      图形化的网络管理程序是<code>System-&gt;Preferences-&gt;Network Connections</code>。打开程序后，点击无线网络项目，点击add增加一个新的无线网络。  给出任意的<code>Connection Name</code>。<code>SSID</code>中输入无限网络的名字。<code>wireless security</code>中选择一种合适的加密类型。key中输入无限网络的密码。 </p>
+<p>   其他字段都不修改。 执行后，应该能够链接无限网络。  可以使用<code>iwconfig wlan0</code>命令查看是否正确连接无线网络。</p>
+<h6 id="未正确链接无线网络的输出："><a href="#未正确链接无线网络的输出：" class="headerlink" title="未正确链接无线网络的输出："></a>未正确链接无线网络的输出：</h6><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br><span class="line">wlan0     IEEE <span class="number">802.11</span>abg  ESSID:off/any </span><br><span class="line">          Mode:Managed  Access Point: Not<span class="literal">-Associated</span>   Tx<span class="literal">-Power</span>=<span class="number">0</span> dBm  </span><br><span class="line">          Retry  long limit:<span class="number">7</span>   RTS thr:off   Fragment thr:off</span><br><span class="line">          Power Management:off</span><br></pre></td></tr></table></figure>
+
+<h6 id="正确链接无线网络后的输出："><a href="#正确链接无线网络后的输出：" class="headerlink" title="正确链接无线网络后的输出："></a>正确链接无线网络后的输出：</h6><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br><span class="line">wlan0     IEEE <span class="number">802.11</span>abg  ESSID:<span class="string">&quot;MyHome&quot;</span> </span><br><span class="line">          Mode:Managed  Frequency:<span class="number">2.437</span> GHz  Access Point: <span class="number">00</span>:<span class="number">26</span>:DS:<span class="number">43</span>:<span class="number">1</span>A:A8  </span><br><span class="line">          Bit Rate=<span class="number">54</span> Mb/s   Tx<span class="literal">-Power</span>=<span class="number">0</span> dBm  </span><br><span class="line">          Retry  long limit:<span class="number">7</span>   RTS thr:off   Fragment thr:off</span><br><span class="line">          Power Management:off</span><br><span class="line">          Link Quality=<span class="number">65</span>/<span class="number">70</span>  Signal level=<span class="literal">-45</span> dBm </span><br><span class="line">          Rx invalid nwid:<span class="number">0</span>  Rx invalid crypt:<span class="number">0</span>  Rx invalid frag:<span class="number">0</span></span><br><span class="line">          Tx excessive retries:<span class="number">0</span>  Invalid misc:<span class="number">0</span>   Missed beacon:<span class="number">0</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>Linux</tag>
+        <tag>无线网卡</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux通过密钥对免密登录</title>
+    <url>/2022/09/21/Linux%E9%80%9A%E8%BF%87%E5%AF%86%E9%92%A5%E5%AF%B9%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/</url>
+    <content><![CDATA[<p>首先，说明一下我们要做的是，跳板机服务器的<code>usera</code>用户免密码登录B服务器的<code>userb</code>用户。<br>我们先使用<code>usera</code>登录跳板服务器</p>
+<blockquote>
+<p>首先生成密钥对如果有则跳过这一步</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<p>操作演示</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">[sera@serverA ~]$ ssh-keygen -t rsa  <span class="comment">//使用rsa算法加密</span></span><br><span class="line"><span class="title class_">Generating</span> public/private rsa key pair.</span><br><span class="line"><span class="title class_">Enter</span> file <span class="keyword">in</span> which to save the key (<span class="regexp">/home/u</span>sera/.<span class="property">ssh</span>/id_rsa): <span class="comment">//私钥默认保存路径</span></span><br><span class="line"><span class="title class_">Created</span> directory <span class="string">&#x27;/home/usera/.ssh&#x27;</span>.</span><br><span class="line"><span class="title class_">Enter</span> passphrase (empty <span class="keyword">for</span> no passphrase): <span class="comment">//在这里输入密码如果这里输入密码以后登录需要密钥和密码才能登录这里建议直接回车也就是空</span></span><br><span class="line"><span class="title class_">Enter</span> same passphrase <span class="attr">again</span>:</span><br><span class="line"><span class="title class_">Your</span> identification has been saved <span class="keyword">in</span> /home/usera/.<span class="property">ssh</span>/id_rsa.</span><br><span class="line"><span class="title class_">Your</span> public key has been saved <span class="keyword">in</span> /home/usera/.<span class="property">ssh</span>/id_rsa.<span class="property">pub</span>. <span class="comment">//公钥保存路径</span></span><br><span class="line"><span class="title class_">The</span> key fingerprint <span class="attr">is</span>:</span><br><span class="line"><span class="number">39</span>:<span class="attr">f2</span>:<span class="attr">fc</span>:<span class="number">70</span>:<span class="attr">ef</span>:<span class="attr">e9</span>:<span class="attr">bd</span>:<span class="number">05</span>:<span class="number">40</span>:6<span class="attr">e</span>:<span class="number">64</span>:<span class="attr">b0</span>:<span class="number">99</span>:<span class="number">56</span>:6<span class="attr">e</span>:<span class="number">01</span> usera@serverA</span><br><span class="line"><span class="title class_">The</span> key<span class="string">&#x27;s randomart image is:</span></span><br><span class="line"><span class="string">+--[ RSA 2048]----+</span></span><br><span class="line"><span class="string">| Eo* |</span></span><br><span class="line"><span class="string">| @ . |</span></span><br><span class="line"><span class="string">| = * |</span></span><br><span class="line"><span class="string">| o o . |</span></span><br><span class="line"><span class="string">| . S . |</span></span><br><span class="line"><span class="string">| + . . |</span></span><br><span class="line"><span class="string">| + . .|</span></span><br><span class="line"><span class="string">| + . o . |</span></span><br><span class="line"><span class="string">| .o= o. |</span></span><br><span class="line"><span class="string">+-----------------+</span></span><br></pre></td></tr></table></figure>
+
+<p>以下是截图提示</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210216196.png"></p>
+<blockquote>
+<p>id_rsa是私钥，id_rsa.pub是公钥公钥在服务器私钥在自己手上</p>
+</blockquote>
+<p>此时会在<code>/home/usera/.ssh</code>目录下生成密钥对我们使用<code>ls</code>查看一下</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">root@<span class="attr">vultr</span>:~#  ls -la .<span class="property">ssh</span></span><br><span class="line">total <span class="number">16</span></span><br><span class="line">drwx------ <span class="number">2</span> root root <span class="number">4096</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> .</span><br><span class="line">drwx------ <span class="number">5</span> root root <span class="number">4096</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">00</span> ..</span><br><span class="line">-rw------- <span class="number">1</span> root root <span class="number">1675</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> id_rsa</span><br><span class="line">-rw-r--r-- <span class="number">1</span> root root  <span class="number">398</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> id_rsa.<span class="property">pub</span></span><br></pre></td></tr></table></figure>
+
+<p>然后将公钥上传到需要登录的服务器，并以<code>userb</code>用户登录<br>至于上传方式可以用<code>scp</code>以及<code>sz</code>命令这里就介绍了<br>可以参考这篇<a href="https://shagain.club/index.php/archives/111/">文章</a></p>
+<blockquote>
+<p>上传到用户目录下的.ssh文件夹下<code>authorized_keys</code>这个文件是用来存放公钥内容的我们使用<code>cat</code>把公钥追加到<code>authorized_keys</code>这个文件就好了</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">cat id_rsa.<span class="property">pub</span> &gt;&gt; ~<span class="regexp">/.ssh/</span>authorized_keys    <span class="comment">//cat 公钥路径 &gt;&gt; ~/.ssh/authorized_keys</span></span><br></pre></td></tr></table></figure>
+
+<p>这样子我们就配置好了<br>另外我们要注意，<code>.ssh</code>目录的权限为<code>700</code>，其下文件<code>authorized_keys</code>和私钥的权限为<code>600</code>。否则会因为权限问题导致无法免密码登录。我们可以看到登陆后会有<code>known_hosts</code>文件生成。</p>
 ]]></content>
       <categories>
         <category>学习</category>
@@ -480,96 +602,6 @@
 
 <p>下面是比较全面的输出机器硬件与软件信息</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ inxi -Fza           </span><br><span class="line">System:</span><br><span class="line">  Kernel: 5.19.0-1-MANJARO arch: x86_64 bits: 64 compiler: gcc v: 12.1.0</span><br><span class="line">    parameters: BOOT_IMAGE=/boot/vmlinuz-5.19-x86_64</span><br><span class="line">    root=UUID=2ddecb6a-da82-48f6-9f5a-d810b32d623b rw quiet apparmor=1</span><br><span class="line">    security=apparmor resume=UUID=406e14e5-7ca3-4959-bb61-8bf9158da6f9</span><br><span class="line">    udev.log_priority=3</span><br><span class="line">  Desktop: KDE Plasma v: 5.24.6 tk: Qt v: 5.15.5 wm: kwin_x11 vt: 1</span><br><span class="line">    dm: SDDM Distro: Manjaro Linux base: Arch Linux</span><br><span class="line">Machine:</span><br><span class="line">  Type: Desktop Mobo: ASRock model: X300M-STX serial: &lt;superuser required&gt;</span><br><span class="line">    UEFI: American Megatrends LLC. v: P1.70 date: 07/01/2021</span><br><span class="line">CPU:</span><br><span class="line">  Info: model: AMD Ryzen 7 PRO 4750G with Radeon Graphics bits: 64</span><br><span class="line">...</span><br><span class="line">Info:</span><br><span class="line">  Processes: 416 Uptime: 6h 52m wakeups: 0 Memory: 58.74 GiB</span><br><span class="line">  used: 11.55 GiB (19.7%) Init: systemd v: 251 default: graphical</span><br><span class="line">  tool: systemctl Compilers: gcc: 12.1.0 clang: 14.0.6 Packages: 1707</span><br><span class="line">  pacman: 1701 lib: 372 flatpak: 0 snap: 6 Shell: Zsh v: 5.9</span><br><span class="line">  running-in: konsole inxi: 3.3.19</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>学习</category>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux系统无线网卡配置</title>
-    <url>/2019/12/16/Linux%E7%B3%BB%E7%BB%9F%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<h2 id="无线网卡配置"><a href="#无线网卡配置" class="headerlink" title="无线网卡配置"></a>无线网卡配置</h2><p>本文介绍在Linux 命令行界面中手动配置无线网卡的方法。目前流行的多数发行版都支持用图形界面的<code>network- manager</code>方便地进行配置，而无需使用本文所介绍的原始方法。</p>
-<p>下面介绍使用<code>iwconfig</code>和<code>ifconfig</code>等命令在命令行状态下配置无线网络。前题是无线网卡驱动已经正确安装，并被系统正确识别。</p>
-<span id="more"></span>
-<h2 id="大体思路"><a href="#大体思路" class="headerlink" title="大体思路"></a>大体思路</h2><p>工作的大体思路如下：</p>
-<ol>
-<li>用<code>iwconfig</code>开启无线网卡的电源，并查找区域内的无线网络</li>
-<li>连接到相应的无线网络</li>
-<li>通过<code>ifconfig</code>启用无线网卡，并获取IP（如果使用DHCP的话）</li>
-</ol>
-<h2 id="具体过程"><a href="#具体过程" class="headerlink" title="具体过程"></a>具体过程</h2><ol>
-<li>打开无线网卡电源</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 txpower on</span><br></pre></td></tr></table></figure>
-<h4 id="无线网络的信号灯应该亮了。"><a href="#无线网络的信号灯应该亮了。" class="headerlink" title="无线网络的信号灯应该亮了。"></a>无线网络的信号灯应该亮了。</h4><ol start="2">
-<li>列出区域内的无线网络<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwlist wlan0 scan</span><br></pre></td></tr></table></figure></li>
-<li>假设要连接到网络MyHome（即essid为MyHome的网络），那么输入命令</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 essid <span class="string">&quot;MyHome&quot;</span> </span><br></pre></td></tr></table></figure>
-<p><em>#如果网络是加密的，密码是0123456789，那么就输入命令#</em></p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 essid <span class="string">&quot;MyHome&quot;</span> key <span class="number">0123</span><span class="literal">-4567-89</span></span><br></pre></td></tr></table></figure>
-<ol start="4">
-<li>如果正常的话，输入</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br></pre></td></tr></table></figure>
-<h4 id="就可以看到连接正常的各项参数了。"><a href="#就可以看到连接正常的各项参数了。" class="headerlink" title="就可以看到连接正常的各项参数了。"></a>就可以看到连接正常的各项参数了。</h4><ol start="5">
-<li>启用无线网卡</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ifconfig wlan0 up</span><br></pre></td></tr></table></figure>
-
-<ol start="6">
-<li>如果是用DHCP获取IP的，那么用dhclient 或dhcpcd获取ip</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">dhcpcd wlan0</span><br></pre></td></tr></table></figure>
-
-<p>或</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">dhclient wlan0</span><br></pre></td></tr></table></figure>
-
-<ol start="7">
-<li>现在无线网卡应该可以正常使用了。</li>
-</ol>
-<h3 id="PS"><a href="#PS" class="headerlink" title="PS:"></a>PS:</h3><p>   如果现在还不能联网。那么点击网络图标。选择链接到隐藏的无线网络。输入找到的网络的名字。<br>      图形化的网络管理程序是<code>System-&gt;Preferences-&gt;Network Connections</code>。打开程序后，点击无线网络项目，点击add增加一个新的无线网络。  给出任意的<code>Connection Name</code>。<code>SSID</code>中输入无限网络的名字。<code>wireless security</code>中选择一种合适的加密类型。key中输入无限网络的密码。 </p>
-<p>   其他字段都不修改。 执行后，应该能够链接无限网络。  可以使用<code>iwconfig wlan0</code>命令查看是否正确连接无线网络。</p>
-<h6 id="未正确链接无线网络的输出："><a href="#未正确链接无线网络的输出：" class="headerlink" title="未正确链接无线网络的输出："></a>未正确链接无线网络的输出：</h6><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br><span class="line">wlan0     IEEE <span class="number">802.11</span>abg  ESSID:off/any </span><br><span class="line">          Mode:Managed  Access Point: Not<span class="literal">-Associated</span>   Tx<span class="literal">-Power</span>=<span class="number">0</span> dBm  </span><br><span class="line">          Retry  long limit:<span class="number">7</span>   RTS thr:off   Fragment thr:off</span><br><span class="line">          Power Management:off</span><br></pre></td></tr></table></figure>
-
-<h6 id="正确链接无线网络后的输出："><a href="#正确链接无线网络后的输出：" class="headerlink" title="正确链接无线网络后的输出："></a>正确链接无线网络后的输出：</h6><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br><span class="line">wlan0     IEEE <span class="number">802.11</span>abg  ESSID:<span class="string">&quot;MyHome&quot;</span> </span><br><span class="line">          Mode:Managed  Frequency:<span class="number">2.437</span> GHz  Access Point: <span class="number">00</span>:<span class="number">26</span>:DS:<span class="number">43</span>:<span class="number">1</span>A:A8  </span><br><span class="line">          Bit Rate=<span class="number">54</span> Mb/s   Tx<span class="literal">-Power</span>=<span class="number">0</span> dBm  </span><br><span class="line">          Retry  long limit:<span class="number">7</span>   RTS thr:off   Fragment thr:off</span><br><span class="line">          Power Management:off</span><br><span class="line">          Link Quality=<span class="number">65</span>/<span class="number">70</span>  Signal level=<span class="literal">-45</span> dBm </span><br><span class="line">          Rx invalid nwid:<span class="number">0</span>  Rx invalid crypt:<span class="number">0</span>  Rx invalid frag:<span class="number">0</span></span><br><span class="line">          Tx excessive retries:<span class="number">0</span>  Invalid misc:<span class="number">0</span>   Missed beacon:<span class="number">0</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>Linux</tag>
-        <tag>无线网卡</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux通过密钥对免密登录</title>
-    <url>/2022/09/21/Linux%E9%80%9A%E8%BF%87%E5%AF%86%E9%92%A5%E5%AF%B9%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/</url>
-    <content><![CDATA[<p>首先，说明一下我们要做的是，跳板机服务器的<code>usera</code>用户免密码登录B服务器的<code>userb</code>用户。<br>我们先使用<code>usera</code>登录跳板服务器</p>
-<blockquote>
-<p>首先生成密钥对如果有则跳过这一步</p>
-</blockquote>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
-<span id="more"></span>
-<p>操作演示</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">[sera@serverA ~]$ ssh-keygen -t rsa  <span class="comment">//使用rsa算法加密</span></span><br><span class="line"><span class="title class_">Generating</span> public/private rsa key pair.</span><br><span class="line"><span class="title class_">Enter</span> file <span class="keyword">in</span> which to save the key (<span class="regexp">/home/u</span>sera/.<span class="property">ssh</span>/id_rsa): <span class="comment">//私钥默认保存路径</span></span><br><span class="line"><span class="title class_">Created</span> directory <span class="string">&#x27;/home/usera/.ssh&#x27;</span>.</span><br><span class="line"><span class="title class_">Enter</span> passphrase (empty <span class="keyword">for</span> no passphrase): <span class="comment">//在这里输入密码如果这里输入密码以后登录需要密钥和密码才能登录这里建议直接回车也就是空</span></span><br><span class="line"><span class="title class_">Enter</span> same passphrase <span class="attr">again</span>:</span><br><span class="line"><span class="title class_">Your</span> identification has been saved <span class="keyword">in</span> /home/usera/.<span class="property">ssh</span>/id_rsa.</span><br><span class="line"><span class="title class_">Your</span> public key has been saved <span class="keyword">in</span> /home/usera/.<span class="property">ssh</span>/id_rsa.<span class="property">pub</span>. <span class="comment">//公钥保存路径</span></span><br><span class="line"><span class="title class_">The</span> key fingerprint <span class="attr">is</span>:</span><br><span class="line"><span class="number">39</span>:<span class="attr">f2</span>:<span class="attr">fc</span>:<span class="number">70</span>:<span class="attr">ef</span>:<span class="attr">e9</span>:<span class="attr">bd</span>:<span class="number">05</span>:<span class="number">40</span>:6<span class="attr">e</span>:<span class="number">64</span>:<span class="attr">b0</span>:<span class="number">99</span>:<span class="number">56</span>:6<span class="attr">e</span>:<span class="number">01</span> usera@serverA</span><br><span class="line"><span class="title class_">The</span> key<span class="string">&#x27;s randomart image is:</span></span><br><span class="line"><span class="string">+--[ RSA 2048]----+</span></span><br><span class="line"><span class="string">| Eo* |</span></span><br><span class="line"><span class="string">| @ . |</span></span><br><span class="line"><span class="string">| = * |</span></span><br><span class="line"><span class="string">| o o . |</span></span><br><span class="line"><span class="string">| . S . |</span></span><br><span class="line"><span class="string">| + . . |</span></span><br><span class="line"><span class="string">| + . .|</span></span><br><span class="line"><span class="string">| + . o . |</span></span><br><span class="line"><span class="string">| .o= o. |</span></span><br><span class="line"><span class="string">+-----------------+</span></span><br></pre></td></tr></table></figure>
-
-<p>以下是截图提示</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210216196.png"></p>
-<blockquote>
-<p>id_rsa是私钥，id_rsa.pub是公钥公钥在服务器私钥在自己手上</p>
-</blockquote>
-<p>此时会在<code>/home/usera/.ssh</code>目录下生成密钥对我们使用<code>ls</code>查看一下</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">root@<span class="attr">vultr</span>:~#  ls -la .<span class="property">ssh</span></span><br><span class="line">total <span class="number">16</span></span><br><span class="line">drwx------ <span class="number">2</span> root root <span class="number">4096</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> .</span><br><span class="line">drwx------ <span class="number">5</span> root root <span class="number">4096</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">00</span> ..</span><br><span class="line">-rw------- <span class="number">1</span> root root <span class="number">1675</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> id_rsa</span><br><span class="line">-rw-r--r-- <span class="number">1</span> root root  <span class="number">398</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> id_rsa.<span class="property">pub</span></span><br></pre></td></tr></table></figure>
-
-<p>然后将公钥上传到需要登录的服务器，并以<code>userb</code>用户登录<br>至于上传方式可以用<code>scp</code>以及<code>sz</code>命令这里就介绍了<br>可以参考这篇<a href="https://shagain.club/index.php/archives/111/">文章</a></p>
-<blockquote>
-<p>上传到用户目录下的.ssh文件夹下<code>authorized_keys</code>这个文件是用来存放公钥内容的我们使用<code>cat</code>把公钥追加到<code>authorized_keys</code>这个文件就好了</p>
-</blockquote>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">cat id_rsa.<span class="property">pub</span> &gt;&gt; ~<span class="regexp">/.ssh/</span>authorized_keys    <span class="comment">//cat 公钥路径 &gt;&gt; ~/.ssh/authorized_keys</span></span><br></pre></td></tr></table></figure>
-
-<p>这样子我们就配置好了<br>另外我们要注意，<code>.ssh</code>目录的权限为<code>700</code>，其下文件<code>authorized_keys</code>和私钥的权限为<code>600</code>。否则会因为权限问题导致无法免密码登录。我们可以看到登陆后会有<code>known_hosts</code>文件生成。</p>
 ]]></content>
       <categories>
         <category>学习</category>
@@ -1047,36 +1079,6 @@
       </tags>
   </entry>
   <entry>
-    <title>继上一期解决github上的图片无法显示的问题</title>
-    <url>/2022/08/21/%E7%BB%A7%E4%B8%8A%E4%B8%80%E6%9C%9F%E8%A7%A3%E5%86%B3github%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>​      <a href="https://movejian.github.io/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/">继上篇github图床问题</a>无法正常显示，但在<strong>github</strong>上看到正常上传，连接也并非错误，百度了一下说什么<strong>DNS</strong>被污染了。解决方法是修改<strong>hosts</strong>文件或者修改<strong>DNS</strong>。</p>
-<p>​      首先，打开<a href="https://ping.eu/nslookup">域名解析</a>网站：<a href="https://ping.eu/nslookup">https://ping.eu/nslookup</a><br>然后输入raw.githubusercontent.com如下图：</p>
-<p><img src="https://movejian.github.io/images/20220821/5.png"></p>
-<span id="more"></span>
-<p>​      我们得到图床所用域名解析到的IP(上图红框中的地址)。</p>
-<ul>
-<li>最后打开本机的<strong>host</strong>文件，其路径如下：<br><code>C:\Windows\System32\drivers\etc\hosts</code>, 然后添加如下内容(上图红框中的地址)：</li>
-</ul>
-<p><img src="https://movejian.github.io/images/20220821/6.png"></p>
-<ul>
-<li>打开<strong>CMD</strong>输入命令<code>ipconfig /flushdns</code>刷新<strong>DNS</strong>缓存,再次输入<code>ipconfig/displaydns</code></li>
-</ul>
-<p>​    如果你的<strong>hosts</strong>的文件不见了,可以通过文件设置显示系统隐藏文件来找到，依然找不到，可能是被误删了，网上有很多是通过新建文本文档解决。也可以通过下面这个命令来生成<strong>hosts</strong>文件。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for /f %P in (&#x27;dir %windir%\WinSxS\hosts /b /s&#x27;) do copy %P %windir%\System32\drivers\etc &amp; echo %P &amp; Notepad %P</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><strong>注意</strong>一定要使用管理员身份输入此命令。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>图床</tag>
-        <tag>问题解决</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>热血传奇魔龙地图与简易图解</title>
     <url>/2022/08/31/%E7%83%AD%E8%A1%80%E4%BC%A0%E5%A5%87%E9%AD%94%E9%BE%99%E5%9C%B0%E5%9B%BE%E4%B8%8E%E7%AE%80%E6%98%93%E5%9B%BE%E8%A7%A3/</url>
     <content><![CDATA[<p>盟重老兵（325，325）处可以直接传送到魔龙城。 魔龙城的怪物有：魔龙血蛙、魔龙破甲兵、魔龙射手、魔龙教主等。</p>
@@ -1189,6 +1191,36 @@
         <tag>传奇</tag>
         <tag>攻略</tag>
         <tag>魔龙</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>继上一期解决github上的图片无法显示的问题</title>
+    <url>/2022/08/21/%E7%BB%A7%E4%B8%8A%E4%B8%80%E6%9C%9F%E8%A7%A3%E5%86%B3github%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>​      <a href="https://movejian.github.io/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/">继上篇github图床问题</a>无法正常显示，但在<strong>github</strong>上看到正常上传，连接也并非错误，百度了一下说什么<strong>DNS</strong>被污染了。解决方法是修改<strong>hosts</strong>文件或者修改<strong>DNS</strong>。</p>
+<p>​      首先，打开<a href="https://ping.eu/nslookup">域名解析</a>网站：<a href="https://ping.eu/nslookup">https://ping.eu/nslookup</a><br>然后输入raw.githubusercontent.com如下图：</p>
+<p><img src="https://movejian.github.io/images/20220821/5.png"></p>
+<span id="more"></span>
+<p>​      我们得到图床所用域名解析到的IP(上图红框中的地址)。</p>
+<ul>
+<li>最后打开本机的<strong>host</strong>文件，其路径如下：<br><code>C:\Windows\System32\drivers\etc\hosts</code>, 然后添加如下内容(上图红框中的地址)：</li>
+</ul>
+<p><img src="https://movejian.github.io/images/20220821/6.png"></p>
+<ul>
+<li>打开<strong>CMD</strong>输入命令<code>ipconfig /flushdns</code>刷新<strong>DNS</strong>缓存,再次输入<code>ipconfig/displaydns</code></li>
+</ul>
+<p>​    如果你的<strong>hosts</strong>的文件不见了,可以通过文件设置显示系统隐藏文件来找到，依然找不到，可能是被误删了，网上有很多是通过新建文本文档解决。也可以通过下面这个命令来生成<strong>hosts</strong>文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for /f %P in (&#x27;dir %windir%\WinSxS\hosts /b /s&#x27;) do copy %P %windir%\System32\drivers\etc &amp; echo %P &amp; Notepad %P</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>注意</strong>一定要使用管理员身份输入此命令。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>图床</tag>
+        <tag>问题解决</tag>
       </tags>
   </entry>
   <entry>
