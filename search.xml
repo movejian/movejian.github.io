@@ -59,76 +59,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo如何迁移到新电脑</title>
-    <url>/2022/08/21/Hexo%E5%A6%82%E4%BD%95%E8%BF%81%E7%A7%BB%E5%88%B0%E6%96%B0%E7%94%B5%E8%84%91/</url>
-    <content><![CDATA[<h3 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h3><p>这是曾经发生的事情，自己对于数据备份疏忽，导致Hexo的<code>source</code>丢失，只能重新搭建博客。。。。。</p>
-<p>如何备份后续会更新，一切都是泪。。。。。</p>
-<span id="more"></span> 
-<h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p>迁移到新电脑之后，发现以前的Hexo拉到本地是无法正常使用的，这时候查找资料寻找解决办法</p>
-<p>由于旧电脑操作不当已经被格式化了，所有的源代码数据都已经被清除，所以我现在只能重新搭建博客</p>
-<h3 id="需要做的事情"><a href="#需要做的事情" class="headerlink" title="需要做的事情"></a>需要做的事情</h3><ol>
-<li><p>重新搭建博客</p>
-</li>
-<li><p>做好GIT备份</p>
-</li>
-<li><p>定期同步</p>
-</li>
-</ol>
-<h3 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h3><p>（有source等文件的情况下可以恢复）</p>
-<h4 id="1-GIT上设置秘钥"><a href="#1-GIT上设置秘钥" class="headerlink" title="1. GIT上设置秘钥"></a>1. GIT上设置秘钥</h4><p>  安装git这里就不描述了，安装完成之后，我们在终端执行<code>ssh-keygen -t rsa -C &quot;movejian@qq.com&quot;</code></p>
-<p>然后按三次回车，生成秘钥</p>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line">$ ssh-<span class="attribute">keygen</span> -t rsa -C <span class="string">&quot;xxxx<span class="variable">@qq</span>.com&quot;</span>(你的邮箱地址) Generating public/private rsa key pair. Enter file in which to save the key (/c/Users/xxxxxx/.ssh/id_rsa):</span><br></pre></td></tr></table></figure>
-
-<p>在<code>C:\Users\xxxx.ssh</code>下面，就可以看到秘钥了，<strong>id_rsa</strong>是私钥，千万不能泄露出去，<strong>id_rsa.pub是公钥</strong>，我们需要复制<strong>公钥</strong>里面的内容</p>
-<p>进入<a href="https://github.com/">github</a> ，选择 <code>setting</code></p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/20220821123613.png" alt="github设置"></p>
-<p>选择<code>SSH and GPG keys</code></p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/20220821123713.png" alt="key配置"></p>
-<p>选择<code>New SSH key</code></p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/20220821123810.png" alt="保存你的key到github"></p>
-<p>填写好title, 复制 rsa_public 里面的内容，点击<code>Add</code>，输入密码即可完成秘钥建立</p>
-<h4 id="2-安装node"><a href="#2-安装node" class="headerlink" title="2. 安装node"></a>2. 安装node</h4><p>  在<strong>GIT</strong>设置完成之后，我们下一步是准备好环境进行还原，首先我们需要进入 <a href="https://nodejs.cn/download/">node.js</a>的官网下载对应的安装包，比如下方的中文网站：</p>
-<p> <a href="https://nodejs.cn/download/">node.js</a>官方中文地址：<a href="https://nodejs.cn/download/">https://nodejs.cn/download/</a></p>
-<p>进入网站之后，我们需要下载对应的安装包进行安装，这里建议下LTS的版本。</p>
-<p>安装完node之后，这里不要着急，先检测一下自己是否真的安装好了，使用下面三个命令检测自己是否具备环境。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">node -v</span><br><span class="line"></span><br><span class="line">npm -v</span><br><span class="line"></span><br><span class="line">Git --version</span><br></pre></td></tr></table></figure>
-
-<h4 id="3-安装hexo"><a href="#3-安装hexo" class="headerlink" title="3. 安装hexo"></a>3. 安装hexo</h4><p>新版本的node基本包含了<code>npm</code>这一类的工具，我们也无需手动安装，另外这里也不建议使用<code>cnpm</code>安装，建议直接使用<code>npm</code>安装即可，我们依次敲入下面的命令即可。</p>
-  <figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
-<p>如果你是用的<strong>苹果系统（MAC）</strong>在前面加上<code>sudo</code></p>
-  <figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">sudo npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>  如果mac电脑在操作node命令的时候出现类似permission的字样，多半是没有权限，sudoy一下即可</p>
-</blockquote>
-<p>安装好了之后，这里可以使用如下的命令安装Hexo，同上，如果使用<strong>MAC</strong>电脑在前面加上<code>sudo</code></p>
-<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">npm install -g hexo</span><br></pre></td></tr></table></figure>
-
-<h4 id="4-从GIT把备份拉到本地"><a href="#4-从GIT把备份拉到本地" class="headerlink" title="4. 从GIT把备份拉到本地"></a>4. 从GIT把备份拉到本地</h4><p>  这一个步骤就是使用git clone把之前的文章构建的备份拉到本地，比如这里个人的命令如下。</p>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">git</span> clone -b hexo https://xxxx/hexo</span><br></pre></td></tr></table></figure>
-
-<p>这一步完成之后，在本地有的只是一个对于hexo的基础架构，这时候还是不能执行hexo命令的，我们还需要执行 npm install 把node和hexo的依赖安装到当前的目录，生成对应的node_moudules 文件。</p>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">npm</span> install</span><br></pre></td></tr></table></figure>
-
-<p>安装完成之后，我们就可以快乐的玩耍了。</p>
-<h4 id="5-Hexo基础操作"><a href="#5-Hexo基础操作" class="headerlink" title="5. Hexo基础操作"></a>5. Hexo基础操作</h4><p>好久没有用过了，这里再次回顾一下基础的操作，其实hexo到了最后就只剩下几个操作就可以完成，比如下面的命令，把笔记软件写好的稿子放到hexo生成的文件里面，加一个<code>&lt;!-- more --&gt;</code>标签即可完成一遍笔记的输出，然后部署上去之后自动推送到github和gitee 的分支。</p>
-  <figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">hexo</span> new <span class="string">&#x27;xxx&#x27;</span>//新建一个新的主题</span><br><span class="line">hexo cl</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-
-<p>  个人喜欢使用如下的文章模板：</p>
-  <figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line">title: &#123;&#123; <span class="attribute">title</span> &#125;&#125;</span><br><span class="line">subtitle: <span class="string">&#x27;这个人很懒，不想写副标题&#x27;</span></span><br><span class="line">author: lazytime</span><br><span class="line">url_suffix: random</span><br><span class="line">date: &#123;&#123; <span class="attribute">date</span> &#125;&#125;</span><br><span class="line">tags:</span><br><span class="line">- 无</span><br><span class="line">categories:</span><br><span class="line">- 未分类</span><br><span class="line">keywords: 请输入关键字（英文逗号分隔多个关键字）</span><br><span class="line">description: 请输入描述信息</span><br><span class="line">copyright: <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>  备份还原还是非常快的，中间除了在node的权限上卡了一下，基本上不到半小时既可以在本地快速搭建一个hexo的博客，十分方便。</p>
-<h3 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h3><p>建议每一个人有一个自己的博客，因为你不知道你的云笔记运营商哪一天会出问题，就好比之前的滴滴事件一样，另外注意平时多备份，不要像我一样傻不拉几的把硬盘格式化结果忘了把博客的内容拷出来结果全部要重写。。。。。</p>
-]]></content>
-      <categories>
-        <category>学习</category>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>技术</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hexo迁移备份</title>
     <url>/2022/08/21/Hexo%E8%BF%81%E7%A7%BB%E5%A4%87%E4%BB%BD/</url>
     <content><![CDATA[<h3 id="创建Git分支将Hexo博客迁移到其它电脑"><a href="#创建Git分支将Hexo博客迁移到其它电脑" class="headerlink" title="创建Git分支将Hexo博客迁移到其它电脑"></a>创建Git分支将Hexo博客迁移到其它电脑</h3><h3 id="反省"><a href="#反省" class="headerlink" title="反省"></a>反省</h3><p>有时候就会干些蠢事，换电脑忘记吧旧电脑博客的Hexo博客备份到移动硬盘上，一个格式化啥都没了，导致丢失了所有的博客资料。（博客内容要慢慢补） 一定要养成经常备份的好习惯。。。。。。。。</p>
@@ -196,6 +126,76 @@
 <h5 id="7-源码推到分支上"><a href="#7-源码推到分支上" class="headerlink" title="7. 源码推到分支上"></a>7. 源码推到分支上</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ git add .</span><br><span class="line">$ git commit -m &quot;xxxx&quot;</span><br><span class="line">$ git push origin hexo</span><br></pre></td></tr></table></figure>
 
 <h3 id="更加推荐的方式"><a href="#更加推荐的方式" class="headerlink" title="更加推荐的方式"></a>更加推荐的方式</h3><p>为了保证我们的源码的一些敏感配置不泄露，建议使用私有仓库进行存储，然而，我是无所谓&#x3D;-&#x3D;</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>技术</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo如何迁移到新电脑</title>
+    <url>/2022/08/21/Hexo%E5%A6%82%E4%BD%95%E8%BF%81%E7%A7%BB%E5%88%B0%E6%96%B0%E7%94%B5%E8%84%91/</url>
+    <content><![CDATA[<h3 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h3><p>这是曾经发生的事情，自己对于数据备份疏忽，导致Hexo的<code>source</code>丢失，只能重新搭建博客。。。。。</p>
+<p>如何备份后续会更新，一切都是泪。。。。。</p>
+<span id="more"></span> 
+<h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p>迁移到新电脑之后，发现以前的Hexo拉到本地是无法正常使用的，这时候查找资料寻找解决办法</p>
+<p>由于旧电脑操作不当已经被格式化了，所有的源代码数据都已经被清除，所以我现在只能重新搭建博客</p>
+<h3 id="需要做的事情"><a href="#需要做的事情" class="headerlink" title="需要做的事情"></a>需要做的事情</h3><ol>
+<li><p>重新搭建博客</p>
+</li>
+<li><p>做好GIT备份</p>
+</li>
+<li><p>定期同步</p>
+</li>
+</ol>
+<h3 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h3><p>（有source等文件的情况下可以恢复）</p>
+<h4 id="1-GIT上设置秘钥"><a href="#1-GIT上设置秘钥" class="headerlink" title="1. GIT上设置秘钥"></a>1. GIT上设置秘钥</h4><p>  安装git这里就不描述了，安装完成之后，我们在终端执行<code>ssh-keygen -t rsa -C &quot;movejian@qq.com&quot;</code></p>
+<p>然后按三次回车，生成秘钥</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line">$ ssh-<span class="attribute">keygen</span> -t rsa -C <span class="string">&quot;xxxx<span class="variable">@qq</span>.com&quot;</span>(你的邮箱地址) Generating public/private rsa key pair. Enter file in which to save the key (/c/Users/xxxxxx/.ssh/id_rsa):</span><br></pre></td></tr></table></figure>
+
+<p>在<code>C:\Users\xxxx.ssh</code>下面，就可以看到秘钥了，<strong>id_rsa</strong>是私钥，千万不能泄露出去，<strong>id_rsa.pub是公钥</strong>，我们需要复制<strong>公钥</strong>里面的内容</p>
+<p>进入<a href="https://github.com/">github</a> ，选择 <code>setting</code></p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/20220821123613.png" alt="github设置"></p>
+<p>选择<code>SSH and GPG keys</code></p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/20220821123713.png" alt="key配置"></p>
+<p>选择<code>New SSH key</code></p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/20220821123810.png" alt="保存你的key到github"></p>
+<p>填写好title, 复制 rsa_public 里面的内容，点击<code>Add</code>，输入密码即可完成秘钥建立</p>
+<h4 id="2-安装node"><a href="#2-安装node" class="headerlink" title="2. 安装node"></a>2. 安装node</h4><p>  在<strong>GIT</strong>设置完成之后，我们下一步是准备好环境进行还原，首先我们需要进入 <a href="https://nodejs.cn/download/">node.js</a>的官网下载对应的安装包，比如下方的中文网站：</p>
+<p> <a href="https://nodejs.cn/download/">node.js</a>官方中文地址：<a href="https://nodejs.cn/download/">https://nodejs.cn/download/</a></p>
+<p>进入网站之后，我们需要下载对应的安装包进行安装，这里建议下LTS的版本。</p>
+<p>安装完node之后，这里不要着急，先检测一下自己是否真的安装好了，使用下面三个命令检测自己是否具备环境。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">node -v</span><br><span class="line"></span><br><span class="line">npm -v</span><br><span class="line"></span><br><span class="line">Git --version</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-安装hexo"><a href="#3-安装hexo" class="headerlink" title="3. 安装hexo"></a>3. 安装hexo</h4><p>新版本的node基本包含了<code>npm</code>这一类的工具，我们也无需手动安装，另外这里也不建议使用<code>cnpm</code>安装，建议直接使用<code>npm</code>安装即可，我们依次敲入下面的命令即可。</p>
+  <figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+<p>如果你是用的<strong>苹果系统（MAC）</strong>在前面加上<code>sudo</code></p>
+  <figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">sudo npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>  如果mac电脑在操作node命令的时候出现类似permission的字样，多半是没有权限，sudoy一下即可</p>
+</blockquote>
+<p>安装好了之后，这里可以使用如下的命令安装Hexo，同上，如果使用<strong>MAC</strong>电脑在前面加上<code>sudo</code></p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">npm install -g hexo</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-从GIT把备份拉到本地"><a href="#4-从GIT把备份拉到本地" class="headerlink" title="4. 从GIT把备份拉到本地"></a>4. 从GIT把备份拉到本地</h4><p>  这一个步骤就是使用git clone把之前的文章构建的备份拉到本地，比如这里个人的命令如下。</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">git</span> clone -b hexo https://xxxx/hexo</span><br></pre></td></tr></table></figure>
+
+<p>这一步完成之后，在本地有的只是一个对于hexo的基础架构，这时候还是不能执行hexo命令的，我们还需要执行 npm install 把node和hexo的依赖安装到当前的目录，生成对应的node_moudules 文件。</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">npm</span> install</span><br></pre></td></tr></table></figure>
+
+<p>安装完成之后，我们就可以快乐的玩耍了。</p>
+<h4 id="5-Hexo基础操作"><a href="#5-Hexo基础操作" class="headerlink" title="5. Hexo基础操作"></a>5. Hexo基础操作</h4><p>好久没有用过了，这里再次回顾一下基础的操作，其实hexo到了最后就只剩下几个操作就可以完成，比如下面的命令，把笔记软件写好的稿子放到hexo生成的文件里面，加一个<code>&lt;!-- more --&gt;</code>标签即可完成一遍笔记的输出，然后部署上去之后自动推送到github和gitee 的分支。</p>
+  <figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">hexo</span> new <span class="string">&#x27;xxx&#x27;</span>//新建一个新的主题</span><br><span class="line">hexo cl</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<p>  个人喜欢使用如下的文章模板：</p>
+  <figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line">title: &#123;&#123; <span class="attribute">title</span> &#125;&#125;</span><br><span class="line">subtitle: <span class="string">&#x27;这个人很懒，不想写副标题&#x27;</span></span><br><span class="line">author: lazytime</span><br><span class="line">url_suffix: random</span><br><span class="line">date: &#123;&#123; <span class="attribute">date</span> &#125;&#125;</span><br><span class="line">tags:</span><br><span class="line">- 无</span><br><span class="line">categories:</span><br><span class="line">- 未分类</span><br><span class="line">keywords: 请输入关键字（英文逗号分隔多个关键字）</span><br><span class="line">description: 请输入描述信息</span><br><span class="line">copyright: <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>  备份还原还是非常快的，中间除了在node的权限上卡了一下，基本上不到半小时既可以在本地快速搭建一个hexo的博客，十分方便。</p>
+<h3 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h3><p>建议每一个人有一个自己的博客，因为你不知道你的云笔记运营商哪一天会出问题，就好比之前的滴滴事件一样，另外注意平时多备份，不要像我一样傻不拉几的把硬盘格式化结果忘了把博客的内容拷出来结果全部要重写。。。。。</p>
 ]]></content>
       <categories>
         <category>学习</category>
@@ -322,6 +322,112 @@
       <tags>
         <tag>Linux</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Linux系统无线网卡配置</title>
+    <url>/2019/12/16/Linux%E7%B3%BB%E7%BB%9F%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h2 id="无线网卡配置"><a href="#无线网卡配置" class="headerlink" title="无线网卡配置"></a>无线网卡配置</h2><p>本文介绍在Linux 命令行界面中手动配置无线网卡的方法。目前流行的多数发行版都支持用图形界面的<code>network- manager</code>方便地进行配置，而无需使用本文所介绍的原始方法。</p>
+<p>下面介绍使用<code>iwconfig</code>和<code>ifconfig</code>等命令在命令行状态下配置无线网络。前题是无线网卡驱动已经正确安装，并被系统正确识别。</p>
+<span id="more"></span>
+<h2 id="大体思路"><a href="#大体思路" class="headerlink" title="大体思路"></a>大体思路</h2><p>工作的大体思路如下：</p>
+<ol>
+<li>用<code>iwconfig</code>开启无线网卡的电源，并查找区域内的无线网络</li>
+<li>连接到相应的无线网络</li>
+<li>通过<code>ifconfig</code>启用无线网卡，并获取IP（如果使用DHCP的话）</li>
+</ol>
+<h2 id="具体过程"><a href="#具体过程" class="headerlink" title="具体过程"></a>具体过程</h2><ol>
+<li>打开无线网卡电源</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 txpower on</span><br></pre></td></tr></table></figure>
+<h4 id="无线网络的信号灯应该亮了。"><a href="#无线网络的信号灯应该亮了。" class="headerlink" title="无线网络的信号灯应该亮了。"></a>无线网络的信号灯应该亮了。</h4><ol start="2">
+<li>列出区域内的无线网络<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwlist wlan0 scan</span><br></pre></td></tr></table></figure></li>
+<li>假设要连接到网络MyHome（即essid为MyHome的网络），那么输入命令</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 essid <span class="string">&quot;MyHome&quot;</span> </span><br></pre></td></tr></table></figure>
+<p><em>#如果网络是加密的，密码是0123456789，那么就输入命令#</em></p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 essid <span class="string">&quot;MyHome&quot;</span> key <span class="number">0123</span><span class="literal">-4567-89</span></span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>如果正常的话，输入</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br></pre></td></tr></table></figure>
+<h4 id="就可以看到连接正常的各项参数了。"><a href="#就可以看到连接正常的各项参数了。" class="headerlink" title="就可以看到连接正常的各项参数了。"></a>就可以看到连接正常的各项参数了。</h4><ol start="5">
+<li>启用无线网卡</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ifconfig wlan0 up</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>如果是用DHCP获取IP的，那么用dhclient 或dhcpcd获取ip</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">dhcpcd wlan0</span><br></pre></td></tr></table></figure>
+
+<p>或</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">dhclient wlan0</span><br></pre></td></tr></table></figure>
+
+<ol start="7">
+<li>现在无线网卡应该可以正常使用了。</li>
+</ol>
+<h3 id="PS"><a href="#PS" class="headerlink" title="PS:"></a>PS:</h3><p>   如果现在还不能联网。那么点击网络图标。选择链接到隐藏的无线网络。输入找到的网络的名字。<br>      图形化的网络管理程序是<code>System-&gt;Preferences-&gt;Network Connections</code>。打开程序后，点击无线网络项目，点击add增加一个新的无线网络。  给出任意的<code>Connection Name</code>。<code>SSID</code>中输入无限网络的名字。<code>wireless security</code>中选择一种合适的加密类型。key中输入无限网络的密码。 </p>
+<p>   其他字段都不修改。 执行后，应该能够链接无限网络。  可以使用<code>iwconfig wlan0</code>命令查看是否正确连接无线网络。</p>
+<h6 id="未正确链接无线网络的输出："><a href="#未正确链接无线网络的输出：" class="headerlink" title="未正确链接无线网络的输出："></a>未正确链接无线网络的输出：</h6><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br><span class="line">wlan0     IEEE <span class="number">802.11</span>abg  ESSID:off/any </span><br><span class="line">          Mode:Managed  Access Point: Not<span class="literal">-Associated</span>   Tx<span class="literal">-Power</span>=<span class="number">0</span> dBm  </span><br><span class="line">          Retry  long limit:<span class="number">7</span>   RTS thr:off   Fragment thr:off</span><br><span class="line">          Power Management:off</span><br></pre></td></tr></table></figure>
+
+<h6 id="正确链接无线网络后的输出："><a href="#正确链接无线网络后的输出：" class="headerlink" title="正确链接无线网络后的输出："></a>正确链接无线网络后的输出：</h6><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br><span class="line">wlan0     IEEE <span class="number">802.11</span>abg  ESSID:<span class="string">&quot;MyHome&quot;</span> </span><br><span class="line">          Mode:Managed  Frequency:<span class="number">2.437</span> GHz  Access Point: <span class="number">00</span>:<span class="number">26</span>:DS:<span class="number">43</span>:<span class="number">1</span>A:A8  </span><br><span class="line">          Bit Rate=<span class="number">54</span> Mb/s   Tx<span class="literal">-Power</span>=<span class="number">0</span> dBm  </span><br><span class="line">          Retry  long limit:<span class="number">7</span>   RTS thr:off   Fragment thr:off</span><br><span class="line">          Power Management:off</span><br><span class="line">          Link Quality=<span class="number">65</span>/<span class="number">70</span>  Signal level=<span class="literal">-45</span> dBm </span><br><span class="line">          Rx invalid nwid:<span class="number">0</span>  Rx invalid crypt:<span class="number">0</span>  Rx invalid frag:<span class="number">0</span></span><br><span class="line">          Tx excessive retries:<span class="number">0</span>  Invalid misc:<span class="number">0</span>   Missed beacon:<span class="number">0</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>Linux</tag>
+        <tag>无线网卡</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Office用C2R工具在线安装激活</title>
+    <url>/2022/09/27/Office%E7%94%A8C2R%E5%B7%A5%E5%85%B7%E5%9C%A8%E7%BA%BF%E5%AE%89%E8%A3%85%E6%BF%80%E6%B4%BB/</url>
+    <content><![CDATA[<p>C2R工具下载地址：<a href="https://wwt.lanzouw.com/b03pbhjri#52pj">https://wwt.lanzouw.com/b03pbhjri#52pj</a></p>
+<p>以下来自吾爱破解论坛：<br>Win11 22H2 最新版本官网镜像下载地址（来自微软官网免费链接，不同镜像的区别就是包含的版本不同）：<br>百度网盘：<a href="https://pan.baidu.com/s/1zZUVDc0wMdzoBehTfEPobQ?pwd=sy71">https://pan.baidu.com/s/1zZUVDc0wMdzoBehTfEPobQ?pwd=sy71</a><br>提取码:sy71<br>123云盘：<a href="https://www.123pan.com/s/HfxDVv-xZQ7d">https://www.123pan.com/s/HfxDVv-xZQ7d</a> 提取码：BGio<br>TechBench：<a href="https://techbench.betaworld.cn/get.php?id=2360">https://techbench.betaworld.cn/get.php?id=2360</a><br>微软官网：<a href="https://www.microsoft.com/zh-cn/software-download/windows11/">https://www.microsoft.com/zh-cn/software-download/windows11/</a></p>
+<span id="more"></span>
+
+<p>文件信息：<br>文件名：Win11_22H2_Chinese(Simplified)_x64.iso<br>MD5: 506B5563FDA4402E3DCB846927612414<br>SHA1: EDA6B80B5E52567D22C862884D7C987C316AF844<br>CRC32: 6D69527A</p>
+<p>IOS镜像包含版本：家庭版，家庭单语言版，专业版，教育版，专业教育版，专业工作站版（6）</p>
+<p>MVS&#x2F;MSDN镜像下载（来自微软官方MVS&#x2F;MSDN付费订阅，磁力链接推荐用迅雷下载）：<br>简体中文 - 消费者版（这个版本其实就是微软官网的版本，和上面那个版本一样）：<br>zh-cn_windows_11_consumer_editions_version_22h2_x64_dvd_59cfe6ee.iso (5.14 GB)<br>SHA-256: 5D4733AD43EE51B7686B766D1DD691342A8421035E7C9FA0C936B7BABEE0BE4B<br>包含版本：家庭版、家庭单语言版、教育版、专业版、专业教育版、专业工作站版（6）<br>123云盘分流：<a href="https://www.123pan.com/s/HfxDVv-nZQ7d">https://www.123pan.com/s/HfxDVv-nZQ7d</a> 提取码:yVi4<br>百度网盘分流：<a href="https://pan.baidu.com/s/1MQswudl58d-R_UPqQ7lqXg?pwd=u7he">https://pan.baidu.com/s/1MQswudl58d-R_UPqQ7lqXg?pwd=u7he</a> 提取码:u7he<br>天翼云盘分流：<a href="https://cloud.189.cn/web/share?code=vAfIFfi2q2ym">https://cloud.189.cn/web/share?code=vAfIFfi2q2ym</a> 访问码：0bqa</p>
+<p>简体中文 - 商业版（这个是官网没有，要在微软MSDN花钱订阅的版本，和VLSC的商业版是一个版本）：<br>zh-cn_windows_11_business_editions_version_22h2_x64_dvd_914b57a5.iso (5.05 GB)<br>SHA-256: D74D24A00F83E77A189BE6BCB2E23FAD5BABC29F576E810C43282CE683F8B048<br>包含版本：教育版、企业版、专业版、专业教育版、专业工作站版（5）<br>123云盘分流：<a href="https://www.123pan.com/s/HfxDVv-2ZQ7d">https://www.123pan.com/s/HfxDVv-2ZQ7d</a> 提取码:TE1P<br>百度网盘分流：<a href="https://pan.baidu.com/s/1XbN47aPaDdc8VUlc7OXI7w?pwd=m4eg">https://pan.baidu.com/s/1XbN47aPaDdc8VUlc7OXI7w?pwd=m4eg</a> 提取码:m4eg<br>天翼云盘分流：<a href="https://cloud.189.cn/web/share?code=B7FjieMRnEje">https://cloud.189.cn/web/share?code=B7FjieMRnEje</a> 访问码：dkg4</p>
+<p>简体中文 - 家庭中文版（中国特供版本，大部分笔记本出厂自带的就是这个版本，不推荐下载）：<br>Win11_22H2_China_GGK_Chinese(Simplified)_x64.iso (4.88 GB)<br>SHA-256: 3DC5C5F88A7F076EE349BB20DAB4B2C3857BA7A8AE089AA532E9C2634ED8BFD7<br>包含版本：家庭中文版（1）<br>123云盘分流：<a href="https://www.123pan.com/s/HfxDVv-UZQ7d">https://www.123pan.com/s/HfxDVv-UZQ7d</a> 提取码:sS6e<br>百度网盘分流：<a href="https://pan.baidu.com/s/1kNeaeKEMbMfuxGyW3sluUA?pwd=k3du">https://pan.baidu.com/s/1kNeaeKEMbMfuxGyW3sluUA?pwd=k3du</a> 提取码:k3du<br>天翼云盘分流：<a href="https://cloud.189.cn/web/share?code=MJBzyameymqm">https://cloud.189.cn/web/share?code=MJBzyameymqm</a> 访问码：28hg</p>
+<p>繁體中文 - 消費者版（官網也可以下載到）：<br>SHA256：0DA9E7C321CEB12536420F21A716C3240235ED0AF48D71F065EC76AE77A58EDB<br>包含版本：家庭版、家庭單語言版、教育版、專業版、專業教育版、專業工作站版（6）<br>123雲盤分流：<a href="https://www.123pan.com/s/HfxDVv-SZQ7d">https://www.123pan.com/s/HfxDVv-SZQ7d</a> 提取碼:sVTE<br>百度網盤分流：<a href="https://pan.baidu.com/s/13tJmkqBIsi-t1S2-B5EABQ?pwd=wuyu">https://pan.baidu.com/s/13tJmkqBIsi-t1S2-B5EABQ?pwd=wuyu</a> 提取碼:wuyu<br>天翼雲盤分流：<a href="https://cloud.189.cn/web/share?code=IzYrMbMfUJBn">https://cloud.189.cn/web/share?code=IzYrMbMfUJBn</a> 訪問碼：bkk8</p>
+<p>繁體中文 - 商業版（這個版本和VLSC的繁體中文商業版其實是壹個版本，同樣是付費訂閱來的）：<br>SHA-256: 4C691D1C01CCB40275BAF979DB1A9CEC98F7DA8A8DFA59B4D2366EEC76084758<br>包含版本：教育版、企業版、專業版、專業教育版、專業工作站版（5）<br>123雲盤分流：<a href="https://www.123pan.com/s/HfxDVv-lZQ7d">https://www.123pan.com/s/HfxDVv-lZQ7d</a> 提取碼:wkWD<br>百度網盤分流：<a href="https://pan.baidu.com/s/1avGQLrDxjtXdCiuCL-OuGw?pwd=1v4f">https://pan.baidu.com/s/1avGQLrDxjtXdCiuCL-OuGw?pwd=1v4f</a> 提取碼:1v4f<br>天翼雲盤分流：<a href="https://cloud.189.cn/web/share?code=J3ABRz3q6Fvu">https://cloud.189.cn/web/share?code=J3ABRz3q6Fvu</a> 訪問碼：9m6t</p>
+<p>English - Consumer（英文消费者版本，同样可以在官网下载到）：<br>en-us_windows_11_consumer_editions_version_22h2_x64_dvd_e630fafd.iso (5.11 GB)<br>SHA-256: 5C69E6F486BC4BDAE91557DE161008458EAA40D40468C34DBBD9078952108D0A<br>Include Version：Home, Home N, Home Single Language, Education, Education N, Pro, Pro N, Pro Education, Pro Education N, Pro for Workstations, Pro N for Workstations（11）<br>123 Cloud Disk（123云盘）：<a href="https://www.123pan.com/s/HfxDVv-DZQ7d">https://www.123pan.com/s/HfxDVv-DZQ7d</a> Code:7P4U<br>Baidu Netdisk（百度网盘）：<a href="https://pan.baidu.com/s/1o2yeRWHecMsYsO2I2-3Udg?pwd=jrmn">https://pan.baidu.com/s/1o2yeRWHecMsYsO2I2-3Udg?pwd=jrmn</a> Code:jrmn<br>E Cloud（天翼云盘）：<a href="https://cloud.189.cn/web/share?code=jA7NriZFFram">https://cloud.189.cn/web/share?code=jA7NriZFFram</a> Code：td7r</p>
+<p>English - Business（英文商业版本，官网没有的版本）：<br>en-us_windows_11_business_editions_version_22h2_x64_dvd_17a08ce3.iso (5 GB)<br>SHA-256: 6E3A101C6E97D8E68F576DDBCED9BE34CBA949F750DA3C83F7D4791401068C9F<br>Include Version：Education, Education N, Enterprise, Enterprise N, Pro, Pro N, Pro Education, Pro Education N, Pro for Workstations, Pro N for Workstations（10）<br>123 Cloud Disk（123云盘）：<a href="https://www.123pan.com/s/HfxDVv-rZQ7d">https://www.123pan.com/s/HfxDVv-rZQ7d</a> Code:5yCR<br>Baidu Netdisk（百度网盘）：<a href="https://pan.baidu.com/s/1M6HtQJGjkKs7MMw1cIXF2A?pwd=7b4s">https://pan.baidu.com/s/1M6HtQJGjkKs7MMw1cIXF2A?pwd=7b4s</a> Code:7b4s<br>E Cloud（天翼云盘）：<a href="https://cloud.189.cn/web/share?code=NZzmEr7Rfemy">https://cloud.189.cn/web/share?code=NZzmEr7Rfemy</a> Code：y383</p>
+<p>PS：消费者版和商业版的区别就是包含的版本不同，我是比较喜欢商业版，因为商业版包含企业版，这个是功能最全的</p>
+<p>VLSC企业订阅版本（也是微软官方付费订阅的，这个版本与MVS&#x2F;MSDN版本的区别由于微软偷懒不想做两个版本所以没有了，但是这个版本有ARM64，MVS&#x2F;MSDN版目前还没有）：<br>简体中文 - 商业版：<br>123云盘：<a href="https://www.123pan.com/s/HfxDVv-fZQ7d">https://www.123pan.com/s/HfxDVv-fZQ7d</a> 提取码:YZix<br>百度网盘：<a href="https://pan.baidu.com/s/1OEu7MmSDbCa7_NyEbbER8w?pwd=rk65">https://pan.baidu.com/s/1OEu7MmSDbCa7_NyEbbER8w?pwd=rk65</a> 提取码:rk65<br>天翼云盘：<a href="https://cloud.189.cn/t/FJ3mUjf6fQZ3">https://cloud.189.cn/t/FJ3mUjf6fQZ3</a> 访问码:qz88<br>SHA256:D74D24A00F83E77A189BE6BCB2E23FAD5BABC29F576E810C43282CE683F8B048<br>包含版本：教育版、企业版、专业版、专业教育版、专业工作站版（5）</p>
+<p>简体中文 - ARM64版本：<br>123云盘：<a href="https://www.123pan.com/s/HfxDVv-pZQ7d">https://www.123pan.com/s/HfxDVv-pZQ7d</a> 提取码:b91o<br>百度网盘：<a href="https://pan.baidu.com/s/1on1LBzsAaYIeDBQEMQYK0Q?pwd=26tb">https://pan.baidu.com/s/1on1LBzsAaYIeDBQEMQYK0Q?pwd=26tb</a> 提取码:26tb<br>天翼云盘：<a href="https://cloud.189.cn/t/RjAVFjQviqia">https://cloud.189.cn/t/RjAVFjQviqia</a> 访问码:2vfk<br>SHA256:6C308F4139F9938E369BC987CBCC983EC293506AB29C736ABDD8284CEBBC5BF7<br>这个是给MAC和Win平板用的版本</p>
+<p>繁體中文 - 商業版：<br>123雲盤：<a href="https://www.123pan.com/s/HfxDVv-YZQ7d">https://www.123pan.com/s/HfxDVv-YZQ7d</a> 提取碼:PJCH<br>百度網盤：<a href="https://pan.baidu.com/s/1sKhZ-GQtj1ifcJH60EJPEQ?pwd=yhx5">https://pan.baidu.com/s/1sKhZ-GQtj1ifcJH60EJPEQ?pwd=yhx5</a> 提取碼:yhx5<br>天翼雲盤：<a href="https://cloud.189.cn/t/6ZNbmeEJrm6r">https://cloud.189.cn/t/6ZNbmeEJrm6r</a> 訪問碼：cfu7<br>SHA256:4C691D1C01CCB40275BAF979DB1A9CEC98F7DA8A8DFA59B4D2366EEC76084758<br>包含版本：教育版、企業版、專業版、專業教育版、專業工作站版（5）</p>
+<p>繁體中文 - ARM64版：<br>123雲盤：<a href="https://www.123pan.com/s/HfxDVv-GZQ7d">https://www.123pan.com/s/HfxDVv-GZQ7d</a> 提取碼:5Jfi<br>百度網盤：<a href="https://pan.baidu.com/s/1cJOyT1PrrNY_yYlJnr-1sw?pwd=pxwr">https://pan.baidu.com/s/1cJOyT1PrrNY_yYlJnr-1sw?pwd=pxwr</a> 提取碼:pxwr<br>天翼雲盤：<a href="https://cloud.189.cn/t/vI7vqurUjQze">https://cloud.189.cn/t/vI7vqurUjQze</a> 訪問碼:2e8c<br>SHA256:EB721E2F2B08DEDE965E18369926E9F3FD868728EB7A38A0B3909A524D791F88<br>這個是給MAC和Win平闆用的版本</p>
+<p>English - Business：<br>123 Cloud Disk：<a href="https://www.123pan.com/s/HfxDVv-PZQ7d">https://www.123pan.com/s/HfxDVv-PZQ7d</a> Code:oAY5<br>Baidu Netdisk：<a href="https://pan.baidu.com/s/1LN96MZgYf_kMj8TUAx1tyg?pwd=rcmh">https://pan.baidu.com/s/1LN96MZgYf_kMj8TUAx1tyg?pwd=rcmh</a> Code:rcmh<br>E Cloud：<a href="https://cloud.189.cn/t/Iveaeeniqqmm">https://cloud.189.cn/t/Iveaeeniqqmm</a> Code:on3h<br>SHA256:6E3A101C6E97D8E68F576DDBCED9BE34CBA949F750DA3C83F7D4791401068C9F<br>Include Version：Education, Education N, Enterprise, Enterprise N, Pro, Pro N, Pro Education, Pro Education N, Pro for Workstations, Pro N for Workstations（10）</p>
+<p>English - ARM64：<br>123 Cloud Disk：<a href="https://www.123pan.com/s/HfxDVv-XZQ7d">https://www.123pan.com/s/HfxDVv-XZQ7d</a> Code:vCmO<br>Baidu Netdisk：<a href="https://pan.baidu.com/s/1kI9vkK4b1_oeQSA_Uvr5OA?pwd=6ay5">https://pan.baidu.com/s/1kI9vkK4b1_oeQSA_Uvr5OA?pwd=6ay5</a> Code:6ay5<br>E Cloud：<a href="https://cloud.189.cn/t/IZ7N32Jv2URf">https://cloud.189.cn/t/IZ7N32Jv2URf</a> Code:azb8<br>SHA256:180C0E977B960D55DDA73F5D8E0F3094B2E27BD82C459B880CE5F51C3C49216A<br>This is a version for MAC and Win tablets</p>
+<p>Win下载地址：<a href="http://www.songyongzhi.com/">http://www.songyongzhi.com</a></p>
+<p>offcie用office tool puls（很简单的，用上这个就不需要找其他乱七八糟的了)<br><a href="https://otp.landian.vip/zh-cn/">https://otp.landian.vip/zh-cn/</a></p>
+]]></content>
+      <categories>
+        <category>转载</category>
+      </categories>
+      <tags>
+        <tag>Offce</tag>
+        <tag>Win</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2017/08/10/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
   </entry>
   <entry>
     <title>Linux查看硬件信息与系统资源</title>
@@ -522,57 +628,30 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux系统无线网卡配置</title>
-    <url>/2019/12/16/Linux%E7%B3%BB%E7%BB%9F%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<h2 id="无线网卡配置"><a href="#无线网卡配置" class="headerlink" title="无线网卡配置"></a>无线网卡配置</h2><p>本文介绍在Linux 命令行界面中手动配置无线网卡的方法。目前流行的多数发行版都支持用图形界面的<code>network- manager</code>方便地进行配置，而无需使用本文所介绍的原始方法。</p>
-<p>下面介绍使用<code>iwconfig</code>和<code>ifconfig</code>等命令在命令行状态下配置无线网络。前题是无线网卡驱动已经正确安装，并被系统正确识别。</p>
+    <title>hexo域名解析的两种方法</title>
+    <url>/2022/08/19/hexo%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>想要在浏览器里面输入域名到达某个地址。必不可少的一步就是要告诉全世界的电脑，这个域名现在指向这个地方啦。<br>而这一步就是由 dns 服务器来负责的。<br>我们需要做的就是将域名与固定的 ip 地址绑定起来 (A)，或者是与某已有域名绑定起来（CNAME）.</p>
+<p>下面我们以阿里云购买的域名为例</p>
+<h2 id="域名解析"><a href="#域名解析" class="headerlink" title="域名解析"></a>域名解析</h2><h3 id="方法一（不推荐）"><a href="#方法一（不推荐）" class="headerlink" title="方法一（不推荐）"></a>方法一（不推荐）</h3><p>首先获取自己 github 的二级域名的 IP 地址，win­dows 下直接在 cmd 里 Ping 一下自己的博客就会得到 IP 地址：</p>
 <span id="more"></span>
-<h2 id="大体思路"><a href="#大体思路" class="headerlink" title="大体思路"></a>大体思路</h2><p>工作的大体思路如下：</p>
-<ol>
-<li>用<code>iwconfig</code>开启无线网卡的电源，并查找区域内的无线网络</li>
-<li>连接到相应的无线网络</li>
-<li>通过<code>ifconfig</code>启用无线网卡，并获取IP（如果使用DHCP的话）</li>
-</ol>
-<h2 id="具体过程"><a href="#具体过程" class="headerlink" title="具体过程"></a>具体过程</h2><ol>
-<li>打开无线网卡电源</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 txpower on</span><br></pre></td></tr></table></figure>
-<h4 id="无线网络的信号灯应该亮了。"><a href="#无线网络的信号灯应该亮了。" class="headerlink" title="无线网络的信号灯应该亮了。"></a>无线网络的信号灯应该亮了。</h4><ol start="2">
-<li>列出区域内的无线网络<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwlist wlan0 scan</span><br></pre></td></tr></table></figure></li>
-<li>假设要连接到网络MyHome（即essid为MyHome的网络），那么输入命令</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 essid <span class="string">&quot;MyHome&quot;</span> </span><br></pre></td></tr></table></figure>
-<p><em>#如果网络是加密的，密码是0123456789，那么就输入命令#</em></p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 essid <span class="string">&quot;MyHome&quot;</span> key <span class="number">0123</span><span class="literal">-4567-89</span></span><br></pre></td></tr></table></figure>
-<ol start="4">
-<li>如果正常的话，输入</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br></pre></td></tr></table></figure>
-<h4 id="就可以看到连接正常的各项参数了。"><a href="#就可以看到连接正常的各项参数了。" class="headerlink" title="就可以看到连接正常的各项参数了。"></a>就可以看到连接正常的各项参数了。</h4><ol start="5">
-<li>启用无线网卡</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ifconfig wlan0 up</span><br></pre></td></tr></table></figure>
 
-<ol start="6">
-<li>如果是用DHCP获取IP的，那么用dhclient 或dhcpcd获取ip</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">dhcpcd wlan0</span><br></pre></td></tr></table></figure>
-
-<p>或</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">dhclient wlan0</span><br></pre></td></tr></table></figure>
-
-<ol start="7">
-<li>现在无线网卡应该可以正常使用了。</li>
-</ol>
-<h3 id="PS"><a href="#PS" class="headerlink" title="PS:"></a>PS:</h3><p>   如果现在还不能联网。那么点击网络图标。选择链接到隐藏的无线网络。输入找到的网络的名字。<br>      图形化的网络管理程序是<code>System-&gt;Preferences-&gt;Network Connections</code>。打开程序后，点击无线网络项目，点击add增加一个新的无线网络。  给出任意的<code>Connection Name</code>。<code>SSID</code>中输入无限网络的名字。<code>wireless security</code>中选择一种合适的加密类型。key中输入无限网络的密码。 </p>
-<p>   其他字段都不修改。 执行后，应该能够链接无限网络。  可以使用<code>iwconfig wlan0</code>命令查看是否正确连接无线网络。</p>
-<h6 id="未正确链接无线网络的输出："><a href="#未正确链接无线网络的输出：" class="headerlink" title="未正确链接无线网络的输出："></a>未正确链接无线网络的输出：</h6><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br><span class="line">wlan0     IEEE <span class="number">802.11</span>abg  ESSID:off/any </span><br><span class="line">          Mode:Managed  Access Point: Not<span class="literal">-Associated</span>   Tx<span class="literal">-Power</span>=<span class="number">0</span> dBm  </span><br><span class="line">          Retry  long limit:<span class="number">7</span>   RTS thr:off   Fragment thr:off</span><br><span class="line">          Power Management:off</span><br></pre></td></tr></table></figure>
-
-<h6 id="正确链接无线网络后的输出："><a href="#正确链接无线网络后的输出：" class="headerlink" title="正确链接无线网络后的输出："></a>正确链接无线网络后的输出：</h6><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br><span class="line">wlan0     IEEE <span class="number">802.11</span>abg  ESSID:<span class="string">&quot;MyHome&quot;</span> </span><br><span class="line">          Mode:Managed  Frequency:<span class="number">2.437</span> GHz  Access Point: <span class="number">00</span>:<span class="number">26</span>:DS:<span class="number">43</span>:<span class="number">1</span>A:A8  </span><br><span class="line">          Bit Rate=<span class="number">54</span> Mb/s   Tx<span class="literal">-Power</span>=<span class="number">0</span> dBm  </span><br><span class="line">          Retry  long limit:<span class="number">7</span>   RTS thr:off   Fragment thr:off</span><br><span class="line">          Power Management:off</span><br><span class="line">          Link Quality=<span class="number">65</span>/<span class="number">70</span>  Signal level=<span class="literal">-45</span> dBm </span><br><span class="line">          Rx invalid nwid:<span class="number">0</span>  Rx invalid crypt:<span class="number">0</span>  Rx invalid frag:<span class="number">0</span></span><br><span class="line">          Tx excessive retries:<span class="number">0</span>  Invalid misc:<span class="number">0</span>   Missed beacon:<span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://movejian.github.io/images/20220819/cmd.png"></p>
+<p>我的 ip 是 185.199.111.153</p>
+<p>下面通过 DNS 域名解析将购买的域名指向 github 的二级域名：user­name.github.io，<br>进入阿里云的管理控制台 - 云解析 DNS，进入域名的解析设置，将得到的 IP 地址填到记录值一栏，点击确定就 OK 了。填完以后的解析列表会出现：</p>
+<p><img src="https://movejian.github.io/images/20220819/yumi.png"><br>记录值就是自己 github 的二级域名的 IP 地址。</p>
+<p>方法二（推荐）<br>直接解析域名的 CNAME 记录到你的 Git 二级域名，不要使用方法一中的 A 记录，因为 ip 地址可能会一段时间之后会改变 (由于网络地址转换协议 NAT)，所以建议记录类型选择 CNAME 进行解析，记录值填的就是 user­name.github.io，比如：</p>
+<p><img src="https://movejian.github.io/images/20220819/yumi2.png"></p>
+<p>如果你只用 github 的二级域名作为博客的地址，那么线路类型选择默认就可以了。</p>
+<h2 id="设置CNAME"><a href="#设置CNAME" class="headerlink" title="设置CNAME"></a>设置CNAME</h2><p>在 hexo 项目下，source 文件夹下面创建 CNAME 文件（没有后缀名的），在里面写上购买的域名。比如：<br>test­blog.top</p>
+<p><img src="https://movejian.github.io/images/20220819/CNAME.png"></p>
+<p>在 github 上面，打开 user­name.github.io 项目的（Set­tings）设置，然后在  Pages 选项,点击蓝色的按钮Add a domain 设置里填上购买的域名。比如：</p>
+<p><img src="https://movejian.github.io/images/20220819/domain.png"></p>
+<blockquote>
+<p>现在即可通过原二级域名和新域名访问hexo博客啦。</p>
+</blockquote>
 ]]></content>
       <tags>
-        <tag>Linux</tag>
-        <tag>无线网卡</tag>
+        <tag>域名</tag>
       </tags>
   </entry>
   <entry>
@@ -612,85 +691,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Office用C2R工具在线安装激活</title>
-    <url>/2022/09/27/Office%E7%94%A8C2R%E5%B7%A5%E5%85%B7%E5%9C%A8%E7%BA%BF%E5%AE%89%E8%A3%85%E6%BF%80%E6%B4%BB/</url>
-    <content><![CDATA[<p>C2R工具下载地址：<a href="https://wwt.lanzouw.com/b03pbhjri#52pj">https://wwt.lanzouw.com/b03pbhjri#52pj</a></p>
-<p>以下来自吾爱破解论坛：<br>Win11 22H2 最新版本官网镜像下载地址（来自微软官网免费链接，不同镜像的区别就是包含的版本不同）：<br>百度网盘：<a href="https://pan.baidu.com/s/1zZUVDc0wMdzoBehTfEPobQ?pwd=sy71">https://pan.baidu.com/s/1zZUVDc0wMdzoBehTfEPobQ?pwd=sy71</a><br>提取码:sy71<br>123云盘：<a href="https://www.123pan.com/s/HfxDVv-xZQ7d">https://www.123pan.com/s/HfxDVv-xZQ7d</a> 提取码：BGio<br>TechBench：<a href="https://techbench.betaworld.cn/get.php?id=2360">https://techbench.betaworld.cn/get.php?id=2360</a><br>微软官网：<a href="https://www.microsoft.com/zh-cn/software-download/windows11/">https://www.microsoft.com/zh-cn/software-download/windows11/</a></p>
-<span id="more"></span>
-
-<p>文件信息：<br>文件名：Win11_22H2_Chinese(Simplified)_x64.iso<br>MD5: 506B5563FDA4402E3DCB846927612414<br>SHA1: EDA6B80B5E52567D22C862884D7C987C316AF844<br>CRC32: 6D69527A</p>
-<p>IOS镜像包含版本：家庭版，家庭单语言版，专业版，教育版，专业教育版，专业工作站版（6）</p>
-<p>MVS&#x2F;MSDN镜像下载（来自微软官方MVS&#x2F;MSDN付费订阅，磁力链接推荐用迅雷下载）：<br>简体中文 - 消费者版（这个版本其实就是微软官网的版本，和上面那个版本一样）：<br>zh-cn_windows_11_consumer_editions_version_22h2_x64_dvd_59cfe6ee.iso (5.14 GB)<br>SHA-256: 5D4733AD43EE51B7686B766D1DD691342A8421035E7C9FA0C936B7BABEE0BE4B<br>包含版本：家庭版、家庭单语言版、教育版、专业版、专业教育版、专业工作站版（6）<br>123云盘分流：<a href="https://www.123pan.com/s/HfxDVv-nZQ7d">https://www.123pan.com/s/HfxDVv-nZQ7d</a> 提取码:yVi4<br>百度网盘分流：<a href="https://pan.baidu.com/s/1MQswudl58d-R_UPqQ7lqXg?pwd=u7he">https://pan.baidu.com/s/1MQswudl58d-R_UPqQ7lqXg?pwd=u7he</a> 提取码:u7he<br>天翼云盘分流：<a href="https://cloud.189.cn/web/share?code=vAfIFfi2q2ym">https://cloud.189.cn/web/share?code=vAfIFfi2q2ym</a> 访问码：0bqa</p>
-<p>简体中文 - 商业版（这个是官网没有，要在微软MSDN花钱订阅的版本，和VLSC的商业版是一个版本）：<br>zh-cn_windows_11_business_editions_version_22h2_x64_dvd_914b57a5.iso (5.05 GB)<br>SHA-256: D74D24A00F83E77A189BE6BCB2E23FAD5BABC29F576E810C43282CE683F8B048<br>包含版本：教育版、企业版、专业版、专业教育版、专业工作站版（5）<br>123云盘分流：<a href="https://www.123pan.com/s/HfxDVv-2ZQ7d">https://www.123pan.com/s/HfxDVv-2ZQ7d</a> 提取码:TE1P<br>百度网盘分流：<a href="https://pan.baidu.com/s/1XbN47aPaDdc8VUlc7OXI7w?pwd=m4eg">https://pan.baidu.com/s/1XbN47aPaDdc8VUlc7OXI7w?pwd=m4eg</a> 提取码:m4eg<br>天翼云盘分流：<a href="https://cloud.189.cn/web/share?code=B7FjieMRnEje">https://cloud.189.cn/web/share?code=B7FjieMRnEje</a> 访问码：dkg4</p>
-<p>简体中文 - 家庭中文版（中国特供版本，大部分笔记本出厂自带的就是这个版本，不推荐下载）：<br>Win11_22H2_China_GGK_Chinese(Simplified)_x64.iso (4.88 GB)<br>SHA-256: 3DC5C5F88A7F076EE349BB20DAB4B2C3857BA7A8AE089AA532E9C2634ED8BFD7<br>包含版本：家庭中文版（1）<br>123云盘分流：<a href="https://www.123pan.com/s/HfxDVv-UZQ7d">https://www.123pan.com/s/HfxDVv-UZQ7d</a> 提取码:sS6e<br>百度网盘分流：<a href="https://pan.baidu.com/s/1kNeaeKEMbMfuxGyW3sluUA?pwd=k3du">https://pan.baidu.com/s/1kNeaeKEMbMfuxGyW3sluUA?pwd=k3du</a> 提取码:k3du<br>天翼云盘分流：<a href="https://cloud.189.cn/web/share?code=MJBzyameymqm">https://cloud.189.cn/web/share?code=MJBzyameymqm</a> 访问码：28hg</p>
-<p>繁體中文 - 消費者版（官網也可以下載到）：<br>SHA256：0DA9E7C321CEB12536420F21A716C3240235ED0AF48D71F065EC76AE77A58EDB<br>包含版本：家庭版、家庭單語言版、教育版、專業版、專業教育版、專業工作站版（6）<br>123雲盤分流：<a href="https://www.123pan.com/s/HfxDVv-SZQ7d">https://www.123pan.com/s/HfxDVv-SZQ7d</a> 提取碼:sVTE<br>百度網盤分流：<a href="https://pan.baidu.com/s/13tJmkqBIsi-t1S2-B5EABQ?pwd=wuyu">https://pan.baidu.com/s/13tJmkqBIsi-t1S2-B5EABQ?pwd=wuyu</a> 提取碼:wuyu<br>天翼雲盤分流：<a href="https://cloud.189.cn/web/share?code=IzYrMbMfUJBn">https://cloud.189.cn/web/share?code=IzYrMbMfUJBn</a> 訪問碼：bkk8</p>
-<p>繁體中文 - 商業版（這個版本和VLSC的繁體中文商業版其實是壹個版本，同樣是付費訂閱來的）：<br>SHA-256: 4C691D1C01CCB40275BAF979DB1A9CEC98F7DA8A8DFA59B4D2366EEC76084758<br>包含版本：教育版、企業版、專業版、專業教育版、專業工作站版（5）<br>123雲盤分流：<a href="https://www.123pan.com/s/HfxDVv-lZQ7d">https://www.123pan.com/s/HfxDVv-lZQ7d</a> 提取碼:wkWD<br>百度網盤分流：<a href="https://pan.baidu.com/s/1avGQLrDxjtXdCiuCL-OuGw?pwd=1v4f">https://pan.baidu.com/s/1avGQLrDxjtXdCiuCL-OuGw?pwd=1v4f</a> 提取碼:1v4f<br>天翼雲盤分流：<a href="https://cloud.189.cn/web/share?code=J3ABRz3q6Fvu">https://cloud.189.cn/web/share?code=J3ABRz3q6Fvu</a> 訪問碼：9m6t</p>
-<p>English - Consumer（英文消费者版本，同样可以在官网下载到）：<br>en-us_windows_11_consumer_editions_version_22h2_x64_dvd_e630fafd.iso (5.11 GB)<br>SHA-256: 5C69E6F486BC4BDAE91557DE161008458EAA40D40468C34DBBD9078952108D0A<br>Include Version：Home, Home N, Home Single Language, Education, Education N, Pro, Pro N, Pro Education, Pro Education N, Pro for Workstations, Pro N for Workstations（11）<br>123 Cloud Disk（123云盘）：<a href="https://www.123pan.com/s/HfxDVv-DZQ7d">https://www.123pan.com/s/HfxDVv-DZQ7d</a> Code:7P4U<br>Baidu Netdisk（百度网盘）：<a href="https://pan.baidu.com/s/1o2yeRWHecMsYsO2I2-3Udg?pwd=jrmn">https://pan.baidu.com/s/1o2yeRWHecMsYsO2I2-3Udg?pwd=jrmn</a> Code:jrmn<br>E Cloud（天翼云盘）：<a href="https://cloud.189.cn/web/share?code=jA7NriZFFram">https://cloud.189.cn/web/share?code=jA7NriZFFram</a> Code：td7r</p>
-<p>English - Business（英文商业版本，官网没有的版本）：<br>en-us_windows_11_business_editions_version_22h2_x64_dvd_17a08ce3.iso (5 GB)<br>SHA-256: 6E3A101C6E97D8E68F576DDBCED9BE34CBA949F750DA3C83F7D4791401068C9F<br>Include Version：Education, Education N, Enterprise, Enterprise N, Pro, Pro N, Pro Education, Pro Education N, Pro for Workstations, Pro N for Workstations（10）<br>123 Cloud Disk（123云盘）：<a href="https://www.123pan.com/s/HfxDVv-rZQ7d">https://www.123pan.com/s/HfxDVv-rZQ7d</a> Code:5yCR<br>Baidu Netdisk（百度网盘）：<a href="https://pan.baidu.com/s/1M6HtQJGjkKs7MMw1cIXF2A?pwd=7b4s">https://pan.baidu.com/s/1M6HtQJGjkKs7MMw1cIXF2A?pwd=7b4s</a> Code:7b4s<br>E Cloud（天翼云盘）：<a href="https://cloud.189.cn/web/share?code=NZzmEr7Rfemy">https://cloud.189.cn/web/share?code=NZzmEr7Rfemy</a> Code：y383</p>
-<p>PS：消费者版和商业版的区别就是包含的版本不同，我是比较喜欢商业版，因为商业版包含企业版，这个是功能最全的</p>
-<p>VLSC企业订阅版本（也是微软官方付费订阅的，这个版本与MVS&#x2F;MSDN版本的区别由于微软偷懒不想做两个版本所以没有了，但是这个版本有ARM64，MVS&#x2F;MSDN版目前还没有）：<br>简体中文 - 商业版：<br>123云盘：<a href="https://www.123pan.com/s/HfxDVv-fZQ7d">https://www.123pan.com/s/HfxDVv-fZQ7d</a> 提取码:YZix<br>百度网盘：<a href="https://pan.baidu.com/s/1OEu7MmSDbCa7_NyEbbER8w?pwd=rk65">https://pan.baidu.com/s/1OEu7MmSDbCa7_NyEbbER8w?pwd=rk65</a> 提取码:rk65<br>天翼云盘：<a href="https://cloud.189.cn/t/FJ3mUjf6fQZ3">https://cloud.189.cn/t/FJ3mUjf6fQZ3</a> 访问码:qz88<br>SHA256:D74D24A00F83E77A189BE6BCB2E23FAD5BABC29F576E810C43282CE683F8B048<br>包含版本：教育版、企业版、专业版、专业教育版、专业工作站版（5）</p>
-<p>简体中文 - ARM64版本：<br>123云盘：<a href="https://www.123pan.com/s/HfxDVv-pZQ7d">https://www.123pan.com/s/HfxDVv-pZQ7d</a> 提取码:b91o<br>百度网盘：<a href="https://pan.baidu.com/s/1on1LBzsAaYIeDBQEMQYK0Q?pwd=26tb">https://pan.baidu.com/s/1on1LBzsAaYIeDBQEMQYK0Q?pwd=26tb</a> 提取码:26tb<br>天翼云盘：<a href="https://cloud.189.cn/t/RjAVFjQviqia">https://cloud.189.cn/t/RjAVFjQviqia</a> 访问码:2vfk<br>SHA256:6C308F4139F9938E369BC987CBCC983EC293506AB29C736ABDD8284CEBBC5BF7<br>这个是给MAC和Win平板用的版本</p>
-<p>繁體中文 - 商業版：<br>123雲盤：<a href="https://www.123pan.com/s/HfxDVv-YZQ7d">https://www.123pan.com/s/HfxDVv-YZQ7d</a> 提取碼:PJCH<br>百度網盤：<a href="https://pan.baidu.com/s/1sKhZ-GQtj1ifcJH60EJPEQ?pwd=yhx5">https://pan.baidu.com/s/1sKhZ-GQtj1ifcJH60EJPEQ?pwd=yhx5</a> 提取碼:yhx5<br>天翼雲盤：<a href="https://cloud.189.cn/t/6ZNbmeEJrm6r">https://cloud.189.cn/t/6ZNbmeEJrm6r</a> 訪問碼：cfu7<br>SHA256:4C691D1C01CCB40275BAF979DB1A9CEC98F7DA8A8DFA59B4D2366EEC76084758<br>包含版本：教育版、企業版、專業版、專業教育版、專業工作站版（5）</p>
-<p>繁體中文 - ARM64版：<br>123雲盤：<a href="https://www.123pan.com/s/HfxDVv-GZQ7d">https://www.123pan.com/s/HfxDVv-GZQ7d</a> 提取碼:5Jfi<br>百度網盤：<a href="https://pan.baidu.com/s/1cJOyT1PrrNY_yYlJnr-1sw?pwd=pxwr">https://pan.baidu.com/s/1cJOyT1PrrNY_yYlJnr-1sw?pwd=pxwr</a> 提取碼:pxwr<br>天翼雲盤：<a href="https://cloud.189.cn/t/vI7vqurUjQze">https://cloud.189.cn/t/vI7vqurUjQze</a> 訪問碼:2e8c<br>SHA256:EB721E2F2B08DEDE965E18369926E9F3FD868728EB7A38A0B3909A524D791F88<br>這個是給MAC和Win平闆用的版本</p>
-<p>English - Business：<br>123 Cloud Disk：<a href="https://www.123pan.com/s/HfxDVv-PZQ7d">https://www.123pan.com/s/HfxDVv-PZQ7d</a> Code:oAY5<br>Baidu Netdisk：<a href="https://pan.baidu.com/s/1LN96MZgYf_kMj8TUAx1tyg?pwd=rcmh">https://pan.baidu.com/s/1LN96MZgYf_kMj8TUAx1tyg?pwd=rcmh</a> Code:rcmh<br>E Cloud：<a href="https://cloud.189.cn/t/Iveaeeniqqmm">https://cloud.189.cn/t/Iveaeeniqqmm</a> Code:on3h<br>SHA256:6E3A101C6E97D8E68F576DDBCED9BE34CBA949F750DA3C83F7D4791401068C9F<br>Include Version：Education, Education N, Enterprise, Enterprise N, Pro, Pro N, Pro Education, Pro Education N, Pro for Workstations, Pro N for Workstations（10）</p>
-<p>English - ARM64：<br>123 Cloud Disk：<a href="https://www.123pan.com/s/HfxDVv-XZQ7d">https://www.123pan.com/s/HfxDVv-XZQ7d</a> Code:vCmO<br>Baidu Netdisk：<a href="https://pan.baidu.com/s/1kI9vkK4b1_oeQSA_Uvr5OA?pwd=6ay5">https://pan.baidu.com/s/1kI9vkK4b1_oeQSA_Uvr5OA?pwd=6ay5</a> Code:6ay5<br>E Cloud：<a href="https://cloud.189.cn/t/IZ7N32Jv2URf">https://cloud.189.cn/t/IZ7N32Jv2URf</a> Code:azb8<br>SHA256:180C0E977B960D55DDA73F5D8E0F3094B2E27BD82C459B880CE5F51C3C49216A<br>This is a version for MAC and Win tablets</p>
-<p>Win下载地址：<a href="http://www.songyongzhi.com/">http://www.songyongzhi.com</a></p>
-<p>offcie用office tool puls（很简单的，用上这个就不需要找其他乱七八糟的了)<br><a href="https://otp.landian.vip/zh-cn/">https://otp.landian.vip/zh-cn/</a></p>
-]]></content>
-      <categories>
-        <category>转载</category>
-      </categories>
-      <tags>
-        <tag>Offce</tag>
-        <tag>Win</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2017/08/10/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>hexo域名解析的两种方法</title>
-    <url>/2022/08/19/hexo%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>想要在浏览器里面输入域名到达某个地址。必不可少的一步就是要告诉全世界的电脑，这个域名现在指向这个地方啦。<br>而这一步就是由 dns 服务器来负责的。<br>我们需要做的就是将域名与固定的 ip 地址绑定起来 (A)，或者是与某已有域名绑定起来（CNAME）.</p>
-<p>下面我们以阿里云购买的域名为例</p>
-<h2 id="域名解析"><a href="#域名解析" class="headerlink" title="域名解析"></a>域名解析</h2><h3 id="方法一（不推荐）"><a href="#方法一（不推荐）" class="headerlink" title="方法一（不推荐）"></a>方法一（不推荐）</h3><p>首先获取自己 github 的二级域名的 IP 地址，win­dows 下直接在 cmd 里 Ping 一下自己的博客就会得到 IP 地址：</p>
-<span id="more"></span>
-
-<p><img src="https://movejian.github.io/images/20220819/cmd.png"></p>
-<p>我的 ip 是 185.199.111.153</p>
-<p>下面通过 DNS 域名解析将购买的域名指向 github 的二级域名：user­name.github.io，<br>进入阿里云的管理控制台 - 云解析 DNS，进入域名的解析设置，将得到的 IP 地址填到记录值一栏，点击确定就 OK 了。填完以后的解析列表会出现：</p>
-<p><img src="https://movejian.github.io/images/20220819/yumi.png"><br>记录值就是自己 github 的二级域名的 IP 地址。</p>
-<p>方法二（推荐）<br>直接解析域名的 CNAME 记录到你的 Git 二级域名，不要使用方法一中的 A 记录，因为 ip 地址可能会一段时间之后会改变 (由于网络地址转换协议 NAT)，所以建议记录类型选择 CNAME 进行解析，记录值填的就是 user­name.github.io，比如：</p>
-<p><img src="https://movejian.github.io/images/20220819/yumi2.png"></p>
-<p>如果你只用 github 的二级域名作为博客的地址，那么线路类型选择默认就可以了。</p>
-<h2 id="设置CNAME"><a href="#设置CNAME" class="headerlink" title="设置CNAME"></a>设置CNAME</h2><p>在 hexo 项目下，source 文件夹下面创建 CNAME 文件（没有后缀名的），在里面写上购买的域名。比如：<br>test­blog.top</p>
-<p><img src="https://movejian.github.io/images/20220819/CNAME.png"></p>
-<p>在 github 上面，打开 user­name.github.io 项目的（Set­tings）设置，然后在  Pages 选项,点击蓝色的按钮Add a domain 设置里填上购买的域名。比如：</p>
-<p><img src="https://movejian.github.io/images/20220819/domain.png"></p>
-<blockquote>
-<p>现在即可通过原二级域名和新域名访问hexo博客啦。</p>
-</blockquote>
-]]></content>
-      <tags>
-        <tag>域名</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>npm安装卸载命令</title>
     <url>/2022/08/23/npm%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BD%E5%91%BD%E4%BB%A4/</url>
     <content><![CDATA[<h2 id="npm安装模块"><a href="#npm安装模块" class="headerlink" title="npm安装模块"></a>npm安装模块</h2><p>利用 npm 安装xxx模块到当前命令行所在目录；</p>
@@ -716,51 +716,6 @@
 ]]></content>
       <tags>
         <tag>命令</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>vscode配置picgo的github的图床</title>
-    <url>/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/</url>
-    <content><![CDATA[<p>vscode+github+picgo 搭建 markdown 图床</p>
-<h2 id="一、vscode-配置"><a href="#一、vscode-配置" class="headerlink" title="一、vscode 配置"></a>一、vscode 配置</h2><h3 id="1、安装-Markdown-All-in-One-插件"><a href="#1、安装-Markdown-All-in-One-插件" class="headerlink" title="1、安装 Markdown All in One 插件"></a>1、安装 Markdown All in One 插件</h3><p>Markdown All in One 插件作为 Markdown 编辑器非常好用，既可以预览，对语法的支持也非常好。</p>
-<h3 id="2、安装-markdownlint-插件"><a href="#2、安装-markdownlint-插件" class="headerlink" title="2、安装 markdownlint 插件"></a>2、安装 markdownlint 插件</h3><p>这是个功能强大的 Markdown 语法检查器，可以帮助你书写出规范的文档，同时避免书写错误导致文档无法渲染。<br>markdownlint 制定了很多书写规范，如果不按照它的规范编写文章，则会提示很多错误或警告。</p>
-<span id="more"></span>
-
-<h3 id="3、安装-picgo-插件"><a href="#3、安装-picgo-插件" class="headerlink" title="3、安装 picgo 插件"></a>3、安装 picgo 插件</h3><p>可以下载 picgo 客户端来使用，但是这里直接在 vscode 中下载 picgo 插件也是可以的，只需要配置一下，配置方法在文章后面。</p>
-<h2 id="二、GitHub-配置"><a href="#二、GitHub-配置" class="headerlink" title="二、GitHub 配置"></a>二、GitHub 配置</h2><h3 id="1、创建一个仓库，必须为public"><a href="#1、创建一个仓库，必须为public" class="headerlink" title="1、创建一个仓库，必须为public"></a>1、创建一个仓库，必须为public</h3><p><img src="https://movejian.github.io/images/20220819/picgo1.png"></p>
-<h3 id="2、获取-Tokens"><a href="#2、获取-Tokens" class="headerlink" title="2、获取  Tokens"></a>2、获取  Tokens</h3><h4 id="①-进入个人设置页面，依次选择-【Developer-settings】-–-gt-【Personal-access-tokens】，然后点击【Generate-new-token】来生成新的-tokens，此-token是上传时验证身份用的。"><a href="#①-进入个人设置页面，依次选择-【Developer-settings】-–-gt-【Personal-access-tokens】，然后点击【Generate-new-token】来生成新的-tokens，此-token是上传时验证身份用的。" class="headerlink" title="① 进入个人设置页面，依次选择 【Developer settings】 –&gt; 【Personal access tokens】，然后点击【Generate new token】来生成新的 tokens，此 token是上传时验证身份用的。"></a>① 进入个人设置页面，依次选择 【Developer settings】 –&gt; 【Personal access tokens】，然后点击【Generate new token】来生成新的 tokens，此 token是上传时验证身份用的。</h4><p>注意：这个【Developer settings】对新手很不友好,不好找.在设置页面的最下方.</p>
-<p><img src="https://movejian.github.io/images/20220819/picgo3.png"></p>
-<h4 id="②-添加描述，然后将-repo-选上"><a href="#②-添加描述，然后将-repo-选上" class="headerlink" title="② 添加描述，然后将 repo 选上"></a>② 添加描述，然后将 repo 选上</h4><p><img src="https://movejian.github.io/images/20220819/picgo4.png"></p>
-<h4 id="③-将生成的字符串保存，关闭页面后将再也无法看到这个字符串了"><a href="#③-将生成的字符串保存，关闭页面后将再也无法看到这个字符串了" class="headerlink" title="③ 将生成的字符串保存，关闭页面后将再也无法看到这个字符串了"></a>③ 将生成的字符串保存，关闭页面后将再也无法看到这个字符串了</h4><p><img src="https://movejian.github.io/images/20220819/picgo5.png"></p>
-<h2 id="三、picgo-配置"><a href="#三、picgo-配置" class="headerlink" title="三、picgo 配置"></a>三、picgo 配置</h2><p>打开 vscode 的设置界面，搜索”picgo”定位到 picgo，具体配置如图：</p>
-<p><img src="https://movejian.github.io/images/20220819/picgo6.png"></p>
-<p>配置picgo</p>
-<p><img src="https://movejian.github.io/images/20220819/picgo7.png"></p>
-<ol>
-<li><h4 id="current-设置为-GitHub"><a href="#current-设置为-GitHub" class="headerlink" title="current 设置为 GitHub"></a>current 设置为 GitHub</h4></li>
-<li><h4 id="Branch-是我们仓库的分支，默认为-main"><a href="#Branch-是我们仓库的分支，默认为-main" class="headerlink" title="Branch 是我们仓库的分支，默认为 main"></a>Branch 是我们仓库的分支，默认为 main</h4></li>
-<li><h4 id="custom-url-使我们图片上传的连接，有两种方式可以使用"><a href="#custom-url-使我们图片上传的连接，有两种方式可以使用" class="headerlink" title="custom url 使我们图片上传的连接，有两种方式可以使用"></a>custom url 使我们图片上传的连接，有两种方式可以使用</h4><ol>
-<li><h5 id="原生方式"><a href="#原生方式" class="headerlink" title="原生方式"></a>原生方式</h5>使用 GitHub 原生连接，格式为： <a href="https://raw.githubusercontent.com/[%E7%94%A8%E6%88%B7%E5%90%8D]/[%E4%BB%93%E5%BA%93%E5%90%8D]/[%E5%88%86%E6%94%AF%E5%90%8D]">https://raw.githubusercontent.com/[用户名]/[仓库名]/[分支名]</a><br>我的例子：<a href="https://raw.githubusercontent.com/misswenzi/gallery/main">https://raw.githubusercontent.com/misswenzi/gallery/main</a><br>原生方式有一个弊端就是，国内速度比较慢</li>
-<li><h5 id="cdn-加速方式"><a href="#cdn-加速方式" class="headerlink" title="cdn 加速方式"></a>cdn 加速方式</h5>格式为：<a href="https://cdn.jsdelivr.net/gh/[%E7%94%A8%E6%88%B7%E5%90%8D]/[%E4%BB%93%E5%BA%93%E5%90%8D]@[%E5%88%86%E6%94%AF%E5%90%8D]">https://cdn.jsdelivr.net/gh/[用户名]/[仓库名]@[分支名]</a><br>我的例子：<a href="https://cdn.jsdelivr.net/gh/misswenzi/gallery@main">https://cdn.jsdelivr.net/gh/misswenzi/gallery@main</a></li>
-</ol>
-</li>
-<li><h4 id="cdn-加速的优点是国内访问速度比较快"><a href="#cdn-加速的优点是国内访问速度比较快" class="headerlink" title="cdn 加速的优点是国内访问速度比较快"></a>cdn 加速的优点是国内访问速度比较快</h4></li>
-<li><h4 id="path-是我们的图片存储在仓库中的路径，比如我的是-blogs-x2F-pictures-x2F-（注意：pictures-后面的-“-x2F-“-要记得加上）Repo-是我们的仓库，比如我的是-misswenzi-x2F-gallery"><a href="#path-是我们的图片存储在仓库中的路径，比如我的是-blogs-x2F-pictures-x2F-（注意：pictures-后面的-“-x2F-“-要记得加上）Repo-是我们的仓库，比如我的是-misswenzi-x2F-gallery" class="headerlink" title="path 是我们的图片存储在仓库中的路径，比如我的是 blogs&#x2F;pictures&#x2F;（注意：pictures 后面的 “&#x2F;“ 要记得加上）Repo 是我们的仓库，比如我的是 misswenzi&#x2F;gallery"></a>path 是我们的图片存储在仓库中的路径，比如我的是 blogs&#x2F;pictures&#x2F;（注意：pictures 后面的 “&#x2F;“ 要记得加上）Repo 是我们的仓库，比如我的是 misswenzi&#x2F;gallery</h4></li>
-<li><h4 id="Token：即-GitHub-中获取的-Tokens"><a href="#Token：即-GitHub-中获取的-Tokens" class="headerlink" title="Token：即 GitHub 中获取的 Tokens"></a>Token：即 GitHub 中获取的 Tokens</h4></li>
-</ol>
-<h2 id="四、测试"><a href="#四、测试" class="headerlink" title="四、测试"></a>四、测试</h2><p>进入 vscode，新建一个 .md 文件，windows 下 【ctrl+alt+U】从剪贴板粘贴图片，【ctrl+alt+E】打开资源管理器，选择图片，如果上传成功，则搭建成功！</p>
-<p><img src="https://movejian.github.io/images/20220819/picgo8.png"></p>
-<p>此时，去 GitHub 对应的仓库下查看，可以看到上传成功的图片。</p>
-<p>在 vscode 中插入的图片会上传到 GitHub 的仓库中，如果删除了仓库里面的图片，那你的 Markdown 里面的图片链接就会失效。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/20220819100154.png" alt="20220819100154"></p>
-<p>首先不提好用不好用,反正我这样配置失败了,还请高人指点！</p>
-]]></content>
-      <categories>
-        <category>学习</category>
-        <category>vscode</category>
-      </categories>
-      <tags>
-        <tag>技术</tag>
       </tags>
   </entry>
   <entry>
@@ -831,6 +786,51 @@
       </categories>
       <tags>
         <tag>插件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vscode配置picgo的github的图床</title>
+    <url>/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/</url>
+    <content><![CDATA[<p>vscode+github+picgo 搭建 markdown 图床</p>
+<h2 id="一、vscode-配置"><a href="#一、vscode-配置" class="headerlink" title="一、vscode 配置"></a>一、vscode 配置</h2><h3 id="1、安装-Markdown-All-in-One-插件"><a href="#1、安装-Markdown-All-in-One-插件" class="headerlink" title="1、安装 Markdown All in One 插件"></a>1、安装 Markdown All in One 插件</h3><p>Markdown All in One 插件作为 Markdown 编辑器非常好用，既可以预览，对语法的支持也非常好。</p>
+<h3 id="2、安装-markdownlint-插件"><a href="#2、安装-markdownlint-插件" class="headerlink" title="2、安装 markdownlint 插件"></a>2、安装 markdownlint 插件</h3><p>这是个功能强大的 Markdown 语法检查器，可以帮助你书写出规范的文档，同时避免书写错误导致文档无法渲染。<br>markdownlint 制定了很多书写规范，如果不按照它的规范编写文章，则会提示很多错误或警告。</p>
+<span id="more"></span>
+
+<h3 id="3、安装-picgo-插件"><a href="#3、安装-picgo-插件" class="headerlink" title="3、安装 picgo 插件"></a>3、安装 picgo 插件</h3><p>可以下载 picgo 客户端来使用，但是这里直接在 vscode 中下载 picgo 插件也是可以的，只需要配置一下，配置方法在文章后面。</p>
+<h2 id="二、GitHub-配置"><a href="#二、GitHub-配置" class="headerlink" title="二、GitHub 配置"></a>二、GitHub 配置</h2><h3 id="1、创建一个仓库，必须为public"><a href="#1、创建一个仓库，必须为public" class="headerlink" title="1、创建一个仓库，必须为public"></a>1、创建一个仓库，必须为public</h3><p><img src="https://movejian.github.io/images/20220819/picgo1.png"></p>
+<h3 id="2、获取-Tokens"><a href="#2、获取-Tokens" class="headerlink" title="2、获取  Tokens"></a>2、获取  Tokens</h3><h4 id="①-进入个人设置页面，依次选择-【Developer-settings】-–-gt-【Personal-access-tokens】，然后点击【Generate-new-token】来生成新的-tokens，此-token是上传时验证身份用的。"><a href="#①-进入个人设置页面，依次选择-【Developer-settings】-–-gt-【Personal-access-tokens】，然后点击【Generate-new-token】来生成新的-tokens，此-token是上传时验证身份用的。" class="headerlink" title="① 进入个人设置页面，依次选择 【Developer settings】 –&gt; 【Personal access tokens】，然后点击【Generate new token】来生成新的 tokens，此 token是上传时验证身份用的。"></a>① 进入个人设置页面，依次选择 【Developer settings】 –&gt; 【Personal access tokens】，然后点击【Generate new token】来生成新的 tokens，此 token是上传时验证身份用的。</h4><p>注意：这个【Developer settings】对新手很不友好,不好找.在设置页面的最下方.</p>
+<p><img src="https://movejian.github.io/images/20220819/picgo3.png"></p>
+<h4 id="②-添加描述，然后将-repo-选上"><a href="#②-添加描述，然后将-repo-选上" class="headerlink" title="② 添加描述，然后将 repo 选上"></a>② 添加描述，然后将 repo 选上</h4><p><img src="https://movejian.github.io/images/20220819/picgo4.png"></p>
+<h4 id="③-将生成的字符串保存，关闭页面后将再也无法看到这个字符串了"><a href="#③-将生成的字符串保存，关闭页面后将再也无法看到这个字符串了" class="headerlink" title="③ 将生成的字符串保存，关闭页面后将再也无法看到这个字符串了"></a>③ 将生成的字符串保存，关闭页面后将再也无法看到这个字符串了</h4><p><img src="https://movejian.github.io/images/20220819/picgo5.png"></p>
+<h2 id="三、picgo-配置"><a href="#三、picgo-配置" class="headerlink" title="三、picgo 配置"></a>三、picgo 配置</h2><p>打开 vscode 的设置界面，搜索”picgo”定位到 picgo，具体配置如图：</p>
+<p><img src="https://movejian.github.io/images/20220819/picgo6.png"></p>
+<p>配置picgo</p>
+<p><img src="https://movejian.github.io/images/20220819/picgo7.png"></p>
+<ol>
+<li><h4 id="current-设置为-GitHub"><a href="#current-设置为-GitHub" class="headerlink" title="current 设置为 GitHub"></a>current 设置为 GitHub</h4></li>
+<li><h4 id="Branch-是我们仓库的分支，默认为-main"><a href="#Branch-是我们仓库的分支，默认为-main" class="headerlink" title="Branch 是我们仓库的分支，默认为 main"></a>Branch 是我们仓库的分支，默认为 main</h4></li>
+<li><h4 id="custom-url-使我们图片上传的连接，有两种方式可以使用"><a href="#custom-url-使我们图片上传的连接，有两种方式可以使用" class="headerlink" title="custom url 使我们图片上传的连接，有两种方式可以使用"></a>custom url 使我们图片上传的连接，有两种方式可以使用</h4><ol>
+<li><h5 id="原生方式"><a href="#原生方式" class="headerlink" title="原生方式"></a>原生方式</h5>使用 GitHub 原生连接，格式为： <a href="https://raw.githubusercontent.com/[%E7%94%A8%E6%88%B7%E5%90%8D]/[%E4%BB%93%E5%BA%93%E5%90%8D]/[%E5%88%86%E6%94%AF%E5%90%8D]">https://raw.githubusercontent.com/[用户名]/[仓库名]/[分支名]</a><br>我的例子：<a href="https://raw.githubusercontent.com/misswenzi/gallery/main">https://raw.githubusercontent.com/misswenzi/gallery/main</a><br>原生方式有一个弊端就是，国内速度比较慢</li>
+<li><h5 id="cdn-加速方式"><a href="#cdn-加速方式" class="headerlink" title="cdn 加速方式"></a>cdn 加速方式</h5>格式为：<a href="https://cdn.jsdelivr.net/gh/[%E7%94%A8%E6%88%B7%E5%90%8D]/[%E4%BB%93%E5%BA%93%E5%90%8D]@[%E5%88%86%E6%94%AF%E5%90%8D]">https://cdn.jsdelivr.net/gh/[用户名]/[仓库名]@[分支名]</a><br>我的例子：<a href="https://cdn.jsdelivr.net/gh/misswenzi/gallery@main">https://cdn.jsdelivr.net/gh/misswenzi/gallery@main</a></li>
+</ol>
+</li>
+<li><h4 id="cdn-加速的优点是国内访问速度比较快"><a href="#cdn-加速的优点是国内访问速度比较快" class="headerlink" title="cdn 加速的优点是国内访问速度比较快"></a>cdn 加速的优点是国内访问速度比较快</h4></li>
+<li><h4 id="path-是我们的图片存储在仓库中的路径，比如我的是-blogs-x2F-pictures-x2F-（注意：pictures-后面的-“-x2F-“-要记得加上）Repo-是我们的仓库，比如我的是-misswenzi-x2F-gallery"><a href="#path-是我们的图片存储在仓库中的路径，比如我的是-blogs-x2F-pictures-x2F-（注意：pictures-后面的-“-x2F-“-要记得加上）Repo-是我们的仓库，比如我的是-misswenzi-x2F-gallery" class="headerlink" title="path 是我们的图片存储在仓库中的路径，比如我的是 blogs&#x2F;pictures&#x2F;（注意：pictures 后面的 “&#x2F;“ 要记得加上）Repo 是我们的仓库，比如我的是 misswenzi&#x2F;gallery"></a>path 是我们的图片存储在仓库中的路径，比如我的是 blogs&#x2F;pictures&#x2F;（注意：pictures 后面的 “&#x2F;“ 要记得加上）Repo 是我们的仓库，比如我的是 misswenzi&#x2F;gallery</h4></li>
+<li><h4 id="Token：即-GitHub-中获取的-Tokens"><a href="#Token：即-GitHub-中获取的-Tokens" class="headerlink" title="Token：即 GitHub 中获取的 Tokens"></a>Token：即 GitHub 中获取的 Tokens</h4></li>
+</ol>
+<h2 id="四、测试"><a href="#四、测试" class="headerlink" title="四、测试"></a>四、测试</h2><p>进入 vscode，新建一个 .md 文件，windows 下 【ctrl+alt+U】从剪贴板粘贴图片，【ctrl+alt+E】打开资源管理器，选择图片，如果上传成功，则搭建成功！</p>
+<p><img src="https://movejian.github.io/images/20220819/picgo8.png"></p>
+<p>此时，去 GitHub 对应的仓库下查看，可以看到上传成功的图片。</p>
+<p>在 vscode 中插入的图片会上传到 GitHub 的仓库中，如果删除了仓库里面的图片，那你的 Markdown 里面的图片链接就会失效。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/20220819100154.png" alt="20220819100154"></p>
+<p>首先不提好用不好用,反正我这样配置失败了,还请高人指点！</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+        <category>vscode</category>
+      </categories>
+      <tags>
+        <tag>技术</tag>
       </tags>
   </entry>
   <entry>
@@ -1159,19 +1159,6 @@
       </tags>
   </entry>
   <entry>
-    <title>愿你编码半生，归来仍是少年</title>
-    <url>/2019/10/21/%E6%84%BF%E4%BD%A0%E7%BC%96%E7%A0%81%E5%8D%8A%E7%94%9F%EF%BC%8C%E5%BD%92%E6%9D%A5%E4%BB%8D%E6%98%AF%E5%B0%91%E5%B9%B4/</url>
-    <content><![CDATA[<h4 id="Hello-World-不巧，我也在等你。"><a href="#Hello-World-不巧，我也在等你。" class="headerlink" title="Hello,World.不巧，我也在等你。"></a>Hello,World.不巧，我也在等你。</h4><p>​      有人说自己被社会磨平了棱角，泯灭了心性，受生活所迫，“都说是为生活所迫，生活缺从来没有被抓过；都说被社会磨去棱角，社会之恶至今无法逃脱”，我们都有权利选择自己想成为的人，并不是由社会说了算，我们都曾年少，我们都曾有棱角，社会的熔炉却在不断的炼化我们，到底是磨平了棱角，还是磨成了钢刀，就让时间来见证吧！</p>
-<p>​      常年混迹于各大网络社区，也曾愤青，如今独爱云淡风轻，只愿在滚滚红尘中揽得风花雪月独醉。</p>
-<h4 id="感谢你的到来。"><a href="#感谢你的到来。" class="headerlink" title="感谢你的到来。"></a>感谢你的到来。</h4><span id="more"></span>
-
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/8.jpg" alt="8"></p>
-]]></content>
-      <tags>
-        <tag>随心</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>【 Office技能扩展】 Office Tool Plus 高级教程</title>
     <url>/2022/09/27/%E6%8A%80%E8%83%BD%E6%89%A9%E5%B1%95Office/</url>
     <content><![CDATA[<h3 id="遵循"><a href="#遵循" class="headerlink" title="遵循"></a>遵循</h3><p>请按照正确的步骤操作，否则可能出现意外的结果。</p>
@@ -1289,6 +1276,19 @@
 ]]></content>
       <tags>
         <tag>Office</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>愿你编码半生，归来仍是少年</title>
+    <url>/2019/10/21/%E6%84%BF%E4%BD%A0%E7%BC%96%E7%A0%81%E5%8D%8A%E7%94%9F%EF%BC%8C%E5%BD%92%E6%9D%A5%E4%BB%8D%E6%98%AF%E5%B0%91%E5%B9%B4/</url>
+    <content><![CDATA[<h4 id="Hello-World-不巧，我也在等你。"><a href="#Hello-World-不巧，我也在等你。" class="headerlink" title="Hello,World.不巧，我也在等你。"></a>Hello,World.不巧，我也在等你。</h4><p>​      有人说自己被社会磨平了棱角，泯灭了心性，受生活所迫，“都说是为生活所迫，生活缺从来没有被抓过；都说被社会磨去棱角，社会之恶至今无法逃脱”，我们都有权利选择自己想成为的人，并不是由社会说了算，我们都曾年少，我们都曾有棱角，社会的熔炉却在不断的炼化我们，到底是磨平了棱角，还是磨成了钢刀，就让时间来见证吧！</p>
+<p>​      常年混迹于各大网络社区，也曾愤青，如今独爱云淡风轻，只愿在滚滚红尘中揽得风花雪月独醉。</p>
+<h4 id="感谢你的到来。"><a href="#感谢你的到来。" class="headerlink" title="感谢你的到来。"></a>感谢你的到来。</h4><span id="more"></span>
+
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/8.jpg" alt="8"></p>
+]]></content>
+      <tags>
+        <tag>随心</tag>
       </tags>
   </entry>
   <entry>
