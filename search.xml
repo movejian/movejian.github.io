@@ -784,6 +784,56 @@
       </tags>
   </entry>
   <entry>
+    <title>使用HEXO-GIT-BACKUP插件备份博客源文件</title>
+    <url>/2022/08/21/%E4%BD%BF%E7%94%A8HEXO-GIT-BACKUP%E6%8F%92%E4%BB%B6%E5%A4%87%E4%BB%BD%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/</url>
+    <content><![CDATA[<p>在搭建好hexo博客之后也要给自己的博客进行备份，文章丢失可是很麻烦的一件事情。我的博客的数据都是直接保存在cloudstudio，用的时候总是会感觉有点问题，生怕自己哪天不小心把工作空间给删除了，那就蛮麻烦了。所以我采用了 <a href="https://github.com/coneycode/hexo-git-backup">hexo-git-backup</a> 这个工具进行备份。</p>
+<h2 id="查看HEXO版本"><a href="#查看HEXO版本" class="headerlink" title="查看HEXO版本"></a>查看HEXO版本</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo version</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<p>第一行的hexo：xxx既为版本</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211933353.png" alt="查看hexo版本"></p>
+<p>如图，我的版本是6.2.0</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>如果你的版本是2.x.x使用这条命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-git-backup@0.0.91 --save</span><br></pre></td></tr></table></figure>
+
+<p>如果你的版本是3.x.x则使用这条命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-git-backup --save</span><br></pre></td></tr></table></figure>
+
+<p>这里我使用的是第二条命令，因为我的hexo版本为6.2.0</p>
+<h2 id="建立分支"><a href="#建立分支" class="headerlink" title="建立分支"></a>建立分支</h2><p>来到你的github仓库目录或者是coding的仓库目录，选择新建分支，因为我是双线部署，所以两个都要创建分支，我创建的分支名都为backup</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211919299.png" alt="查看所有分支和管理"></p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211921232.png" alt="新建分支"></p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211924488.png" alt="给分支取个名称"></p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>打开博客配置文件_config.yml</p>
+<p>在最下方添加</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># hexo-git-backup 插件，用来备份的</span><br><span class="line">backup:</span><br><span class="line">    type: git</span><br><span class="line">    repository:</span><br><span class="line">       github: git@github.com:xxx/xxx.git,branchName</span><br><span class="line">       coding: git@github.com:xxx/xxx.git,branchName</span><br><span class="line">12345</span><br></pre></td></tr></table></figure>
+
+<p>branchName为分支名（我的分支名称是blogbak），要和前面的仓库地址用英文逗号隔开。</p>
+<p>“coding: “是gitlag的库。</p>
+<p>这里就差不多配置完成了</p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo backup </span><br></pre></td></tr></table></figure>
+
+<p>or</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo b</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置项"><a href="#配置项" class="headerlink" title="配置项"></a>配置项</h2><p>如果你只是想备份主题目录，只需要添加theme属性</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">backup:</span><br><span class="line">    type: git</span><br><span class="line">    theme: coney,landscape,xxx</span><br><span class="line">    repository:</span><br><span class="line">       github: git@github.com:xxx/xxx.git,branchName</span><br><span class="line">       gitcafe: git@github.com:xxx/xxx.git,branchName</span><br></pre></td></tr></table></figure>
+
+<p>如果你想自定义提交的message信息，那么只需要添加message属性</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">backup:</span><br><span class="line">    type: git</span><br><span class="line">    message: update xxx</span><br><span class="line">    repository:</span><br><span class="line">       github: git@github.com:xxx/xxx.git,branchName</span><br><span class="line">       gitcafe: git@github.com:xxx/xxx.git,branchName</span><br></pre></td></tr></table></figure>
+
+<p>插件地址</p>
+<p><a href="https://github.com/coneycode/hexo-git-backup">hexo-git-backup</a></p>
+<h2 id="反省"><a href="#反省" class="headerlink" title="反省"></a>反省</h2><p>记得一定要做好备份，千万不要轻易重装系统，欲哭无泪！</p>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>插件</category>
+      </categories>
+      <tags>
+        <tag>插件</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>十年之约，一个人的寂寞，一群人的狂欢</title>
     <url>/2022/08/21/%E5%8D%81%E5%B9%B4%E4%B9%8B%E7%BA%A6%EF%BC%8C%E4%B8%80%E4%B8%AA%E4%BA%BA%E7%9A%84%E5%AF%82%E5%AF%9E%EF%BC%8C%E4%B8%80%E7%BE%A4%E4%BA%BA%E7%9A%84%E7%8B%82%E6%AC%A2/</url>
     <content><![CDATA[<p>​       在网络逐步转向手机端的今天，web博客网站似乎已经失去了活力，高昂的服务器费用，还需要技术基础以搭建起网站，忙前忙后设计维护着自己的网站，远不如朋友圈一样说发就发，但真相真的如此吗？我原本也这样理解，直到我发现了这样一个组织-十年之约。</p>
@@ -918,56 +968,6 @@
 ]]></content>
       <tags>
         <tag>区块链</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用HEXO-GIT-BACKUP插件备份博客源文件</title>
-    <url>/2022/08/21/%E4%BD%BF%E7%94%A8HEXO-GIT-BACKUP%E6%8F%92%E4%BB%B6%E5%A4%87%E4%BB%BD%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/</url>
-    <content><![CDATA[<p>在搭建好hexo博客之后也要给自己的博客进行备份，文章丢失可是很麻烦的一件事情。我的博客的数据都是直接保存在cloudstudio，用的时候总是会感觉有点问题，生怕自己哪天不小心把工作空间给删除了，那就蛮麻烦了。所以我采用了 <a href="https://github.com/coneycode/hexo-git-backup">hexo-git-backup</a> 这个工具进行备份。</p>
-<h2 id="查看HEXO版本"><a href="#查看HEXO版本" class="headerlink" title="查看HEXO版本"></a>查看HEXO版本</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo version</span><br></pre></td></tr></table></figure>
-<span id="more"></span>
-<p>第一行的hexo：xxx既为版本</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211933353.png" alt="查看hexo版本"></p>
-<p>如图，我的版本是6.2.0</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>如果你的版本是2.x.x使用这条命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-git-backup@0.0.91 --save</span><br></pre></td></tr></table></figure>
-
-<p>如果你的版本是3.x.x则使用这条命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-git-backup --save</span><br></pre></td></tr></table></figure>
-
-<p>这里我使用的是第二条命令，因为我的hexo版本为6.2.0</p>
-<h2 id="建立分支"><a href="#建立分支" class="headerlink" title="建立分支"></a>建立分支</h2><p>来到你的github仓库目录或者是coding的仓库目录，选择新建分支，因为我是双线部署，所以两个都要创建分支，我创建的分支名都为backup</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211919299.png" alt="查看所有分支和管理"></p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211921232.png" alt="新建分支"></p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211924488.png" alt="给分支取个名称"></p>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>打开博客配置文件_config.yml</p>
-<p>在最下方添加</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># hexo-git-backup 插件，用来备份的</span><br><span class="line">backup:</span><br><span class="line">    type: git</span><br><span class="line">    repository:</span><br><span class="line">       github: git@github.com:xxx/xxx.git,branchName</span><br><span class="line">       coding: git@github.com:xxx/xxx.git,branchName</span><br><span class="line">12345</span><br></pre></td></tr></table></figure>
-
-<p>branchName为分支名（我的分支名称是blogbak），要和前面的仓库地址用英文逗号隔开。</p>
-<p>“coding: “是gitlag的库。</p>
-<p>这里就差不多配置完成了</p>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo backup </span><br></pre></td></tr></table></figure>
-
-<p>or</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo b</span><br></pre></td></tr></table></figure>
-
-<h2 id="配置项"><a href="#配置项" class="headerlink" title="配置项"></a>配置项</h2><p>如果你只是想备份主题目录，只需要添加theme属性</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">backup:</span><br><span class="line">    type: git</span><br><span class="line">    theme: coney,landscape,xxx</span><br><span class="line">    repository:</span><br><span class="line">       github: git@github.com:xxx/xxx.git,branchName</span><br><span class="line">       gitcafe: git@github.com:xxx/xxx.git,branchName</span><br></pre></td></tr></table></figure>
-
-<p>如果你想自定义提交的message信息，那么只需要添加message属性</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">backup:</span><br><span class="line">    type: git</span><br><span class="line">    message: update xxx</span><br><span class="line">    repository:</span><br><span class="line">       github: git@github.com:xxx/xxx.git,branchName</span><br><span class="line">       gitcafe: git@github.com:xxx/xxx.git,branchName</span><br></pre></td></tr></table></figure>
-
-<p>插件地址</p>
-<p><a href="https://github.com/coneycode/hexo-git-backup">hexo-git-backup</a></p>
-<h2 id="反省"><a href="#反省" class="headerlink" title="反省"></a>反省</h2><p>记得一定要做好备份，千万不要轻易重装系统，欲哭无泪！</p>
-]]></content>
-      <categories>
-        <category>技术</category>
-        <category>插件</category>
-      </categories>
-      <tags>
-        <tag>插件</tag>
       </tags>
   </entry>
   <entry>
@@ -1134,19 +1134,6 @@
       </tags>
   </entry>
   <entry>
-    <title>愿你编码半生，归来仍是少年</title>
-    <url>/2019/10/21/%E6%84%BF%E4%BD%A0%E7%BC%96%E7%A0%81%E5%8D%8A%E7%94%9F%EF%BC%8C%E5%BD%92%E6%9D%A5%E4%BB%8D%E6%98%AF%E5%B0%91%E5%B9%B4/</url>
-    <content><![CDATA[<h4 id="Hello-World-不巧，我也在等你。"><a href="#Hello-World-不巧，我也在等你。" class="headerlink" title="Hello,World.不巧，我也在等你。"></a>Hello,World.不巧，我也在等你。</h4><p>​      有人说自己被社会磨平了棱角，泯灭了心性，受生活所迫，“都说是为生活所迫，生活缺从来没有被抓过；都说被社会磨去棱角，社会之恶至今无法逃脱”，我们都有权利选择自己想成为的人，并不是由社会说了算，我们都曾年少，我们都曾有棱角，社会的熔炉却在不断的炼化我们，到底是磨平了棱角，还是磨成了钢刀，就让时间来见证吧！</p>
-<p>​      常年混迹于各大网络社区，也曾愤青，如今独爱云淡风轻，只愿在滚滚红尘中揽得风花雪月独醉。</p>
-<h4 id="感谢你的到来。"><a href="#感谢你的到来。" class="headerlink" title="感谢你的到来。"></a>感谢你的到来。</h4><span id="more"></span>
-
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/8.jpg" alt="8"></p>
-]]></content>
-      <tags>
-        <tag>随心</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>将Windows打印机变成网络打印机</title>
     <url>/2022/09/11/%E5%B0%86Windows%E6%89%93%E5%8D%B0%E6%9C%BA%E5%8F%98%E6%88%90%E7%BD%91%E7%BB%9C%E6%89%93%E5%8D%B0%E6%9C%BA/</url>
     <content><![CDATA[<p>大家都知道Windows的打印共享一直属于玄学，2000&#x2F;XP&#x2F;2003（NT 5.x）及以前的时代基本还算正常，经过简单的设置总能搞定，自从Vista开始的NT 6.x，尤其到了win10&#x2F;win11时代，Windows的打印共享基本上就变成了玄学，姑且不说很难搞定，就算搞定了，一个补丁也可能把它搞残废。另外，Windows的共享服务一直存在各种安全漏洞，曾经一度被勒索病毒利用，尤其是win7（不能打补丁那种），为了安全，我一般都禁用server服务。</p>
@@ -1169,6 +1156,19 @@
       </categories>
       <tags>
         <tag>技术</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>愿你编码半生，归来仍是少年</title>
+    <url>/2019/10/21/%E6%84%BF%E4%BD%A0%E7%BC%96%E7%A0%81%E5%8D%8A%E7%94%9F%EF%BC%8C%E5%BD%92%E6%9D%A5%E4%BB%8D%E6%98%AF%E5%B0%91%E5%B9%B4/</url>
+    <content><![CDATA[<h4 id="Hello-World-不巧，我也在等你。"><a href="#Hello-World-不巧，我也在等你。" class="headerlink" title="Hello,World.不巧，我也在等你。"></a>Hello,World.不巧，我也在等你。</h4><p>​      有人说自己被社会磨平了棱角，泯灭了心性，受生活所迫，“都说是为生活所迫，生活缺从来没有被抓过；都说被社会磨去棱角，社会之恶至今无法逃脱”，我们都有权利选择自己想成为的人，并不是由社会说了算，我们都曾年少，我们都曾有棱角，社会的熔炉却在不断的炼化我们，到底是磨平了棱角，还是磨成了钢刀，就让时间来见证吧！</p>
+<p>​      常年混迹于各大网络社区，也曾愤青，如今独爱云淡风轻，只愿在滚滚红尘中揽得风花雪月独醉。</p>
+<h4 id="感谢你的到来。"><a href="#感谢你的到来。" class="headerlink" title="感谢你的到来。"></a>感谢你的到来。</h4><span id="more"></span>
+
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/8.jpg" alt="8"></p>
+]]></content>
+      <tags>
+        <tag>随心</tag>
       </tags>
   </entry>
   <entry>
@@ -1337,121 +1337,6 @@
       </tags>
   </entry>
   <entry>
-    <title>热血传奇魔龙地图与简易图解</title>
-    <url>/2022/08/31/%E7%83%AD%E8%A1%80%E4%BC%A0%E5%A5%87%E9%AD%94%E9%BE%99%E5%9C%B0%E5%9B%BE%E4%B8%8E%E7%AE%80%E6%98%93%E5%9B%BE%E8%A7%A3/</url>
-    <content><![CDATA[<p>盟重老兵（325，325）处可以直接传送到魔龙城。 魔龙城的怪物有：魔龙血蛙、魔龙破甲兵、魔龙射手、魔龙教主等。</p>
-<p>热血传奇每张主城地图都有一段传奇背景故事，而180版本更新的魔龙城地图就没有啥背景故事，后面出来的背景故事也是一些写手编写的各种版本。据说韩版里面魔龙城是上古比奇城，这也是为何传奇中魔龙城只有通过传送才能去的原因。如下图，魔龙城的外观跟比奇城的外观都差不多</p>
-<span id="more"></span>
-
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310151686.jpg"></p>
-<p>说完了背景来源，咱们说说魔龙城的更新地位。作为合击版本的新地图，这里地图更多，怪物更强，产出的装备也越好。魔龙地图的BOSS也就是被誉为玛法最强BOSS的–魔龙教主。魔龙教主可以掉落开天系列，凤天系列，42级衣服，战神，圣魔，真魂系列，魔龙首饰等等。老道以前跟朋友组队去打过 ，想着不爆玄天了，爆个逍遥扇也快活的，可惜没爆啥好东西。</p>
-<h3 id="大图拼接"><a href="#大图拼接" class="headerlink" title="大图拼接"></a>大图拼接</h3><p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/%E9%AD%94%E9%BE%99%E5%85%A8%E5%9B%BE.webp"></p>
-<h3 id="简易图解"><a href="#简易图解" class="headerlink" title="简易图解"></a>简易图解</h3><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310151382.jpg" style="zoom:50%;" />
-
-<h2 id="魔龙东郊到魔龙血域"><a href="#魔龙东郊到魔龙血域" class="headerlink" title="魔龙东郊到魔龙血域"></a>魔龙东郊到魔龙血域</h2><table>
-<thead>
-<tr>
-<th align="center"></th>
-<th align="center"></th>
-<th align="center"></th>
-<th align="center"></th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">魔龙东郊入口</td>
-<td align="center">471，375</td>
-<td align="center">魔龙东郊&gt;&gt;魔龙城</td>
-<td align="center">35，132</td>
-</tr>
-<tr>
-<td align="center">东郊&gt;&gt;东林间胜地</td>
-<td align="center">164，393</td>
-<td align="center">东林间胜地&gt;&gt;东郊</td>
-<td align="center">28，147</td>
-</tr>
-<tr>
-<td align="center">东林间&gt;&gt;魔龙旧寨</td>
-<td align="center">172，150</td>
-<td align="center">魔龙旧寨&gt;&gt;东林间</td>
-<td align="center">60，467</td>
-</tr>
-<tr>
-<td align="center">魔龙旧寨&gt;&gt;魔龙祭坛</td>
-<td align="center">165，57</td>
-<td align="center">魔龙祭坛&gt;&gt;魔龙旧寨</td>
-<td align="center">47，45</td>
-</tr>
-<tr>
-<td align="center">魔龙祭坛&gt;&gt;魔龙岭</td>
-<td align="center">173，170</td>
-<td align="center">魔龙岭&gt;&gt;魔龙祭坛</td>
-<td align="center">26，368</td>
-</tr>
-<tr>
-<td align="center">魔龙岭&gt;&gt;魔龙沼泽</td>
-<td align="center">258，366</td>
-<td align="center">魔龙沼泽&gt;&gt;魔龙岭</td>
-<td align="center">263，38</td>
-</tr>
-<tr>
-<td align="center">魔龙岭&gt;&gt;东魔龙关</td>
-<td align="center">249，36</td>
-<td align="center">东魔龙关&gt;&gt;魔龙岭</td>
-<td align="center">161，168</td>
-</tr>
-<tr>
-<td align="center">东魔龙关&gt;&gt;魔龙血域</td>
-<td align="center">26，37</td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-</tbody></table>
-<h3 id="东郊走法"><a href="#东郊走法" class="headerlink" title="东郊走法"></a>东郊走法</h3><table>
-<thead>
-<tr>
-<th align="center"></th>
-<th align="center"></th>
-<th align="center"></th>
-<th align="center"></th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">入口</td>
-<td align="center">460，66</td>
-<td align="center">魔龙西郊&gt;&gt;魔龙城</td>
-<td align="center">32，46</td>
-</tr>
-<tr>
-<td align="center">西郊&gt;&gt;西林间胜地</td>
-<td align="center">288，284</td>
-<td align="center">西林间胜地&gt;&gt;西郊</td>
-<td align="center">31，117</td>
-</tr>
-<tr>
-<td align="center">西郊&gt;&gt;魔龙旧寨</td>
-<td align="center">347，53</td>
-<td align="center">魔龙旧寨&gt;&gt;西郊</td>
-<td align="center">135，429</td>
-</tr>
-<tr>
-<td align="center">西林间&gt;&gt;魔龙沼泽</td>
-<td align="center">369，140</td>
-<td align="center">魔龙沼泽&gt;&gt;西林间</td>
-<td align="center">33，264</td>
-</tr>
-</tbody></table>
-<p>魔龙血域走法：魔龙城（472，376）→魔龙东郊（162，390）→东林间胜地（169，148）→魔龙旧寨（161，55）→魔龙祭坛（170，173）→魔龙岭（250，41）→魔龙东关（30，35）→魔龙谷（40，64）→龙源血路（50，161）→魔龙血域。</p>
-]]></content>
-      <categories>
-        <category>游戏</category>
-      </categories>
-      <tags>
-        <tag>传奇</tag>
-        <tag>攻略</tag>
-        <tag>魔龙</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>【疑难解答】 Office Tool Plus 入门教程</title>
     <url>/2022/09/27/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94Office/</url>
     <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>如果你的系统本身就有诸多毛病，建议直接重装原版系统，这是最有效最快的解决办法。</p>
@@ -1580,6 +1465,121 @@
 ]]></content>
       <tags>
         <tag>Office</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>热血传奇魔龙地图与简易图解</title>
+    <url>/2022/08/31/%E7%83%AD%E8%A1%80%E4%BC%A0%E5%A5%87%E9%AD%94%E9%BE%99%E5%9C%B0%E5%9B%BE%E4%B8%8E%E7%AE%80%E6%98%93%E5%9B%BE%E8%A7%A3/</url>
+    <content><![CDATA[<p>盟重老兵（325，325）处可以直接传送到魔龙城。 魔龙城的怪物有：魔龙血蛙、魔龙破甲兵、魔龙射手、魔龙教主等。</p>
+<p>热血传奇每张主城地图都有一段传奇背景故事，而180版本更新的魔龙城地图就没有啥背景故事，后面出来的背景故事也是一些写手编写的各种版本。据说韩版里面魔龙城是上古比奇城，这也是为何传奇中魔龙城只有通过传送才能去的原因。如下图，魔龙城的外观跟比奇城的外观都差不多</p>
+<span id="more"></span>
+
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310151686.jpg"></p>
+<p>说完了背景来源，咱们说说魔龙城的更新地位。作为合击版本的新地图，这里地图更多，怪物更强，产出的装备也越好。魔龙地图的BOSS也就是被誉为玛法最强BOSS的–魔龙教主。魔龙教主可以掉落开天系列，凤天系列，42级衣服，战神，圣魔，真魂系列，魔龙首饰等等。老道以前跟朋友组队去打过 ，想着不爆玄天了，爆个逍遥扇也快活的，可惜没爆啥好东西。</p>
+<h3 id="大图拼接"><a href="#大图拼接" class="headerlink" title="大图拼接"></a>大图拼接</h3><p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/%E9%AD%94%E9%BE%99%E5%85%A8%E5%9B%BE.webp"></p>
+<h3 id="简易图解"><a href="#简易图解" class="headerlink" title="简易图解"></a>简易图解</h3><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310151382.jpg" style="zoom:50%;" />
+
+<h2 id="魔龙东郊到魔龙血域"><a href="#魔龙东郊到魔龙血域" class="headerlink" title="魔龙东郊到魔龙血域"></a>魔龙东郊到魔龙血域</h2><table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">魔龙东郊入口</td>
+<td align="center">471，375</td>
+<td align="center">魔龙东郊&gt;&gt;魔龙城</td>
+<td align="center">35，132</td>
+</tr>
+<tr>
+<td align="center">东郊&gt;&gt;东林间胜地</td>
+<td align="center">164，393</td>
+<td align="center">东林间胜地&gt;&gt;东郊</td>
+<td align="center">28，147</td>
+</tr>
+<tr>
+<td align="center">东林间&gt;&gt;魔龙旧寨</td>
+<td align="center">172，150</td>
+<td align="center">魔龙旧寨&gt;&gt;东林间</td>
+<td align="center">60，467</td>
+</tr>
+<tr>
+<td align="center">魔龙旧寨&gt;&gt;魔龙祭坛</td>
+<td align="center">165，57</td>
+<td align="center">魔龙祭坛&gt;&gt;魔龙旧寨</td>
+<td align="center">47，45</td>
+</tr>
+<tr>
+<td align="center">魔龙祭坛&gt;&gt;魔龙岭</td>
+<td align="center">173，170</td>
+<td align="center">魔龙岭&gt;&gt;魔龙祭坛</td>
+<td align="center">26，368</td>
+</tr>
+<tr>
+<td align="center">魔龙岭&gt;&gt;魔龙沼泽</td>
+<td align="center">258，366</td>
+<td align="center">魔龙沼泽&gt;&gt;魔龙岭</td>
+<td align="center">263，38</td>
+</tr>
+<tr>
+<td align="center">魔龙岭&gt;&gt;东魔龙关</td>
+<td align="center">249，36</td>
+<td align="center">东魔龙关&gt;&gt;魔龙岭</td>
+<td align="center">161，168</td>
+</tr>
+<tr>
+<td align="center">东魔龙关&gt;&gt;魔龙血域</td>
+<td align="center">26，37</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<h3 id="东郊走法"><a href="#东郊走法" class="headerlink" title="东郊走法"></a>东郊走法</h3><table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">入口</td>
+<td align="center">460，66</td>
+<td align="center">魔龙西郊&gt;&gt;魔龙城</td>
+<td align="center">32，46</td>
+</tr>
+<tr>
+<td align="center">西郊&gt;&gt;西林间胜地</td>
+<td align="center">288，284</td>
+<td align="center">西林间胜地&gt;&gt;西郊</td>
+<td align="center">31，117</td>
+</tr>
+<tr>
+<td align="center">西郊&gt;&gt;魔龙旧寨</td>
+<td align="center">347，53</td>
+<td align="center">魔龙旧寨&gt;&gt;西郊</td>
+<td align="center">135，429</td>
+</tr>
+<tr>
+<td align="center">西林间&gt;&gt;魔龙沼泽</td>
+<td align="center">369，140</td>
+<td align="center">魔龙沼泽&gt;&gt;西林间</td>
+<td align="center">33，264</td>
+</tr>
+</tbody></table>
+<p>魔龙血域走法：魔龙城（472，376）→魔龙东郊（162，390）→东林间胜地（169，148）→魔龙旧寨（161，55）→魔龙祭坛（170，173）→魔龙岭（250，41）→魔龙东关（30，35）→魔龙谷（40，64）→龙源血路（50，161）→魔龙血域。</p>
+]]></content>
+      <categories>
+        <category>游戏</category>
+      </categories>
+      <tags>
+        <tag>传奇</tag>
+        <tag>攻略</tag>
+        <tag>魔龙</tag>
       </tags>
   </entry>
   <entry>
