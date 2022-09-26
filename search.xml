@@ -1,31 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>HOOK微信获取聊天消息</title>
-    <url>/2022/09/21/HOOK%E5%BE%AE%E4%BF%A1%E8%8E%B7%E5%8F%96%E8%81%8A%E5%A4%A9%E6%B6%88%E6%81%AF/</url>
-    <content><![CDATA[<blockquote>
-<div class="wp-block-argon-admonition admonition shadow-sm" style="border-left-color:#660000"><div class="admonition-title" style="background-color:#dd0000"><span>警告</span></div><div class="admonition-body"><font color=red>网络不是法外之地，本篇文章仅供技术交流，相关具体实现过程我将省略！</font></div></div>
-</blockquote>
-<h2 id="获取微信处理消息的函数"><a href="#获取微信处理消息的函数" class="headerlink" title="获取微信处理消息的函数"></a>获取微信处理消息的函数</h2><p>我们可以反复向通过CE搜索消息，获取消息所在的内存地址，然后下硬件写入断点，在栈里找到相关函数，这里你可以自行按上面方法进行搜索。</p>
-<span id="more"></span>
-
-<h2 id="使用MinHook-hook该消息函数"><a href="#使用MinHook-hook该消息函数" class="headerlink" title="使用MinHook hook该消息函数"></a>使用MinHook hook该消息函数</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// Initialize MinHook.</span><br><span class="line">if (MH_Initialize() != MH_OK)</span><br><span class="line">&#123;</span><br><span class="line">return 1;</span><br><span class="line">&#125;</span><br><span class="line">DWORD windllAddress = (DWORD)GetModuleHandle(L&quot;WeChatWin.dll&quot;);</span><br><span class="line">if (windllAddress == 0) &#123;</span><br><span class="line">printf(&quot;Module Address Get Error: 0x%x\n&quot;, windllAddress);</span><br><span class="line">return 0;</span><br><span class="line">&#125;</span><br><span class="line">DWORD ReceiveHookAddress = windllAddress + 0x*****; // 偏移地址请查看下方</span><br><span class="line"> </span><br><span class="line">// Create a hook for MessageBoxW, in disabled state.</span><br><span class="line">if (MH_CreateHook((LPVOID)ReceiveHookAddress, &amp;ReceiveWxMessage,</span><br><span class="line">reinterpret_cast&lt;LPVOID*&gt;(&amp;_receiveMsgFunc)) != MH_OK)</span><br><span class="line">&#123;</span><br><span class="line">printf(&quot;MH_CreateHook Error: 0x%x\n&quot;, ReceiveHookAddress);</span><br><span class="line">return 0;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<h2 id="消息Hook函数"><a href="#消息Hook函数" class="headerlink" title="消息Hook函数"></a>消息Hook函数</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">void ReceiveWxMessage(DWORD r_eax)</span><br><span class="line">&#123;</span><br><span class="line">try</span><br><span class="line">&#123;</span><br><span class="line">// 检查进程是否有权限访问指定的内存块</span><br><span class="line">if (IsBadReadPtr((void*)r_eax, 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgTypeOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgContentOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + WxidOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + GroupMsgSenderOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgSourceOffset), 4)</span><br><span class="line">) &#123;</span><br><span class="line">return;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">// 取出消息内容</span><br><span class="line">LPVOID pContent = *((LPVOID*)(r_eax + MsgContentOffset));</span><br><span class="line"> </span><br><span class="line">// 取出微信ID/群ID</span><br><span class="line">LPVOID pWxid = *((LPVOID*)(r_eax + WxidOffset));</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">if (!wcscmp((wchar_t*)pWxid, L&quot;filehelper&quot;)) &#123;</span><br><span class="line">wprintf(L&quot;Receive Msg\n Wechat ID: %ws \n Content: %ws\n&quot;, (wchar_t*)pWxid, (wchar_t*)pContent);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line">catch (...)</span><br><span class="line">&#123;</span><br><span class="line">OutputDebugStringA(&quot;消息异常&quot;);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<h2 id="Hook效果"><a href="#Hook效果" class="headerlink" title="Hook效果"></a>Hook效果</h2><p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210322614.png"></p>
-<blockquote>
-<p>接收函数具体地址：windllAddress + 0x1086F0;</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>微信</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Centos7安装时引导错误以及解决方案</title>
     <url>/2019/11/19/Centos7%E5%AE%89%E8%A3%85%E6%97%B6%E5%BC%95%E5%AF%BC%E9%94%99%E8%AF%AF%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</url>
     <content><![CDATA[<p>Centos7安装时引导错误以及解决方案<br>使用U盘刻录方式安装CentOS7.6，但是发现安装初始化时候发生错误，本以为是U盘刻录或者是镜像的问题，但是反复刻录多遍仍然出错。后来在CentOS中文社区，发现使用UltraISO刻录安装时就可能出现初始化引导错误1.一般情况下</p>
@@ -56,6 +31,31 @@
 ]]></content>
       <tags>
         <tag>Centos7</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HOOK微信获取聊天消息</title>
+    <url>/2022/09/21/HOOK%E5%BE%AE%E4%BF%A1%E8%8E%B7%E5%8F%96%E8%81%8A%E5%A4%A9%E6%B6%88%E6%81%AF/</url>
+    <content><![CDATA[<blockquote>
+<div class="wp-block-argon-admonition admonition shadow-sm" style="border-left-color:#660000"><div class="admonition-title" style="background-color:#dd0000"><span>警告</span></div><div class="admonition-body"><font color=red>网络不是法外之地，本篇文章仅供技术交流，相关具体实现过程我将省略！</font></div></div>
+</blockquote>
+<h2 id="获取微信处理消息的函数"><a href="#获取微信处理消息的函数" class="headerlink" title="获取微信处理消息的函数"></a>获取微信处理消息的函数</h2><p>我们可以反复向通过CE搜索消息，获取消息所在的内存地址，然后下硬件写入断点，在栈里找到相关函数，这里你可以自行按上面方法进行搜索。</p>
+<span id="more"></span>
+
+<h2 id="使用MinHook-hook该消息函数"><a href="#使用MinHook-hook该消息函数" class="headerlink" title="使用MinHook hook该消息函数"></a>使用MinHook hook该消息函数</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// Initialize MinHook.</span><br><span class="line">if (MH_Initialize() != MH_OK)</span><br><span class="line">&#123;</span><br><span class="line">return 1;</span><br><span class="line">&#125;</span><br><span class="line">DWORD windllAddress = (DWORD)GetModuleHandle(L&quot;WeChatWin.dll&quot;);</span><br><span class="line">if (windllAddress == 0) &#123;</span><br><span class="line">printf(&quot;Module Address Get Error: 0x%x\n&quot;, windllAddress);</span><br><span class="line">return 0;</span><br><span class="line">&#125;</span><br><span class="line">DWORD ReceiveHookAddress = windllAddress + 0x*****; // 偏移地址请查看下方</span><br><span class="line"> </span><br><span class="line">// Create a hook for MessageBoxW, in disabled state.</span><br><span class="line">if (MH_CreateHook((LPVOID)ReceiveHookAddress, &amp;ReceiveWxMessage,</span><br><span class="line">reinterpret_cast&lt;LPVOID*&gt;(&amp;_receiveMsgFunc)) != MH_OK)</span><br><span class="line">&#123;</span><br><span class="line">printf(&quot;MH_CreateHook Error: 0x%x\n&quot;, ReceiveHookAddress);</span><br><span class="line">return 0;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h2 id="消息Hook函数"><a href="#消息Hook函数" class="headerlink" title="消息Hook函数"></a>消息Hook函数</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">void ReceiveWxMessage(DWORD r_eax)</span><br><span class="line">&#123;</span><br><span class="line">try</span><br><span class="line">&#123;</span><br><span class="line">// 检查进程是否有权限访问指定的内存块</span><br><span class="line">if (IsBadReadPtr((void*)r_eax, 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgTypeOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgContentOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + WxidOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + GroupMsgSenderOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgSourceOffset), 4)</span><br><span class="line">) &#123;</span><br><span class="line">return;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">// 取出消息内容</span><br><span class="line">LPVOID pContent = *((LPVOID*)(r_eax + MsgContentOffset));</span><br><span class="line"> </span><br><span class="line">// 取出微信ID/群ID</span><br><span class="line">LPVOID pWxid = *((LPVOID*)(r_eax + WxidOffset));</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">if (!wcscmp((wchar_t*)pWxid, L&quot;filehelper&quot;)) &#123;</span><br><span class="line">wprintf(L&quot;Receive Msg\n Wechat ID: %ws \n Content: %ws\n&quot;, (wchar_t*)pWxid, (wchar_t*)pContent);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line">catch (...)</span><br><span class="line">&#123;</span><br><span class="line">OutputDebugStringA(&quot;消息异常&quot;);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h2 id="Hook效果"><a href="#Hook效果" class="headerlink" title="Hook效果"></a>Hook效果</h2><p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210322614.png"></p>
+<blockquote>
+<p>接收函数具体地址：windllAddress + 0x1086F0;</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>微信</tag>
       </tags>
   </entry>
   <entry>
@@ -324,96 +324,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux系统无线网卡配置</title>
-    <url>/2019/12/16/Linux%E7%B3%BB%E7%BB%9F%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<h2 id="无线网卡配置"><a href="#无线网卡配置" class="headerlink" title="无线网卡配置"></a>无线网卡配置</h2><p>本文介绍在Linux 命令行界面中手动配置无线网卡的方法。目前流行的多数发行版都支持用图形界面的<code>network- manager</code>方便地进行配置，而无需使用本文所介绍的原始方法。</p>
-<p>下面介绍使用<code>iwconfig</code>和<code>ifconfig</code>等命令在命令行状态下配置无线网络。前题是无线网卡驱动已经正确安装，并被系统正确识别。</p>
-<span id="more"></span>
-<h2 id="大体思路"><a href="#大体思路" class="headerlink" title="大体思路"></a>大体思路</h2><p>工作的大体思路如下：</p>
-<ol>
-<li>用<code>iwconfig</code>开启无线网卡的电源，并查找区域内的无线网络</li>
-<li>连接到相应的无线网络</li>
-<li>通过<code>ifconfig</code>启用无线网卡，并获取IP（如果使用DHCP的话）</li>
-</ol>
-<h2 id="具体过程"><a href="#具体过程" class="headerlink" title="具体过程"></a>具体过程</h2><ol>
-<li>打开无线网卡电源</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 txpower on</span><br></pre></td></tr></table></figure>
-<h4 id="无线网络的信号灯应该亮了。"><a href="#无线网络的信号灯应该亮了。" class="headerlink" title="无线网络的信号灯应该亮了。"></a>无线网络的信号灯应该亮了。</h4><ol start="2">
-<li>列出区域内的无线网络<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwlist wlan0 scan</span><br></pre></td></tr></table></figure></li>
-<li>假设要连接到网络MyHome（即essid为MyHome的网络），那么输入命令</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 essid <span class="string">&quot;MyHome&quot;</span> </span><br></pre></td></tr></table></figure>
-<p><em>#如果网络是加密的，密码是0123456789，那么就输入命令#</em></p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 essid <span class="string">&quot;MyHome&quot;</span> key <span class="number">0123</span><span class="literal">-4567-89</span></span><br></pre></td></tr></table></figure>
-<ol start="4">
-<li>如果正常的话，输入</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br></pre></td></tr></table></figure>
-<h4 id="就可以看到连接正常的各项参数了。"><a href="#就可以看到连接正常的各项参数了。" class="headerlink" title="就可以看到连接正常的各项参数了。"></a>就可以看到连接正常的各项参数了。</h4><ol start="5">
-<li>启用无线网卡</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ifconfig wlan0 up</span><br></pre></td></tr></table></figure>
-
-<ol start="6">
-<li>如果是用DHCP获取IP的，那么用dhclient 或dhcpcd获取ip</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">dhcpcd wlan0</span><br></pre></td></tr></table></figure>
-
-<p>或</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">dhclient wlan0</span><br></pre></td></tr></table></figure>
-
-<ol start="7">
-<li>现在无线网卡应该可以正常使用了。</li>
-</ol>
-<h3 id="PS"><a href="#PS" class="headerlink" title="PS:"></a>PS:</h3><p>   如果现在还不能联网。那么点击网络图标。选择链接到隐藏的无线网络。输入找到的网络的名字。<br>      图形化的网络管理程序是<code>System-&gt;Preferences-&gt;Network Connections</code>。打开程序后，点击无线网络项目，点击add增加一个新的无线网络。  给出任意的<code>Connection Name</code>。<code>SSID</code>中输入无限网络的名字。<code>wireless security</code>中选择一种合适的加密类型。key中输入无限网络的密码。 </p>
-<p>   其他字段都不修改。 执行后，应该能够链接无限网络。  可以使用<code>iwconfig wlan0</code>命令查看是否正确连接无线网络。</p>
-<h6 id="未正确链接无线网络的输出："><a href="#未正确链接无线网络的输出：" class="headerlink" title="未正确链接无线网络的输出："></a>未正确链接无线网络的输出：</h6><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br><span class="line">wlan0     IEEE <span class="number">802.11</span>abg  ESSID:off/any </span><br><span class="line">          Mode:Managed  Access Point: Not<span class="literal">-Associated</span>   Tx<span class="literal">-Power</span>=<span class="number">0</span> dBm  </span><br><span class="line">          Retry  long limit:<span class="number">7</span>   RTS thr:off   Fragment thr:off</span><br><span class="line">          Power Management:off</span><br></pre></td></tr></table></figure>
-
-<h6 id="正确链接无线网络后的输出："><a href="#正确链接无线网络后的输出：" class="headerlink" title="正确链接无线网络后的输出："></a>正确链接无线网络后的输出：</h6><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br><span class="line">wlan0     IEEE <span class="number">802.11</span>abg  ESSID:<span class="string">&quot;MyHome&quot;</span> </span><br><span class="line">          Mode:Managed  Frequency:<span class="number">2.437</span> GHz  Access Point: <span class="number">00</span>:<span class="number">26</span>:DS:<span class="number">43</span>:<span class="number">1</span>A:A8  </span><br><span class="line">          Bit Rate=<span class="number">54</span> Mb/s   Tx<span class="literal">-Power</span>=<span class="number">0</span> dBm  </span><br><span class="line">          Retry  long limit:<span class="number">7</span>   RTS thr:off   Fragment thr:off</span><br><span class="line">          Power Management:off</span><br><span class="line">          Link Quality=<span class="number">65</span>/<span class="number">70</span>  Signal level=<span class="literal">-45</span> dBm </span><br><span class="line">          Rx invalid nwid:<span class="number">0</span>  Rx invalid crypt:<span class="number">0</span>  Rx invalid frag:<span class="number">0</span></span><br><span class="line">          Tx excessive retries:<span class="number">0</span>  Invalid misc:<span class="number">0</span>   Missed beacon:<span class="number">0</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>Linux</tag>
-        <tag>无线网卡</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux通过密钥对免密登录</title>
-    <url>/2022/09/21/Linux%E9%80%9A%E8%BF%87%E5%AF%86%E9%92%A5%E5%AF%B9%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/</url>
-    <content><![CDATA[<p>首先，说明一下我们要做的是，跳板机服务器的<code>usera</code>用户免密码登录B服务器的<code>userb</code>用户。<br>我们先使用<code>usera</code>登录跳板服务器</p>
-<blockquote>
-<p>首先生成密钥对如果有则跳过这一步</p>
-</blockquote>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
-<span id="more"></span>
-<p>操作演示</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">[sera@serverA ~]$ ssh-keygen -t rsa  <span class="comment">//使用rsa算法加密</span></span><br><span class="line"><span class="title class_">Generating</span> public/private rsa key pair.</span><br><span class="line"><span class="title class_">Enter</span> file <span class="keyword">in</span> which to save the key (<span class="regexp">/home/u</span>sera/.<span class="property">ssh</span>/id_rsa): <span class="comment">//私钥默认保存路径</span></span><br><span class="line"><span class="title class_">Created</span> directory <span class="string">&#x27;/home/usera/.ssh&#x27;</span>.</span><br><span class="line"><span class="title class_">Enter</span> passphrase (empty <span class="keyword">for</span> no passphrase): <span class="comment">//在这里输入密码如果这里输入密码以后登录需要密钥和密码才能登录这里建议直接回车也就是空</span></span><br><span class="line"><span class="title class_">Enter</span> same passphrase <span class="attr">again</span>:</span><br><span class="line"><span class="title class_">Your</span> identification has been saved <span class="keyword">in</span> /home/usera/.<span class="property">ssh</span>/id_rsa.</span><br><span class="line"><span class="title class_">Your</span> public key has been saved <span class="keyword">in</span> /home/usera/.<span class="property">ssh</span>/id_rsa.<span class="property">pub</span>. <span class="comment">//公钥保存路径</span></span><br><span class="line"><span class="title class_">The</span> key fingerprint <span class="attr">is</span>:</span><br><span class="line"><span class="number">39</span>:<span class="attr">f2</span>:<span class="attr">fc</span>:<span class="number">70</span>:<span class="attr">ef</span>:<span class="attr">e9</span>:<span class="attr">bd</span>:<span class="number">05</span>:<span class="number">40</span>:6<span class="attr">e</span>:<span class="number">64</span>:<span class="attr">b0</span>:<span class="number">99</span>:<span class="number">56</span>:6<span class="attr">e</span>:<span class="number">01</span> usera@serverA</span><br><span class="line"><span class="title class_">The</span> key<span class="string">&#x27;s randomart image is:</span></span><br><span class="line"><span class="string">+--[ RSA 2048]----+</span></span><br><span class="line"><span class="string">| Eo* |</span></span><br><span class="line"><span class="string">| @ . |</span></span><br><span class="line"><span class="string">| = * |</span></span><br><span class="line"><span class="string">| o o . |</span></span><br><span class="line"><span class="string">| . S . |</span></span><br><span class="line"><span class="string">| + . . |</span></span><br><span class="line"><span class="string">| + . .|</span></span><br><span class="line"><span class="string">| + . o . |</span></span><br><span class="line"><span class="string">| .o= o. |</span></span><br><span class="line"><span class="string">+-----------------+</span></span><br></pre></td></tr></table></figure>
-
-<p>以下是截图提示</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210216196.png"></p>
-<blockquote>
-<p>id_rsa是私钥，id_rsa.pub是公钥公钥在服务器私钥在自己手上</p>
-</blockquote>
-<p>此时会在<code>/home/usera/.ssh</code>目录下生成密钥对我们使用<code>ls</code>查看一下</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">root@<span class="attr">vultr</span>:~#  ls -la .<span class="property">ssh</span></span><br><span class="line">total <span class="number">16</span></span><br><span class="line">drwx------ <span class="number">2</span> root root <span class="number">4096</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> .</span><br><span class="line">drwx------ <span class="number">5</span> root root <span class="number">4096</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">00</span> ..</span><br><span class="line">-rw------- <span class="number">1</span> root root <span class="number">1675</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> id_rsa</span><br><span class="line">-rw-r--r-- <span class="number">1</span> root root  <span class="number">398</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> id_rsa.<span class="property">pub</span></span><br></pre></td></tr></table></figure>
-
-<p>然后将公钥上传到需要登录的服务器，并以<code>userb</code>用户登录<br>至于上传方式可以用<code>scp</code>以及<code>sz</code>命令这里就介绍了<br>可以参考这篇<a href="https://shagain.club/index.php/archives/111/">文章</a></p>
-<blockquote>
-<p>上传到用户目录下的.ssh文件夹下<code>authorized_keys</code>这个文件是用来存放公钥内容的我们使用<code>cat</code>把公钥追加到<code>authorized_keys</code>这个文件就好了</p>
-</blockquote>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">cat id_rsa.<span class="property">pub</span> &gt;&gt; ~<span class="regexp">/.ssh/</span>authorized_keys    <span class="comment">//cat 公钥路径 &gt;&gt; ~/.ssh/authorized_keys</span></span><br></pre></td></tr></table></figure>
-
-<p>这样子我们就配置好了<br>另外我们要注意，<code>.ssh</code>目录的权限为<code>700</code>，其下文件<code>authorized_keys</code>和私钥的权限为<code>600</code>。否则会因为权限问题导致无法免密码登录。我们可以看到登陆后会有<code>known_hosts</code>文件生成。</p>
-]]></content>
-      <categories>
-        <category>学习</category>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Linux查看硬件信息与系统资源</title>
     <url>/2022/09/06/Linux%E6%9F%A5%E7%9C%8B%E7%A1%AC%E4%BB%B6%E4%BF%A1%E6%81%AF%E4%B8%8E%E7%B3%BB%E7%BB%9F%E8%B5%84%E6%BA%90/</url>
     <content><![CDATA[<p>Linux下经常需要查看系统资源或硬件资源，与之对应的命令行也是非常多</p>
@@ -612,6 +522,96 @@
       </tags>
   </entry>
   <entry>
+    <title>Linux系统无线网卡配置</title>
+    <url>/2019/12/16/Linux%E7%B3%BB%E7%BB%9F%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h2 id="无线网卡配置"><a href="#无线网卡配置" class="headerlink" title="无线网卡配置"></a>无线网卡配置</h2><p>本文介绍在Linux 命令行界面中手动配置无线网卡的方法。目前流行的多数发行版都支持用图形界面的<code>network- manager</code>方便地进行配置，而无需使用本文所介绍的原始方法。</p>
+<p>下面介绍使用<code>iwconfig</code>和<code>ifconfig</code>等命令在命令行状态下配置无线网络。前题是无线网卡驱动已经正确安装，并被系统正确识别。</p>
+<span id="more"></span>
+<h2 id="大体思路"><a href="#大体思路" class="headerlink" title="大体思路"></a>大体思路</h2><p>工作的大体思路如下：</p>
+<ol>
+<li>用<code>iwconfig</code>开启无线网卡的电源，并查找区域内的无线网络</li>
+<li>连接到相应的无线网络</li>
+<li>通过<code>ifconfig</code>启用无线网卡，并获取IP（如果使用DHCP的话）</li>
+</ol>
+<h2 id="具体过程"><a href="#具体过程" class="headerlink" title="具体过程"></a>具体过程</h2><ol>
+<li>打开无线网卡电源</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 txpower on</span><br></pre></td></tr></table></figure>
+<h4 id="无线网络的信号灯应该亮了。"><a href="#无线网络的信号灯应该亮了。" class="headerlink" title="无线网络的信号灯应该亮了。"></a>无线网络的信号灯应该亮了。</h4><ol start="2">
+<li>列出区域内的无线网络<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwlist wlan0 scan</span><br></pre></td></tr></table></figure></li>
+<li>假设要连接到网络MyHome（即essid为MyHome的网络），那么输入命令</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 essid <span class="string">&quot;MyHome&quot;</span> </span><br></pre></td></tr></table></figure>
+<p><em>#如果网络是加密的，密码是0123456789，那么就输入命令#</em></p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 essid <span class="string">&quot;MyHome&quot;</span> key <span class="number">0123</span><span class="literal">-4567-89</span></span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>如果正常的话，输入</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br></pre></td></tr></table></figure>
+<h4 id="就可以看到连接正常的各项参数了。"><a href="#就可以看到连接正常的各项参数了。" class="headerlink" title="就可以看到连接正常的各项参数了。"></a>就可以看到连接正常的各项参数了。</h4><ol start="5">
+<li>启用无线网卡</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ifconfig wlan0 up</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>如果是用DHCP获取IP的，那么用dhclient 或dhcpcd获取ip</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">dhcpcd wlan0</span><br></pre></td></tr></table></figure>
+
+<p>或</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">dhclient wlan0</span><br></pre></td></tr></table></figure>
+
+<ol start="7">
+<li>现在无线网卡应该可以正常使用了。</li>
+</ol>
+<h3 id="PS"><a href="#PS" class="headerlink" title="PS:"></a>PS:</h3><p>   如果现在还不能联网。那么点击网络图标。选择链接到隐藏的无线网络。输入找到的网络的名字。<br>      图形化的网络管理程序是<code>System-&gt;Preferences-&gt;Network Connections</code>。打开程序后，点击无线网络项目，点击add增加一个新的无线网络。  给出任意的<code>Connection Name</code>。<code>SSID</code>中输入无限网络的名字。<code>wireless security</code>中选择一种合适的加密类型。key中输入无限网络的密码。 </p>
+<p>   其他字段都不修改。 执行后，应该能够链接无限网络。  可以使用<code>iwconfig wlan0</code>命令查看是否正确连接无线网络。</p>
+<h6 id="未正确链接无线网络的输出："><a href="#未正确链接无线网络的输出：" class="headerlink" title="未正确链接无线网络的输出："></a>未正确链接无线网络的输出：</h6><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br><span class="line">wlan0     IEEE <span class="number">802.11</span>abg  ESSID:off/any </span><br><span class="line">          Mode:Managed  Access Point: Not<span class="literal">-Associated</span>   Tx<span class="literal">-Power</span>=<span class="number">0</span> dBm  </span><br><span class="line">          Retry  long limit:<span class="number">7</span>   RTS thr:off   Fragment thr:off</span><br><span class="line">          Power Management:off</span><br></pre></td></tr></table></figure>
+
+<h6 id="正确链接无线网络后的输出："><a href="#正确链接无线网络后的输出：" class="headerlink" title="正确链接无线网络后的输出："></a>正确链接无线网络后的输出：</h6><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br><span class="line">wlan0     IEEE <span class="number">802.11</span>abg  ESSID:<span class="string">&quot;MyHome&quot;</span> </span><br><span class="line">          Mode:Managed  Frequency:<span class="number">2.437</span> GHz  Access Point: <span class="number">00</span>:<span class="number">26</span>:DS:<span class="number">43</span>:<span class="number">1</span>A:A8  </span><br><span class="line">          Bit Rate=<span class="number">54</span> Mb/s   Tx<span class="literal">-Power</span>=<span class="number">0</span> dBm  </span><br><span class="line">          Retry  long limit:<span class="number">7</span>   RTS thr:off   Fragment thr:off</span><br><span class="line">          Power Management:off</span><br><span class="line">          Link Quality=<span class="number">65</span>/<span class="number">70</span>  Signal level=<span class="literal">-45</span> dBm </span><br><span class="line">          Rx invalid nwid:<span class="number">0</span>  Rx invalid crypt:<span class="number">0</span>  Rx invalid frag:<span class="number">0</span></span><br><span class="line">          Tx excessive retries:<span class="number">0</span>  Invalid misc:<span class="number">0</span>   Missed beacon:<span class="number">0</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>Linux</tag>
+        <tag>无线网卡</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux通过密钥对免密登录</title>
+    <url>/2022/09/21/Linux%E9%80%9A%E8%BF%87%E5%AF%86%E9%92%A5%E5%AF%B9%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/</url>
+    <content><![CDATA[<p>首先，说明一下我们要做的是，跳板机服务器的<code>usera</code>用户免密码登录B服务器的<code>userb</code>用户。<br>我们先使用<code>usera</code>登录跳板服务器</p>
+<blockquote>
+<p>首先生成密钥对如果有则跳过这一步</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<p>操作演示</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">[sera@serverA ~]$ ssh-keygen -t rsa  <span class="comment">//使用rsa算法加密</span></span><br><span class="line"><span class="title class_">Generating</span> public/private rsa key pair.</span><br><span class="line"><span class="title class_">Enter</span> file <span class="keyword">in</span> which to save the key (<span class="regexp">/home/u</span>sera/.<span class="property">ssh</span>/id_rsa): <span class="comment">//私钥默认保存路径</span></span><br><span class="line"><span class="title class_">Created</span> directory <span class="string">&#x27;/home/usera/.ssh&#x27;</span>.</span><br><span class="line"><span class="title class_">Enter</span> passphrase (empty <span class="keyword">for</span> no passphrase): <span class="comment">//在这里输入密码如果这里输入密码以后登录需要密钥和密码才能登录这里建议直接回车也就是空</span></span><br><span class="line"><span class="title class_">Enter</span> same passphrase <span class="attr">again</span>:</span><br><span class="line"><span class="title class_">Your</span> identification has been saved <span class="keyword">in</span> /home/usera/.<span class="property">ssh</span>/id_rsa.</span><br><span class="line"><span class="title class_">Your</span> public key has been saved <span class="keyword">in</span> /home/usera/.<span class="property">ssh</span>/id_rsa.<span class="property">pub</span>. <span class="comment">//公钥保存路径</span></span><br><span class="line"><span class="title class_">The</span> key fingerprint <span class="attr">is</span>:</span><br><span class="line"><span class="number">39</span>:<span class="attr">f2</span>:<span class="attr">fc</span>:<span class="number">70</span>:<span class="attr">ef</span>:<span class="attr">e9</span>:<span class="attr">bd</span>:<span class="number">05</span>:<span class="number">40</span>:6<span class="attr">e</span>:<span class="number">64</span>:<span class="attr">b0</span>:<span class="number">99</span>:<span class="number">56</span>:6<span class="attr">e</span>:<span class="number">01</span> usera@serverA</span><br><span class="line"><span class="title class_">The</span> key<span class="string">&#x27;s randomart image is:</span></span><br><span class="line"><span class="string">+--[ RSA 2048]----+</span></span><br><span class="line"><span class="string">| Eo* |</span></span><br><span class="line"><span class="string">| @ . |</span></span><br><span class="line"><span class="string">| = * |</span></span><br><span class="line"><span class="string">| o o . |</span></span><br><span class="line"><span class="string">| . S . |</span></span><br><span class="line"><span class="string">| + . . |</span></span><br><span class="line"><span class="string">| + . .|</span></span><br><span class="line"><span class="string">| + . o . |</span></span><br><span class="line"><span class="string">| .o= o. |</span></span><br><span class="line"><span class="string">+-----------------+</span></span><br></pre></td></tr></table></figure>
+
+<p>以下是截图提示</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210216196.png"></p>
+<blockquote>
+<p>id_rsa是私钥，id_rsa.pub是公钥公钥在服务器私钥在自己手上</p>
+</blockquote>
+<p>此时会在<code>/home/usera/.ssh</code>目录下生成密钥对我们使用<code>ls</code>查看一下</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">root@<span class="attr">vultr</span>:~#  ls -la .<span class="property">ssh</span></span><br><span class="line">total <span class="number">16</span></span><br><span class="line">drwx------ <span class="number">2</span> root root <span class="number">4096</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> .</span><br><span class="line">drwx------ <span class="number">5</span> root root <span class="number">4096</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">00</span> ..</span><br><span class="line">-rw------- <span class="number">1</span> root root <span class="number">1675</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> id_rsa</span><br><span class="line">-rw-r--r-- <span class="number">1</span> root root  <span class="number">398</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> id_rsa.<span class="property">pub</span></span><br></pre></td></tr></table></figure>
+
+<p>然后将公钥上传到需要登录的服务器，并以<code>userb</code>用户登录<br>至于上传方式可以用<code>scp</code>以及<code>sz</code>命令这里就介绍了<br>可以参考这篇<a href="https://shagain.club/index.php/archives/111/">文章</a></p>
+<blockquote>
+<p>上传到用户目录下的.ssh文件夹下<code>authorized_keys</code>这个文件是用来存放公钥内容的我们使用<code>cat</code>把公钥追加到<code>authorized_keys</code>这个文件就好了</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">cat id_rsa.<span class="property">pub</span> &gt;&gt; ~<span class="regexp">/.ssh/</span>authorized_keys    <span class="comment">//cat 公钥路径 &gt;&gt; ~/.ssh/authorized_keys</span></span><br></pre></td></tr></table></figure>
+
+<p>这样子我们就配置好了<br>另外我们要注意，<code>.ssh</code>目录的权限为<code>700</code>，其下文件<code>authorized_keys</code>和私钥的权限为<code>600</code>。否则会因为权限问题导致无法免密码登录。我们可以看到登陆后会有<code>known_hosts</code>文件生成。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Office用C2R工具在线安装激活</title>
     <url>/2022/09/27/Office%E7%94%A8C2R%E5%B7%A5%E5%85%B7%E5%9C%A8%E7%BA%BF%E5%AE%89%E8%A3%85%E6%BF%80%E6%B4%BB/</url>
     <content><![CDATA[<p>C2R工具下载地址：<a href="https://wwt.lanzouw.com/b03pbhjri#52pj">https://wwt.lanzouw.com/b03pbhjri#52pj</a></p>
@@ -691,6 +691,34 @@
       </tags>
   </entry>
   <entry>
+    <title>npm安装卸载命令</title>
+    <url>/2022/08/23/npm%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BD%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<h2 id="npm安装模块"><a href="#npm安装模块" class="headerlink" title="npm安装模块"></a>npm安装模块</h2><p>利用 npm 安装xxx模块到当前命令行所在目录；</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install xxx</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<p>利用npm安装全局模块xxx；</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install -g xxx</span><br></pre></td></tr></table></figure>
+
+<h2 id="本地安装时将模块写入package-json中："><a href="#本地安装时将模块写入package-json中：" class="headerlink" title="本地安装时将模块写入package.json中："></a>本地安装时将模块写入package.json中：</h2><p>安装但不写入package.json；</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install xxx</span><br></pre></td></tr></table></figure>
+
+<p>安装并写入package.json的”dependencies”中；</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install xxx –save</span><br></pre></td></tr></table></figure>
+
+<p>安装并写入package.json的”devDependencies”中。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install xxx –save-dev</span><br></pre></td></tr></table></figure>
+
+<h2 id="npm-删除模块"><a href="#npm-删除模块" class="headerlink" title="npm 删除模块"></a>npm 删除模块</h2><p>删除xxx模块；</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm uninstall xxx</span><br></pre></td></tr></table></figure>
+
+<p>删除全局模块xxx；</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm uninstall -g xxx</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>命令</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>vscode配置picgo的github的图床</title>
     <url>/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/</url>
     <content><![CDATA[<p>vscode+github+picgo 搭建 markdown 图床</p>
@@ -733,34 +761,6 @@
       </categories>
       <tags>
         <tag>技术</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>npm安装卸载命令</title>
-    <url>/2022/08/23/npm%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BD%E5%91%BD%E4%BB%A4/</url>
-    <content><![CDATA[<h2 id="npm安装模块"><a href="#npm安装模块" class="headerlink" title="npm安装模块"></a>npm安装模块</h2><p>利用 npm 安装xxx模块到当前命令行所在目录；</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install xxx</span><br></pre></td></tr></table></figure>
-<span id="more"></span>
-<p>利用npm安装全局模块xxx；</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install -g xxx</span><br></pre></td></tr></table></figure>
-
-<h2 id="本地安装时将模块写入package-json中："><a href="#本地安装时将模块写入package-json中：" class="headerlink" title="本地安装时将模块写入package.json中："></a>本地安装时将模块写入package.json中：</h2><p>安装但不写入package.json；</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install xxx</span><br></pre></td></tr></table></figure>
-
-<p>安装并写入package.json的”dependencies”中；</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install xxx –save</span><br></pre></td></tr></table></figure>
-
-<p>安装并写入package.json的”devDependencies”中。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install xxx –save-dev</span><br></pre></td></tr></table></figure>
-
-<h2 id="npm-删除模块"><a href="#npm-删除模块" class="headerlink" title="npm 删除模块"></a>npm 删除模块</h2><p>删除xxx模块；</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm uninstall xxx</span><br></pre></td></tr></table></figure>
-
-<p>删除全局模块xxx；</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm uninstall -g xxx</span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>命令</tag>
       </tags>
   </entry>
   <entry>
@@ -971,6 +971,110 @@
       </tags>
   </entry>
   <entry>
+    <title>安装 Office Tool Plus 入门教程</title>
+    <url>/2022/09/27/%E5%AE%89%E8%A3%85Office/</url>
+    <content><![CDATA[<h2 id="写在开头"><a href="#写在开头" class="headerlink" title="写在开头"></a>写在开头</h2><p>安装 Office 是一件非常简单的事情，大家不必过于担心，更不必对自己没有信心。<br>本教程适用于需要全新安装 Office 的用户，若您需要修改 Office 请参阅 [<a href="https://movejian.github.io/2022/09/27/%E6%8A%80%E8%83%BD%E6%89%A9%E5%B1%95Office">技能扩展] Office Tool Plus 高级教程</a><br>任何人都可使用 Office Tool Plus 轻松地安装 Office，请认真阅读教程以避免因为疏忽出现问题。<br>如无特殊情况，文章中提到的 Windows 10 也适用于 Windows 11.</p>
+<span id="more"></span>
+
+<h3 id="1-开始使用"><a href="#1-开始使用" class="headerlink" title="1. 开始使用"></a>1. 开始使用</h3><p>请下载最新的包含框架的版本（with runtime），以确保你始终可以获得最好的体验。<br>在<a href="http://otp.landian.vip/">官网下载 Office Tool Plus</a> 后，将其解压至正常位置（例如桌面），双击 Office Tool Plus 以运行。<br>为了获得最佳体验，若 Office Tool Plus 提示有更新，请更新后继续操作。### 2. 注意事项</p>
+<h4 id="安装开始前，请知晓以下事情："><a href="#安装开始前，请知晓以下事情：" class="headerlink" title="安装开始前，请知晓以下事情："></a>安装开始前，请知晓以下事情：</h4><ol>
+<li>使用 Office Tool Plus 安装的 Office 是官方原版，非破解、非精简。</li>
+<li>教程没提到的产品就不要随便安装，别问，问就是不推荐。</li>
+<li>教程没提到的设置就不要随便乱动，别问，不懂就不要动。</li>
+<li>建议勾选下载后再部署，能避免因为网络不佳而卡住不动。</li>
+<li>安装 Office 出现问题时，请根据提供的错误信息排查问题；更详细的错误信息可以在 【工具箱】-&gt;【收集 Office 安装日志】获得。</li>
+</ol>
+<p>Office 安装程序出现问题跟我们没有太大关系哈。举个例子，你叫了个外卖，但是送到后你觉得太难吃，这能怪骑手吗？这不能。做人要讲理，不能随便污蔑别人。</p>
+<p>如果你有任何疑问，可前往 [<a href="https://movejian.github.io/2022/09/27/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94Office">疑难解答] Office Tool Plus 入门教程</a> 查看相关问题解答。</p>
+<h4 id="安装开始前，请做好以下事情："><a href="#安装开始前，请做好以下事情：" class="headerlink" title="安装开始前，请做好以下事情："></a>安装开始前，请做好以下事情：</h4><ol>
+<li>卸载 WPS，两者共存容易出问题（没有问题当我没说）。</li>
+<li>卸载旧版本 Office，按照标准流程操作，请勿直接强制移除。</li>
+<li>清除旧版本激活信息，在 [激活] -&gt; [许可证管理] -&gt; [子菜单] -&gt; [清除激活状态]。</li>
+<li>清除 Office 设置，在 [工具箱] -&gt; [重置 Office 为默认设置]。</li>
+</ol>
+<p>附图为清除激活信息：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270128402.png" alt="清除 Office 激活信息"></p>
+<p>附图为重置 Office 的设置：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270128335.png" alt="重置 Office 为默认设置"></p>
+<h3 id="3-部署-Office"><a href="#3-部署-Office" class="headerlink" title="3. 部署 Office"></a>3. 部署 Office</h3><p>不知道自己有没有正版 Office？个人用户 <a href="https://account.microsoft.com/services/">&gt;&gt;点击这里检查&lt;&lt;</a>，企业用户 <a href="https://portal.office.com/account/?ref=MeControl#subscriptions">&gt;&gt;点击这里检查&lt;&lt;</a>。</p>
+<p>需要使用正版 Office？<a href="https://otp.landian.vip/zh-cn/#store">点击这里查看详细信息</a>。</p>
+<p>以下提到的安装方法或者产品都是合适的（差不多），不会有任何问题，请放心使用。</p>
+<hr>
+<p>自动安装：</p>
+<h5 id="一键安装"><a href="#一键安装" class="headerlink" title="一键安装"></a>一键安装</h5><p>如果你什么都不懂，或者，你只是想要个能用的 Office，那么使用一键安装代码是最合适的：</p>
+<p>确保自己使用的是最新版的 Office Tool Plus，按下 Ctrl + Shift + P 打开命令框，输入以下命令：</p>
+<p>旧版本打开命令框的快捷方式为 Ctrl + P，最新版已修改。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270130407.png" alt="命令框"></p>
+<p>安装 Microsoft 365 企业应用版（Word, PowerPoint, Excel）：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy /addProduct O365ProPlusRetail_zh-cn_Access,Bing,Groove,Lync,OneDrive,OneNote,Outlook,Publisher,Teams /channel Current /downloadFirst</span><br></pre></td></tr></table></figure>
+
+<p>安装 Microsoft 365 企业应用版（Word, PowerPoint, Excel）+ Visio 2016：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy /addProduct O365ProPlusRetail_zh-cn_Access,Bing,Groove,Lync,OneDrive,OneNote,Outlook,Publisher,Teams /addProduct VisioProRetail_zh-cn_Groove,OneDrive /channel Current /downloadFirst</span><br></pre></td></tr></table></figure>
+
+<p>输入命令后请按回车（Enter）以执行命令，然后耐心等待安装完成。</p>
+<p>安装完成后，请务必使用 [<a href="https://movejian.github.io/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B">激活 Office] Office Tool Plus 入门教程</a> 中的一键激活代码进行激活</p>
+<hr>
+<p>手动安装：</p>
+<p>转到 Office Tool Plus 的部署页面，按照以下提示操作。</p>
+<h4 id="必须做的事情"><a href="#必须做的事情" class="headerlink" title="必须做的事情"></a>必须做的事情</h4><ol>
+<li>添加产品：看下面的选项，选一个合适自己的来学习。</li>
+<li>添加语言：点一下「添加语言」就行，软件会自动匹配合适的语言。不要把“仅部署校对工具”打勾，除非你知道这是什么。</li>
+</ol>
+<h5 id="我有正版-Office"><a href="#我有正版-Office" class="headerlink" title="我有正版 Office"></a>我有正版 Office</h5><p>如果你有 Office 正版，比如你自己购买了 Microsoft 365 家庭版，安装的时候选择这个即可。</p>
+<p>当然现在也有不少人去网上白嫖什么 365 订阅，基本都是安装 Microsoft 365 企业应用版（O365ProPlusRetail）。</p>
+<p>如果学校&#x2F;企业提供了 2019&#x2F;2021 批量许可授权，安装这个也可。</p>
+<p>无论如何，你必须要安装对应的产品，否则你将无法通过账户&#x2F;密钥激活你的 Office。</p>
+<p>如果你有 Office 的正版授权，但是没有 Visio，又想装？</p>
+<p>Office, Visio 和 Project 三个产品的授权是可以分开处理的，所以你不必担心搞 Visio 会影响 Office.</p>
+<h5 id="有什么好选择吗？"><a href="#有什么好选择吗？" class="headerlink" title="有什么好选择吗？"></a>有什么好选择吗？</h5><p>当然有啦~</p>
+<p>Office 选择：Microsoft 365 企业应用版 (O365ProPlusRetail)</p>
+<p>Visio 选择：Visio 专业版 2016 (VisioProRetail)</p>
+<p>Project 选择：Project 专业版 2016 (ProjectProRetail)</p>
+<p>当然，Visio 和 Project 是需要才选，不需要或者看不懂就不需要管啦。</p>
+<h5 id="我要安装年份版-Office（例如-Office-2021）"><a href="#我要安装年份版-Office（例如-Office-2021）" class="headerlink" title="我要安装年份版 Office（例如 Office 2021）"></a>我要安装年份版 Office（例如 Office 2021）</h5><p>有一说一，年份版没有你想的那么好的哦，如果不是强迫症建议看上面那条。</p>
+<p>针对非正版用户，你只可以安装批量许可产品以便使用 KMS 激活。</p>
+<p>安装批量版时，需要使用对应的 Office 2019&#x2F;2021 企业长期版通道，否则会无法安装。</p>
+<p>Office 2021：</p>
+<p>Office LTSC 专业增强版 2021 - 批量许可证 (ProPlus2021Volume)</p>
+<p>Visio LTSC 专业版 2021 - 批量许可证 (VisioPro2021Volume)</p>
+<p>Project 专业版 2021 - 批量许可证 (ProjectPro2021Volume)</p>
+<p>Office 2019：</p>
+<p>Office 专业增强版 2019 - 批量许可证 (ProPlus2019Volume)</p>
+<p>Visio 专业版 2019 - 批量许可证 (VisioPro2019Volume)</p>
+<p>Project 专业版 2019 - 批量许可证 (ProjectPro2019Volume)</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">PS：不要问我为什么 2021 叫 LTSC，名字是微软起的有问题问微软去。</span><br></pre></td></tr></table></figure>
+
+<h5 id="我是-Windows-7-x2F-8-x2F-8-1-用户"><a href="#我是-Windows-7-x2F-8-x2F-8-1-用户" class="headerlink" title="我是 Windows 7&#x2F;8&#x2F;8.1 用户"></a>我是 Windows 7&#x2F;8&#x2F;8.1 用户</h5><p>由于系统原因，我们推荐按照第二条选项进行处理，这样确保可以进行正常安装。</p>
+<p>不要问我 Office 2019&#x2F;2021 能不能装，问就是说不能，别人说可以的话你问别人去。</p>
+<h5 id="（额外补充内容）什么系统能装什么样的-Office？"><a href="#（额外补充内容）什么系统能装什么样的-Office？" class="headerlink" title="（额外补充内容）什么系统能装什么样的 Office？"></a>（额外补充内容）什么系统能装什么样的 Office？</h5><p>目前 Office Tool Plus 中有 Office 2016、2019、2021、365 可供安装。</p>
+<p>Windows 10 和 11 无限制，可以安装任何版本的 Office。</p>
+<p>Windows 8 和 8.1 只可以安装部分产品，如果将部署模块从「Office 部署工具」更改到「Office Tool Plus」也可以安装任意产品。</p>
+<p>Windows 7 只可以安装 Office 2016 或 365，并且只能够使用「当前通道」。即使你更改部署模块，Office 2019&#x2F;2021 也不一定能安装成功。</p>
+<p>如果你的安装包是从别的地方下载的，那，那就别来问我，我也不知道你下载的是什么。</p>
+<h4 id="可以做的事情"><a href="#可以做的事情" class="headerlink" title="可以做的事情"></a>可以做的事情</h4><ol>
+<li>应用程序：选自己能看懂的就行，一般就是 Word, PowerPoint, Excel.</li>
+<li>通道：“当前通道”就行，Office 2019&#x2F;2021 批量许可证请选 Office 2019&#x2F;2021 企业长期版。</li>
+<li>体系结构：32 位兼容性好；64 位兼容性稍差且体积大，但处理大数据能力稍强。</li>
+<li>部署模式：那肯定要选安装啊，要不然怎么安装。</li>
+<li>安装模块：如没有特殊要求，请勿选择 Office Tool Plus.</li>
+<li>下载后再部署：如果网不行，最好把这个选上，免得安装卡进度卡半天。</li>
+</ol>
+<p>产品和语言弄好后即可开始部署 Office，其余设置不需要更改。</p>
+<p>部署时请耐心等待，不要强制结束安装程序或重启计算机。</p>
+<h3 id="4-视频教程"><a href="#4-视频教程" class="headerlink" title="4. 视频教程"></a>4. 视频教程</h3><p>视频教程更新不及时，建议看本文即可。</p>
+<p>bilibili：<a href="https://www.bilibili.com/video/BV1eU4y1V7NU">https://www.bilibili.com/video/BV1eU4y1V7NU</a></p>
+<p>YouTube：<a href="https://www.youtube.com/watch?v=p90V9_D-8Go">https://www.youtube.com/watch?v=p90V9_D-8Go</a></p>
+<h3 id="5-离线安装包"><a href="#5-离线安装包" class="headerlink" title="5. 离线安装包"></a>5. 离线安装包</h3><p>如果因为网络问题下载缓慢或者无法下载 Office，你可以下载 ISO 文件使用。</p>
+<p><a href="https://otp.landian.vip/zh-cn/download.html">下载站点</a>（云图小镇、OneDrive）中包含有 Office ISO.</p>
+<p>Office ISO 文件不需要解压，双击打开即可挂载使用（Win 7 除外）。</p>
+<h3 id="6-激活-Office"><a href="#6-激活-Office" class="headerlink" title="6. 激活 Office"></a>6. 激活 Office</h3><p>如果你是正版用户，一般情况下是不需要借助 Office Tool Plus 激活 Office 的，在 Office 应用程序中登录自己的微软账号，或者输入你的正版密钥即可激活 Office。</p>
+<p><a href="https://movejian.github.io/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B">【点击此处】前往另一个教程查看如何激活 Office</a></p>
+]]></content>
+      <tags>
+        <tag>Office</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>实战kali破解wifi密码 全网最详细的保姆级教程</title>
     <url>/2022/09/21/%E5%AE%9E%E6%88%98kali%E7%A0%B4%E8%A7%A3wifi%E5%AF%86%E7%A0%81/</url>
     <content><![CDATA[<h2 id="kali官网"><a href="#kali官网" class="headerlink" title="kali官网"></a>kali官网</h2><hr>
@@ -1065,6 +1169,113 @@
 ]]></content>
       <tags>
         <tag>随心</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>技能扩展 Office Tool Plus 高级教程</title>
+    <url>/2022/09/27/%E6%8A%80%E8%83%BD%E6%89%A9%E5%B1%95Office/</url>
+    <content><![CDATA[<h3 id="写在开头"><a href="#写在开头" class="headerlink" title="写在开头"></a>写在开头</h3><p>请按照正确的步骤操作，否则可能出现意外的结果。</p>
+<p>同时为了避免出现一些未知的问题，请务必使用最新版的 Office Tool Plus。</p>
+<p><strong>在这里要清楚两个概念：</strong></p>
+<p>产品指的是 Office 2019，Microsoft 365 等。</p>
+<span id="more"></span>
+<p>而应用程序指的是产品附带的 Excel，PowerPoint，Word 等。</p>
+<h3 id="使用-Office-Tool-Plus-的进阶操作"><a href="#使用-Office-Tool-Plus-的进阶操作" class="headerlink" title="使用 Office Tool Plus 的进阶操作"></a>使用 Office Tool Plus 的进阶操作</h3><h5 id="增删应用程序（例如-Access，PowerPoint）"><a href="#增删应用程序（例如-Access，PowerPoint）" class="headerlink" title="增删应用程序（例如 Access，PowerPoint）"></a>增删应用程序（例如 Access，PowerPoint）</h5><p>在部署页面的应用程序卡片中，将自己想要的应用程序打勾，不想要的取消打勾，</p>
+<p>然后点击开始部署，即可增加&#x2F;卸载指定的应用程序。</p>
+<p>扩展：</p>
+<p>如果您想添加一个 Access，但是发现应用程序里面没有 Access 可以选？</p>
+<p>添加一个产品，选择 Access 即可，可以选择 Access 2019 - 批量版，好激活。</p>
+<h5 id="增删一个或多个产品（语言包同理）"><a href="#增删一个或多个产品（语言包同理）" class="headerlink" title="增删一个或多个产品（语言包同理）"></a>增删一个或多个产品（语言包同理）</h5><p>Office Tool Plus 中可以在已安装 Office 的情况下增加一个或者多个产品，</p>
+<p>添加完成后，直接开始部署即可。</p>
+<p>如果新增的产品需要激活，根据教程选取对应的激活代码，或者单独对其进行手动激活即可。</p>
+<p>在系统自带的程序管理中，我们可以一次性卸载单个产品。</p>
+<p>如果要一次性删除多个产品，在部署页面点击产品&#x2F;语言的卸载，然后开始部署即可。</p>
+<h5 id="在不卸载重装的情况下使用现有安装包更新-Office"><a href="#在不卸载重装的情况下使用现有安装包更新-Office" class="headerlink" title="在不卸载重装的情况下使用现有安装包更新 Office"></a>在不卸载重装的情况下使用现有安装包更新 Office</h5><p>使用此功能前，要确保 Office Tool Plus 中已加载并能识别现有的安装包。</p>
+<p>在部署页面添加跟现有的一摸一样的产品，然后开始部署即可。</p>
+<h5 id="一步到位迁移体系结构"><a href="#一步到位迁移体系结构" class="headerlink" title="一步到位迁移体系结构"></a>一步到位迁移体系结构</h5><p>如果要将 Office 从 32 位迁移到 64 位（反之同理），正常情况下需要人工值守完成卸载+重新安装的操作。</p>
+<p>而 Office 部署工具支持自动化执行此操作，只需在 Office Tool Plus 内做好配置即可。</p>
+<p>打开部署页面，做好以下操作：</p>
+<ol>
+<li>将体系结构换成自己想要的，比如从 32 迁移到 64 位，那么现在就选 64 位的。</li>
+<li>将 高级设置- 升级选项 - 迁移体系结构 打勾</li>
+</ol>
+<p>由于这是个重新安装的操作，因此建议使用下载后安装或指定 Office 安装文件源。</p>
+<h3 id="微软官方技术文档"><a href="#微软官方技术文档" class="headerlink" title="微软官方技术文档"></a>微软官方技术文档</h3><p>微软官方的技术文档中有一部分功能&#x2F;词汇的解释，如有需要可前去查看了解。</p>
+<p><a href="https://support.microsoft.com/zh-cn/office/%E9%80%89%E6%8B%A9-64-%E4%BD%8D%E6%88%96-32-%E4%BD%8D%E7%89%88%E6%9C%AC%E7%9A%84-office-2dee7807-8f95-4d0c-b5fe-6c6f49b8d261">【版本选择】选择 64 位或 32 位版本的 Office</a></p>
+<p><a href="https://docs.microsoft.com/zh-cn/deployoffice/overview-update-channels">【通道区别】Microsoft 365 应用版的更新通道概述</a></p>
+<p><a href="https://docs.microsoft.com/zh-cn/officeupdates/update-history-microsoft365-apps-by-date">【通道更新历史】Microsoft 365 应用版的更新历史记录</a></p>
+<h3 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h3><p>如果本文内容有误或者有任何疑问，欢迎留言一起讨论。</p>
+<p>如果您觉得这篇文章对您有用的话，别忘了点个赞哦！</p>
+<p>坐等屏幕前的大帅哥、小姐姐打赏个鸡腿  :happy:</p>
+]]></content>
+      <tags>
+        <tag>Office</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>激活 Office Office Tool Plus 入门教程</title>
+    <url>/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/</url>
+    <content><![CDATA[<h4 id="写在开头"><a href="#写在开头" class="headerlink" title="写在开头"></a>写在开头</h4><p>正版用户一般情况下不需要使用 Office Tool Plus 进行激活，登录账号&#x2F;输入密钥即可激活 Office。</p>
+<p>如果你是从安装教程来到这一步的，那么在这里继续跟着教程来就行。</p>
+<p>需要使用正版 Office？<a href="https://otp.landian.vip/zh-cn/#store">点击这里查看详细信息</a>。</p>
+<p><font style="background: green">如无特殊情况，文章中提到的 Windows 10 也适用于 Windows 11.</font></p>
+<span id="more"></span>
+
+<blockquote>
+<h4 id="注意⚠"><a href="#注意⚠" class="headerlink" title=" 注意⚠"></a><font style="background: yellow"> 注意⚠</font></h4><p><a href="https://kms.loli.beer/">kms.loli.beer</a> 已启用客户端限制，每个 IP 每天只允许激活 10 次，超过此限制将会拉黑此 IP 24 小时，连续多次触发限制将会被永久封禁。</p>
+</blockquote>
+<h3 id="1-开始使用"><a href="#1-开始使用" class="headerlink" title="1. 开始使用"></a>1. 开始使用</h3><blockquote>
+<p>请下载最新的包含框架的版本（with runtime），以确保你始终可以获得最好的体验。</p>
+</blockquote>
+<p>在<a href="http://otp.landian.vip/">官网下载 Office Tool Plus</a> 后，将其解压至正常位置（例如桌面），双击 Office Tool Plus 以运行。</p>
+<p><strong>为了确保激活能顺利完成，请务必使用最新版 Office Tool Plus.</strong></p>
+<h3 id="2-注意事项"><a href="#2-注意事项" class="headerlink" title="2. 注意事项"></a>2. 注意事项</h3><p><strong>+</strong> 激活开始前，请知晓以下事情：</p>
+<ol>
+<li>如果你激活出现了问题，请首先检查自己的步骤是否有误，再去检查系统是否有问题。</li>
+<li>激活出现问题时，请不要盲目去重装 Office，这几乎是毫无作用的，只会浪费时间。</li>
+<li>Office 激活完成后，所有功能正常使用，不存在什么不能登录账户这种说法。</li>
+<li>Office 的部分功能需要搭配个人&#x2F;企业账户使用。</li>
+<li>使用此处的 KMS 并不会造成电脑被控制，请放心使用。</li>
+<li>你不能使用 KMS 激活零售 (Retail) 许可证，KMS 只能激活批量 (Volume) 许可证。</li>
+<li>如果你的 Office 版本太旧会导致 Office Tool Plus 无法正常识别，请通过 Office Tool Plus 重新安装 Office.</li>
+<li>激活后，在 KMS 主机以及网络正常的情况下，系统会自动续期，不会 180 天后到期。</li>
+</ol>
+<p><strong>请务必仔细查阅教程，如因个人问题造成误解等，请自行承担所有后果。</strong></p>
+<p>激活出现了问题？请首先前往 [<a href="https://movejian.github.io/2022/09/27/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94Office">疑难解答] Office Tool Plus 入门教程</a> 查看相关信息，找不到再留言或加群交流。</p>
+<h3 id="3-清除激活信息"><a href="#3-清除激活信息" class="headerlink" title="3. 清除激活信息"></a>3. 清除激活信息</h3><p><strong>卸载 Office 是不会清除激活信息的</strong>；为了避免出现问题，请按照以下操作清除激活信息：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270042413.png" alt="清除 Office 激活信息"></p>
+<p>如果账户授权无法撤销，在工具箱内「恢复 Office 设置为默认设置」。</p>
+<p>![重置 Office 为默认设置](D:\Program Files\PicGo\临时储存\reset-Office-settings.png)</p>
+<p>已经在上一个教程中做过了？那你可以跳过这一步了。</p>
+<h3 id="使用-Office-Tool-Plus-自动激活-Office"><a href="#使用-Office-Tool-Plus-自动激活-Office" class="headerlink" title="使用 Office Tool Plus 自动激活 Office"></a>使用 Office Tool Plus 自动激活 Office</h3><p>请确保你的 Office Tool Plus 是最新版本，过于陈旧的版本无法使用这些命令。</p>
+<p>旧版本打开命令框的快捷方式为<code>Ctrl+P</code>，最新版已修改。</p>
+<p>按下快捷键<code> Ctrl+Shift+P</code>，打开命令框，按需复制下面的命令，粘贴后回车（Enter）以执行操作。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270042398.png" alt="命令框"></p>
+<p>如果你安装了 Microsoft 365，或者你只是单纯地在遵循教程的指示，请使用以下代码进行激活：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ospp /insLicID MondoVolume /sethst:kms.coolhub.top /setprt:1688 /act</span><br></pre></td></tr></table></figure>
+
+<p><strong>上述代码可一次性激活 Office, Visio, Project，同时适用 Win 7&#x2F;8，能使用 Office 的所有功能。</strong></p>
+<p>如果你需要激活以下产品，请按照自己的需求选择：</p>
+<h5 id="Office-LTSC-2021-Visio-LTSC-2021-Project-2021"><a href="#Office-LTSC-2021-Visio-LTSC-2021-Project-2021" class="headerlink" title="Office LTSC 2021, Visio LTSC 2021, Project 2021"></a>Office LTSC 2021, Visio LTSC 2021, Project 2021</h5><h5 id="Office-Visio-Project-2019"><a href="#Office-Visio-Project-2019" class="headerlink" title="Office, Visio, Project 2019"></a>Office, Visio, Project 2019</h5><h5 id="Office-Visio-Project-2016"><a href="#Office-Visio-Project-2016" class="headerlink" title="Office, Visio, Project 2016"></a>Office, Visio, Project 2016</h5><h2 id="使用-Office-Tool-Plus-手动激活-Office"><a href="#使用-Office-Tool-Plus-手动激活-Office" class="headerlink" title="使用 Office Tool Plus 手动激活 Office"></a>使用 Office Tool Plus 手动激活 Office</h2><p>请优先使用自动激活，避免你遇到问题又不会解决。</p>
+<p>手动激活步骤：</p>
+<ol>
+<li>**安装 Office 批量许可证 (Volume)**，无论如何，这里你都要选批量许可证。</li>
+<li>设置一个 KMS 主机地址（可以设置端口为 1688）并保存设置。</li>
+<li>点击激活按钮，等待激活完成。</li>
+</ol>
+<h3 id="离线激活-Office"><a href="#离线激活-Office" class="headerlink" title="离线激活 Office"></a>离线激活 Office</h3><p>离线激活有两种办法：</p>
+<h5 id="电话激活，需要有效密钥"><a href="#电话激活，需要有效密钥" class="headerlink" title="电话激活，需要有效密钥"></a>电话激活，需要有效密钥</h5><h5 id="KMS-工具激活"><a href="#KMS-工具激活" class="headerlink" title="KMS 工具激活"></a>KMS 工具激活</h5><h3 id="可用的-KMS-列表"><a href="#可用的-KMS-列表" class="headerlink" title="可用的 KMS 列表"></a>可用的 KMS 列表</h3><p>如果你正在用的 KMS 失效了，更换 KMS 主机并保存设置即可，无需重新安装许可证。</p>
+<p>点击<a href="https://www.coolhub.top/tech-articles/kms_list.html">查看 KMS 主机实时状态</a>列表。</p>
+<h3 id="高校正版化激活"><a href="#高校正版化激活" class="headerlink" title="高校正版化激活"></a>高校正版化激活</h3><p>高校的正版化激活只供学校的师生使用，如果你不是，那你将会没有访问权限。</p>
+<p>有的大学已购买 Office 正版授权，一般情况下，师生也能从学校的软件中心找到使用方法等。</p>
+<p>Office Tool Plus 同样支持使用此类 KMS 进行操作，步骤和手动激活说的一样，换个地址就行了。</p>
+<p>如果师生目前不在校园网内，可能需要使用学校提供的 VPN 连接后才可正常激活。</p>
+<p>下列地址均由网友提供，如有错误或新补充，可在评论区留言。</p>
+<h3 id="高校-KMS-主机地址（已认证会带-√）"><a href="#高校-KMS-主机地址（已认证会带-√）" class="headerlink" title="高校 KMS 主机地址（已认证会带 √）"></a>高校 KMS 主机地址（已认证会带 √）</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">北京大学 (√)：kms.pku.edu.cn</span><br><span class="line">清华大学 (√)：kms.cic.tsinghua.edu.cn</span><br><span class="line">复旦大学：mvls.fudan.edu.cn</span><br><span class="line">同济大学：kms.tongji.edu.cn</span><br><span class="line">苏州大学：kms.suda.edu.cn</span><br><span class="line">中山大学：kms.sysu.edu.cn</span><br><span class="line">华东理工大学 (√)：kms.ecust.edu.cn</span><br><span class="line">华北电力大学：202.204.74.218</span><br><span class="line">华南理工大学 (√)：act.msweb.scut.edu.cn</span><br><span class="line">南安普顿大学：kms.soton.ac.uk</span><br><span class="line">上海交通大学 (√)：kms.sjtu.edu.cn</span><br><span class="line">上海财经大学：kms.shufe.edu.cn</span><br><span class="line">上海师范大学：mskms.shnu.edu.cn</span><br><span class="line">上海海事大学：kms.shmtu.edu.cn</span><br><span class="line">武汉理工大学：kms.whut.edu.cn</span><br><span class="line">河南科技大学（√，需搭配特定软件使用）：kms.haust.edu.cn</span><br><span class="line">南京航空航天大学 (√)：kms.nuaa.edu.cn</span><br><span class="line">上海第二工业大学：kms.sspu.edu.cn</span><br><span class="line">中国科学技术大学：kms.ustc.edu.cn</span><br></pre></td></tr></table></figure>
+<h3 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h3><p>如果本文内容有误或者有任何疑问，欢迎留言一起讨论。<br>如果您觉得这篇文章对您有用的话，别忘了点个赞哦！<br>坐等屏幕前的大帅哥、小姐姐打赏个鸡腿 :happy</p>
+]]></content>
+      <tags>
+        <tag>Office</tag>
       </tags>
   </entry>
   <entry>
@@ -1228,102 +1439,6 @@
       </tags>
   </entry>
   <entry>
-    <title>继上一期解决github上的图片无法显示的问题</title>
-    <url>/2022/08/21/%E7%BB%A7%E4%B8%8A%E4%B8%80%E6%9C%9F%E8%A7%A3%E5%86%B3github%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>​      <a href="https://movejian.github.io/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/">继上篇github图床问题</a>无法正常显示，但在<strong>github</strong>上看到正常上传，连接也并非错误，百度了一下说什么<strong>DNS</strong>被污染了。解决方法是修改<strong>hosts</strong>文件或者修改<strong>DNS</strong>。</p>
-<p>​      首先，打开<a href="https://ping.eu/nslookup">域名解析</a>网站：<a href="https://ping.eu/nslookup">https://ping.eu/nslookup</a><br>然后输入raw.githubusercontent.com如下图：</p>
-<p><img src="https://movejian.github.io/images/20220821/5.png"></p>
-<span id="more"></span>
-<p>​      我们得到图床所用域名解析到的IP(上图红框中的地址)。</p>
-<ul>
-<li>最后打开本机的<strong>host</strong>文件，其路径如下：<br><code>C:\Windows\System32\drivers\etc\hosts</code>, 然后添加如下内容(上图红框中的地址)：</li>
-</ul>
-<p><img src="https://movejian.github.io/images/20220821/6.png"></p>
-<ul>
-<li>打开<strong>CMD</strong>输入命令<code>ipconfig /flushdns</code>刷新<strong>DNS</strong>缓存,再次输入<code>ipconfig/displaydns</code></li>
-</ul>
-<p>​    如果你的<strong>hosts</strong>的文件不见了,可以通过文件设置显示系统隐藏文件来找到，依然找不到，可能是被误删了，网上有很多是通过新建文本文档解决。也可以通过下面这个命令来生成<strong>hosts</strong>文件。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for /f %P in (&#x27;dir %windir%\WinSxS\hosts /b /s&#x27;) do copy %P %windir%\System32\drivers\etc &amp; echo %P &amp; Notepad %P</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><strong>注意</strong>一定要使用管理员身份输入此命令。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>图床</tag>
-        <tag>问题解决</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>自动备份Hexo博客源文件</title>
-    <url>/2022/08/21/%E8%87%AA%E5%8A%A8%E5%A4%87%E4%BB%BDHexo%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/</url>
-    <content><![CDATA[<h3 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h3><p>自从接触了Hexo+NexT之后，发现离不开了，以后有能力的时候一定重新架构一下，使得更加个性化，最大程度的满足我们对于软件的需求，大家都知道，如果写东西在本地的话，最怕的应该就是更换电脑，还要重新搭建博客了，所以备份对于我们来说特别重要！备份博客就是本篇博客文章的主旨了，一定要攻下这座城堡。</p>
-<p>我曾经看过Git备份Hexo博客源文件的方式，这种方式虽然能够备份Hexo博客的源文件，但是对于我这种懒人，每次更新博文都需要输入两三行重复的Git命令真是一件麻烦的事情。况且指不定哪天就搞忘push到github上了。你说是不是，所以这篇文章出现了……</p>
-<span id="more"></span>
-<h3 id="二、原理"><a href="#二、原理" class="headerlink" title="二、原理"></a>二、原理</h3><p>通过监听Hexo的事件来完成自动执行Git命令进行自动备份，查阅Hexo文档，找到了Hexo的主要事件，见下表：</p>
-<table>
-<thead>
-<tr>
-<th>事件名</th>
-<th>事件发生时间</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>deployBefore</td>
-<td>在部署完成前发布</td>
-</tr>
-<tr>
-<td>deployAfter</td>
-<td>在部署成功后发布</td>
-</tr>
-<tr>
-<td>exit</td>
-<td>在 Hexo 结束前发布</td>
-</tr>
-<tr>
-<td>generateBefore</td>
-<td>在静态文件生成前发布</td>
-</tr>
-<tr>
-<td>generateAfter</td>
-<td>在静态文件生成后发布</td>
-</tr>
-<tr>
-<td>new</td>
-<td>在文章文件建立后发布</td>
-</tr>
-</tbody></table>
-<p>于是我们就可以通过监听Hexo的deployAfter事件，待上传完成之后自动运行Git备份命令，从而达到自动备份的目的。</p>
-<h3 id="三、实现"><a href="#三、实现" class="headerlink" title="三、实现"></a>三、实现</h3><h5 id="1-将Hexo目录加入Git仓库"><a href="#1-将Hexo目录加入Git仓库" class="headerlink" title="1.将Hexo目录加入Git仓库"></a>1.将Hexo目录加入Git仓库</h5><p>本脚本需要提前将Hexo加入Git仓库并与Github或者Gitee远程仓库绑定之后，才能正常工作。如果你不知道该怎样进行操作，可以参考我的另一篇博文：</p>
-<ul>
-<li>Git命令手动备份Hexo博客源文件</li>
-</ul>
-<h5 id="2-安装shelljs模块"><a href="#2-安装shelljs模块" class="headerlink" title="2.安装shelljs模块"></a>2.安装shelljs模块</h5><p>要实现这个自动备份功能，需要依赖NodeJs的一个shelljs模块,该模块重新包装了child_process,调用系统命令更加的方便。（其实就是因为我懒( ╯▽╰)）该模块需要安装后使用。</p>
-<p>在命令中键入以下命令，完成shelljs模块的安装：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install --save shelljs</span><br></pre></td></tr></table></figure>
-
-<h5 id="3-编写自动备份脚本"><a href="#3-编写自动备份脚本" class="headerlink" title="3.编写自动备份脚本"></a>3.编写自动备份脚本</h5><p>shelljs模块安装完成后，在Hexo根目录的scripts文件夹下新建一个js文件，文件名随意取(我的文件名为:auto_backup.js)。如果没有scripts目录，请新建一个。</p>
-<p>然后在脚本中，写入以下内容：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">require(<span class="string">&#x27;shelljs/global&#x27;</span>);</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    hexo.on(<span class="string">&#x27;deployAfter&#x27;</span>, function() &#123;//当deploy完成后执行备份</span><br><span class="line">        run();</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">&#125; catch (e) &#123;</span><br><span class="line">    console.log(<span class="string">&quot;产生了一个错误啊&lt;(￣3￣)&gt; !，错误详情为：&quot;</span> + e.toString());</span><br><span class="line">&#125;</span><br><span class="line">function run() &#123;</span><br><span class="line">    <span class="keyword">if</span> (!which(<span class="string">&#x27;git&#x27;</span>)) &#123;</span><br><span class="line">        echo(<span class="string">&#x27;Sorry, this script requires git&#x27;</span>);</span><br><span class="line">        exit(<span class="number">1</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        echo(<span class="string">&quot;======================Auto Backup Begin===========================&quot;</span>);</span><br><span class="line">        cd(<span class="string">&#x27;E:/work/myblog&#x27;</span>);    //此处修改为Hexo根目录路径</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">exec</span>(<span class="string">&#x27;git add --all&#x27;</span>).code !== <span class="number">0</span>) &#123;</span><br><span class="line">            echo(<span class="string">&#x27;Error: Git add failed&#x27;</span>);</span><br><span class="line">            exit(<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">exec</span>(<span class="string">&#x27;git commit -am &quot;blog auto backup script\&#x27;s commit&quot;&#x27;</span>).code !== <span class="number">0</span>) &#123;</span><br><span class="line">            echo(<span class="string">&#x27;Error: Git commit failed&#x27;</span>);</span><br><span class="line">            exit(<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">exec</span>(<span class="string">&#x27;git push origin master&#x27;</span>).code !== <span class="number">0</span>) &#123;</span><br><span class="line">            echo(<span class="string">&#x27;Error: Git push failed&#x27;</span>);</span><br><span class="line">            exit(<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        echo(<span class="string">&quot;==================Auto Backup Complete============================&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>其中，需要修改第16行的<code>E:/work/myblog</code>路径为Hexo的根目录路径。（脚本中的路径为博主的Hexo路径）</li>
-<li>如果你的Git远程仓库名称不为<code>origin</code>的话，还需要修改第25行执行的push命令，修改成自己的远程仓库名和相应的分支名。</li>
-</ul>
-<h5 id="4-测试结果"><a href="#4-测试结果" class="headerlink" title="4.测试结果"></a>4.测试结果</h5><p>保存脚本并退出，然后执行hexo d命令，在常规结果执行出来后，将会得到类似以下结果:</p>
-]]></content>
-      <categories>
-        <category>学习</category>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>技术</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>疑难解答 Office Tool Plus 入门教程</title>
     <url>/2022/09/27/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94Office/</url>
     <content><![CDATA[<h3 id="写在开头"><a href="#写在开头" class="headerlink" title="写在开头"></a>写在开头</h3><p>如果你的系统本身就有诸多毛病，建议直接重装原版系统，这是最有效最快的解决办法。</p>
@@ -1452,6 +1567,102 @@
 ]]></content>
       <tags>
         <tag>Office</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>继上一期解决github上的图片无法显示的问题</title>
+    <url>/2022/08/21/%E7%BB%A7%E4%B8%8A%E4%B8%80%E6%9C%9F%E8%A7%A3%E5%86%B3github%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>​      <a href="https://movejian.github.io/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/">继上篇github图床问题</a>无法正常显示，但在<strong>github</strong>上看到正常上传，连接也并非错误，百度了一下说什么<strong>DNS</strong>被污染了。解决方法是修改<strong>hosts</strong>文件或者修改<strong>DNS</strong>。</p>
+<p>​      首先，打开<a href="https://ping.eu/nslookup">域名解析</a>网站：<a href="https://ping.eu/nslookup">https://ping.eu/nslookup</a><br>然后输入raw.githubusercontent.com如下图：</p>
+<p><img src="https://movejian.github.io/images/20220821/5.png"></p>
+<span id="more"></span>
+<p>​      我们得到图床所用域名解析到的IP(上图红框中的地址)。</p>
+<ul>
+<li>最后打开本机的<strong>host</strong>文件，其路径如下：<br><code>C:\Windows\System32\drivers\etc\hosts</code>, 然后添加如下内容(上图红框中的地址)：</li>
+</ul>
+<p><img src="https://movejian.github.io/images/20220821/6.png"></p>
+<ul>
+<li>打开<strong>CMD</strong>输入命令<code>ipconfig /flushdns</code>刷新<strong>DNS</strong>缓存,再次输入<code>ipconfig/displaydns</code></li>
+</ul>
+<p>​    如果你的<strong>hosts</strong>的文件不见了,可以通过文件设置显示系统隐藏文件来找到，依然找不到，可能是被误删了，网上有很多是通过新建文本文档解决。也可以通过下面这个命令来生成<strong>hosts</strong>文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for /f %P in (&#x27;dir %windir%\WinSxS\hosts /b /s&#x27;) do copy %P %windir%\System32\drivers\etc &amp; echo %P &amp; Notepad %P</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>注意</strong>一定要使用管理员身份输入此命令。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>图床</tag>
+        <tag>问题解决</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>自动备份Hexo博客源文件</title>
+    <url>/2022/08/21/%E8%87%AA%E5%8A%A8%E5%A4%87%E4%BB%BDHexo%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/</url>
+    <content><![CDATA[<h3 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h3><p>自从接触了Hexo+NexT之后，发现离不开了，以后有能力的时候一定重新架构一下，使得更加个性化，最大程度的满足我们对于软件的需求，大家都知道，如果写东西在本地的话，最怕的应该就是更换电脑，还要重新搭建博客了，所以备份对于我们来说特别重要！备份博客就是本篇博客文章的主旨了，一定要攻下这座城堡。</p>
+<p>我曾经看过Git备份Hexo博客源文件的方式，这种方式虽然能够备份Hexo博客的源文件，但是对于我这种懒人，每次更新博文都需要输入两三行重复的Git命令真是一件麻烦的事情。况且指不定哪天就搞忘push到github上了。你说是不是，所以这篇文章出现了……</p>
+<span id="more"></span>
+<h3 id="二、原理"><a href="#二、原理" class="headerlink" title="二、原理"></a>二、原理</h3><p>通过监听Hexo的事件来完成自动执行Git命令进行自动备份，查阅Hexo文档，找到了Hexo的主要事件，见下表：</p>
+<table>
+<thead>
+<tr>
+<th>事件名</th>
+<th>事件发生时间</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>deployBefore</td>
+<td>在部署完成前发布</td>
+</tr>
+<tr>
+<td>deployAfter</td>
+<td>在部署成功后发布</td>
+</tr>
+<tr>
+<td>exit</td>
+<td>在 Hexo 结束前发布</td>
+</tr>
+<tr>
+<td>generateBefore</td>
+<td>在静态文件生成前发布</td>
+</tr>
+<tr>
+<td>generateAfter</td>
+<td>在静态文件生成后发布</td>
+</tr>
+<tr>
+<td>new</td>
+<td>在文章文件建立后发布</td>
+</tr>
+</tbody></table>
+<p>于是我们就可以通过监听Hexo的deployAfter事件，待上传完成之后自动运行Git备份命令，从而达到自动备份的目的。</p>
+<h3 id="三、实现"><a href="#三、实现" class="headerlink" title="三、实现"></a>三、实现</h3><h5 id="1-将Hexo目录加入Git仓库"><a href="#1-将Hexo目录加入Git仓库" class="headerlink" title="1.将Hexo目录加入Git仓库"></a>1.将Hexo目录加入Git仓库</h5><p>本脚本需要提前将Hexo加入Git仓库并与Github或者Gitee远程仓库绑定之后，才能正常工作。如果你不知道该怎样进行操作，可以参考我的另一篇博文：</p>
+<ul>
+<li>Git命令手动备份Hexo博客源文件</li>
+</ul>
+<h5 id="2-安装shelljs模块"><a href="#2-安装shelljs模块" class="headerlink" title="2.安装shelljs模块"></a>2.安装shelljs模块</h5><p>要实现这个自动备份功能，需要依赖NodeJs的一个shelljs模块,该模块重新包装了child_process,调用系统命令更加的方便。（其实就是因为我懒( ╯▽╰)）该模块需要安装后使用。</p>
+<p>在命令中键入以下命令，完成shelljs模块的安装：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install --save shelljs</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-编写自动备份脚本"><a href="#3-编写自动备份脚本" class="headerlink" title="3.编写自动备份脚本"></a>3.编写自动备份脚本</h5><p>shelljs模块安装完成后，在Hexo根目录的scripts文件夹下新建一个js文件，文件名随意取(我的文件名为:auto_backup.js)。如果没有scripts目录，请新建一个。</p>
+<p>然后在脚本中，写入以下内容：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">require(<span class="string">&#x27;shelljs/global&#x27;</span>);</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    hexo.on(<span class="string">&#x27;deployAfter&#x27;</span>, function() &#123;//当deploy完成后执行备份</span><br><span class="line">        run();</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">&#125; catch (e) &#123;</span><br><span class="line">    console.log(<span class="string">&quot;产生了一个错误啊&lt;(￣3￣)&gt; !，错误详情为：&quot;</span> + e.toString());</span><br><span class="line">&#125;</span><br><span class="line">function run() &#123;</span><br><span class="line">    <span class="keyword">if</span> (!which(<span class="string">&#x27;git&#x27;</span>)) &#123;</span><br><span class="line">        echo(<span class="string">&#x27;Sorry, this script requires git&#x27;</span>);</span><br><span class="line">        exit(<span class="number">1</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        echo(<span class="string">&quot;======================Auto Backup Begin===========================&quot;</span>);</span><br><span class="line">        cd(<span class="string">&#x27;E:/work/myblog&#x27;</span>);    //此处修改为Hexo根目录路径</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">exec</span>(<span class="string">&#x27;git add --all&#x27;</span>).code !== <span class="number">0</span>) &#123;</span><br><span class="line">            echo(<span class="string">&#x27;Error: Git add failed&#x27;</span>);</span><br><span class="line">            exit(<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">exec</span>(<span class="string">&#x27;git commit -am &quot;blog auto backup script\&#x27;s commit&quot;&#x27;</span>).code !== <span class="number">0</span>) &#123;</span><br><span class="line">            echo(<span class="string">&#x27;Error: Git commit failed&#x27;</span>);</span><br><span class="line">            exit(<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">exec</span>(<span class="string">&#x27;git push origin master&#x27;</span>).code !== <span class="number">0</span>) &#123;</span><br><span class="line">            echo(<span class="string">&#x27;Error: Git push failed&#x27;</span>);</span><br><span class="line">            exit(<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        echo(<span class="string">&quot;==================Auto Backup Complete============================&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>其中，需要修改第16行的<code>E:/work/myblog</code>路径为Hexo的根目录路径。（脚本中的路径为博主的Hexo路径）</li>
+<li>如果你的Git远程仓库名称不为<code>origin</code>的话，还需要修改第25行执行的push命令，修改成自己的远程仓库名和相应的分支名。</li>
+</ul>
+<h5 id="4-测试结果"><a href="#4-测试结果" class="headerlink" title="4.测试结果"></a>4.测试结果</h5><p>保存脚本并退出，然后执行hexo d命令，在常规结果执行出来后，将会得到类似以下结果:</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>技术</tag>
       </tags>
   </entry>
 </search>

@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-09-26T17:44:07.584Z</updated>
+  <updated>2022-09-26T17:45:25.590Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,43 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>技能扩展 Office Tool Plus 高级教程</title>
+    <link href="http://example.com/2022/09/27/%E6%8A%80%E8%83%BD%E6%89%A9%E5%B1%95Office/"/>
+    <id>http://example.com/2022/09/27/%E6%8A%80%E8%83%BD%E6%89%A9%E5%B1%95Office/</id>
+    <published>2022-09-26T17:36:40.000Z</published>
+    <updated>2022-09-26T17:45:25.590Z</updated>
+    
+    
+    <summary type="html">&lt;h3 id=&quot;写在开头&quot;&gt;&lt;a href=&quot;#写在开头&quot; class=&quot;headerlink&quot; title=&quot;写在开头&quot;&gt;&lt;/a&gt;写在开头&lt;/h3&gt;&lt;p&gt;请按照正确的步骤操作，否则可能出现意外的结果。&lt;/p&gt;
+&lt;p&gt;同时为了避免出现一些未知的问题，请务必使用最新版的 Office Tool Plus。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;在这里要清楚两个概念：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;产品指的是 Office 2019，Microsoft 365 等。&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="Office" scheme="http://example.com/tags/Office/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>安装 Office Tool Plus 入门教程</title>
+    <link href="http://example.com/2022/09/27/%E5%AE%89%E8%A3%85Office/"/>
+    <id>http://example.com/2022/09/27/%E5%AE%89%E8%A3%85Office/</id>
+    <published>2022-09-26T17:25:32.000Z</published>
+    <updated>2022-09-26T17:45:10.696Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;写在开头&quot;&gt;&lt;a href=&quot;#写在开头&quot; class=&quot;headerlink&quot; title=&quot;写在开头&quot;&gt;&lt;/a&gt;写在开头&lt;/h2&gt;&lt;p&gt;安装 Office 是一件非常简单的事情，大家不必过于担心，更不必对自己没有信心。&lt;br&gt;本教程适用于需要全新安装 Office 的用户，若您需要修改 Office 请参阅 [&lt;a href=&quot;https://movejian.github.io/2022/09/27/%E6%8A%80%E8%83%BD%E6%89%A9%E5%B1%95Office&quot;&gt;技能扩展] Office Tool Plus 高级教程&lt;/a&gt;&lt;br&gt;任何人都可使用 Office Tool Plus 轻松地安装 Office，请认真阅读教程以避免因为疏忽出现问题。&lt;br&gt;如无特殊情况，文章中提到的 Windows 10 也适用于 Windows 11.&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="Office" scheme="http://example.com/tags/Office/"/>
+    
+  </entry>
   
   <entry>
     <title>疑难解答 Office Tool Plus 入门教程</title>
@@ -27,6 +64,26 @@
     <summary type="html">&lt;h3 id=&quot;写在开头&quot;&gt;&lt;a href=&quot;#写在开头&quot; class=&quot;headerlink&quot; title=&quot;写在开头&quot;&gt;&lt;/a&gt;写在开头&lt;/h3&gt;&lt;p&gt;如果你的系统本身就有诸多毛病，建议直接重装原版系统，这是最有效最快的解决办法。&lt;/p&gt;
 &lt;p&gt;下面的问题以及解决办法仅供参考，不一定有效，可能因系统环境等原因有些许不同。&lt;/p&gt;
 &lt;p&gt;如无特殊情况，文章中提到的 Windows 10 也适用于 Windows 11.&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="Office" scheme="http://example.com/tags/Office/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>激活 Office Office Tool Plus 入门教程</title>
+    <link href="http://example.com/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/"/>
+    <id>http://example.com/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/</id>
+    <published>2022-09-26T16:41:04.000Z</published>
+    <updated>2022-09-26T17:45:36.941Z</updated>
+    
+    
+    <summary type="html">&lt;h4 id=&quot;写在开头&quot;&gt;&lt;a href=&quot;#写在开头&quot; class=&quot;headerlink&quot; title=&quot;写在开头&quot;&gt;&lt;/a&gt;写在开头&lt;/h4&gt;&lt;p&gt;正版用户一般情况下不需要使用 Office Tool Plus 进行激活，登录账号&amp;#x2F;输入密钥即可激活 Office。&lt;/p&gt;
+&lt;p&gt;如果你是从安装教程来到这一步的，那么在这里继续跟着教程来就行。&lt;/p&gt;
+&lt;p&gt;需要使用正版 Office？&lt;a href=&quot;https://otp.landian.vip/zh-cn/#store&quot;&gt;点击这里查看详细信息&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;font style=&quot;background: green&quot;&gt;如无特殊情况，文章中提到的 Windows 10 也适用于 Windows 11.&lt;/font&gt;&lt;/p&gt;</summary>
     
     
     
@@ -384,72 +441,6 @@
     
     
     <category term="技术" scheme="http://example.com/tags/%E6%8A%80%E6%9C%AF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hexo如何迁移到新电脑</title>
-    <link href="http://example.com/2022/08/21/Hexo%E5%A6%82%E4%BD%95%E8%BF%81%E7%A7%BB%E5%88%B0%E6%96%B0%E7%94%B5%E8%84%91/"/>
-    <id>http://example.com/2022/08/21/Hexo%E5%A6%82%E4%BD%95%E8%BF%81%E7%A7%BB%E5%88%B0%E6%96%B0%E7%94%B5%E8%84%91/</id>
-    <published>2022-08-21T04:11:08.000Z</published>
-    <updated>2022-08-22T16:56:54.136Z</updated>
-    
-    
-    <summary type="html">&lt;h3 id=&quot;前言：&quot;&gt;&lt;a href=&quot;#前言：&quot; class=&quot;headerlink&quot; title=&quot;前言：&quot;&gt;&lt;/a&gt;前言：&lt;/h3&gt;&lt;p&gt;这是曾经发生的事情，自己对于数据备份疏忽，导致Hexo的&lt;code&gt;source&lt;/code&gt;丢失，只能重新搭建博客。。。。。&lt;/p&gt;
-&lt;p&gt;如何备份后续会更新，一切都是泪。。。。。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="学习" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/"/>
-    
-    <category term="Hexo" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/Hexo/"/>
-    
-    
-    <category term="技术" scheme="http://example.com/tags/%E6%8A%80%E6%9C%AF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>继上一期解决github上的图片无法显示的问题</title>
-    <link href="http://example.com/2022/08/21/%E7%BB%A7%E4%B8%8A%E4%B8%80%E6%9C%9F%E8%A7%A3%E5%86%B3github%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/"/>
-    <id>http://example.com/2022/08/21/%E7%BB%A7%E4%B8%8A%E4%B8%80%E6%9C%9F%E8%A7%A3%E5%86%B3github%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/</id>
-    <published>2022-08-20T19:48:33.000Z</published>
-    <updated>2022-08-23T12:40:15.031Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;​      &lt;a href=&quot;https://movejian.github.io/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/&quot;&gt;继上篇github图床问题&lt;/a&gt;无法正常显示，但在&lt;strong&gt;github&lt;/strong&gt;上看到正常上传，连接也并非错误，百度了一下说什么&lt;strong&gt;DNS&lt;/strong&gt;被污染了。解决方法是修改&lt;strong&gt;hosts&lt;/strong&gt;文件或者修改&lt;strong&gt;DNS&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;​      首先，打开&lt;a href=&quot;https://ping.eu/nslookup&quot;&gt;域名解析&lt;/a&gt;网站：&lt;a href=&quot;https://ping.eu/nslookup&quot;&gt;https://ping.eu/nslookup&lt;/a&gt;&lt;br&gt;然后输入raw.githubusercontent.com如下图：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://movejian.github.io/images/20220821/5.png&quot;&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="技术" scheme="http://example.com/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-    
-    <category term="图床" scheme="http://example.com/tags/%E5%9B%BE%E5%BA%8A/"/>
-    
-    <category term="问题解决" scheme="http://example.com/tags/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>十年之约，一个人的寂寞，一群人的狂欢</title>
-    <link href="http://example.com/2022/08/21/%E5%8D%81%E5%B9%B4%E4%B9%8B%E7%BA%A6%EF%BC%8C%E4%B8%80%E4%B8%AA%E4%BA%BA%E7%9A%84%E5%AF%82%E5%AF%9E%EF%BC%8C%E4%B8%80%E7%BE%A4%E4%BA%BA%E7%9A%84%E7%8B%82%E6%AC%A2/"/>
-    <id>http://example.com/2022/08/21/%E5%8D%81%E5%B9%B4%E4%B9%8B%E7%BA%A6%EF%BC%8C%E4%B8%80%E4%B8%AA%E4%BA%BA%E7%9A%84%E5%AF%82%E5%AF%9E%EF%BC%8C%E4%B8%80%E7%BE%A4%E4%BA%BA%E7%9A%84%E7%8B%82%E6%AC%A2/</id>
-    <published>2022-08-20T18:46:58.000Z</published>
-    <updated>2022-08-22T13:23:17.459Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;​       在网络逐步转向手机端的今天，web博客网站似乎已经失去了活力，高昂的服务器费用，还需要技术基础以搭建起网站，忙前忙后设计维护着自己的网站，远不如朋友圈一样说发就发，但真相真的如此吗？我原本也这样理解，直到我发现了这样一个组织-十年之约。&lt;/p&gt;
-&lt;p&gt;​       &lt;strong&gt;十年之约&lt;/strong&gt;是由“十年之约”项目组维护的非营利性、自愿加入的博客活动。加入“十 年之约”可锻炼您的写作能力，进而提升您的思考、观察、记录、分享等能力，是 一项非常有意义的活动。“十年之约”的宗旨是：我们的博客十年不关闭或者更久， 并保持更新和活力。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://movejian.github.io/images/20220821/1.png&quot;&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="转载" scheme="http://example.com/categories/%E8%BD%AC%E8%BD%BD/"/>
-    
-    
-    <category term="随笔" scheme="http://example.com/tags/%E9%9A%8F%E7%AC%94/"/>
     
   </entry>
   
