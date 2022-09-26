@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-09-26T16:40:07.560Z</updated>
+  <updated>2022-09-26T17:44:07.584Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,25 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>疑难解答 Office Tool Plus 入门教程</title>
+    <link href="http://example.com/2022/09/27/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94Office/"/>
+    <id>http://example.com/2022/09/27/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94Office/</id>
+    <published>2022-09-26T17:08:32.000Z</published>
+    <updated>2022-09-26T17:44:07.584Z</updated>
+    
+    
+    <summary type="html">&lt;h3 id=&quot;写在开头&quot;&gt;&lt;a href=&quot;#写在开头&quot; class=&quot;headerlink&quot; title=&quot;写在开头&quot;&gt;&lt;/a&gt;写在开头&lt;/h3&gt;&lt;p&gt;如果你的系统本身就有诸多毛病，建议直接重装原版系统，这是最有效最快的解决办法。&lt;/p&gt;
+&lt;p&gt;下面的问题以及解决办法仅供参考，不一定有效，可能因系统环境等原因有些许不同。&lt;/p&gt;
+&lt;p&gt;如无特殊情况，文章中提到的 Windows 10 也适用于 Windows 11.&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="Office" scheme="http://example.com/tags/Office/"/>
+    
+  </entry>
   
   <entry>
     <title>Office用C2R工具在线安装激活</title>
@@ -431,29 +450,6 @@
     
     
     <category term="随笔" scheme="http://example.com/tags/%E9%9A%8F%E7%AC%94/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>vscode配置picgo的github的图床</title>
-    <link href="http://example.com/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/"/>
-    <id>http://example.com/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/</id>
-    <published>2022-08-19T00:58:36.000Z</published>
-    <updated>2022-08-20T21:39:35.232Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;vscode+github+picgo 搭建 markdown 图床&lt;/p&gt;
-&lt;h2 id=&quot;一、vscode-配置&quot;&gt;&lt;a href=&quot;#一、vscode-配置&quot; class=&quot;headerlink&quot; title=&quot;一、vscode 配置&quot;&gt;&lt;/a&gt;一、vscode 配置&lt;/h2&gt;&lt;h3 id=&quot;1、安装-Markdown-All-in-One-插件&quot;&gt;&lt;a href=&quot;#1、安装-Markdown-All-in-One-插件&quot; class=&quot;headerlink&quot; title=&quot;1、安装 Markdown All in One 插件&quot;&gt;&lt;/a&gt;1、安装 Markdown All in One 插件&lt;/h3&gt;&lt;p&gt;Markdown All in One 插件作为 Markdown 编辑器非常好用，既可以预览，对语法的支持也非常好。&lt;/p&gt;
-&lt;h3 id=&quot;2、安装-markdownlint-插件&quot;&gt;&lt;a href=&quot;#2、安装-markdownlint-插件&quot; class=&quot;headerlink&quot; title=&quot;2、安装 markdownlint 插件&quot;&gt;&lt;/a&gt;2、安装 markdownlint 插件&lt;/h3&gt;&lt;p&gt;这是个功能强大的 Markdown 语法检查器，可以帮助你书写出规范的文档，同时避免书写错误导致文档无法渲染。&lt;br&gt;markdownlint 制定了很多书写规范，如果不按照它的规范编写文章，则会提示很多错误或警告。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="学习" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/"/>
-    
-    <category term="vscode" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/vscode/"/>
-    
-    
-    <category term="技术" scheme="http://example.com/tags/%E6%8A%80%E6%9C%AF/"/>
     
   </entry>
   
