@@ -34,31 +34,6 @@
       </tags>
   </entry>
   <entry>
-    <title>HOOK微信获取聊天消息</title>
-    <url>/2022/09/21/HOOK%E5%BE%AE%E4%BF%A1%E8%8E%B7%E5%8F%96%E8%81%8A%E5%A4%A9%E6%B6%88%E6%81%AF/</url>
-    <content><![CDATA[<blockquote>
-<div class="wp-block-argon-admonition admonition shadow-sm" style="border-left-color:#660000"><div class="admonition-title" style="background-color:#dd0000"><span>警告</span></div><div class="admonition-body"><font color=red>网络不是法外之地，本篇文章仅供技术交流，相关具体实现过程我将省略！</font></div></div>
-</blockquote>
-<h2 id="获取微信处理消息的函数"><a href="#获取微信处理消息的函数" class="headerlink" title="获取微信处理消息的函数"></a>获取微信处理消息的函数</h2><p>我们可以反复向通过CE搜索消息，获取消息所在的内存地址，然后下硬件写入断点，在栈里找到相关函数，这里你可以自行按上面方法进行搜索。</p>
-<span id="more"></span>
-
-<h2 id="使用MinHook-hook该消息函数"><a href="#使用MinHook-hook该消息函数" class="headerlink" title="使用MinHook hook该消息函数"></a>使用MinHook hook该消息函数</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// Initialize MinHook.</span><br><span class="line">if (MH_Initialize() != MH_OK)</span><br><span class="line">&#123;</span><br><span class="line">return 1;</span><br><span class="line">&#125;</span><br><span class="line">DWORD windllAddress = (DWORD)GetModuleHandle(L&quot;WeChatWin.dll&quot;);</span><br><span class="line">if (windllAddress == 0) &#123;</span><br><span class="line">printf(&quot;Module Address Get Error: 0x%x\n&quot;, windllAddress);</span><br><span class="line">return 0;</span><br><span class="line">&#125;</span><br><span class="line">DWORD ReceiveHookAddress = windllAddress + 0x*****; // 偏移地址请查看下方</span><br><span class="line"> </span><br><span class="line">// Create a hook for MessageBoxW, in disabled state.</span><br><span class="line">if (MH_CreateHook((LPVOID)ReceiveHookAddress, &amp;ReceiveWxMessage,</span><br><span class="line">reinterpret_cast&lt;LPVOID*&gt;(&amp;_receiveMsgFunc)) != MH_OK)</span><br><span class="line">&#123;</span><br><span class="line">printf(&quot;MH_CreateHook Error: 0x%x\n&quot;, ReceiveHookAddress);</span><br><span class="line">return 0;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<h2 id="消息Hook函数"><a href="#消息Hook函数" class="headerlink" title="消息Hook函数"></a>消息Hook函数</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">void ReceiveWxMessage(DWORD r_eax)</span><br><span class="line">&#123;</span><br><span class="line">try</span><br><span class="line">&#123;</span><br><span class="line">// 检查进程是否有权限访问指定的内存块</span><br><span class="line">if (IsBadReadPtr((void*)r_eax, 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgTypeOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgContentOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + WxidOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + GroupMsgSenderOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgSourceOffset), 4)</span><br><span class="line">) &#123;</span><br><span class="line">return;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">// 取出消息内容</span><br><span class="line">LPVOID pContent = *((LPVOID*)(r_eax + MsgContentOffset));</span><br><span class="line"> </span><br><span class="line">// 取出微信ID/群ID</span><br><span class="line">LPVOID pWxid = *((LPVOID*)(r_eax + WxidOffset));</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">if (!wcscmp((wchar_t*)pWxid, L&quot;filehelper&quot;)) &#123;</span><br><span class="line">wprintf(L&quot;Receive Msg\n Wechat ID: %ws \n Content: %ws\n&quot;, (wchar_t*)pWxid, (wchar_t*)pContent);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line">catch (...)</span><br><span class="line">&#123;</span><br><span class="line">OutputDebugStringA(&quot;消息异常&quot;);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<h2 id="Hook效果"><a href="#Hook效果" class="headerlink" title="Hook效果"></a>Hook效果</h2><p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210322614.png"></p>
-<blockquote>
-<p>接收函数具体地址：windllAddress + 0x1086F0;</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>微信</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hexo如何迁移到新电脑</title>
     <url>/2022/08/21/Hexo%E5%A6%82%E4%BD%95%E8%BF%81%E7%A7%BB%E5%88%B0%E6%96%B0%E7%94%B5%E8%84%91/</url>
     <content><![CDATA[<h3 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h3><p>这是曾经发生的事情，自己对于数据备份疏忽，导致Hexo的<code>source</code>丢失，只能重新搭建博客。。。。。</p>
@@ -206,6 +181,31 @@
       </tags>
   </entry>
   <entry>
+    <title>HOOK微信获取聊天消息</title>
+    <url>/2022/09/21/HOOK%E5%BE%AE%E4%BF%A1%E8%8E%B7%E5%8F%96%E8%81%8A%E5%A4%A9%E6%B6%88%E6%81%AF/</url>
+    <content><![CDATA[<blockquote>
+<div class="wp-block-argon-admonition admonition shadow-sm" style="border-left-color:#660000"><div class="admonition-title" style="background-color:#dd0000"><span>警告</span></div><div class="admonition-body"><font color=red>网络不是法外之地，本篇文章仅供技术交流，相关具体实现过程我将省略！</font></div></div>
+</blockquote>
+<h2 id="获取微信处理消息的函数"><a href="#获取微信处理消息的函数" class="headerlink" title="获取微信处理消息的函数"></a>获取微信处理消息的函数</h2><p>我们可以反复向通过CE搜索消息，获取消息所在的内存地址，然后下硬件写入断点，在栈里找到相关函数，这里你可以自行按上面方法进行搜索。</p>
+<span id="more"></span>
+
+<h2 id="使用MinHook-hook该消息函数"><a href="#使用MinHook-hook该消息函数" class="headerlink" title="使用MinHook hook该消息函数"></a>使用MinHook hook该消息函数</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// Initialize MinHook.</span><br><span class="line">if (MH_Initialize() != MH_OK)</span><br><span class="line">&#123;</span><br><span class="line">return 1;</span><br><span class="line">&#125;</span><br><span class="line">DWORD windllAddress = (DWORD)GetModuleHandle(L&quot;WeChatWin.dll&quot;);</span><br><span class="line">if (windllAddress == 0) &#123;</span><br><span class="line">printf(&quot;Module Address Get Error: 0x%x\n&quot;, windllAddress);</span><br><span class="line">return 0;</span><br><span class="line">&#125;</span><br><span class="line">DWORD ReceiveHookAddress = windllAddress + 0x*****; // 偏移地址请查看下方</span><br><span class="line"> </span><br><span class="line">// Create a hook for MessageBoxW, in disabled state.</span><br><span class="line">if (MH_CreateHook((LPVOID)ReceiveHookAddress, &amp;ReceiveWxMessage,</span><br><span class="line">reinterpret_cast&lt;LPVOID*&gt;(&amp;_receiveMsgFunc)) != MH_OK)</span><br><span class="line">&#123;</span><br><span class="line">printf(&quot;MH_CreateHook Error: 0x%x\n&quot;, ReceiveHookAddress);</span><br><span class="line">return 0;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h2 id="消息Hook函数"><a href="#消息Hook函数" class="headerlink" title="消息Hook函数"></a>消息Hook函数</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">void ReceiveWxMessage(DWORD r_eax)</span><br><span class="line">&#123;</span><br><span class="line">try</span><br><span class="line">&#123;</span><br><span class="line">// 检查进程是否有权限访问指定的内存块</span><br><span class="line">if (IsBadReadPtr((void*)r_eax, 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgTypeOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgContentOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + WxidOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + GroupMsgSenderOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgSourceOffset), 4)</span><br><span class="line">) &#123;</span><br><span class="line">return;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">// 取出消息内容</span><br><span class="line">LPVOID pContent = *((LPVOID*)(r_eax + MsgContentOffset));</span><br><span class="line"> </span><br><span class="line">// 取出微信ID/群ID</span><br><span class="line">LPVOID pWxid = *((LPVOID*)(r_eax + WxidOffset));</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">if (!wcscmp((wchar_t*)pWxid, L&quot;filehelper&quot;)) &#123;</span><br><span class="line">wprintf(L&quot;Receive Msg\n Wechat ID: %ws \n Content: %ws\n&quot;, (wchar_t*)pWxid, (wchar_t*)pContent);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line">catch (...)</span><br><span class="line">&#123;</span><br><span class="line">OutputDebugStringA(&quot;消息异常&quot;);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h2 id="Hook效果"><a href="#Hook效果" class="headerlink" title="Hook效果"></a>Hook效果</h2><p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210322614.png"></p>
+<blockquote>
+<p>接收函数具体地址：windllAddress + 0x1086F0;</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>微信</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Kali的DDoS攻击方法</title>
     <url>/2022/09/21/Kali%E7%9A%84DDoS%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95/</url>
     <content><![CDATA[<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212049992.jpeg"></p>
@@ -235,92 +235,6 @@
       </categories>
       <tags>
         <tag>Kali</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux中的挂载命令mount</title>
-    <url>/2022/09/21/Linux%E4%B8%AD%E7%9A%84%E6%8C%82%E8%BD%BD%E5%91%BD%E4%BB%A4mount/</url>
-    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在 Linux GUI 中，我们通常理所当然地认为，当我们插入 USB 闪存驱动器、硬盘驱动器甚至 DVD 磁盘时，它们就可以使用了。但是在后台有一个过程，设备被安装（准备好使用）并分配了一个安装点。当使用服务器或远程连接时，并不能确定某个设备是否会自动可用，那么我们如何挂载自己的设备呢？下面我们一起来看一下！</p>
-<span id="more"></span>
-<h3 id="mount是什么？"><a href="#mount是什么？" class="headerlink" title="mount是什么？"></a>mount是什么？</h3><p>Linux文件系统中的所有文件都以<code>/ </code>为根的大树的形式排列。这些文件可以根据您的分区表分布在各种设备上，最初你的父目录安装（即附加）到这棵树的<code>/</code> ，其他的可以手动挂载使用<code>GUI</code>界面（如果可用）或使用挂载命令。</p>
-<p><code>mount</code>命令用于将设备上找到的文件系统挂载到以 <code>/</code> 为根的大树结构（Linux文件系统）上。相反，另一个命令<code>umount</code>可用于从树中分离这些设备。</p>
-<h3 id="mount的初级用法"><a href="#mount的初级用法" class="headerlink" title="mount的初级用法"></a>mount的初级用法</h3><p><code>mount</code>命令挂载存储设备或文件系统，使其可访问并将其附加到现有目录结构。</p>
-<h4 id="语法："><a href="#语法：" class="headerlink" title="语法："></a>语法：</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mount -t 类型设备目录</span><br></pre></td></tr></table></figure>
-
-<p>这告诉内核将设备上找到的文件系统（类型为type）附加到目录<code>dir</code>。<code>dir</code>之前的内容（如果有）、<code>owner</code>和<code>mode</code>变得不可见，只要这个文件系统保持挂载，路径名dir指的是设备上文件系统的根目录。如果没有提到目标目录，默认情况下，它将设备挂载在 <code>/etc/fstab</code> 文件中。</p>
-<h4 id="其他形式："><a href="#其他形式：" class="headerlink" title="其他形式："></a>其他形式：</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mount [-l|-h|-V]</span><br><span class="line">mount -a [-fFnrsvw] [-t fstype] [-O optlist]</span><br><span class="line">mount [-fnrsvw] [-o options] device|dir</span><br><span class="line">mount [-fnrsvw] [-t fstype] [-o options] device dir</span><br></pre></td></tr></table></figure>
-
-<p>这些命令告诉内核将在设备上找到的文件系统附加到<code>dir</code>。</p>
-<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><p>要将硬盘驱动器的第二个分区挂载到现有目录<code>/media/PHOTOS</code>（挂载点）：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mount /dev/hda2 /media/PHOTOS</span><br></pre></td></tr></table></figure>
-
-<p> 显示所有已安装的分区：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mount</span><br><span class="line">proc on /proc type proc (rw) </span><br><span class="line">sysfs on /sys type sysfs (rw) </span><br><span class="line">devpts on /dev/pts type devpts (rw,gid=5,mode=620) </span><br><span class="line">/dev/sda1 on /boot type ext3 (rw ) </span><br><span class="line">/tmp on /var/tmp type none (rw,noexec,nosuid,bind) </span><br><span class="line">10.4.0.4:/srv/export/setup_server on /nfs/setup_server type nfs (ro,addr=10.4.0.4)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>如果需要卸载刚才的分区：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ umount /dev/hda2</span><br></pre></td></tr></table></figure>
-
-<p>参照挂载点卸载：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ umount /media/PHOTOS</span><br></pre></td></tr></table></figure>
-
-<p>使用特定选项重新挂载分区：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mount -o remount,rw /dev/hda2</span><br></pre></td></tr></table></figure>
-
-<h3 id="umount的初级用法"><a href="#umount的初级用法" class="headerlink" title="umount的初级用法"></a>umount的初级用法</h3><p><code>umount</code>命令从文件层次结构中分离指定的文件系统。一个文件系统是通过给出它被安装的目录来指定的。提供文件系统所在的特殊设备也可以工作，但这是一种过时的方法，主要是因为如果该设备安装在多个目录上，它会失败。</p>
-<p>但是需要注意，文件系统在繁忙时无法卸载 。例如，当它上面有打开的文件时，或者当某个进程在那里有它的工作目录时，或者当它上面的交换文件正在使用时，<code>umount</code>将无法成功。</p>
-<p>有些无法使用<code>umount</code>的进程甚至可能是<code>umount</code>本身——例如，<code>umount</code>打开公共C库，而后者又可能打开了语言环境文件，如果它们在相关设备上，则会阻止它被卸载。即使出现这种冲突，“惰性”卸载（参见下面卸载选项部分中的-l ）也会尝试卸载。</p>
-<h3 id="高级用法"><a href="#高级用法" class="headerlink" title="高级用法"></a>高级用法</h3><ul>
-<li>显示有关已安装文件系统的信息：</li>
-</ul>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210149077.png"></p>
-<ul>
-<li>挂载文件系统：</li>
-</ul>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210150279.png"></p>
-<ul>
-<li><p>显示版本信息：</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210151979.png"></p>
-</li>
-<li><p>卸载文件系统：</p>
-</li>
-</ul>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210151025.png"></p>
-<h3 id="绑定挂载"><a href="#绑定挂载" class="headerlink" title="绑定挂载"></a>绑定挂载</h3><p>绑定挂载允许将文件系统层次结构或文件挂载到不同的挂载点。与符号链接不同，文件系统本身不存在绑定挂载。在下面的例子中，路径&#x2F;olddir将被挂载在<code>/newdir</code></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mount --bind /olddir /newdir</span><br></pre></td></tr></table></figure>
-
-<h3 id="如何在-Linux-上挂载和卸载驱动器"><a href="#如何在-Linux-上挂载和卸载驱动器" class="headerlink" title="如何在 Linux 上挂载和卸载驱动器"></a>如何在 Linux 上挂载和卸载驱动器</h3><p>可以使用终端安装 SSD、USB 闪存驱动器、HDD 和 ISO 映像。在终端仿真器中使用命令行界面 (CLI) 可以让我们更好地控制何时安装驱动器以及它们在文件系统中的安装位置。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210123639.png"></p>
-<ol>
-<li>使用<code>lsblk</code>命令识别 USB 驱动器。在结果中，您可能会看到许多标记为“循环”的条目。但是，您正在寻找被列为<code>sda</code>或<code>sdb</code>的结果，以识别连接到您的系统的物理磁盘。比较所连接驱动器的列出容量通常可以帮助您发现目标驱动器的名称。在我们的例子中，我们可以将 USB 驱动器识别为 <code>sdb1</code>。</li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210123811.png"></p>
-<ol start="2">
-<li>创建一个目录来挂载 USB 驱动器。当外部驱动器自动挂载时，它通常挂载在媒体目录中。但是使用 CLI，我们可以创建并指定一个目录，我们将在其中挂载我们的 <code>pendrive</code>。请注意，我们需要使用<code>sudo</code>来调用<code>root</code>权限，以便在媒体目录中创建一个目录。</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo mkdir /media/pendrive</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>使用<code>mount</code>命令将 U 盘挂载到<code>/media/pendrive</code>目录。<code>mount</code>命令具有以下语法；</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo mount /dev/sdb1 /media/pendrive</span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li><p>通过重新运行<code>lsblk</code>检查驱动器是否已安装。</p>
-<blockquote>
-<p>请注意， <code>lsblk</code>输出中的最后一列列出了列出设备的挂载点，如果列出了挂载点，则确认该设备已挂载。</p>
-</blockquote>
-</li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210124550.png"></p>
-<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>使用<code>mount</code>命令我们可以更好地控制在 Linux 中挂载和卸载磁盘，并掌握一些技巧，在连接的驱动器无法自动正确挂载时可能会有所帮助。</p>
-<p>在探索以前使用的系统的旧备份映像或想要查看 Linux 发行版映像内容以进行探索或学习时，能够使用循环设备挂载磁盘映像非常有用。</p>
-]]></content>
-      <categories>
-        <category>学习</category>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -612,37 +526,89 @@
       </tags>
   </entry>
   <entry>
-    <title>Office用C2R工具在线安装激活</title>
-    <url>/2022/09/27/Office%E7%94%A8C2R%E5%B7%A5%E5%85%B7%E5%9C%A8%E7%BA%BF%E5%AE%89%E8%A3%85%E6%BF%80%E6%B4%BB/</url>
-    <content><![CDATA[<p>C2R工具下载地址：<a href="https://wwt.lanzouw.com/b03pbhjri#52pj">https://wwt.lanzouw.com/b03pbhjri#52pj</a></p>
-<p>以下来自吾爱破解论坛：<br>Win11 22H2 最新版本官网镜像下载地址（来自微软官网免费链接，不同镜像的区别就是包含的版本不同）：<br>百度网盘：<a href="https://pan.baidu.com/s/1zZUVDc0wMdzoBehTfEPobQ?pwd=sy71">https://pan.baidu.com/s/1zZUVDc0wMdzoBehTfEPobQ?pwd=sy71</a><br>提取码:sy71<br>123云盘：<a href="https://www.123pan.com/s/HfxDVv-xZQ7d">https://www.123pan.com/s/HfxDVv-xZQ7d</a> 提取码：BGio<br>TechBench：<a href="https://techbench.betaworld.cn/get.php?id=2360">https://techbench.betaworld.cn/get.php?id=2360</a><br>微软官网：<a href="https://www.microsoft.com/zh-cn/software-download/windows11/">https://www.microsoft.com/zh-cn/software-download/windows11/</a></p>
+    <title>Linux中的挂载命令mount</title>
+    <url>/2022/09/21/Linux%E4%B8%AD%E7%9A%84%E6%8C%82%E8%BD%BD%E5%91%BD%E4%BB%A4mount/</url>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在 Linux GUI 中，我们通常理所当然地认为，当我们插入 USB 闪存驱动器、硬盘驱动器甚至 DVD 磁盘时，它们就可以使用了。但是在后台有一个过程，设备被安装（准备好使用）并分配了一个安装点。当使用服务器或远程连接时，并不能确定某个设备是否会自动可用，那么我们如何挂载自己的设备呢？下面我们一起来看一下！</p>
 <span id="more"></span>
+<h3 id="mount是什么？"><a href="#mount是什么？" class="headerlink" title="mount是什么？"></a>mount是什么？</h3><p>Linux文件系统中的所有文件都以<code>/ </code>为根的大树的形式排列。这些文件可以根据您的分区表分布在各种设备上，最初你的父目录安装（即附加）到这棵树的<code>/</code> ，其他的可以手动挂载使用<code>GUI</code>界面（如果可用）或使用挂载命令。</p>
+<p><code>mount</code>命令用于将设备上找到的文件系统挂载到以 <code>/</code> 为根的大树结构（Linux文件系统）上。相反，另一个命令<code>umount</code>可用于从树中分离这些设备。</p>
+<h3 id="mount的初级用法"><a href="#mount的初级用法" class="headerlink" title="mount的初级用法"></a>mount的初级用法</h3><p><code>mount</code>命令挂载存储设备或文件系统，使其可访问并将其附加到现有目录结构。</p>
+<h4 id="语法："><a href="#语法：" class="headerlink" title="语法："></a>语法：</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mount -t 类型设备目录</span><br></pre></td></tr></table></figure>
 
-<p>文件信息：<br>文件名：Win11_22H2_Chinese(Simplified)_x64.iso<br>MD5: 506B5563FDA4402E3DCB846927612414<br>SHA1: EDA6B80B5E52567D22C862884D7C987C316AF844<br>CRC32: 6D69527A</p>
-<p>IOS镜像包含版本：家庭版，家庭单语言版，专业版，教育版，专业教育版，专业工作站版（6）</p>
-<p>MVS&#x2F;MSDN镜像下载（来自微软官方MVS&#x2F;MSDN付费订阅，磁力链接推荐用迅雷下载）：<br>简体中文 - 消费者版（这个版本其实就是微软官网的版本，和上面那个版本一样）：<br>zh-cn_windows_11_consumer_editions_version_22h2_x64_dvd_59cfe6ee.iso (5.14 GB)<br>SHA-256: 5D4733AD43EE51B7686B766D1DD691342A8421035E7C9FA0C936B7BABEE0BE4B<br>包含版本：家庭版、家庭单语言版、教育版、专业版、专业教育版、专业工作站版（6）<br>123云盘分流：<a href="https://www.123pan.com/s/HfxDVv-nZQ7d">https://www.123pan.com/s/HfxDVv-nZQ7d</a> 提取码:yVi4<br>百度网盘分流：<a href="https://pan.baidu.com/s/1MQswudl58d-R_UPqQ7lqXg?pwd=u7he">https://pan.baidu.com/s/1MQswudl58d-R_UPqQ7lqXg?pwd=u7he</a> 提取码:u7he<br>天翼云盘分流：<a href="https://cloud.189.cn/web/share?code=vAfIFfi2q2ym">https://cloud.189.cn/web/share?code=vAfIFfi2q2ym</a> 访问码：0bqa</p>
-<p>简体中文 - 商业版（这个是官网没有，要在微软MSDN花钱订阅的版本，和VLSC的商业版是一个版本）：<br>zh-cn_windows_11_business_editions_version_22h2_x64_dvd_914b57a5.iso (5.05 GB)<br>SHA-256: D74D24A00F83E77A189BE6BCB2E23FAD5BABC29F576E810C43282CE683F8B048<br>包含版本：教育版、企业版、专业版、专业教育版、专业工作站版（5）<br>123云盘分流：<a href="https://www.123pan.com/s/HfxDVv-2ZQ7d">https://www.123pan.com/s/HfxDVv-2ZQ7d</a> 提取码:TE1P<br>百度网盘分流：<a href="https://pan.baidu.com/s/1XbN47aPaDdc8VUlc7OXI7w?pwd=m4eg">https://pan.baidu.com/s/1XbN47aPaDdc8VUlc7OXI7w?pwd=m4eg</a> 提取码:m4eg<br>天翼云盘分流：<a href="https://cloud.189.cn/web/share?code=B7FjieMRnEje">https://cloud.189.cn/web/share?code=B7FjieMRnEje</a> 访问码：dkg4</p>
-<p>简体中文 - 家庭中文版（中国特供版本，大部分笔记本出厂自带的就是这个版本，不推荐下载）：<br>Win11_22H2_China_GGK_Chinese(Simplified)_x64.iso (4.88 GB)<br>SHA-256: 3DC5C5F88A7F076EE349BB20DAB4B2C3857BA7A8AE089AA532E9C2634ED8BFD7<br>包含版本：家庭中文版（1）<br>123云盘分流：<a href="https://www.123pan.com/s/HfxDVv-UZQ7d">https://www.123pan.com/s/HfxDVv-UZQ7d</a> 提取码:sS6e<br>百度网盘分流：<a href="https://pan.baidu.com/s/1kNeaeKEMbMfuxGyW3sluUA?pwd=k3du">https://pan.baidu.com/s/1kNeaeKEMbMfuxGyW3sluUA?pwd=k3du</a> 提取码:k3du<br>天翼云盘分流：<a href="https://cloud.189.cn/web/share?code=MJBzyameymqm">https://cloud.189.cn/web/share?code=MJBzyameymqm</a> 访问码：28hg</p>
-<p>繁體中文 - 消費者版（官網也可以下載到）：<br>SHA256：0DA9E7C321CEB12536420F21A716C3240235ED0AF48D71F065EC76AE77A58EDB<br>包含版本：家庭版、家庭單語言版、教育版、專業版、專業教育版、專業工作站版（6）<br>123雲盤分流：<a href="https://www.123pan.com/s/HfxDVv-SZQ7d">https://www.123pan.com/s/HfxDVv-SZQ7d</a> 提取碼:sVTE<br>百度網盤分流：<a href="https://pan.baidu.com/s/13tJmkqBIsi-t1S2-B5EABQ?pwd=wuyu">https://pan.baidu.com/s/13tJmkqBIsi-t1S2-B5EABQ?pwd=wuyu</a> 提取碼:wuyu<br>天翼雲盤分流：<a href="https://cloud.189.cn/web/share?code=IzYrMbMfUJBn">https://cloud.189.cn/web/share?code=IzYrMbMfUJBn</a> 訪問碼：bkk8</p>
-<p>繁體中文 - 商業版（這個版本和VLSC的繁體中文商業版其實是壹個版本，同樣是付費訂閱來的）：<br>SHA-256: 4C691D1C01CCB40275BAF979DB1A9CEC98F7DA8A8DFA59B4D2366EEC76084758<br>包含版本：教育版、企業版、專業版、專業教育版、專業工作站版（5）<br>123雲盤分流：<a href="https://www.123pan.com/s/HfxDVv-lZQ7d">https://www.123pan.com/s/HfxDVv-lZQ7d</a> 提取碼:wkWD<br>百度網盤分流：<a href="https://pan.baidu.com/s/1avGQLrDxjtXdCiuCL-OuGw?pwd=1v4f">https://pan.baidu.com/s/1avGQLrDxjtXdCiuCL-OuGw?pwd=1v4f</a> 提取碼:1v4f<br>天翼雲盤分流：<a href="https://cloud.189.cn/web/share?code=J3ABRz3q6Fvu">https://cloud.189.cn/web/share?code=J3ABRz3q6Fvu</a> 訪問碼：9m6t</p>
-<p>English - Consumer（英文消费者版本，同样可以在官网下载到）：<br>en-us_windows_11_consumer_editions_version_22h2_x64_dvd_e630fafd.iso (5.11 GB)<br>SHA-256: 5C69E6F486BC4BDAE91557DE161008458EAA40D40468C34DBBD9078952108D0A<br>Include Version：Home, Home N, Home Single Language, Education, Education N, Pro, Pro N, Pro Education, Pro Education N, Pro for Workstations, Pro N for Workstations（11）<br>123 Cloud Disk（123云盘）：<a href="https://www.123pan.com/s/HfxDVv-DZQ7d">https://www.123pan.com/s/HfxDVv-DZQ7d</a> Code:7P4U<br>Baidu Netdisk（百度网盘）：<a href="https://pan.baidu.com/s/1o2yeRWHecMsYsO2I2-3Udg?pwd=jrmn">https://pan.baidu.com/s/1o2yeRWHecMsYsO2I2-3Udg?pwd=jrmn</a> Code:jrmn<br>E Cloud（天翼云盘）：<a href="https://cloud.189.cn/web/share?code=jA7NriZFFram">https://cloud.189.cn/web/share?code=jA7NriZFFram</a> Code：td7r</p>
-<p>English - Business（英文商业版本，官网没有的版本）：<br>en-us_windows_11_business_editions_version_22h2_x64_dvd_17a08ce3.iso (5 GB)<br>SHA-256: 6E3A101C6E97D8E68F576DDBCED9BE34CBA949F750DA3C83F7D4791401068C9F<br>Include Version：Education, Education N, Enterprise, Enterprise N, Pro, Pro N, Pro Education, Pro Education N, Pro for Workstations, Pro N for Workstations（10）<br>123 Cloud Disk（123云盘）：<a href="https://www.123pan.com/s/HfxDVv-rZQ7d">https://www.123pan.com/s/HfxDVv-rZQ7d</a> Code:5yCR<br>Baidu Netdisk（百度网盘）：<a href="https://pan.baidu.com/s/1M6HtQJGjkKs7MMw1cIXF2A?pwd=7b4s">https://pan.baidu.com/s/1M6HtQJGjkKs7MMw1cIXF2A?pwd=7b4s</a> Code:7b4s<br>E Cloud（天翼云盘）：<a href="https://cloud.189.cn/web/share?code=NZzmEr7Rfemy">https://cloud.189.cn/web/share?code=NZzmEr7Rfemy</a> Code：y383</p>
-<p>PS：消费者版和商业版的区别就是包含的版本不同，我是比较喜欢商业版，因为商业版包含企业版，这个是功能最全的</p>
-<p>VLSC企业订阅版本（也是微软官方付费订阅的，这个版本与MVS&#x2F;MSDN版本的区别由于微软偷懒不想做两个版本所以没有了，但是这个版本有ARM64，MVS&#x2F;MSDN版目前还没有）：<br>简体中文 - 商业版：<br>123云盘：<a href="https://www.123pan.com/s/HfxDVv-fZQ7d">https://www.123pan.com/s/HfxDVv-fZQ7d</a> 提取码:YZix<br>百度网盘：<a href="https://pan.baidu.com/s/1OEu7MmSDbCa7_NyEbbER8w?pwd=rk65">https://pan.baidu.com/s/1OEu7MmSDbCa7_NyEbbER8w?pwd=rk65</a> 提取码:rk65<br>天翼云盘：<a href="https://cloud.189.cn/t/FJ3mUjf6fQZ3">https://cloud.189.cn/t/FJ3mUjf6fQZ3</a> 访问码:qz88<br>SHA256:D74D24A00F83E77A189BE6BCB2E23FAD5BABC29F576E810C43282CE683F8B048<br>包含版本：教育版、企业版、专业版、专业教育版、专业工作站版（5）</p>
-<p>简体中文 - ARM64版本：<br>123云盘：<a href="https://www.123pan.com/s/HfxDVv-pZQ7d">https://www.123pan.com/s/HfxDVv-pZQ7d</a> 提取码:b91o<br>百度网盘：<a href="https://pan.baidu.com/s/1on1LBzsAaYIeDBQEMQYK0Q?pwd=26tb">https://pan.baidu.com/s/1on1LBzsAaYIeDBQEMQYK0Q?pwd=26tb</a> 提取码:26tb<br>天翼云盘：<a href="https://cloud.189.cn/t/RjAVFjQviqia">https://cloud.189.cn/t/RjAVFjQviqia</a> 访问码:2vfk<br>SHA256:6C308F4139F9938E369BC987CBCC983EC293506AB29C736ABDD8284CEBBC5BF7<br>这个是给MAC和Win平板用的版本</p>
-<p>繁體中文 - 商業版：<br>123雲盤：<a href="https://www.123pan.com/s/HfxDVv-YZQ7d">https://www.123pan.com/s/HfxDVv-YZQ7d</a> 提取碼:PJCH<br>百度網盤：<a href="https://pan.baidu.com/s/1sKhZ-GQtj1ifcJH60EJPEQ?pwd=yhx5">https://pan.baidu.com/s/1sKhZ-GQtj1ifcJH60EJPEQ?pwd=yhx5</a> 提取碼:yhx5<br>天翼雲盤：<a href="https://cloud.189.cn/t/6ZNbmeEJrm6r">https://cloud.189.cn/t/6ZNbmeEJrm6r</a> 訪問碼：cfu7<br>SHA256:4C691D1C01CCB40275BAF979DB1A9CEC98F7DA8A8DFA59B4D2366EEC76084758<br>包含版本：教育版、企業版、專業版、專業教育版、專業工作站版（5）</p>
-<p>繁體中文 - ARM64版：<br>123雲盤：<a href="https://www.123pan.com/s/HfxDVv-GZQ7d">https://www.123pan.com/s/HfxDVv-GZQ7d</a> 提取碼:5Jfi<br>百度網盤：<a href="https://pan.baidu.com/s/1cJOyT1PrrNY_yYlJnr-1sw?pwd=pxwr">https://pan.baidu.com/s/1cJOyT1PrrNY_yYlJnr-1sw?pwd=pxwr</a> 提取碼:pxwr<br>天翼雲盤：<a href="https://cloud.189.cn/t/vI7vqurUjQze">https://cloud.189.cn/t/vI7vqurUjQze</a> 訪問碼:2e8c<br>SHA256:EB721E2F2B08DEDE965E18369926E9F3FD868728EB7A38A0B3909A524D791F88<br>這個是給MAC和Win平闆用的版本</p>
-<p>English - Business：<br>123 Cloud Disk：<a href="https://www.123pan.com/s/HfxDVv-PZQ7d">https://www.123pan.com/s/HfxDVv-PZQ7d</a> Code:oAY5<br>Baidu Netdisk：<a href="https://pan.baidu.com/s/1LN96MZgYf_kMj8TUAx1tyg?pwd=rcmh">https://pan.baidu.com/s/1LN96MZgYf_kMj8TUAx1tyg?pwd=rcmh</a> Code:rcmh<br>E Cloud：<a href="https://cloud.189.cn/t/Iveaeeniqqmm">https://cloud.189.cn/t/Iveaeeniqqmm</a> Code:on3h<br>SHA256:6E3A101C6E97D8E68F576DDBCED9BE34CBA949F750DA3C83F7D4791401068C9F<br>Include Version：Education, Education N, Enterprise, Enterprise N, Pro, Pro N, Pro Education, Pro Education N, Pro for Workstations, Pro N for Workstations（10）</p>
-<p>English - ARM64：<br>123 Cloud Disk：<a href="https://www.123pan.com/s/HfxDVv-XZQ7d">https://www.123pan.com/s/HfxDVv-XZQ7d</a> Code:vCmO<br>Baidu Netdisk：<a href="https://pan.baidu.com/s/1kI9vkK4b1_oeQSA_Uvr5OA?pwd=6ay5">https://pan.baidu.com/s/1kI9vkK4b1_oeQSA_Uvr5OA?pwd=6ay5</a> Code:6ay5<br>E Cloud：<a href="https://cloud.189.cn/t/IZ7N32Jv2URf">https://cloud.189.cn/t/IZ7N32Jv2URf</a> Code:azb8<br>SHA256:180C0E977B960D55DDA73F5D8E0F3094B2E27BD82C459B880CE5F51C3C49216A<br>This is a version for MAC and Win tablets</p>
-<p>Win下载地址：<a href="http://www.songyongzhi.com/">http://www.songyongzhi.com</a></p>
-<p>offcie用office tool puls（很简单的，用上这个就不需要找其他乱七八糟的了)<br><a href="https://otp.landian.vip/zh-cn/">https://otp.landian.vip/zh-cn/</a></p>
+<p>这告诉内核将设备上找到的文件系统（类型为type）附加到目录<code>dir</code>。<code>dir</code>之前的内容（如果有）、<code>owner</code>和<code>mode</code>变得不可见，只要这个文件系统保持挂载，路径名dir指的是设备上文件系统的根目录。如果没有提到目标目录，默认情况下，它将设备挂载在 <code>/etc/fstab</code> 文件中。</p>
+<h4 id="其他形式："><a href="#其他形式：" class="headerlink" title="其他形式："></a>其他形式：</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mount [-l|-h|-V]</span><br><span class="line">mount -a [-fFnrsvw] [-t fstype] [-O optlist]</span><br><span class="line">mount [-fnrsvw] [-o options] device|dir</span><br><span class="line">mount [-fnrsvw] [-t fstype] [-o options] device dir</span><br></pre></td></tr></table></figure>
+
+<p>这些命令告诉内核将在设备上找到的文件系统附加到<code>dir</code>。</p>
+<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><p>要将硬盘驱动器的第二个分区挂载到现有目录<code>/media/PHOTOS</code>（挂载点）：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mount /dev/hda2 /media/PHOTOS</span><br></pre></td></tr></table></figure>
+
+<p> 显示所有已安装的分区：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mount</span><br><span class="line">proc on /proc type proc (rw) </span><br><span class="line">sysfs on /sys type sysfs (rw) </span><br><span class="line">devpts on /dev/pts type devpts (rw,gid=5,mode=620) </span><br><span class="line">/dev/sda1 on /boot type ext3 (rw ) </span><br><span class="line">/tmp on /var/tmp type none (rw,noexec,nosuid,bind) </span><br><span class="line">10.4.0.4:/srv/export/setup_server on /nfs/setup_server type nfs (ro,addr=10.4.0.4)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>如果需要卸载刚才的分区：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ umount /dev/hda2</span><br></pre></td></tr></table></figure>
+
+<p>参照挂载点卸载：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ umount /media/PHOTOS</span><br></pre></td></tr></table></figure>
+
+<p>使用特定选项重新挂载分区：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mount -o remount,rw /dev/hda2</span><br></pre></td></tr></table></figure>
+
+<h3 id="umount的初级用法"><a href="#umount的初级用法" class="headerlink" title="umount的初级用法"></a>umount的初级用法</h3><p><code>umount</code>命令从文件层次结构中分离指定的文件系统。一个文件系统是通过给出它被安装的目录来指定的。提供文件系统所在的特殊设备也可以工作，但这是一种过时的方法，主要是因为如果该设备安装在多个目录上，它会失败。</p>
+<p>但是需要注意，文件系统在繁忙时无法卸载 。例如，当它上面有打开的文件时，或者当某个进程在那里有它的工作目录时，或者当它上面的交换文件正在使用时，<code>umount</code>将无法成功。</p>
+<p>有些无法使用<code>umount</code>的进程甚至可能是<code>umount</code>本身——例如，<code>umount</code>打开公共C库，而后者又可能打开了语言环境文件，如果它们在相关设备上，则会阻止它被卸载。即使出现这种冲突，“惰性”卸载（参见下面卸载选项部分中的-l ）也会尝试卸载。</p>
+<h3 id="高级用法"><a href="#高级用法" class="headerlink" title="高级用法"></a>高级用法</h3><ul>
+<li>显示有关已安装文件系统的信息：</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210149077.png"></p>
+<ul>
+<li>挂载文件系统：</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210150279.png"></p>
+<ul>
+<li><p>显示版本信息：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210151979.png"></p>
+</li>
+<li><p>卸载文件系统：</p>
+</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210151025.png"></p>
+<h3 id="绑定挂载"><a href="#绑定挂载" class="headerlink" title="绑定挂载"></a>绑定挂载</h3><p>绑定挂载允许将文件系统层次结构或文件挂载到不同的挂载点。与符号链接不同，文件系统本身不存在绑定挂载。在下面的例子中，路径&#x2F;olddir将被挂载在<code>/newdir</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mount --bind /olddir /newdir</span><br></pre></td></tr></table></figure>
+
+<h3 id="如何在-Linux-上挂载和卸载驱动器"><a href="#如何在-Linux-上挂载和卸载驱动器" class="headerlink" title="如何在 Linux 上挂载和卸载驱动器"></a>如何在 Linux 上挂载和卸载驱动器</h3><p>可以使用终端安装 SSD、USB 闪存驱动器、HDD 和 ISO 映像。在终端仿真器中使用命令行界面 (CLI) 可以让我们更好地控制何时安装驱动器以及它们在文件系统中的安装位置。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210123639.png"></p>
+<ol>
+<li>使用<code>lsblk</code>命令识别 USB 驱动器。在结果中，您可能会看到许多标记为“循环”的条目。但是，您正在寻找被列为<code>sda</code>或<code>sdb</code>的结果，以识别连接到您的系统的物理磁盘。比较所连接驱动器的列出容量通常可以帮助您发现目标驱动器的名称。在我们的例子中，我们可以将 USB 驱动器识别为 <code>sdb1</code>。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210123811.png"></p>
+<ol start="2">
+<li>创建一个目录来挂载 USB 驱动器。当外部驱动器自动挂载时，它通常挂载在媒体目录中。但是使用 CLI，我们可以创建并指定一个目录，我们将在其中挂载我们的 <code>pendrive</code>。请注意，我们需要使用<code>sudo</code>来调用<code>root</code>权限，以便在媒体目录中创建一个目录。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo mkdir /media/pendrive</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>使用<code>mount</code>命令将 U 盘挂载到<code>/media/pendrive</code>目录。<code>mount</code>命令具有以下语法；</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo mount /dev/sdb1 /media/pendrive</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li><p>通过重新运行<code>lsblk</code>检查驱动器是否已安装。</p>
+<blockquote>
+<p>请注意， <code>lsblk</code>输出中的最后一列列出了列出设备的挂载点，如果列出了挂载点，则确认该设备已挂载。</p>
+</blockquote>
+</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210124550.png"></p>
+<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>使用<code>mount</code>命令我们可以更好地控制在 Linux 中挂载和卸载磁盘，并掌握一些技巧，在连接的驱动器无法自动正确挂载时可能会有所帮助。</p>
+<p>在探索以前使用的系统的旧备份映像或想要查看 Linux 发行版映像内容以进行探索或学习时，能够使用循环设备挂载磁盘映像非常有用。</p>
 ]]></content>
       <categories>
-        <category>转载</category>
+        <category>学习</category>
+        <category>Linux</category>
       </categories>
       <tags>
-        <tag>Offce</tag>
-        <tag>Win</tag>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -691,6 +657,40 @@
       </tags>
   </entry>
   <entry>
+    <title>Office用C2R工具在线安装激活</title>
+    <url>/2022/09/27/Office%E7%94%A8C2R%E5%B7%A5%E5%85%B7%E5%9C%A8%E7%BA%BF%E5%AE%89%E8%A3%85%E6%BF%80%E6%B4%BB/</url>
+    <content><![CDATA[<p>C2R工具下载地址：<a href="https://wwt.lanzouw.com/b03pbhjri#52pj">https://wwt.lanzouw.com/b03pbhjri#52pj</a></p>
+<p>以下来自吾爱破解论坛：<br>Win11 22H2 最新版本官网镜像下载地址（来自微软官网免费链接，不同镜像的区别就是包含的版本不同）：<br>百度网盘：<a href="https://pan.baidu.com/s/1zZUVDc0wMdzoBehTfEPobQ?pwd=sy71">https://pan.baidu.com/s/1zZUVDc0wMdzoBehTfEPobQ?pwd=sy71</a><br>提取码:sy71<br>123云盘：<a href="https://www.123pan.com/s/HfxDVv-xZQ7d">https://www.123pan.com/s/HfxDVv-xZQ7d</a> 提取码：BGio<br>TechBench：<a href="https://techbench.betaworld.cn/get.php?id=2360">https://techbench.betaworld.cn/get.php?id=2360</a><br>微软官网：<a href="https://www.microsoft.com/zh-cn/software-download/windows11/">https://www.microsoft.com/zh-cn/software-download/windows11/</a></p>
+<span id="more"></span>
+
+<p>文件信息：<br>文件名：Win11_22H2_Chinese(Simplified)_x64.iso<br>MD5: 506B5563FDA4402E3DCB846927612414<br>SHA1: EDA6B80B5E52567D22C862884D7C987C316AF844<br>CRC32: 6D69527A</p>
+<p>IOS镜像包含版本：家庭版，家庭单语言版，专业版，教育版，专业教育版，专业工作站版（6）</p>
+<p>MVS&#x2F;MSDN镜像下载（来自微软官方MVS&#x2F;MSDN付费订阅，磁力链接推荐用迅雷下载）：<br>简体中文 - 消费者版（这个版本其实就是微软官网的版本，和上面那个版本一样）：<br>zh-cn_windows_11_consumer_editions_version_22h2_x64_dvd_59cfe6ee.iso (5.14 GB)<br>SHA-256: 5D4733AD43EE51B7686B766D1DD691342A8421035E7C9FA0C936B7BABEE0BE4B<br>包含版本：家庭版、家庭单语言版、教育版、专业版、专业教育版、专业工作站版（6）<br>123云盘分流：<a href="https://www.123pan.com/s/HfxDVv-nZQ7d">https://www.123pan.com/s/HfxDVv-nZQ7d</a> 提取码:yVi4<br>百度网盘分流：<a href="https://pan.baidu.com/s/1MQswudl58d-R_UPqQ7lqXg?pwd=u7he">https://pan.baidu.com/s/1MQswudl58d-R_UPqQ7lqXg?pwd=u7he</a> 提取码:u7he<br>天翼云盘分流：<a href="https://cloud.189.cn/web/share?code=vAfIFfi2q2ym">https://cloud.189.cn/web/share?code=vAfIFfi2q2ym</a> 访问码：0bqa</p>
+<p>简体中文 - 商业版（这个是官网没有，要在微软MSDN花钱订阅的版本，和VLSC的商业版是一个版本）：<br>zh-cn_windows_11_business_editions_version_22h2_x64_dvd_914b57a5.iso (5.05 GB)<br>SHA-256: D74D24A00F83E77A189BE6BCB2E23FAD5BABC29F576E810C43282CE683F8B048<br>包含版本：教育版、企业版、专业版、专业教育版、专业工作站版（5）<br>123云盘分流：<a href="https://www.123pan.com/s/HfxDVv-2ZQ7d">https://www.123pan.com/s/HfxDVv-2ZQ7d</a> 提取码:TE1P<br>百度网盘分流：<a href="https://pan.baidu.com/s/1XbN47aPaDdc8VUlc7OXI7w?pwd=m4eg">https://pan.baidu.com/s/1XbN47aPaDdc8VUlc7OXI7w?pwd=m4eg</a> 提取码:m4eg<br>天翼云盘分流：<a href="https://cloud.189.cn/web/share?code=B7FjieMRnEje">https://cloud.189.cn/web/share?code=B7FjieMRnEje</a> 访问码：dkg4</p>
+<p>简体中文 - 家庭中文版（中国特供版本，大部分笔记本出厂自带的就是这个版本，不推荐下载）：<br>Win11_22H2_China_GGK_Chinese(Simplified)_x64.iso (4.88 GB)<br>SHA-256: 3DC5C5F88A7F076EE349BB20DAB4B2C3857BA7A8AE089AA532E9C2634ED8BFD7<br>包含版本：家庭中文版（1）<br>123云盘分流：<a href="https://www.123pan.com/s/HfxDVv-UZQ7d">https://www.123pan.com/s/HfxDVv-UZQ7d</a> 提取码:sS6e<br>百度网盘分流：<a href="https://pan.baidu.com/s/1kNeaeKEMbMfuxGyW3sluUA?pwd=k3du">https://pan.baidu.com/s/1kNeaeKEMbMfuxGyW3sluUA?pwd=k3du</a> 提取码:k3du<br>天翼云盘分流：<a href="https://cloud.189.cn/web/share?code=MJBzyameymqm">https://cloud.189.cn/web/share?code=MJBzyameymqm</a> 访问码：28hg</p>
+<p>繁體中文 - 消費者版（官網也可以下載到）：<br>SHA256：0DA9E7C321CEB12536420F21A716C3240235ED0AF48D71F065EC76AE77A58EDB<br>包含版本：家庭版、家庭單語言版、教育版、專業版、專業教育版、專業工作站版（6）<br>123雲盤分流：<a href="https://www.123pan.com/s/HfxDVv-SZQ7d">https://www.123pan.com/s/HfxDVv-SZQ7d</a> 提取碼:sVTE<br>百度網盤分流：<a href="https://pan.baidu.com/s/13tJmkqBIsi-t1S2-B5EABQ?pwd=wuyu">https://pan.baidu.com/s/13tJmkqBIsi-t1S2-B5EABQ?pwd=wuyu</a> 提取碼:wuyu<br>天翼雲盤分流：<a href="https://cloud.189.cn/web/share?code=IzYrMbMfUJBn">https://cloud.189.cn/web/share?code=IzYrMbMfUJBn</a> 訪問碼：bkk8</p>
+<p>繁體中文 - 商業版（這個版本和VLSC的繁體中文商業版其實是壹個版本，同樣是付費訂閱來的）：<br>SHA-256: 4C691D1C01CCB40275BAF979DB1A9CEC98F7DA8A8DFA59B4D2366EEC76084758<br>包含版本：教育版、企業版、專業版、專業教育版、專業工作站版（5）<br>123雲盤分流：<a href="https://www.123pan.com/s/HfxDVv-lZQ7d">https://www.123pan.com/s/HfxDVv-lZQ7d</a> 提取碼:wkWD<br>百度網盤分流：<a href="https://pan.baidu.com/s/1avGQLrDxjtXdCiuCL-OuGw?pwd=1v4f">https://pan.baidu.com/s/1avGQLrDxjtXdCiuCL-OuGw?pwd=1v4f</a> 提取碼:1v4f<br>天翼雲盤分流：<a href="https://cloud.189.cn/web/share?code=J3ABRz3q6Fvu">https://cloud.189.cn/web/share?code=J3ABRz3q6Fvu</a> 訪問碼：9m6t</p>
+<p>English - Consumer（英文消费者版本，同样可以在官网下载到）：<br>en-us_windows_11_consumer_editions_version_22h2_x64_dvd_e630fafd.iso (5.11 GB)<br>SHA-256: 5C69E6F486BC4BDAE91557DE161008458EAA40D40468C34DBBD9078952108D0A<br>Include Version：Home, Home N, Home Single Language, Education, Education N, Pro, Pro N, Pro Education, Pro Education N, Pro for Workstations, Pro N for Workstations（11）<br>123 Cloud Disk（123云盘）：<a href="https://www.123pan.com/s/HfxDVv-DZQ7d">https://www.123pan.com/s/HfxDVv-DZQ7d</a> Code:7P4U<br>Baidu Netdisk（百度网盘）：<a href="https://pan.baidu.com/s/1o2yeRWHecMsYsO2I2-3Udg?pwd=jrmn">https://pan.baidu.com/s/1o2yeRWHecMsYsO2I2-3Udg?pwd=jrmn</a> Code:jrmn<br>E Cloud（天翼云盘）：<a href="https://cloud.189.cn/web/share?code=jA7NriZFFram">https://cloud.189.cn/web/share?code=jA7NriZFFram</a> Code：td7r</p>
+<p>English - Business（英文商业版本，官网没有的版本）：<br>en-us_windows_11_business_editions_version_22h2_x64_dvd_17a08ce3.iso (5 GB)<br>SHA-256: 6E3A101C6E97D8E68F576DDBCED9BE34CBA949F750DA3C83F7D4791401068C9F<br>Include Version：Education, Education N, Enterprise, Enterprise N, Pro, Pro N, Pro Education, Pro Education N, Pro for Workstations, Pro N for Workstations（10）<br>123 Cloud Disk（123云盘）：<a href="https://www.123pan.com/s/HfxDVv-rZQ7d">https://www.123pan.com/s/HfxDVv-rZQ7d</a> Code:5yCR<br>Baidu Netdisk（百度网盘）：<a href="https://pan.baidu.com/s/1M6HtQJGjkKs7MMw1cIXF2A?pwd=7b4s">https://pan.baidu.com/s/1M6HtQJGjkKs7MMw1cIXF2A?pwd=7b4s</a> Code:7b4s<br>E Cloud（天翼云盘）：<a href="https://cloud.189.cn/web/share?code=NZzmEr7Rfemy">https://cloud.189.cn/web/share?code=NZzmEr7Rfemy</a> Code：y383</p>
+<p>PS：消费者版和商业版的区别就是包含的版本不同，我是比较喜欢商业版，因为商业版包含企业版，这个是功能最全的</p>
+<p>VLSC企业订阅版本（也是微软官方付费订阅的，这个版本与MVS&#x2F;MSDN版本的区别由于微软偷懒不想做两个版本所以没有了，但是这个版本有ARM64，MVS&#x2F;MSDN版目前还没有）：<br>简体中文 - 商业版：<br>123云盘：<a href="https://www.123pan.com/s/HfxDVv-fZQ7d">https://www.123pan.com/s/HfxDVv-fZQ7d</a> 提取码:YZix<br>百度网盘：<a href="https://pan.baidu.com/s/1OEu7MmSDbCa7_NyEbbER8w?pwd=rk65">https://pan.baidu.com/s/1OEu7MmSDbCa7_NyEbbER8w?pwd=rk65</a> 提取码:rk65<br>天翼云盘：<a href="https://cloud.189.cn/t/FJ3mUjf6fQZ3">https://cloud.189.cn/t/FJ3mUjf6fQZ3</a> 访问码:qz88<br>SHA256:D74D24A00F83E77A189BE6BCB2E23FAD5BABC29F576E810C43282CE683F8B048<br>包含版本：教育版、企业版、专业版、专业教育版、专业工作站版（5）</p>
+<p>简体中文 - ARM64版本：<br>123云盘：<a href="https://www.123pan.com/s/HfxDVv-pZQ7d">https://www.123pan.com/s/HfxDVv-pZQ7d</a> 提取码:b91o<br>百度网盘：<a href="https://pan.baidu.com/s/1on1LBzsAaYIeDBQEMQYK0Q?pwd=26tb">https://pan.baidu.com/s/1on1LBzsAaYIeDBQEMQYK0Q?pwd=26tb</a> 提取码:26tb<br>天翼云盘：<a href="https://cloud.189.cn/t/RjAVFjQviqia">https://cloud.189.cn/t/RjAVFjQviqia</a> 访问码:2vfk<br>SHA256:6C308F4139F9938E369BC987CBCC983EC293506AB29C736ABDD8284CEBBC5BF7<br>这个是给MAC和Win平板用的版本</p>
+<p>繁體中文 - 商業版：<br>123雲盤：<a href="https://www.123pan.com/s/HfxDVv-YZQ7d">https://www.123pan.com/s/HfxDVv-YZQ7d</a> 提取碼:PJCH<br>百度網盤：<a href="https://pan.baidu.com/s/1sKhZ-GQtj1ifcJH60EJPEQ?pwd=yhx5">https://pan.baidu.com/s/1sKhZ-GQtj1ifcJH60EJPEQ?pwd=yhx5</a> 提取碼:yhx5<br>天翼雲盤：<a href="https://cloud.189.cn/t/6ZNbmeEJrm6r">https://cloud.189.cn/t/6ZNbmeEJrm6r</a> 訪問碼：cfu7<br>SHA256:4C691D1C01CCB40275BAF979DB1A9CEC98F7DA8A8DFA59B4D2366EEC76084758<br>包含版本：教育版、企業版、專業版、專業教育版、專業工作站版（5）</p>
+<p>繁體中文 - ARM64版：<br>123雲盤：<a href="https://www.123pan.com/s/HfxDVv-GZQ7d">https://www.123pan.com/s/HfxDVv-GZQ7d</a> 提取碼:5Jfi<br>百度網盤：<a href="https://pan.baidu.com/s/1cJOyT1PrrNY_yYlJnr-1sw?pwd=pxwr">https://pan.baidu.com/s/1cJOyT1PrrNY_yYlJnr-1sw?pwd=pxwr</a> 提取碼:pxwr<br>天翼雲盤：<a href="https://cloud.189.cn/t/vI7vqurUjQze">https://cloud.189.cn/t/vI7vqurUjQze</a> 訪問碼:2e8c<br>SHA256:EB721E2F2B08DEDE965E18369926E9F3FD868728EB7A38A0B3909A524D791F88<br>這個是給MAC和Win平闆用的版本</p>
+<p>English - Business：<br>123 Cloud Disk：<a href="https://www.123pan.com/s/HfxDVv-PZQ7d">https://www.123pan.com/s/HfxDVv-PZQ7d</a> Code:oAY5<br>Baidu Netdisk：<a href="https://pan.baidu.com/s/1LN96MZgYf_kMj8TUAx1tyg?pwd=rcmh">https://pan.baidu.com/s/1LN96MZgYf_kMj8TUAx1tyg?pwd=rcmh</a> Code:rcmh<br>E Cloud：<a href="https://cloud.189.cn/t/Iveaeeniqqmm">https://cloud.189.cn/t/Iveaeeniqqmm</a> Code:on3h<br>SHA256:6E3A101C6E97D8E68F576DDBCED9BE34CBA949F750DA3C83F7D4791401068C9F<br>Include Version：Education, Education N, Enterprise, Enterprise N, Pro, Pro N, Pro Education, Pro Education N, Pro for Workstations, Pro N for Workstations（10）</p>
+<p>English - ARM64：<br>123 Cloud Disk：<a href="https://www.123pan.com/s/HfxDVv-XZQ7d">https://www.123pan.com/s/HfxDVv-XZQ7d</a> Code:vCmO<br>Baidu Netdisk：<a href="https://pan.baidu.com/s/1kI9vkK4b1_oeQSA_Uvr5OA?pwd=6ay5">https://pan.baidu.com/s/1kI9vkK4b1_oeQSA_Uvr5OA?pwd=6ay5</a> Code:6ay5<br>E Cloud：<a href="https://cloud.189.cn/t/IZ7N32Jv2URf">https://cloud.189.cn/t/IZ7N32Jv2URf</a> Code:azb8<br>SHA256:180C0E977B960D55DDA73F5D8E0F3094B2E27BD82C459B880CE5F51C3C49216A<br>This is a version for MAC and Win tablets</p>
+<p>Win下载地址：<a href="http://www.songyongzhi.com/">http://www.songyongzhi.com</a></p>
+<p>offcie用office tool puls（很简单的，用上这个就不需要找其他乱七八糟的了)<br><a href="https://otp.landian.vip/zh-cn/">https://otp.landian.vip/zh-cn/</a></p>
+]]></content>
+      <categories>
+        <category>转载</category>
+      </categories>
+      <tags>
+        <tag>Offce</tag>
+        <tag>Win</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>npm安装卸载命令</title>
     <url>/2022/08/23/npm%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BD%E5%91%BD%E4%BB%A4/</url>
     <content><![CDATA[<h2 id="npm安装模块"><a href="#npm安装模块" class="headerlink" title="npm安装模块"></a>npm安装模块</h2><p>利用 npm 安装xxx模块到当前命令行所在目录；</p>
@@ -716,26 +716,6 @@
 ]]></content>
       <tags>
         <tag>命令</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>传奇内挂垃圾物品过滤</title>
-    <url>/2022/09/03/%E4%BC%A0%E5%A5%87%E5%86%85%E6%8C%82%E5%9E%83%E5%9C%BE%E7%89%A9%E5%93%81%E8%BF%87%E6%BB%A4/</url>
-    <content><![CDATA[<p> 传奇内挂过滤垃圾。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209031601159.png" alt="image-20220903160139387"></p>
-<p>先打开传奇目录 <code>D:\传奇私服\Config </code>   修改DAT档案文件，把下面内容复制粘贴进去保存即可：</p>
-<span id="more"></span>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">金创药(小量),药品类,0,0,0,0</span><br><span class="line">魔法药(小量),药品类,0,0,0,0</span><br><span class="line">肉,其它类,0,0,0,0</span><br><span class="line">布衣(男),服装类,0,0,0,0</span><br><span class="line">布衣(女),服装类,0,0,0,0</span><br><span class="line">木剑,武器类,0,0,0,0</span><br><span class="line">铁剑,武器类,0,0,0,0</span><br><span class="line">青铜剑,武器类,0,0,0,0</span><br><span class="line">轻型盔甲(男),服装类,0,0,0,0</span><br><span class="line">轻型盔甲(女),服装类,0,0,0,0</span><br><span class="line">凝霜,武器类,0,0,0,0</span><br><span class="line">短剑,武器类,0,0,0,0</span><br><span class="line">青铜斧,武器类,0,0,0,0</span><br><span class="line">重盔甲(女),服装类,0,0,0,0</span><br><span class="line">魔法长袍(女),服装类,0,0,0,0</span><br><span class="line">灵魂战衣(女),服装类,0,0,0,0</span><br><span class="line">重盔甲(男),服装类,0,0,0,0</span><br><span class="line">魔法长袍(男),服装类,0,0,0,0</span><br><span class="line">灵魂战衣(男),服装类,0,0,0,0</span><br><span class="line">海魂,武器类,0,0,0,0</span><br><span class="line">修罗,武器类,0,0,0,0</span><br><span class="line">破魂,武器类,0,0,0,0</span><br><span class="line">斩马刀,武器类,0,0,0,0</span><br><span class="line">青铜头盔,首饰类,0,0,0,0</span><br><span class="line">金项链,首饰类,0,0,0,0</span><br><span class="line">铁手镯,首饰类,0,0,0,0</span><br><span class="line">灰色药粉(中量),药品类,0,0,0,0</span><br><span class="line">黄色药粉(中量),药品类,0,0,0,0</span><br><span class="line">八荒,武器类,0,0,0,0</span><br><span class="line">玻璃戒指,首饰类,0,0,0,0</span><br><span class="line">牛角戒指,首饰类,0,0,0,0</span><br><span class="line">蓝色水晶戒指,首饰类,0,0,0,0</span><br><span class="line">黑檀项链,首饰类,0,0,0,0</span><br><span class="line">黄色水晶项链,首饰类,0,0,0,0</span><br><span class="line">黑色水晶项链,首饰类,0,0,0,0</span><br><span class="line">半月,武器类,0,0,0,0</span><br><span class="line">皮制手套,首饰类,0,0,0,0</span><br><span class="line">钢手镯,首饰类,0,0,0,0</span><br><span class="line">生铁戒指,首饰类,0,0,0,0</span><br><span class="line">金戒指,首饰类,0,0,0,0</span><br><span class="line">灯笼项链,首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链,首饰类,1,1,1,0</span><br><span class="line">魅力戒指,首饰类,0,0,0,0</span><br><span class="line">道德戒指,首饰类,0,0,0,0</span><br><span class="line">白金项链,首饰类,0,0,0,0</span><br><span class="line">降妖除魔戒指,首饰类,0,0,0,0</span><br><span class="line">偃月,武器类,0,0,0,0</span><br><span class="line">降魔,武器类,0,0,0,0</span><br><span class="line">小手镯,首饰类,0,0,0,0</span><br><span class="line">银手镯,首饰类,0,0,0,0</span><br><span class="line">大手镯,首饰类,0,0,0,0</span><br><span class="line">金创药(中量),药品类,0,0,0,0</span><br><span class="line">魔法药(中量),药品类,0,0,0,0</span><br><span class="line">黑色水晶戒指,首饰类,0,0,0,0</span><br><span class="line">魔鬼项链,首饰类,0,0,0,0</span><br><span class="line">珊瑚戒指,首饰类,0,0,0,0</span><br><span class="line">蓝翡翠项链,首饰类,0,0,0,0</span><br><span class="line">蛇眼戒指,首饰类,0,0,0,0</span><br><span class="line">琥珀项链,首饰类,0,0,0,0</span><br><span class="line">放大镜,首饰类,0,0,0,0</span><br><span class="line">珍珠戒指,首饰类,0,0,0,0</span><br><span class="line">竹笛,首饰类,0,0,0,0</span><br><span class="line">骷髅戒指,首饰类,0,0,0,0</span><br><span class="line">死神手套,首饰类,0,0,0,0</span><br><span class="line">骷髅头盔,首饰类,0,0,0,0</span><br><span class="line">魔法手镯,首饰类,0,0,0,0</span><br><span class="line">金手镯,首饰类,0,0,0,0</span><br><span class="line">道士头盔,首饰类,0,0,0,0</span><br><span class="line">凤凰明珠,首饰类,0,0,0,0</span><br><span class="line">道士手镯,首饰类,0,0,0,0</span><br><span class="line">黑檀手镯,首饰类,0,0,0,0</span><br><span class="line">铁矿,其它类,0,0,0,0</span><br><span class="line">黑铁矿,其它类,0,0,0,0</span><br><span class="line">困魔咒,其它类,0,0,0,0</span><br><span class="line">召唤骷髅,其它类,0,0,0,0</span><br><span class="line">地狱雷光,其它类,0,0,0,0</span><br><span class="line">半月弯刀,其它类,0,0,0,0</span><br><span class="line">太阳水,药品类,0,1,0,0</span><br><span class="line">强效金创药,药品类,0,1,0,0</span><br><span class="line">强效魔法药,药品类,0,1,0,0</span><br><span class="line">野蛮冲撞,其它类,0,0,0,0</span><br><span class="line">群体治疗术,其它类,0,0,0,0</span><br><span class="line">圣言术,其它类,0,0,0,0</span><br><span class="line">强效太阳水,药品类,0,1,0,0</span><br><span class="line">魔力手镯,首饰类,0,0,0,0</span><br><span class="line">攻击力药水,其它类,0,0,0,0</span><br><span class="line">道术力药水,其它类,0,0,0,0</span><br><span class="line">疾风药水,其它类,0,0,0,0</span><br><span class="line">体力强化水,其它类,0,0,0,0</span><br><span class="line">魔力强化水,其它类,0,0,0,0</span><br><span class="line">战神盔甲(男),服装类,0,0,0,0</span><br><span class="line">战神盔甲(女),服装类,0,0,0,0</span><br><span class="line">幽灵战衣(男),服装类,0,0,0,0</span><br><span class="line">幽灵战衣(女),服装类,0,0,0,0</span><br><span class="line">恶魔长袍(男),服装类,0,0,0,0</span><br><span class="line">恶魔长袍(女),服装类,0,0,0,0</span><br><span class="line">中型盔甲(男),服装类,0,0,0,0</span><br><span class="line">灯笼项链②,首饰类,1,1,1,0</span><br><span class="line">灯笼项链[残],首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链[残],首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链②,首饰类,1,1,1,0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>游戏</category>
-        <category>传奇</category>
-      </categories>
-      <tags>
-        <tag>传奇</tag>
-        <tag>外挂</tag>
       </tags>
   </entry>
   <entry>
@@ -781,6 +761,26 @@
       </categories>
       <tags>
         <tag>技术</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>传奇内挂垃圾物品过滤</title>
+    <url>/2022/09/03/%E4%BC%A0%E5%A5%87%E5%86%85%E6%8C%82%E5%9E%83%E5%9C%BE%E7%89%A9%E5%93%81%E8%BF%87%E6%BB%A4/</url>
+    <content><![CDATA[<p> 传奇内挂过滤垃圾。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209031601159.png" alt="image-20220903160139387"></p>
+<p>先打开传奇目录 <code>D:\传奇私服\Config </code>   修改DAT档案文件，把下面内容复制粘贴进去保存即可：</p>
+<span id="more"></span>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">金创药(小量),药品类,0,0,0,0</span><br><span class="line">魔法药(小量),药品类,0,0,0,0</span><br><span class="line">肉,其它类,0,0,0,0</span><br><span class="line">布衣(男),服装类,0,0,0,0</span><br><span class="line">布衣(女),服装类,0,0,0,0</span><br><span class="line">木剑,武器类,0,0,0,0</span><br><span class="line">铁剑,武器类,0,0,0,0</span><br><span class="line">青铜剑,武器类,0,0,0,0</span><br><span class="line">轻型盔甲(男),服装类,0,0,0,0</span><br><span class="line">轻型盔甲(女),服装类,0,0,0,0</span><br><span class="line">凝霜,武器类,0,0,0,0</span><br><span class="line">短剑,武器类,0,0,0,0</span><br><span class="line">青铜斧,武器类,0,0,0,0</span><br><span class="line">重盔甲(女),服装类,0,0,0,0</span><br><span class="line">魔法长袍(女),服装类,0,0,0,0</span><br><span class="line">灵魂战衣(女),服装类,0,0,0,0</span><br><span class="line">重盔甲(男),服装类,0,0,0,0</span><br><span class="line">魔法长袍(男),服装类,0,0,0,0</span><br><span class="line">灵魂战衣(男),服装类,0,0,0,0</span><br><span class="line">海魂,武器类,0,0,0,0</span><br><span class="line">修罗,武器类,0,0,0,0</span><br><span class="line">破魂,武器类,0,0,0,0</span><br><span class="line">斩马刀,武器类,0,0,0,0</span><br><span class="line">青铜头盔,首饰类,0,0,0,0</span><br><span class="line">金项链,首饰类,0,0,0,0</span><br><span class="line">铁手镯,首饰类,0,0,0,0</span><br><span class="line">灰色药粉(中量),药品类,0,0,0,0</span><br><span class="line">黄色药粉(中量),药品类,0,0,0,0</span><br><span class="line">八荒,武器类,0,0,0,0</span><br><span class="line">玻璃戒指,首饰类,0,0,0,0</span><br><span class="line">牛角戒指,首饰类,0,0,0,0</span><br><span class="line">蓝色水晶戒指,首饰类,0,0,0,0</span><br><span class="line">黑檀项链,首饰类,0,0,0,0</span><br><span class="line">黄色水晶项链,首饰类,0,0,0,0</span><br><span class="line">黑色水晶项链,首饰类,0,0,0,0</span><br><span class="line">半月,武器类,0,0,0,0</span><br><span class="line">皮制手套,首饰类,0,0,0,0</span><br><span class="line">钢手镯,首饰类,0,0,0,0</span><br><span class="line">生铁戒指,首饰类,0,0,0,0</span><br><span class="line">金戒指,首饰类,0,0,0,0</span><br><span class="line">灯笼项链,首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链,首饰类,1,1,1,0</span><br><span class="line">魅力戒指,首饰类,0,0,0,0</span><br><span class="line">道德戒指,首饰类,0,0,0,0</span><br><span class="line">白金项链,首饰类,0,0,0,0</span><br><span class="line">降妖除魔戒指,首饰类,0,0,0,0</span><br><span class="line">偃月,武器类,0,0,0,0</span><br><span class="line">降魔,武器类,0,0,0,0</span><br><span class="line">小手镯,首饰类,0,0,0,0</span><br><span class="line">银手镯,首饰类,0,0,0,0</span><br><span class="line">大手镯,首饰类,0,0,0,0</span><br><span class="line">金创药(中量),药品类,0,0,0,0</span><br><span class="line">魔法药(中量),药品类,0,0,0,0</span><br><span class="line">黑色水晶戒指,首饰类,0,0,0,0</span><br><span class="line">魔鬼项链,首饰类,0,0,0,0</span><br><span class="line">珊瑚戒指,首饰类,0,0,0,0</span><br><span class="line">蓝翡翠项链,首饰类,0,0,0,0</span><br><span class="line">蛇眼戒指,首饰类,0,0,0,0</span><br><span class="line">琥珀项链,首饰类,0,0,0,0</span><br><span class="line">放大镜,首饰类,0,0,0,0</span><br><span class="line">珍珠戒指,首饰类,0,0,0,0</span><br><span class="line">竹笛,首饰类,0,0,0,0</span><br><span class="line">骷髅戒指,首饰类,0,0,0,0</span><br><span class="line">死神手套,首饰类,0,0,0,0</span><br><span class="line">骷髅头盔,首饰类,0,0,0,0</span><br><span class="line">魔法手镯,首饰类,0,0,0,0</span><br><span class="line">金手镯,首饰类,0,0,0,0</span><br><span class="line">道士头盔,首饰类,0,0,0,0</span><br><span class="line">凤凰明珠,首饰类,0,0,0,0</span><br><span class="line">道士手镯,首饰类,0,0,0,0</span><br><span class="line">黑檀手镯,首饰类,0,0,0,0</span><br><span class="line">铁矿,其它类,0,0,0,0</span><br><span class="line">黑铁矿,其它类,0,0,0,0</span><br><span class="line">困魔咒,其它类,0,0,0,0</span><br><span class="line">召唤骷髅,其它类,0,0,0,0</span><br><span class="line">地狱雷光,其它类,0,0,0,0</span><br><span class="line">半月弯刀,其它类,0,0,0,0</span><br><span class="line">太阳水,药品类,0,1,0,0</span><br><span class="line">强效金创药,药品类,0,1,0,0</span><br><span class="line">强效魔法药,药品类,0,1,0,0</span><br><span class="line">野蛮冲撞,其它类,0,0,0,0</span><br><span class="line">群体治疗术,其它类,0,0,0,0</span><br><span class="line">圣言术,其它类,0,0,0,0</span><br><span class="line">强效太阳水,药品类,0,1,0,0</span><br><span class="line">魔力手镯,首饰类,0,0,0,0</span><br><span class="line">攻击力药水,其它类,0,0,0,0</span><br><span class="line">道术力药水,其它类,0,0,0,0</span><br><span class="line">疾风药水,其它类,0,0,0,0</span><br><span class="line">体力强化水,其它类,0,0,0,0</span><br><span class="line">魔力强化水,其它类,0,0,0,0</span><br><span class="line">战神盔甲(男),服装类,0,0,0,0</span><br><span class="line">战神盔甲(女),服装类,0,0,0,0</span><br><span class="line">幽灵战衣(男),服装类,0,0,0,0</span><br><span class="line">幽灵战衣(女),服装类,0,0,0,0</span><br><span class="line">恶魔长袍(男),服装类,0,0,0,0</span><br><span class="line">恶魔长袍(女),服装类,0,0,0,0</span><br><span class="line">中型盔甲(男),服装类,0,0,0,0</span><br><span class="line">灯笼项链②,首饰类,1,1,1,0</span><br><span class="line">灯笼项链[残],首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链[残],首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链②,首饰类,1,1,1,0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>游戏</category>
+        <category>传奇</category>
+      </categories>
+      <tags>
+        <tag>传奇</tag>
+        <tag>外挂</tag>
       </tags>
   </entry>
   <entry>
@@ -861,6 +861,110 @@
       </categories>
       <tags>
         <tag>随笔</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【安装Office】 Office Tool Plus 入门教程</title>
+    <url>/2022/09/27/%E5%AE%89%E8%A3%85Office/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>安装 Office 是一件非常简单的事情，大家不必过于担心，更不必对自己没有信心。<br>本教程适用于需要全新安装 Office 的用户，若您需要修改 Office 请参阅 [<a href="https://movejian.github.io/2022/09/27/%E6%8A%80%E8%83%BD%E6%89%A9%E5%B1%95Office">技能扩展] Office Tool Plus 高级教程</a><br>任何人都可使用 Office Tool Plus 轻松地安装 Office，请认真阅读教程以避免因为疏忽出现问题。<br>如无特殊情况，文章中提到的 Windows 10 也适用于 Windows 11.</p>
+<span id="more"></span>
+
+<h3 id="1-开始使用"><a href="#1-开始使用" class="headerlink" title="1. 开始使用"></a>1. 开始使用</h3><p>请下载最新的包含框架的版本（with runtime），以确保你始终可以获得最好的体验。<br>在<a href="http://otp.landian.vip/">官网下载 Office Tool Plus</a> 后，将其解压至正常位置（例如桌面），双击 Office Tool Plus 以运行。<br>为了获得最佳体验，若 Office Tool Plus 提示有更新，请更新后继续操作。### 2. 注意事项</p>
+<h4 id="安装开始前，请知晓以下事情："><a href="#安装开始前，请知晓以下事情：" class="headerlink" title="安装开始前，请知晓以下事情："></a>安装开始前，请知晓以下事情：</h4><ol>
+<li>使用 Office Tool Plus 安装的 Office 是官方原版，非破解、非精简。</li>
+<li>教程没提到的产品就不要随便安装，别问，问就是不推荐。</li>
+<li>教程没提到的设置就不要随便乱动，别问，不懂就不要动。</li>
+<li>建议勾选下载后再部署，能避免因为网络不佳而卡住不动。</li>
+<li>安装 Office 出现问题时，请根据提供的错误信息排查问题；更详细的错误信息可以在 【工具箱】-&gt;【收集 Office 安装日志】获得。</li>
+</ol>
+<p>Office 安装程序出现问题跟我们没有太大关系哈。举个例子，你叫了个外卖，但是送到后你觉得太难吃，这能怪骑手吗？这不能。做人要讲理，不能随便污蔑别人。</p>
+<p>如果你有任何疑问，可前往 [<a href="https://movejian.github.io/2022/09/27/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94Office">疑难解答] Office Tool Plus 入门教程</a> 查看相关问题解答。</p>
+<h4 id="安装开始前，请做好以下事情："><a href="#安装开始前，请做好以下事情：" class="headerlink" title="安装开始前，请做好以下事情："></a>安装开始前，请做好以下事情：</h4><ol>
+<li>卸载 WPS，两者共存容易出问题（没有问题当我没说）。</li>
+<li>卸载旧版本 Office，按照标准流程操作，请勿直接强制移除。</li>
+<li>清除旧版本激活信息，在 [激活] -&gt; [许可证管理] -&gt; [子菜单] -&gt; [清除激活状态]。</li>
+<li>清除 Office 设置，在 [工具箱] -&gt; [重置 Office 为默认设置]。</li>
+</ol>
+<p>附图为清除激活信息：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270128402.png" alt="清除 Office 激活信息"></p>
+<p>附图为重置 Office 的设置：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270128335.png" alt="重置 Office 为默认设置"></p>
+<h3 id="3-部署-Office"><a href="#3-部署-Office" class="headerlink" title="3. 部署 Office"></a>3. 部署 Office</h3><p>不知道自己有没有正版 Office？个人用户 <a href="https://account.microsoft.com/services/">&gt;&gt;点击这里检查&lt;&lt;</a>，企业用户 <a href="https://portal.office.com/account/?ref=MeControl#subscriptions">&gt;&gt;点击这里检查&lt;&lt;</a>。</p>
+<p>需要使用正版 Office？<a href="https://otp.landian.vip/zh-cn/#store">点击这里查看详细信息</a>。</p>
+<p>以下提到的安装方法或者产品都是合适的（差不多），不会有任何问题，请放心使用。</p>
+<hr>
+<p>自动安装：</p>
+<h5 id="一键安装"><a href="#一键安装" class="headerlink" title="一键安装"></a>一键安装</h5><p>如果你什么都不懂，或者，你只是想要个能用的 Office，那么使用一键安装代码是最合适的：</p>
+<p>确保自己使用的是最新版的 Office Tool Plus，按下 Ctrl + Shift + P 打开命令框，输入以下命令：</p>
+<p>旧版本打开命令框的快捷方式为 Ctrl + P，最新版已修改。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270130407.png" alt="命令框"></p>
+<p>安装 Microsoft 365 企业应用版（Word, PowerPoint, Excel）：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy /addProduct O365ProPlusRetail_zh-cn_Access,Bing,Groove,Lync,OneDrive,OneNote,Outlook,Publisher,Teams /channel Current /downloadFirst</span><br></pre></td></tr></table></figure>
+
+<p>安装 Microsoft 365 企业应用版（Word, PowerPoint, Excel）+ Visio 2016：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy /addProduct O365ProPlusRetail_zh-cn_Access,Bing,Groove,Lync,OneDrive,OneNote,Outlook,Publisher,Teams /addProduct VisioProRetail_zh-cn_Groove,OneDrive /channel Current /downloadFirst</span><br></pre></td></tr></table></figure>
+
+<p>输入命令后请按回车（Enter）以执行命令，然后耐心等待安装完成。</p>
+<p>安装完成后，请务必使用 [<a href="https://movejian.github.io/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B">激活 Office] Office Tool Plus 入门教程</a> 中的一键激活代码进行激活</p>
+<hr>
+<p>手动安装：</p>
+<p>转到 Office Tool Plus 的部署页面，按照以下提示操作。</p>
+<h4 id="必须做的事情"><a href="#必须做的事情" class="headerlink" title="必须做的事情"></a>必须做的事情</h4><ol>
+<li>添加产品：看下面的选项，选一个合适自己的来学习。</li>
+<li>添加语言：点一下「添加语言」就行，软件会自动匹配合适的语言。不要把“仅部署校对工具”打勾，除非你知道这是什么。</li>
+</ol>
+<h5 id="我有正版-Office"><a href="#我有正版-Office" class="headerlink" title="我有正版 Office"></a>我有正版 Office</h5><p>如果你有 Office 正版，比如你自己购买了 Microsoft 365 家庭版，安装的时候选择这个即可。</p>
+<p>当然现在也有不少人去网上白嫖什么 365 订阅，基本都是安装 Microsoft 365 企业应用版（O365ProPlusRetail）。</p>
+<p>如果学校&#x2F;企业提供了 2019&#x2F;2021 批量许可授权，安装这个也可。</p>
+<p>无论如何，你必须要安装对应的产品，否则你将无法通过账户&#x2F;密钥激活你的 Office。</p>
+<p>如果你有 Office 的正版授权，但是没有 Visio，又想装？</p>
+<p>Office, Visio 和 Project 三个产品的授权是可以分开处理的，所以你不必担心搞 Visio 会影响 Office.</p>
+<h5 id="有什么好选择吗？"><a href="#有什么好选择吗？" class="headerlink" title="有什么好选择吗？"></a>有什么好选择吗？</h5><p>当然有啦~</p>
+<p>Office 选择：Microsoft 365 企业应用版 (O365ProPlusRetail)</p>
+<p>Visio 选择：Visio 专业版 2016 (VisioProRetail)</p>
+<p>Project 选择：Project 专业版 2016 (ProjectProRetail)</p>
+<p>当然，Visio 和 Project 是需要才选，不需要或者看不懂就不需要管啦。</p>
+<h5 id="我要安装年份版-Office（例如-Office-2021）"><a href="#我要安装年份版-Office（例如-Office-2021）" class="headerlink" title="我要安装年份版 Office（例如 Office 2021）"></a>我要安装年份版 Office（例如 Office 2021）</h5><p>有一说一，年份版没有你想的那么好的哦，如果不是强迫症建议看上面那条。</p>
+<p>针对非正版用户，你只可以安装批量许可产品以便使用 KMS 激活。</p>
+<p>安装批量版时，需要使用对应的 Office 2019&#x2F;2021 企业长期版通道，否则会无法安装。</p>
+<p>Office 2021：</p>
+<p>Office LTSC 专业增强版 2021 - 批量许可证 (ProPlus2021Volume)</p>
+<p>Visio LTSC 专业版 2021 - 批量许可证 (VisioPro2021Volume)</p>
+<p>Project 专业版 2021 - 批量许可证 (ProjectPro2021Volume)</p>
+<p>Office 2019：</p>
+<p>Office 专业增强版 2019 - 批量许可证 (ProPlus2019Volume)</p>
+<p>Visio 专业版 2019 - 批量许可证 (VisioPro2019Volume)</p>
+<p>Project 专业版 2019 - 批量许可证 (ProjectPro2019Volume)</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">PS：不要问我为什么 2021 叫 LTSC，名字是微软起的有问题问微软去。</span><br></pre></td></tr></table></figure>
+
+<h5 id="我是-Windows-7-x2F-8-x2F-8-1-用户"><a href="#我是-Windows-7-x2F-8-x2F-8-1-用户" class="headerlink" title="我是 Windows 7&#x2F;8&#x2F;8.1 用户"></a>我是 Windows 7&#x2F;8&#x2F;8.1 用户</h5><p>由于系统原因，我们推荐按照第二条选项进行处理，这样确保可以进行正常安装。</p>
+<p>不要问我 Office 2019&#x2F;2021 能不能装，问就是说不能，别人说可以的话你问别人去。</p>
+<h5 id="（额外补充内容）什么系统能装什么样的-Office？"><a href="#（额外补充内容）什么系统能装什么样的-Office？" class="headerlink" title="（额外补充内容）什么系统能装什么样的 Office？"></a>（额外补充内容）什么系统能装什么样的 Office？</h5><p>目前 Office Tool Plus 中有 Office 2016、2019、2021、365 可供安装。</p>
+<p>Windows 10 和 11 无限制，可以安装任何版本的 Office。</p>
+<p>Windows 8 和 8.1 只可以安装部分产品，如果将部署模块从「Office 部署工具」更改到「Office Tool Plus」也可以安装任意产品。</p>
+<p>Windows 7 只可以安装 Office 2016 或 365，并且只能够使用「当前通道」。即使你更改部署模块，Office 2019&#x2F;2021 也不一定能安装成功。</p>
+<p>如果你的安装包是从别的地方下载的，那，那就别来问我，我也不知道你下载的是什么。</p>
+<h4 id="可以做的事情"><a href="#可以做的事情" class="headerlink" title="可以做的事情"></a>可以做的事情</h4><ol>
+<li>应用程序：选自己能看懂的就行，一般就是 Word, PowerPoint, Excel.</li>
+<li>通道：“当前通道”就行，Office 2019&#x2F;2021 批量许可证请选 Office 2019&#x2F;2021 企业长期版。</li>
+<li>体系结构：32 位兼容性好；64 位兼容性稍差且体积大，但处理大数据能力稍强。</li>
+<li>部署模式：那肯定要选安装啊，要不然怎么安装。</li>
+<li>安装模块：如没有特殊要求，请勿选择 Office Tool Plus.</li>
+<li>下载后再部署：如果网不行，最好把这个选上，免得安装卡进度卡半天。</li>
+</ol>
+<p>产品和语言弄好后即可开始部署 Office，其余设置不需要更改。</p>
+<p>部署时请耐心等待，不要强制结束安装程序或重启计算机。</p>
+<h3 id="4-视频教程"><a href="#4-视频教程" class="headerlink" title="4. 视频教程"></a>4. 视频教程</h3><p>视频教程更新不及时，建议看本文即可。</p>
+<p>bilibili：<a href="https://www.bilibili.com/video/BV1eU4y1V7NU">https://www.bilibili.com/video/BV1eU4y1V7NU</a></p>
+<p>YouTube：<a href="https://www.youtube.com/watch?v=p90V9_D-8Go">https://www.youtube.com/watch?v=p90V9_D-8Go</a></p>
+<h3 id="5-离线安装包"><a href="#5-离线安装包" class="headerlink" title="5. 离线安装包"></a>5. 离线安装包</h3><p>如果因为网络问题下载缓慢或者无法下载 Office，你可以下载 ISO 文件使用。</p>
+<p><a href="https://otp.landian.vip/zh-cn/download.html">下载站点</a>（云图小镇、OneDrive）中包含有 Office ISO.</p>
+<p>Office ISO 文件不需要解压，双击打开即可挂载使用（Win 7 除外）。</p>
+<h3 id="6-激活-Office"><a href="#6-激活-Office" class="headerlink" title="6. 激活 Office"></a>6. 激活 Office</h3><p>如果你是正版用户，一般情况下是不需要借助 Office Tool Plus 激活 Office 的，在 Office 应用程序中登录自己的微软账号，或者输入你的正版密钥即可激活 Office。</p>
+<p><a href="https://movejian.github.io/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B">【点击此处】前往另一个教程查看如何激活 Office</a></p>
+]]></content>
+      <tags>
+        <tag>Office</tag>
       </tags>
   </entry>
   <entry>
@@ -968,110 +1072,6 @@
 ]]></content>
       <tags>
         <tag>区块链</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【安装Office】 Office Tool Plus 入门教程</title>
-    <url>/2022/09/27/%E5%AE%89%E8%A3%85Office/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>安装 Office 是一件非常简单的事情，大家不必过于担心，更不必对自己没有信心。<br>本教程适用于需要全新安装 Office 的用户，若您需要修改 Office 请参阅 [<a href="https://movejian.github.io/2022/09/27/%E6%8A%80%E8%83%BD%E6%89%A9%E5%B1%95Office">技能扩展] Office Tool Plus 高级教程</a><br>任何人都可使用 Office Tool Plus 轻松地安装 Office，请认真阅读教程以避免因为疏忽出现问题。<br>如无特殊情况，文章中提到的 Windows 10 也适用于 Windows 11.</p>
-<span id="more"></span>
-
-<h3 id="1-开始使用"><a href="#1-开始使用" class="headerlink" title="1. 开始使用"></a>1. 开始使用</h3><p>请下载最新的包含框架的版本（with runtime），以确保你始终可以获得最好的体验。<br>在<a href="http://otp.landian.vip/">官网下载 Office Tool Plus</a> 后，将其解压至正常位置（例如桌面），双击 Office Tool Plus 以运行。<br>为了获得最佳体验，若 Office Tool Plus 提示有更新，请更新后继续操作。### 2. 注意事项</p>
-<h4 id="安装开始前，请知晓以下事情："><a href="#安装开始前，请知晓以下事情：" class="headerlink" title="安装开始前，请知晓以下事情："></a>安装开始前，请知晓以下事情：</h4><ol>
-<li>使用 Office Tool Plus 安装的 Office 是官方原版，非破解、非精简。</li>
-<li>教程没提到的产品就不要随便安装，别问，问就是不推荐。</li>
-<li>教程没提到的设置就不要随便乱动，别问，不懂就不要动。</li>
-<li>建议勾选下载后再部署，能避免因为网络不佳而卡住不动。</li>
-<li>安装 Office 出现问题时，请根据提供的错误信息排查问题；更详细的错误信息可以在 【工具箱】-&gt;【收集 Office 安装日志】获得。</li>
-</ol>
-<p>Office 安装程序出现问题跟我们没有太大关系哈。举个例子，你叫了个外卖，但是送到后你觉得太难吃，这能怪骑手吗？这不能。做人要讲理，不能随便污蔑别人。</p>
-<p>如果你有任何疑问，可前往 [<a href="https://movejian.github.io/2022/09/27/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94Office">疑难解答] Office Tool Plus 入门教程</a> 查看相关问题解答。</p>
-<h4 id="安装开始前，请做好以下事情："><a href="#安装开始前，请做好以下事情：" class="headerlink" title="安装开始前，请做好以下事情："></a>安装开始前，请做好以下事情：</h4><ol>
-<li>卸载 WPS，两者共存容易出问题（没有问题当我没说）。</li>
-<li>卸载旧版本 Office，按照标准流程操作，请勿直接强制移除。</li>
-<li>清除旧版本激活信息，在 [激活] -&gt; [许可证管理] -&gt; [子菜单] -&gt; [清除激活状态]。</li>
-<li>清除 Office 设置，在 [工具箱] -&gt; [重置 Office 为默认设置]。</li>
-</ol>
-<p>附图为清除激活信息：</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270128402.png" alt="清除 Office 激活信息"></p>
-<p>附图为重置 Office 的设置：</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270128335.png" alt="重置 Office 为默认设置"></p>
-<h3 id="3-部署-Office"><a href="#3-部署-Office" class="headerlink" title="3. 部署 Office"></a>3. 部署 Office</h3><p>不知道自己有没有正版 Office？个人用户 <a href="https://account.microsoft.com/services/">&gt;&gt;点击这里检查&lt;&lt;</a>，企业用户 <a href="https://portal.office.com/account/?ref=MeControl#subscriptions">&gt;&gt;点击这里检查&lt;&lt;</a>。</p>
-<p>需要使用正版 Office？<a href="https://otp.landian.vip/zh-cn/#store">点击这里查看详细信息</a>。</p>
-<p>以下提到的安装方法或者产品都是合适的（差不多），不会有任何问题，请放心使用。</p>
-<hr>
-<p>自动安装：</p>
-<h5 id="一键安装"><a href="#一键安装" class="headerlink" title="一键安装"></a>一键安装</h5><p>如果你什么都不懂，或者，你只是想要个能用的 Office，那么使用一键安装代码是最合适的：</p>
-<p>确保自己使用的是最新版的 Office Tool Plus，按下 Ctrl + Shift + P 打开命令框，输入以下命令：</p>
-<p>旧版本打开命令框的快捷方式为 Ctrl + P，最新版已修改。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270130407.png" alt="命令框"></p>
-<p>安装 Microsoft 365 企业应用版（Word, PowerPoint, Excel）：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy /addProduct O365ProPlusRetail_zh-cn_Access,Bing,Groove,Lync,OneDrive,OneNote,Outlook,Publisher,Teams /channel Current /downloadFirst</span><br></pre></td></tr></table></figure>
-
-<p>安装 Microsoft 365 企业应用版（Word, PowerPoint, Excel）+ Visio 2016：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy /addProduct O365ProPlusRetail_zh-cn_Access,Bing,Groove,Lync,OneDrive,OneNote,Outlook,Publisher,Teams /addProduct VisioProRetail_zh-cn_Groove,OneDrive /channel Current /downloadFirst</span><br></pre></td></tr></table></figure>
-
-<p>输入命令后请按回车（Enter）以执行命令，然后耐心等待安装完成。</p>
-<p>安装完成后，请务必使用 [<a href="https://movejian.github.io/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B">激活 Office] Office Tool Plus 入门教程</a> 中的一键激活代码进行激活</p>
-<hr>
-<p>手动安装：</p>
-<p>转到 Office Tool Plus 的部署页面，按照以下提示操作。</p>
-<h4 id="必须做的事情"><a href="#必须做的事情" class="headerlink" title="必须做的事情"></a>必须做的事情</h4><ol>
-<li>添加产品：看下面的选项，选一个合适自己的来学习。</li>
-<li>添加语言：点一下「添加语言」就行，软件会自动匹配合适的语言。不要把“仅部署校对工具”打勾，除非你知道这是什么。</li>
-</ol>
-<h5 id="我有正版-Office"><a href="#我有正版-Office" class="headerlink" title="我有正版 Office"></a>我有正版 Office</h5><p>如果你有 Office 正版，比如你自己购买了 Microsoft 365 家庭版，安装的时候选择这个即可。</p>
-<p>当然现在也有不少人去网上白嫖什么 365 订阅，基本都是安装 Microsoft 365 企业应用版（O365ProPlusRetail）。</p>
-<p>如果学校&#x2F;企业提供了 2019&#x2F;2021 批量许可授权，安装这个也可。</p>
-<p>无论如何，你必须要安装对应的产品，否则你将无法通过账户&#x2F;密钥激活你的 Office。</p>
-<p>如果你有 Office 的正版授权，但是没有 Visio，又想装？</p>
-<p>Office, Visio 和 Project 三个产品的授权是可以分开处理的，所以你不必担心搞 Visio 会影响 Office.</p>
-<h5 id="有什么好选择吗？"><a href="#有什么好选择吗？" class="headerlink" title="有什么好选择吗？"></a>有什么好选择吗？</h5><p>当然有啦~</p>
-<p>Office 选择：Microsoft 365 企业应用版 (O365ProPlusRetail)</p>
-<p>Visio 选择：Visio 专业版 2016 (VisioProRetail)</p>
-<p>Project 选择：Project 专业版 2016 (ProjectProRetail)</p>
-<p>当然，Visio 和 Project 是需要才选，不需要或者看不懂就不需要管啦。</p>
-<h5 id="我要安装年份版-Office（例如-Office-2021）"><a href="#我要安装年份版-Office（例如-Office-2021）" class="headerlink" title="我要安装年份版 Office（例如 Office 2021）"></a>我要安装年份版 Office（例如 Office 2021）</h5><p>有一说一，年份版没有你想的那么好的哦，如果不是强迫症建议看上面那条。</p>
-<p>针对非正版用户，你只可以安装批量许可产品以便使用 KMS 激活。</p>
-<p>安装批量版时，需要使用对应的 Office 2019&#x2F;2021 企业长期版通道，否则会无法安装。</p>
-<p>Office 2021：</p>
-<p>Office LTSC 专业增强版 2021 - 批量许可证 (ProPlus2021Volume)</p>
-<p>Visio LTSC 专业版 2021 - 批量许可证 (VisioPro2021Volume)</p>
-<p>Project 专业版 2021 - 批量许可证 (ProjectPro2021Volume)</p>
-<p>Office 2019：</p>
-<p>Office 专业增强版 2019 - 批量许可证 (ProPlus2019Volume)</p>
-<p>Visio 专业版 2019 - 批量许可证 (VisioPro2019Volume)</p>
-<p>Project 专业版 2019 - 批量许可证 (ProjectPro2019Volume)</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">PS：不要问我为什么 2021 叫 LTSC，名字是微软起的有问题问微软去。</span><br></pre></td></tr></table></figure>
-
-<h5 id="我是-Windows-7-x2F-8-x2F-8-1-用户"><a href="#我是-Windows-7-x2F-8-x2F-8-1-用户" class="headerlink" title="我是 Windows 7&#x2F;8&#x2F;8.1 用户"></a>我是 Windows 7&#x2F;8&#x2F;8.1 用户</h5><p>由于系统原因，我们推荐按照第二条选项进行处理，这样确保可以进行正常安装。</p>
-<p>不要问我 Office 2019&#x2F;2021 能不能装，问就是说不能，别人说可以的话你问别人去。</p>
-<h5 id="（额外补充内容）什么系统能装什么样的-Office？"><a href="#（额外补充内容）什么系统能装什么样的-Office？" class="headerlink" title="（额外补充内容）什么系统能装什么样的 Office？"></a>（额外补充内容）什么系统能装什么样的 Office？</h5><p>目前 Office Tool Plus 中有 Office 2016、2019、2021、365 可供安装。</p>
-<p>Windows 10 和 11 无限制，可以安装任何版本的 Office。</p>
-<p>Windows 8 和 8.1 只可以安装部分产品，如果将部署模块从「Office 部署工具」更改到「Office Tool Plus」也可以安装任意产品。</p>
-<p>Windows 7 只可以安装 Office 2016 或 365，并且只能够使用「当前通道」。即使你更改部署模块，Office 2019&#x2F;2021 也不一定能安装成功。</p>
-<p>如果你的安装包是从别的地方下载的，那，那就别来问我，我也不知道你下载的是什么。</p>
-<h4 id="可以做的事情"><a href="#可以做的事情" class="headerlink" title="可以做的事情"></a>可以做的事情</h4><ol>
-<li>应用程序：选自己能看懂的就行，一般就是 Word, PowerPoint, Excel.</li>
-<li>通道：“当前通道”就行，Office 2019&#x2F;2021 批量许可证请选 Office 2019&#x2F;2021 企业长期版。</li>
-<li>体系结构：32 位兼容性好；64 位兼容性稍差且体积大，但处理大数据能力稍强。</li>
-<li>部署模式：那肯定要选安装啊，要不然怎么安装。</li>
-<li>安装模块：如没有特殊要求，请勿选择 Office Tool Plus.</li>
-<li>下载后再部署：如果网不行，最好把这个选上，免得安装卡进度卡半天。</li>
-</ol>
-<p>产品和语言弄好后即可开始部署 Office，其余设置不需要更改。</p>
-<p>部署时请耐心等待，不要强制结束安装程序或重启计算机。</p>
-<h3 id="4-视频教程"><a href="#4-视频教程" class="headerlink" title="4. 视频教程"></a>4. 视频教程</h3><p>视频教程更新不及时，建议看本文即可。</p>
-<p>bilibili：<a href="https://www.bilibili.com/video/BV1eU4y1V7NU">https://www.bilibili.com/video/BV1eU4y1V7NU</a></p>
-<p>YouTube：<a href="https://www.youtube.com/watch?v=p90V9_D-8Go">https://www.youtube.com/watch?v=p90V9_D-8Go</a></p>
-<h3 id="5-离线安装包"><a href="#5-离线安装包" class="headerlink" title="5. 离线安装包"></a>5. 离线安装包</h3><p>如果因为网络问题下载缓慢或者无法下载 Office，你可以下载 ISO 文件使用。</p>
-<p><a href="https://otp.landian.vip/zh-cn/download.html">下载站点</a>（云图小镇、OneDrive）中包含有 Office ISO.</p>
-<p>Office ISO 文件不需要解压，双击打开即可挂载使用（Win 7 除外）。</p>
-<h3 id="6-激活-Office"><a href="#6-激活-Office" class="headerlink" title="6. 激活 Office"></a>6. 激活 Office</h3><p>如果你是正版用户，一般情况下是不需要借助 Office Tool Plus 激活 Office 的，在 Office 应用程序中登录自己的微软账号，或者输入你的正版密钥即可激活 Office。</p>
-<p><a href="https://movejian.github.io/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B">【点击此处】前往另一个教程查看如何激活 Office</a></p>
-]]></content>
-      <tags>
-        <tag>Office</tag>
       </tags>
   </entry>
   <entry>
@@ -1218,7 +1218,7 @@
     <content><![CDATA[<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>正版用户一般情况下不需要使用 Office Tool Plus 进行激活，登录账号&#x2F;输入密钥即可激活 Office。</p>
 <p>如果你是从安装教程来到这一步的，那么在这里继续跟着教程来就行。</p>
 <p>需要使用正版 Office？<a href="https://otp.landian.vip/zh-cn/#store">点击这里查看详细信息</a>。</p>
-<p><font style="background: green">如无特殊情况，文章中提到的 Windows 10 也适用于 Windows 11.</font></p>
+<p><font style="background: green" size="6">如无特殊情况，文章中提到的 Windows 10 也适用于 Windows 11.</font></p>
 <span id="more"></span>
 
 <blockquote>
