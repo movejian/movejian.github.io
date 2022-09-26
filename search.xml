@@ -1,31 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>HOOK微信获取聊天消息</title>
-    <url>/2022/09/21/HOOK%E5%BE%AE%E4%BF%A1%E8%8E%B7%E5%8F%96%E8%81%8A%E5%A4%A9%E6%B6%88%E6%81%AF/</url>
-    <content><![CDATA[<blockquote>
-<div class="wp-block-argon-admonition admonition shadow-sm" style="border-left-color:#660000"><div class="admonition-title" style="background-color:#dd0000"><span>警告</span></div><div class="admonition-body"><font color=red>网络不是法外之地，本篇文章仅供技术交流，相关具体实现过程我将省略！</font></div></div>
-</blockquote>
-<h2 id="获取微信处理消息的函数"><a href="#获取微信处理消息的函数" class="headerlink" title="获取微信处理消息的函数"></a>获取微信处理消息的函数</h2><p>我们可以反复向通过CE搜索消息，获取消息所在的内存地址，然后下硬件写入断点，在栈里找到相关函数，这里你可以自行按上面方法进行搜索。</p>
-<span id="more"></span>
-
-<h2 id="使用MinHook-hook该消息函数"><a href="#使用MinHook-hook该消息函数" class="headerlink" title="使用MinHook hook该消息函数"></a>使用MinHook hook该消息函数</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// Initialize MinHook.</span><br><span class="line">if (MH_Initialize() != MH_OK)</span><br><span class="line">&#123;</span><br><span class="line">return 1;</span><br><span class="line">&#125;</span><br><span class="line">DWORD windllAddress = (DWORD)GetModuleHandle(L&quot;WeChatWin.dll&quot;);</span><br><span class="line">if (windllAddress == 0) &#123;</span><br><span class="line">printf(&quot;Module Address Get Error: 0x%x\n&quot;, windllAddress);</span><br><span class="line">return 0;</span><br><span class="line">&#125;</span><br><span class="line">DWORD ReceiveHookAddress = windllAddress + 0x*****; // 偏移地址请查看下方</span><br><span class="line"> </span><br><span class="line">// Create a hook for MessageBoxW, in disabled state.</span><br><span class="line">if (MH_CreateHook((LPVOID)ReceiveHookAddress, &amp;ReceiveWxMessage,</span><br><span class="line">reinterpret_cast&lt;LPVOID*&gt;(&amp;_receiveMsgFunc)) != MH_OK)</span><br><span class="line">&#123;</span><br><span class="line">printf(&quot;MH_CreateHook Error: 0x%x\n&quot;, ReceiveHookAddress);</span><br><span class="line">return 0;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<h2 id="消息Hook函数"><a href="#消息Hook函数" class="headerlink" title="消息Hook函数"></a>消息Hook函数</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">void ReceiveWxMessage(DWORD r_eax)</span><br><span class="line">&#123;</span><br><span class="line">try</span><br><span class="line">&#123;</span><br><span class="line">// 检查进程是否有权限访问指定的内存块</span><br><span class="line">if (IsBadReadPtr((void*)r_eax, 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgTypeOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgContentOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + WxidOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + GroupMsgSenderOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgSourceOffset), 4)</span><br><span class="line">) &#123;</span><br><span class="line">return;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">// 取出消息内容</span><br><span class="line">LPVOID pContent = *((LPVOID*)(r_eax + MsgContentOffset));</span><br><span class="line"> </span><br><span class="line">// 取出微信ID/群ID</span><br><span class="line">LPVOID pWxid = *((LPVOID*)(r_eax + WxidOffset));</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">if (!wcscmp((wchar_t*)pWxid, L&quot;filehelper&quot;)) &#123;</span><br><span class="line">wprintf(L&quot;Receive Msg\n Wechat ID: %ws \n Content: %ws\n&quot;, (wchar_t*)pWxid, (wchar_t*)pContent);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line">catch (...)</span><br><span class="line">&#123;</span><br><span class="line">OutputDebugStringA(&quot;消息异常&quot;);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<h2 id="Hook效果"><a href="#Hook效果" class="headerlink" title="Hook效果"></a>Hook效果</h2><p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210322614.png"></p>
-<blockquote>
-<p>接收函数具体地址：windllAddress + 0x1086F0;</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>微信</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Centos7安装时引导错误以及解决方案</title>
     <url>/2019/11/19/Centos7%E5%AE%89%E8%A3%85%E6%97%B6%E5%BC%95%E5%AF%BC%E9%94%99%E8%AF%AF%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</url>
     <content><![CDATA[<p>Centos7安装时引导错误以及解决方案<br>使用U盘刻录方式安装CentOS7.6，但是发现安装初始化时候发生错误，本以为是U盘刻录或者是镜像的问题，但是反复刻录多遍仍然出错。后来在CentOS中文社区，发现使用UltraISO刻录安装时就可能出现初始化引导错误1.一般情况下</p>
@@ -56,76 +31,6 @@
 ]]></content>
       <tags>
         <tag>Centos7</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo如何迁移到新电脑</title>
-    <url>/2022/08/21/Hexo%E5%A6%82%E4%BD%95%E8%BF%81%E7%A7%BB%E5%88%B0%E6%96%B0%E7%94%B5%E8%84%91/</url>
-    <content><![CDATA[<h3 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h3><p>这是曾经发生的事情，自己对于数据备份疏忽，导致Hexo的<code>source</code>丢失，只能重新搭建博客。。。。。</p>
-<p>如何备份后续会更新，一切都是泪。。。。。</p>
-<span id="more"></span> 
-<h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p>迁移到新电脑之后，发现以前的Hexo拉到本地是无法正常使用的，这时候查找资料寻找解决办法</p>
-<p>由于旧电脑操作不当已经被格式化了，所有的源代码数据都已经被清除，所以我现在只能重新搭建博客</p>
-<h3 id="需要做的事情"><a href="#需要做的事情" class="headerlink" title="需要做的事情"></a>需要做的事情</h3><ol>
-<li><p>重新搭建博客</p>
-</li>
-<li><p>做好GIT备份</p>
-</li>
-<li><p>定期同步</p>
-</li>
-</ol>
-<h3 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h3><p>（有source等文件的情况下可以恢复）</p>
-<h4 id="1-GIT上设置秘钥"><a href="#1-GIT上设置秘钥" class="headerlink" title="1. GIT上设置秘钥"></a>1. GIT上设置秘钥</h4><p>  安装git这里就不描述了，安装完成之后，我们在终端执行<code>ssh-keygen -t rsa -C &quot;movejian@qq.com&quot;</code></p>
-<p>然后按三次回车，生成秘钥</p>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line">$ ssh-<span class="attribute">keygen</span> -t rsa -C <span class="string">&quot;xxxx<span class="variable">@qq</span>.com&quot;</span>(你的邮箱地址) Generating public/private rsa key pair. Enter file in which to save the key (/c/Users/xxxxxx/.ssh/id_rsa):</span><br></pre></td></tr></table></figure>
-
-<p>在<code>C:\Users\xxxx.ssh</code>下面，就可以看到秘钥了，<strong>id_rsa</strong>是私钥，千万不能泄露出去，<strong>id_rsa.pub是公钥</strong>，我们需要复制<strong>公钥</strong>里面的内容</p>
-<p>进入<a href="https://github.com/">github</a> ，选择 <code>setting</code></p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/20220821123613.png" alt="github设置"></p>
-<p>选择<code>SSH and GPG keys</code></p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/20220821123713.png" alt="key配置"></p>
-<p>选择<code>New SSH key</code></p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/20220821123810.png" alt="保存你的key到github"></p>
-<p>填写好title, 复制 rsa_public 里面的内容，点击<code>Add</code>，输入密码即可完成秘钥建立</p>
-<h4 id="2-安装node"><a href="#2-安装node" class="headerlink" title="2. 安装node"></a>2. 安装node</h4><p>  在<strong>GIT</strong>设置完成之后，我们下一步是准备好环境进行还原，首先我们需要进入 <a href="https://nodejs.cn/download/">node.js</a>的官网下载对应的安装包，比如下方的中文网站：</p>
-<p> <a href="https://nodejs.cn/download/">node.js</a>官方中文地址：<a href="https://nodejs.cn/download/">https://nodejs.cn/download/</a></p>
-<p>进入网站之后，我们需要下载对应的安装包进行安装，这里建议下LTS的版本。</p>
-<p>安装完node之后，这里不要着急，先检测一下自己是否真的安装好了，使用下面三个命令检测自己是否具备环境。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">node -v</span><br><span class="line"></span><br><span class="line">npm -v</span><br><span class="line"></span><br><span class="line">Git --version</span><br></pre></td></tr></table></figure>
-
-<h4 id="3-安装hexo"><a href="#3-安装hexo" class="headerlink" title="3. 安装hexo"></a>3. 安装hexo</h4><p>新版本的node基本包含了<code>npm</code>这一类的工具，我们也无需手动安装，另外这里也不建议使用<code>cnpm</code>安装，建议直接使用<code>npm</code>安装即可，我们依次敲入下面的命令即可。</p>
-  <figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
-<p>如果你是用的<strong>苹果系统（MAC）</strong>在前面加上<code>sudo</code></p>
-  <figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">sudo npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>  如果mac电脑在操作node命令的时候出现类似permission的字样，多半是没有权限，sudoy一下即可</p>
-</blockquote>
-<p>安装好了之后，这里可以使用如下的命令安装Hexo，同上，如果使用<strong>MAC</strong>电脑在前面加上<code>sudo</code></p>
-<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">npm install -g hexo</span><br></pre></td></tr></table></figure>
-
-<h4 id="4-从GIT把备份拉到本地"><a href="#4-从GIT把备份拉到本地" class="headerlink" title="4. 从GIT把备份拉到本地"></a>4. 从GIT把备份拉到本地</h4><p>  这一个步骤就是使用git clone把之前的文章构建的备份拉到本地，比如这里个人的命令如下。</p>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">git</span> clone -b hexo https://xxxx/hexo</span><br></pre></td></tr></table></figure>
-
-<p>这一步完成之后，在本地有的只是一个对于hexo的基础架构，这时候还是不能执行hexo命令的，我们还需要执行 npm install 把node和hexo的依赖安装到当前的目录，生成对应的node_moudules 文件。</p>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">npm</span> install</span><br></pre></td></tr></table></figure>
-
-<p>安装完成之后，我们就可以快乐的玩耍了。</p>
-<h4 id="5-Hexo基础操作"><a href="#5-Hexo基础操作" class="headerlink" title="5. Hexo基础操作"></a>5. Hexo基础操作</h4><p>好久没有用过了，这里再次回顾一下基础的操作，其实hexo到了最后就只剩下几个操作就可以完成，比如下面的命令，把笔记软件写好的稿子放到hexo生成的文件里面，加一个<code>&lt;!-- more --&gt;</code>标签即可完成一遍笔记的输出，然后部署上去之后自动推送到github和gitee 的分支。</p>
-  <figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">hexo</span> new <span class="string">&#x27;xxx&#x27;</span>//新建一个新的主题</span><br><span class="line">hexo cl</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-
-<p>  个人喜欢使用如下的文章模板：</p>
-  <figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line">title: &#123;&#123; <span class="attribute">title</span> &#125;&#125;</span><br><span class="line">subtitle: <span class="string">&#x27;这个人很懒，不想写副标题&#x27;</span></span><br><span class="line">author: lazytime</span><br><span class="line">url_suffix: random</span><br><span class="line">date: &#123;&#123; <span class="attribute">date</span> &#125;&#125;</span><br><span class="line">tags:</span><br><span class="line">- 无</span><br><span class="line">categories:</span><br><span class="line">- 未分类</span><br><span class="line">keywords: 请输入关键字（英文逗号分隔多个关键字）</span><br><span class="line">description: 请输入描述信息</span><br><span class="line">copyright: <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>  备份还原还是非常快的，中间除了在node的权限上卡了一下，基本上不到半小时既可以在本地快速搭建一个hexo的博客，十分方便。</p>
-<h3 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h3><p>建议每一个人有一个自己的博客，因为你不知道你的云笔记运营商哪一天会出问题，就好比之前的滴滴事件一样，另外注意平时多备份，不要像我一样傻不拉几的把硬盘格式化结果忘了把博客的内容拷出来结果全部要重写。。。。。</p>
-]]></content>
-      <categories>
-        <category>学习</category>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>技术</tag>
       </tags>
   </entry>
   <entry>
@@ -206,6 +111,31 @@
       </tags>
   </entry>
   <entry>
+    <title>HOOK微信获取聊天消息</title>
+    <url>/2022/09/21/HOOK%E5%BE%AE%E4%BF%A1%E8%8E%B7%E5%8F%96%E8%81%8A%E5%A4%A9%E6%B6%88%E6%81%AF/</url>
+    <content><![CDATA[<blockquote>
+<div class="wp-block-argon-admonition admonition shadow-sm" style="border-left-color:#660000"><div class="admonition-title" style="background-color:#dd0000"><span>警告</span></div><div class="admonition-body"><font color=red>网络不是法外之地，本篇文章仅供技术交流，相关具体实现过程我将省略！</font></div></div>
+</blockquote>
+<h2 id="获取微信处理消息的函数"><a href="#获取微信处理消息的函数" class="headerlink" title="获取微信处理消息的函数"></a>获取微信处理消息的函数</h2><p>我们可以反复向通过CE搜索消息，获取消息所在的内存地址，然后下硬件写入断点，在栈里找到相关函数，这里你可以自行按上面方法进行搜索。</p>
+<span id="more"></span>
+
+<h2 id="使用MinHook-hook该消息函数"><a href="#使用MinHook-hook该消息函数" class="headerlink" title="使用MinHook hook该消息函数"></a>使用MinHook hook该消息函数</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// Initialize MinHook.</span><br><span class="line">if (MH_Initialize() != MH_OK)</span><br><span class="line">&#123;</span><br><span class="line">return 1;</span><br><span class="line">&#125;</span><br><span class="line">DWORD windllAddress = (DWORD)GetModuleHandle(L&quot;WeChatWin.dll&quot;);</span><br><span class="line">if (windllAddress == 0) &#123;</span><br><span class="line">printf(&quot;Module Address Get Error: 0x%x\n&quot;, windllAddress);</span><br><span class="line">return 0;</span><br><span class="line">&#125;</span><br><span class="line">DWORD ReceiveHookAddress = windllAddress + 0x*****; // 偏移地址请查看下方</span><br><span class="line"> </span><br><span class="line">// Create a hook for MessageBoxW, in disabled state.</span><br><span class="line">if (MH_CreateHook((LPVOID)ReceiveHookAddress, &amp;ReceiveWxMessage,</span><br><span class="line">reinterpret_cast&lt;LPVOID*&gt;(&amp;_receiveMsgFunc)) != MH_OK)</span><br><span class="line">&#123;</span><br><span class="line">printf(&quot;MH_CreateHook Error: 0x%x\n&quot;, ReceiveHookAddress);</span><br><span class="line">return 0;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h2 id="消息Hook函数"><a href="#消息Hook函数" class="headerlink" title="消息Hook函数"></a>消息Hook函数</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">void ReceiveWxMessage(DWORD r_eax)</span><br><span class="line">&#123;</span><br><span class="line">try</span><br><span class="line">&#123;</span><br><span class="line">// 检查进程是否有权限访问指定的内存块</span><br><span class="line">if (IsBadReadPtr((void*)r_eax, 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgTypeOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgContentOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + WxidOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + GroupMsgSenderOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgSourceOffset), 4)</span><br><span class="line">) &#123;</span><br><span class="line">return;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">// 取出消息内容</span><br><span class="line">LPVOID pContent = *((LPVOID*)(r_eax + MsgContentOffset));</span><br><span class="line"> </span><br><span class="line">// 取出微信ID/群ID</span><br><span class="line">LPVOID pWxid = *((LPVOID*)(r_eax + WxidOffset));</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">if (!wcscmp((wchar_t*)pWxid, L&quot;filehelper&quot;)) &#123;</span><br><span class="line">wprintf(L&quot;Receive Msg\n Wechat ID: %ws \n Content: %ws\n&quot;, (wchar_t*)pWxid, (wchar_t*)pContent);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line">catch (...)</span><br><span class="line">&#123;</span><br><span class="line">OutputDebugStringA(&quot;消息异常&quot;);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h2 id="Hook效果"><a href="#Hook效果" class="headerlink" title="Hook效果"></a>Hook效果</h2><p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210322614.png"></p>
+<blockquote>
+<p>接收函数具体地址：windllAddress + 0x1086F0;</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>微信</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Kali的DDoS攻击方法</title>
     <url>/2022/09/21/Kali%E7%9A%84DDoS%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95/</url>
     <content><![CDATA[<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212049992.jpeg"></p>
@@ -235,6 +165,76 @@
       </categories>
       <tags>
         <tag>Kali</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo如何迁移到新电脑</title>
+    <url>/2022/08/21/Hexo%E5%A6%82%E4%BD%95%E8%BF%81%E7%A7%BB%E5%88%B0%E6%96%B0%E7%94%B5%E8%84%91/</url>
+    <content><![CDATA[<h3 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h3><p>这是曾经发生的事情，自己对于数据备份疏忽，导致Hexo的<code>source</code>丢失，只能重新搭建博客。。。。。</p>
+<p>如何备份后续会更新，一切都是泪。。。。。</p>
+<span id="more"></span> 
+<h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p>迁移到新电脑之后，发现以前的Hexo拉到本地是无法正常使用的，这时候查找资料寻找解决办法</p>
+<p>由于旧电脑操作不当已经被格式化了，所有的源代码数据都已经被清除，所以我现在只能重新搭建博客</p>
+<h3 id="需要做的事情"><a href="#需要做的事情" class="headerlink" title="需要做的事情"></a>需要做的事情</h3><ol>
+<li><p>重新搭建博客</p>
+</li>
+<li><p>做好GIT备份</p>
+</li>
+<li><p>定期同步</p>
+</li>
+</ol>
+<h3 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h3><p>（有source等文件的情况下可以恢复）</p>
+<h4 id="1-GIT上设置秘钥"><a href="#1-GIT上设置秘钥" class="headerlink" title="1. GIT上设置秘钥"></a>1. GIT上设置秘钥</h4><p>  安装git这里就不描述了，安装完成之后，我们在终端执行<code>ssh-keygen -t rsa -C &quot;movejian@qq.com&quot;</code></p>
+<p>然后按三次回车，生成秘钥</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line">$ ssh-<span class="attribute">keygen</span> -t rsa -C <span class="string">&quot;xxxx<span class="variable">@qq</span>.com&quot;</span>(你的邮箱地址) Generating public/private rsa key pair. Enter file in which to save the key (/c/Users/xxxxxx/.ssh/id_rsa):</span><br></pre></td></tr></table></figure>
+
+<p>在<code>C:\Users\xxxx.ssh</code>下面，就可以看到秘钥了，<strong>id_rsa</strong>是私钥，千万不能泄露出去，<strong>id_rsa.pub是公钥</strong>，我们需要复制<strong>公钥</strong>里面的内容</p>
+<p>进入<a href="https://github.com/">github</a> ，选择 <code>setting</code></p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/20220821123613.png" alt="github设置"></p>
+<p>选择<code>SSH and GPG keys</code></p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/20220821123713.png" alt="key配置"></p>
+<p>选择<code>New SSH key</code></p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/20220821123810.png" alt="保存你的key到github"></p>
+<p>填写好title, 复制 rsa_public 里面的内容，点击<code>Add</code>，输入密码即可完成秘钥建立</p>
+<h4 id="2-安装node"><a href="#2-安装node" class="headerlink" title="2. 安装node"></a>2. 安装node</h4><p>  在<strong>GIT</strong>设置完成之后，我们下一步是准备好环境进行还原，首先我们需要进入 <a href="https://nodejs.cn/download/">node.js</a>的官网下载对应的安装包，比如下方的中文网站：</p>
+<p> <a href="https://nodejs.cn/download/">node.js</a>官方中文地址：<a href="https://nodejs.cn/download/">https://nodejs.cn/download/</a></p>
+<p>进入网站之后，我们需要下载对应的安装包进行安装，这里建议下LTS的版本。</p>
+<p>安装完node之后，这里不要着急，先检测一下自己是否真的安装好了，使用下面三个命令检测自己是否具备环境。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">node -v</span><br><span class="line"></span><br><span class="line">npm -v</span><br><span class="line"></span><br><span class="line">Git --version</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-安装hexo"><a href="#3-安装hexo" class="headerlink" title="3. 安装hexo"></a>3. 安装hexo</h4><p>新版本的node基本包含了<code>npm</code>这一类的工具，我们也无需手动安装，另外这里也不建议使用<code>cnpm</code>安装，建议直接使用<code>npm</code>安装即可，我们依次敲入下面的命令即可。</p>
+  <figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+<p>如果你是用的<strong>苹果系统（MAC）</strong>在前面加上<code>sudo</code></p>
+  <figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">sudo npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>  如果mac电脑在操作node命令的时候出现类似permission的字样，多半是没有权限，sudoy一下即可</p>
+</blockquote>
+<p>安装好了之后，这里可以使用如下的命令安装Hexo，同上，如果使用<strong>MAC</strong>电脑在前面加上<code>sudo</code></p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">npm install -g hexo</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-从GIT把备份拉到本地"><a href="#4-从GIT把备份拉到本地" class="headerlink" title="4. 从GIT把备份拉到本地"></a>4. 从GIT把备份拉到本地</h4><p>  这一个步骤就是使用git clone把之前的文章构建的备份拉到本地，比如这里个人的命令如下。</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">git</span> clone -b hexo https://xxxx/hexo</span><br></pre></td></tr></table></figure>
+
+<p>这一步完成之后，在本地有的只是一个对于hexo的基础架构，这时候还是不能执行hexo命令的，我们还需要执行 npm install 把node和hexo的依赖安装到当前的目录，生成对应的node_moudules 文件。</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">npm</span> install</span><br></pre></td></tr></table></figure>
+
+<p>安装完成之后，我们就可以快乐的玩耍了。</p>
+<h4 id="5-Hexo基础操作"><a href="#5-Hexo基础操作" class="headerlink" title="5. Hexo基础操作"></a>5. Hexo基础操作</h4><p>好久没有用过了，这里再次回顾一下基础的操作，其实hexo到了最后就只剩下几个操作就可以完成，比如下面的命令，把笔记软件写好的稿子放到hexo生成的文件里面，加一个<code>&lt;!-- more --&gt;</code>标签即可完成一遍笔记的输出，然后部署上去之后自动推送到github和gitee 的分支。</p>
+  <figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">hexo</span> new <span class="string">&#x27;xxx&#x27;</span>//新建一个新的主题</span><br><span class="line">hexo cl</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<p>  个人喜欢使用如下的文章模板：</p>
+  <figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line">title: &#123;&#123; <span class="attribute">title</span> &#125;&#125;</span><br><span class="line">subtitle: <span class="string">&#x27;这个人很懒，不想写副标题&#x27;</span></span><br><span class="line">author: lazytime</span><br><span class="line">url_suffix: random</span><br><span class="line">date: &#123;&#123; <span class="attribute">date</span> &#125;&#125;</span><br><span class="line">tags:</span><br><span class="line">- 无</span><br><span class="line">categories:</span><br><span class="line">- 未分类</span><br><span class="line">keywords: 请输入关键字（英文逗号分隔多个关键字）</span><br><span class="line">description: 请输入描述信息</span><br><span class="line">copyright: <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>  备份还原还是非常快的，中间除了在node的权限上卡了一下，基本上不到半小时既可以在本地快速搭建一个hexo的博客，十分方便。</p>
+<h3 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h3><p>建议每一个人有一个自己的博客，因为你不知道你的云笔记运营商哪一天会出问题，就好比之前的滴滴事件一样，另外注意平时多备份，不要像我一样傻不拉几的把硬盘格式化结果忘了把博客的内容拷出来结果全部要重写。。。。。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>技术</tag>
       </tags>
   </entry>
   <entry>
@@ -314,204 +314,6 @@
 <p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210124550.png"></p>
 <h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>使用<code>mount</code>命令我们可以更好地控制在 Linux 中挂载和卸载磁盘，并掌握一些技巧，在连接的驱动器无法自动正确挂载时可能会有所帮助。</p>
 <p>在探索以前使用的系统的旧备份映像或想要查看 Linux 发行版映像内容以进行探索或学习时，能够使用循环设备挂载磁盘映像非常有用。</p>
-]]></content>
-      <categories>
-        <category>学习</category>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux查看硬件信息与系统资源</title>
-    <url>/2022/09/06/Linux%E6%9F%A5%E7%9C%8B%E7%A1%AC%E4%BB%B6%E4%BF%A1%E6%81%AF%E4%B8%8E%E7%B3%BB%E7%BB%9F%E8%B5%84%E6%BA%90/</url>
-    <content><![CDATA[<p>Linux下经常需要查看系统资源或硬件资源，与之对应的命令行也是非常多</p>
-<p>本文将根据使用经验，将常见的查询方法总结罗列一遍以供参考</p>
-<p>以下指令以Ubuntu1804、Cent7OS作为测试平台</p>
-<h2 id="1-系统资源"><a href="#1-系统资源" class="headerlink" title="1. 系统资源"></a>1. 系统资源</h2><h3 id="1-1-Linux发行版与内核"><a href="#1-1-Linux发行版与内核" class="headerlink" title="1.1. Linux发行版与内核"></a>1.1. Linux发行版与内核</h3><p><code>uname -r</code>命令输出发行版与内核信息，大部分发行版基本均带有此命令，但输出中未必包含发行版全称信息</p>
-<span id="more"></span>
-<p>Cent7OS</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[chancel@localhost ~]$ uname -a</span><br><span class="line">Linux localhost.localdomain 3.10.0-1160.62.1.el7.x86_64 #1 SMP Tue Apr 5 16:57:59 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux</span><br></pre></td></tr></table></figure>
-
-<p>Ubuntu1804</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ uname -a</span><br><span class="line">Linux ubuntu1804 4.15.0-189-generic #200-Ubuntu SMP Wed Jun 22 19:53:37 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux</span><br></pre></td></tr></table></figure>
-
-<p><code>cat /proc/version</code>命令输出内核版本与编译的gcc版本</p>
-<p>Cent7OS</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[chancel@localhost ~]$ cat /proc/version </span><br><span class="line">Linux version 3.10.0-1160.62.1.el7.x86_64 (mockbuild@kbuilder.bsys.centos.org) (gcc version 4.8.5 20150623 (Red Hat 4.8.5-44) (GCC) ) #1 SMP Tue Apr 5 16:57:59 UTC 2022</span><br></pre></td></tr></table></figure>
-
-<p>Ubuntu1804</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ cat /proc/version</span><br><span class="line">Linux version 4.15.0-189-generic (buildd@lcy02-amd64-039) (gcc version 7.5.0 (Ubuntu 7.5.0-3ubuntu1~18.04)) #200-Ubuntu SMP Wed Jun 22 19:53:37 UTC 2022</span><br></pre></td></tr></table></figure>
-
-<p><code>lsb_release -a</code>命令输出发行版信息，但Cent7OS并不包含此命令</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ lsb_release -a</span><br><span class="line">No LSB modules are available.</span><br><span class="line">Distributor ID: Ubuntu</span><br><span class="line">Description:    Ubuntu 18.04.6 LTS</span><br><span class="line">Release:        18.04</span><br><span class="line">Codename:       bionic</span><br></pre></td></tr></table></figure>
-
-<p><code>cat /etc/redhat-release</code>命令是Redhat系列独有的</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[chancel@localhost ~]$ cat /etc/redhat-release</span><br><span class="line">CentOS Linux release 7.9.2009 (Core)</span><br></pre></td></tr></table></figure>
-
-<p><code>cat /etc/*release</code>命令在大部分Linux发行版中都可以使用，是最方便使用的命令</p>
-<p>以Cent7OS为例</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[chancel@localhost ~]$ cat /etc/*release</span><br><span class="line">CentOS Linux release 7.9.2009 (Core)</span><br><span class="line">NAME=&quot;CentOS Linux&quot;</span><br><span class="line">VERSION=&quot;7 (Core)&quot;</span><br><span class="line">ID=&quot;centos&quot;</span><br><span class="line">ID_LIKE=&quot;rhel fedora&quot;</span><br><span class="line">VERSION_ID=&quot;7&quot;</span><br><span class="line">PRETTY_NAME=&quot;CentOS Linux 7 (Core)&quot;</span><br><span class="line">...</span><br><span class="line">CentOS Linux release 7.9.2009 (Core)</span><br><span class="line">CentOS Linux release 7.9.2009 (Core)</span><br></pre></td></tr></table></figure>
-
-<h3 id="1-2-CPU-x2F-内存占用查看"><a href="#1-2-CPU-x2F-内存占用查看" class="headerlink" title="1.2. CPU&#x2F;内存占用查看"></a>1.2. CPU&#x2F;内存占用查看</h3><p><code>top</code>指令是最常见用于检测CPU占用情况的指令，使用效果如下</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209081929349.png" alt="img"></p>
-<p>此时按<code>P</code>以CPU占用排序，按<code>M</code>以内存占用排序，按<code>I</code>隐藏所有空闲进程，按<code>S</code>以运行时间排序</p>
-<p><code>htop</code>指令则是比<code>top</code>更简洁的显示程序，在部分发行版上需要自行安装，使用效果如下</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209081930961.png" alt="img"></p>
-<p>相较于<code>top</code>的使用，<code>htop</code>界面更清晰易懂，使用方法在界面均有提示，对用户更为友好</p>
-<p>通常情况下，<code>htop</code>需要自行安装</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># Ubuntu</span><br><span class="line">sudo apt install htop</span><br><span class="line"></span><br><span class="line"># Cent</span><br><span class="line">sudo yum install htop</span><br></pre></td></tr></table></figure>
-
-<p><code>glances</code>则是比<code>htop</code>更进一步的资源查看器</p>
-<p>不但包括常见的CPU、内存，甚至还包括当前网速以及硬件温度数据，使用效果如下</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209081931536.png" alt="img"></p>
-<p>通常情况下，<code>glances</code>需要自行安装，由于是使用Python语言开发的，所以资源占用也较大</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># Ubuntu</span><br><span class="line">sudo apt install glances</span><br><span class="line"></span><br><span class="line"># Cent</span><br><span class="line">sudo yum install glances</span><br></pre></td></tr></table></figure>
-
-<p>以上3个是我比较常用的系统资源占用查询工具，大部分情况下都非常够用</p>
-<p>其他的可能还包括<code>nmon</code>、<code>vmstat</code>等，若有兴趣也可自行查询</p>
-<h3 id="1-3-磁盘资源管理"><a href="#1-3-磁盘资源管理" class="headerlink" title="1.3. 磁盘资源管理"></a>1.3. 磁盘资源管理</h3><p><code>df -h</code>通常用于查询硬盘资源使用情况（-h代表使用以1024为单位且易读的方式显示）</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ df -h</span><br><span class="line">Filesystem      Size  Used Avail Use% Mounted on</span><br><span class="line">udev            1.9G     0  1.9G   0% /dev</span><br><span class="line">tmpfs           395M  1.3M  394M   1% /run</span><br><span class="line">/dev/vda2       126G   57G   63G  48% /</span><br><span class="line">tmpfs           2.0G     0  2.0G   0% /dev/shm</span><br><span class="line">tmpfs           5.0M     0  5.0M   0% /run/lock</span><br><span class="line">tmpfs           2.0G     0  2.0G   0% /sys/fs/cgroup</span><br><span class="line">/dev/loop0      114M  114M     0 100% /snap/core/13425</span><br><span class="line">/dev/loop1      114M  114M     0 100% /snap/core/13308</span><br><span class="line">tmpfs           395M     0  395M   0% /run/user/1000</span><br></pre></td></tr></table></figure>
-
-<p><code>fdisk -l</code>则是用于查询物理分区情况</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ sudo fdisk -l</span><br><span class="line">Disk /dev/loop0: 114 MiB, 119525376 bytes, 233448 sectors</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disk /dev/loop1: 113.9 MiB, 119418880 bytes, 233240 sectors</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disk /dev/vda: 128 GiB, 137438953472 bytes, 268435456 sectors</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disklabel type: gpt</span><br><span class="line">Disk identifier: 376C8DD5-F786-4C39-9F4E-1461BE1FA269</span><br><span class="line"></span><br><span class="line">Device     Start       End   Sectors  Size Type</span><br><span class="line">/dev/vda1   2048      4095      2048    1M BIOS boot</span><br><span class="line">/dev/vda2   4096 268433407 268429312  128G Linux filesystem</span><br></pre></td></tr></table></figure>
-
-<p>当然，<code>fdisk</code>命令本身主要还是用于管理硬盘分区，其管理过程是对话式的，类似于下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[chancel@localhost ~]$ sudo fdisk /dev/vda</span><br><span class="line">[sudo] password for chancel: </span><br><span class="line">Welcome to fdisk (util-linux 2.23.2).</span><br><span class="line"></span><br><span class="line">Changes will remain in memory only, until you decide to write them.</span><br><span class="line">Be careful before using the write command.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Command (m for help):</span><br></pre></td></tr></table></figure>
-
-<p>输入<code>m</code>可获得指令帮助，创建过程非常简单易懂</p>
-<p><code>mkfs.[format]</code>命令用于格式化硬盘，<code>[format]</code>代表硬盘格式，常见的格式如下</p>
-<ul>
-<li>mkfs.ext2</li>
-<li>mkfs.ext3</li>
-<li>mkfs.ext4</li>
-<li>mkfs.ntfs</li>
-<li>mkfs.xfs</li>
-</ul>
-<p>在分区成功后，通常需要格式化，使用<code>mkfs.[format] /dev/[device_name]</code>进行格式化</p>
-<h3 id="1-4-网络信息管理"><a href="#1-4-网络信息管理" class="headerlink" title="1.4. 网络信息管理"></a>1.4. 网络信息管理</h3><p><code>ip</code>是常用的网络信息查看工具，是后期Linux用于替换<code>ipconfig</code>的工具</p>
-<p>常见的用法</p>
-<ul>
-<li><code>ip addr show</code>显示网路ip信息（缩写<code>ip a</code>）</li>
-<li><code>ip link show</code>显示网络接口信息（缩写<code>ip l</code>）</li>
-<li><code>ip route list</code>显示网路路由信息（缩写<code>ip r</code>）</li>
-<li><code>ip neigh show</code>显示网路ARP表信息（缩写<code>ip n</code>）</li>
-</ul>
-<p><code>ip addr</code>通常用于设置网卡的网络信息，如</p>
-<ul>
-<li><code>ip addr &#123;add|change|del&#125; 172.16.0.1/24 dev eth0</code>添加&#x2F;更改&#x2F;删除网卡ip</li>
-</ul>
-<p><code>ip link</code>通常用于控制网卡的行为，如</p>
-<ul>
-<li><code>ip link set eth0 &#123;up/down&#125;</code>用于开启关闭网卡</li>
-<li><code>ip link set eth0 promisc &#123;on/off&#125;</code>用于设置网卡混杂模式开启关闭</li>
-</ul>
-<p><code>ip route</code>通常用于设置路由信息，如</p>
-<ul>
-<li><code>ip route &#123;add/del&#125; [ip_address] via [gateway]</code>添加&#x2F;删除网关静态路由</li>
-<li><code>ip route &#123;add/del&#125; [ip_address] dev [interface]</code>添加&#x2F;删除接口静态路由</li>
-</ul>
-<p><code>ip neigh</code>通常用于王路平arp表（替换老旧的<code>arp</code>命令），如</p>
-<ul>
-<li><code>ip neigh &#123;add/dev&#125; [ip_address] dev [interface]</code>添加&#x2F;删除一个arp映射</li>
-</ul>
-<p>比较常用的是<code>ip addr</code>与<code>ip route</code>2个参数</p>
-<p>前者用于查询网络ip信息，其输出如下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">~ ➤ ip a</span><br><span class="line">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000</span><br><span class="line">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00</span><br><span class="line">    inet 127.0.0.1/8 scope host lo</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 ::1/128 scope host </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc fq_codel state UP group default qlen 1000</span><br><span class="line">    link/ether 00:16:de:23:94:48 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 209.141.42.231/24 brd 209.141.42.255 scope global dynamic eth0</span><br><span class="line">       valid_lft 2591984sec preferred_lft 2591984sec</span><br><span class="line">    inet6 fe80::216:deff:fe23:9448/64 scope link </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br></pre></td></tr></table></figure>
-
-<p>后者常用于规划路由请求，如下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 设置路由走网关172.16.0.1，得到公网IP为4.4.4.4</span><br><span class="line">➜  ~ ip route add 104.160.18.230 via 172.16.0.1</span><br><span class="line">➜  ~ curl https://api.chancel.me/rest/api/v1/ip</span><br><span class="line">&#123;&quot;status&quot;:1,&quot;msg&quot;:&quot;Query success&quot;,&quot;data&quot;:&#123;&quot;ip&quot;:&quot;4.4.4.4&quot;&#125;&#125;</span><br><span class="line"></span><br><span class="line"># 设置路由走网关192.168.1.1，得到公网IP为6.6.6.6</span><br><span class="line">➜  ~ ip route del 104.160.18.230 via 192.168.1.1</span><br><span class="line">➜  ~ curl https://api.chancel.me/rest/api/v1/ip</span><br><span class="line">&#123;&quot;status&quot;:1,&quot;msg&quot;:&quot;Query success&quot;,&quot;data&quot;:&#123;&quot;ip&quot;:&quot;6.6.6.6&quot;&#125;&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="2-硬件资源"><a href="#2-硬件资源" class="headerlink" title="2. 硬件资源"></a>2. 硬件资源</h2><h3 id="2-1-CPU信息"><a href="#2-1-CPU信息" class="headerlink" title="2.1. CPU信息"></a>2.1. CPU信息</h3><p><code>lscpu</code>和<code>cat /proc/cpuinfo</code>都可以输出CPU信息，如下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ lscpu   </span><br><span class="line">Architecture:            x86_64</span><br><span class="line">  CPU op-mode(s):        32-bit, 64-bit</span><br><span class="line">  Address sizes:         48 bits physical, 48 bits virtual</span><br><span class="line">  ...</span><br><span class="line">Vulnerabilities:         </span><br><span class="line">  ...</span><br><span class="line">  Tsx async abort:       Not affected</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-2-内存信息"><a href="#2-2-内存信息" class="headerlink" title="2.2. 内存信息"></a>2.2. 内存信息</h3><p><code>lsmem</code>和<code>cat /proc/meminfo</code>都可以输出内存信息，如下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ lsmem       </span><br><span class="line">RANGE                                 SIZE  STATE REMOVABLE  BLOCK</span><br><span class="line">0x0000000000000000-0x00000000bfffffff   3G online       yes   0-23</span><br><span class="line">0x0000000100000000-0x0000000f3fffffff  57G online       yes 32-487</span><br><span class="line"></span><br><span class="line">Memory block size:       128M</span><br><span class="line">Total online memory:      60G</span><br><span class="line">Total offline memory:      0B</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-3-硬盘信息"><a href="#2-3-硬盘信息" class="headerlink" title="2.3. 硬盘信息"></a>2.3. 硬盘信息</h3><p><code>lsblk</code>用于查看硬盘信息，如下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ lsblk       </span><br><span class="line">NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS</span><br><span class="line">loop0         7:0    0     4K  1 loop /var/lib/snapd/snap/bare/5</span><br><span class="line">...</span><br><span class="line">loop8         7:8    0    47M  1 loop /var/lib/snapd/snap/snapd/16292</span><br><span class="line">sda           8:0    0 476.9G  0 disk </span><br><span class="line">└─sda1        8:1    0 476.9G  0 part /mnt/SDA</span><br><span class="line">nvme0n1     259:0    0 931.5G  0 disk </span><br><span class="line">├─nvme0n1p1 259:1    0   300M  0 part /boot/efi</span><br><span class="line">├─nvme0n1p2 259:2    0 866.5G  0 part /</span><br><span class="line">└─nvme0n1p3 259:3    0  64.7G  0 part [SWAP]</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-4-USB信息"><a href="#2-4-USB信息" class="headerlink" title="2.4. USB信息"></a>2.4. USB信息</h3><p><code>lsusb</code>用于查看USB接口信息，如下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ lsusb -t</span><br><span class="line">/:  Bus 04.Port 1: Dev 1, Class=root_hub, Driver=xhci_hcd/2p, 10000M</span><br><span class="line">/:  Bus 03.Port 1: Dev 1, Class=root_hub, Driver=xhci_hcd/4p, 480M</span><br><span class="line">    |__ Port 1: Dev 2, If 0, Class=Human Interface Device, Driver=usbhid, 12M</span><br><span class="line">    |__ Port 1: Dev 2, If 1, Class=Human Interface Device, Driver=usbhid, 12M</span><br><span class="line">    |__ Port 2: Dev 3, If 0, Class=Hub, Driver=hub/4p, 480M</span><br><span class="line">        |__ Port 2: Dev 4, If 0, Class=Human Interface Device, Driver=usbhid, 12M</span><br><span class="line">        |__ Port 2: Dev 4, If 1, Class=Human Interface Device, Driver=usbhid, 12M</span><br><span class="line">        |__ Port 2: Dev 4, If 2, Class=Human Interface Device, Driver=usbhid, 12M</span><br><span class="line">/:  Bus 02.Port 1: Dev 1, Class=root_hub, Driver=xhci_hcd/2p, 10000M</span><br><span class="line">/:  Bus 01.Port 1: Dev 1, Class=root_hub, Driver=xhci_hcd/4p, 480M</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-5-lspci"><a href="#2-5-lspci" class="headerlink" title="2.5. lspci"></a>2.5. lspci</h3><p><code>lspci</code>用于提取主板上所有的硬件信息，如下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ lspci</span><br><span class="line">00:00.0 Host bridge: Advanced Micro Devices, Inc. [AMD] Renoir/Cezanne Root Complex</span><br><span class="line">00:00.2 IOMMU: Advanced Micro Devices, Inc. [AMD] Renoir/Cezanne IOMMU</span><br><span class="line">...</span><br><span class="line">03:00.6 Audio device: Advanced Micro Devices, Inc. [AMD] Family 17h/19h HD Audio Controller</span><br><span class="line">04:00.0 SATA controller: Advanced Micro Devices, Inc. [AMD] FCH SATA Controller [AHCI mode] (rev 81)</span><br></pre></td></tr></table></figure>
-
-<p>如果需要更详细的pci信息，可以使用<code>lspci -v</code>或<code>lspci -vv</code></p>
-<p><code>lspci</code>通常配合<code>grep</code>用于筛查硬件信息，如<code>lspci | grep -i eth</code>可查看网络接口情况</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ lspci | grep -i eth</span><br><span class="line">02:00.0 Ethernet controller: Realtek Semiconductor Co., Ltd. RTL8111/8168/8411 PCI Express Gigabit Ethernet Controller (rev 15)</span><br></pre></td></tr></table></figure>
-
-<h2 id="3-高级命令"><a href="#3-高级命令" class="headerlink" title="3. 高级命令"></a>3. 高级命令</h2><p>以下命令相较于上面的命令来说，能更加全面的显示系统资源与硬件信息</p>
-<h3 id="3-1-netstat"><a href="#3-1-netstat" class="headerlink" title="3.1. netstat"></a>3.1. netstat</h3><p><code>netstat</code>用于监控tcp&#x2F;ip连接信息，常用于查找某个端口的占用程序</p>
-<p>如<code>netstat -anp | grep 8384</code>便可以查询出占用8384端口的程序PID</p>
-<p><code>-a</code>代表列出所有，<code>-n</code>代表禁用反向域名解析，<code>-p</code>代表打印程序PID</p>
-<p>效果如下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ netstat -atp | grep 8384</span><br><span class="line">(Not all processes could be identified, non-owned process info</span><br><span class="line"> will not be shown, you would have to be root to see it all.)</span><br><span class="line">tcp        0      0 localhost:8384          0.0.0.0:*               LISTEN      817/syncthing</span><br></pre></td></tr></table></figure>
-
-<p>使用<code>-l</code>参数，可以显示所有正在监听端口的服务程序，如下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ netstat -tnlp</span><br><span class="line">(Not all processes could be identified, non-owned process info</span><br><span class="line"> will not be shown, you would have to be root to see it all.)</span><br><span class="line">Active Internet connections (only servers)</span><br><span class="line">Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    </span><br><span class="line">tcp        0      0 127.0.0.1:8384          0.0.0.0:*               LISTEN      817/syncthing       </span><br><span class="line">...   </span><br><span class="line">tcp6       0      0 :::42103                :::*                    LISTEN      796/client_linux_am</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>注：<code>-p</code>参数打印出PID，但ROOT用户运行的程序普通用户无法探查其PID，故看情况需要决定是否使用<code>sudo</code></p>
-</blockquote>
-<p><code>netstat</code>也可打印网络接口信息，如下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ netstat -ie</span><br><span class="line">Kernel Interface table</span><br><span class="line">enp2s0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500</span><br><span class="line">        inet 192.168.4.12  netmask 255.255.240.0  broadcast 192.168.15.255</span><br><span class="line">        inet6 fd1c:b796:b00f:3f00:28a8:42ce:82e2:eda1  prefixlen 64  scopeid 0x0&lt;global&gt;</span><br><span class="line">        inet6 fe80::fea6:9f63:51a6:3dc0  prefixlen 64  scopeid 0x20&lt;link&gt;</span><br><span class="line">        inet6 240e:47c:630:64d9:b23c:f504:1008:88df  prefixlen 64  scopeid 0x0&lt;global&gt;</span><br><span class="line">        ether 5a:bc:da:6d:f1:09  txqueuelen 1000  (Ethernet)</span><br><span class="line">        RX packets 4480503  bytes 2392967850 (2.2 GiB)</span><br><span class="line">        RX errors 0  dropped 1093  overruns 0  frame 0</span><br><span class="line">        TX packets 2206930  bytes 246464482 (235.0 MiB)</span><br><span class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span><br><span class="line"></span><br><span class="line">lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536</span><br><span class="line">        inet 127.0.0.1  netmask 255.0.0.0</span><br><span class="line">        inet6 ::1  prefixlen 128  scopeid 0x10&lt;host&gt;</span><br><span class="line">        loop  txqueuelen 1000  (Local Loopback)</span><br><span class="line">        RX packets 231260  bytes 482760756 (460.3 MiB)</span><br><span class="line">        RX errors 0  dropped 0  overruns 0  frame 0</span><br><span class="line">        TX packets 231260  bytes 482760756 (460.3 MiB)</span><br><span class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span><br></pre></td></tr></table></figure>
-
-<p><code>netstat</code>具备非常多的网络高级操作功能，若有兴趣，可参考<code>man netstat</code>进行学习</p>
-<h3 id="3-2-lsof"><a href="#3-2-lsof" class="headerlink" title="3.2. lsof"></a>3.2. lsof</h3><p>在Linux中，一切皆是文件</p>
-<p><code>lsof</code>(list open files)是一个列出当前操作系统打开文件的工具，所以<code>lsof</code>可以做到非常多的事情</p>
-<p>直接使用<code>lsof</code>会显示当前系统所有正打开的文件，由于长时间运行的操作系统拥有多个进程，单纯使用<code>lsof</code>的操作较少</p>
-<p><code>lsof</code>常用于查询资源占用情况，如</p>
-<ul>
-<li><code>lsof -c syncthing</code>显示进程syncthing正在使用的资源</li>
-<li><code>lsof -c -p 817</code>显示PID为817的进程正在使用的资源</li>
-<li><code>lsof +d /tmp</code>显示正在使用<code>/tmp</code>目录的进程列表</li>
-<li><code>lsof -i :8384</code>显示正在使用端口8384的进程</li>
-</ul>
-<p><code>lsof</code>适用场景非常广泛，如</p>
-<ul>
-<li>无法卸载文件系统时显示<code>/mnt/sda target is busy</code>，可以使用<code>lsof /mnt/sda</code>查看是什么进程正在占用目录</li>
-<li>无法启动监听端口8080程序时，可以使用<code>lsof -i :8080</code>查看是什么进程占用了端口8080</li>
-<li>…</li>
-</ul>
-<h3 id="3-3-lshw"><a href="#3-3-lshw" class="headerlink" title="3.3. lshw"></a>3.3. lshw</h3><p><code>lshw</code>命令常用于输出机器配置摘要，如</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">lshw -html &gt; my-hardware.html</span><br></pre></td></tr></table></figure>
-
-<p>除了html报告可选外，还有<code>-json</code>、<code>-xml</code>等格式可选</p>
-<p><code>-short</code>参数查看简略报告，如下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ sudo lshw -short</span><br><span class="line">H/W path              Device          Class       Description</span><br><span class="line">=============================================================</span><br><span class="line">                                      system      To Be Filled By O.E.M. (To Be Filled By O.E.M.)</span><br><span class="line">/0                                    bus         X300M-STX</span><br><span class="line">...</span><br><span class="line">/0/4                                  system      Motherboard registers</span><br><span class="line">/0/5                                  system      Motherboard registers</span><br></pre></td></tr></table></figure>
-
-<p><code>-class</code>参数可指定查看部分硬件信息，如下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ sudo lshw -class cpu -class disk</span><br><span class="line">  *-cpu                     </span><br><span class="line">       description: CPU</span><br><span class="line">       product: AMD Ryzen 7 PRO 4750G with Radeon Graphics</span><br><span class="line">       vendor: Advanced Micro Devices [AMD]</span><br><span class="line">       ...</span><br><span class="line">       sectorsize=512 wwid=eui.0025385211918242</span><br><span class="line">  *-disk</span><br><span class="line">       description: ATA Disk</span><br><span class="line">       ...</span><br><span class="line">       logicalsectorsize=512 sectorsize=512</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-4-inxi（推荐）"><a href="#3-4-inxi（推荐）" class="headerlink" title="3.4. inxi（推荐）"></a>3.4. inxi（推荐）</h3><p><code>inxi</code>用于获取所有硬件与系统信息，如下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ inxi</span><br><span class="line">CPU: 8-core AMD Ryzen 7 PRO 4750G with Radeon Graphics (-MT MCP-)</span><br><span class="line">speed/min/max: 1594/1400/4454 MHz Kernel: 5.19.0-1-MANJARO x86_64 Up: 6h 43m</span><br><span class="line">Mem: 11918.5/60152.7 MiB (19.8%) Storage: 1.38 TiB (22.2% used) Procs: 416</span><br><span class="line">Shell: Zsh inxi: 3.3.19</span><br></pre></td></tr></table></figure>
-
-<p><code>-M</code>参数可用于获取机器硬件品牌信息</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ inxi -M</span><br><span class="line">Machine:</span><br><span class="line">  Type: Desktop Mobo: ASRock model: X300M-STX serial: &lt;superuser required&gt;</span><br><span class="line">    UEFI: American Megatrends LLC. v: P1.70 date: 07/01/2021</span><br></pre></td></tr></table></figure>
-
-<p>获取单个硬件有以下参数</p>
-<ul>
-<li><code>-C</code>CPU信息</li>
-<li><code>-A</code>声卡信息</li>
-<li><code>-N</code>网卡信息</li>
-<li><code>-D</code>硬盘信息</li>
-<li><code>-s</code>传感器温度与风扇转速</li>
-</ul>
-<p>获取系统资源信息有以下参数</p>
-<ul>
-<li><code>-p</code>硬盘分区信息</li>
-<li><code>-I</code>进程数以及开机时间等信息</li>
-<li><code>-t</code>显示5个最占用CPU&#x2F;内存的应用（使用<code>cm10</code>可修改成前10个）</li>
-<li><code>-n</code>网络接口信息</li>
-<li><code>-r</code>软件仓库信息</li>
-</ul>
-<p>同样<code>inxi</code>也支持输出机器配置报告</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ inxi -b</span><br><span class="line">System:</span><br><span class="line">  Host: KDE-Manjaro-64G Kernel: 5.19.0-1-MANJARO arch: x86_64 bits: 64</span><br><span class="line">    ...</span><br><span class="line">  Shell: Zsh inxi: 3.3.19</span><br></pre></td></tr></table></figure>
-
-<p>下面是比较全面的输出机器硬件与软件信息</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ inxi -Fza           </span><br><span class="line">System:</span><br><span class="line">  Kernel: 5.19.0-1-MANJARO arch: x86_64 bits: 64 compiler: gcc v: 12.1.0</span><br><span class="line">    parameters: BOOT_IMAGE=/boot/vmlinuz-5.19-x86_64</span><br><span class="line">    root=UUID=2ddecb6a-da82-48f6-9f5a-d810b32d623b rw quiet apparmor=1</span><br><span class="line">    security=apparmor resume=UUID=406e14e5-7ca3-4959-bb61-8bf9158da6f9</span><br><span class="line">    udev.log_priority=3</span><br><span class="line">  Desktop: KDE Plasma v: 5.24.6 tk: Qt v: 5.15.5 wm: kwin_x11 vt: 1</span><br><span class="line">    dm: SDDM Distro: Manjaro Linux base: Arch Linux</span><br><span class="line">Machine:</span><br><span class="line">  Type: Desktop Mobo: ASRock model: X300M-STX serial: &lt;superuser required&gt;</span><br><span class="line">    UEFI: American Megatrends LLC. v: P1.70 date: 07/01/2021</span><br><span class="line">CPU:</span><br><span class="line">  Info: model: AMD Ryzen 7 PRO 4750G with Radeon Graphics bits: 64</span><br><span class="line">...</span><br><span class="line">Info:</span><br><span class="line">  Processes: 416 Uptime: 6h 52m wakeups: 0 Memory: 58.74 GiB</span><br><span class="line">  used: 11.55 GiB (19.7%) Init: systemd v: 251 default: graphical</span><br><span class="line">  tool: systemctl Compilers: gcc: 12.1.0 clang: 14.0.6 Packages: 1707</span><br><span class="line">  pacman: 1701 lib: 372 flatpak: 0 snap: 6 Shell: Zsh v: 5.9</span><br><span class="line">  running-in: konsole inxi: 3.3.19</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>学习</category>
@@ -971,7 +773,7 @@
       </tags>
   </entry>
   <entry>
-    <title>安装 Office Tool Plus 入门教程</title>
+    <title>【安装Office】 Office Tool Plus 入门教程</title>
     <url>/2022/09/27/%E5%AE%89%E8%A3%85Office/</url>
     <content><![CDATA[<h2 id="写在开头"><a href="#写在开头" class="headerlink" title="写在开头"></a>写在开头</h2><p>安装 Office 是一件非常简单的事情，大家不必过于担心，更不必对自己没有信心。<br>本教程适用于需要全新安装 Office 的用户，若您需要修改 Office 请参阅 [<a href="https://movejian.github.io/2022/09/27/%E6%8A%80%E8%83%BD%E6%89%A9%E5%B1%95Office">技能扩展] Office Tool Plus 高级教程</a><br>任何人都可使用 Office Tool Plus 轻松地安装 Office，请认真阅读教程以避免因为疏忽出现问题。<br>如无特殊情况，文章中提到的 Windows 10 也适用于 Windows 11.</p>
 <span id="more"></span>
@@ -1172,7 +974,7 @@
       </tags>
   </entry>
   <entry>
-    <title>技能扩展 Office Tool Plus 高级教程</title>
+    <title>【 Office技能扩展】 Office Tool Plus 高级教程</title>
     <url>/2022/09/27/%E6%8A%80%E8%83%BD%E6%89%A9%E5%B1%95Office/</url>
     <content><![CDATA[<h3 id="写在开头"><a href="#写在开头" class="headerlink" title="写在开头"></a>写在开头</h3><p>请按照正确的步骤操作，否则可能出现意外的结果。</p>
 <p>同时为了避免出现一些未知的问题，请务必使用最新版的 Office Tool Plus。</p>
@@ -1439,7 +1241,7 @@
       </tags>
   </entry>
   <entry>
-    <title>疑难解答 Office Tool Plus 入门教程</title>
+    <title>【疑难解答】 Office Tool Plus 入门教程</title>
     <url>/2022/09/27/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94Office/</url>
     <content><![CDATA[<h3 id="写在开头"><a href="#写在开头" class="headerlink" title="写在开头"></a>写在开头</h3><p>如果你的系统本身就有诸多毛病，建议直接重装原版系统，这是最有效最快的解决办法。</p>
 <p>下面的问题以及解决办法仅供参考，不一定有效，可能因系统环境等原因有些许不同。</p>
@@ -1570,33 +1372,201 @@
       </tags>
   </entry>
   <entry>
-    <title>继上一期解决github上的图片无法显示的问题</title>
-    <url>/2022/08/21/%E7%BB%A7%E4%B8%8A%E4%B8%80%E6%9C%9F%E8%A7%A3%E5%86%B3github%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>​      <a href="https://movejian.github.io/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/">继上篇github图床问题</a>无法正常显示，但在<strong>github</strong>上看到正常上传，连接也并非错误，百度了一下说什么<strong>DNS</strong>被污染了。解决方法是修改<strong>hosts</strong>文件或者修改<strong>DNS</strong>。</p>
-<p>​      首先，打开<a href="https://ping.eu/nslookup">域名解析</a>网站：<a href="https://ping.eu/nslookup">https://ping.eu/nslookup</a><br>然后输入raw.githubusercontent.com如下图：</p>
-<p><img src="https://movejian.github.io/images/20220821/5.png"></p>
+    <title>Linux查看硬件信息与系统资源</title>
+    <url>/2022/09/06/Linux%E6%9F%A5%E7%9C%8B%E7%A1%AC%E4%BB%B6%E4%BF%A1%E6%81%AF%E4%B8%8E%E7%B3%BB%E7%BB%9F%E8%B5%84%E6%BA%90/</url>
+    <content><![CDATA[<p>Linux下经常需要查看系统资源或硬件资源，与之对应的命令行也是非常多</p>
+<p>本文将根据使用经验，将常见的查询方法总结罗列一遍以供参考</p>
+<p>以下指令以Ubuntu1804、Cent7OS作为测试平台</p>
+<h2 id="1-系统资源"><a href="#1-系统资源" class="headerlink" title="1. 系统资源"></a>1. 系统资源</h2><h3 id="1-1-Linux发行版与内核"><a href="#1-1-Linux发行版与内核" class="headerlink" title="1.1. Linux发行版与内核"></a>1.1. Linux发行版与内核</h3><p><code>uname -r</code>命令输出发行版与内核信息，大部分发行版基本均带有此命令，但输出中未必包含发行版全称信息</p>
 <span id="more"></span>
-<p>​      我们得到图床所用域名解析到的IP(上图红框中的地址)。</p>
-<ul>
-<li>最后打开本机的<strong>host</strong>文件，其路径如下：<br><code>C:\Windows\System32\drivers\etc\hosts</code>, 然后添加如下内容(上图红框中的地址)：</li>
-</ul>
-<p><img src="https://movejian.github.io/images/20220821/6.png"></p>
-<ul>
-<li>打开<strong>CMD</strong>输入命令<code>ipconfig /flushdns</code>刷新<strong>DNS</strong>缓存,再次输入<code>ipconfig/displaydns</code></li>
-</ul>
-<p>​    如果你的<strong>hosts</strong>的文件不见了,可以通过文件设置显示系统隐藏文件来找到，依然找不到，可能是被误删了，网上有很多是通过新建文本文档解决。也可以通过下面这个命令来生成<strong>hosts</strong>文件。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for /f %P in (&#x27;dir %windir%\WinSxS\hosts /b /s&#x27;) do copy %P %windir%\System32\drivers\etc &amp; echo %P &amp; Notepad %P</span><br></pre></td></tr></table></figure>
+<p>Cent7OS</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[chancel@localhost ~]$ uname -a</span><br><span class="line">Linux localhost.localdomain 3.10.0-1160.62.1.el7.x86_64 #1 SMP Tue Apr 5 16:57:59 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux</span><br></pre></td></tr></table></figure>
 
+<p>Ubuntu1804</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ uname -a</span><br><span class="line">Linux ubuntu1804 4.15.0-189-generic #200-Ubuntu SMP Wed Jun 22 19:53:37 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux</span><br></pre></td></tr></table></figure>
+
+<p><code>cat /proc/version</code>命令输出内核版本与编译的gcc版本</p>
+<p>Cent7OS</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[chancel@localhost ~]$ cat /proc/version </span><br><span class="line">Linux version 3.10.0-1160.62.1.el7.x86_64 (mockbuild@kbuilder.bsys.centos.org) (gcc version 4.8.5 20150623 (Red Hat 4.8.5-44) (GCC) ) #1 SMP Tue Apr 5 16:57:59 UTC 2022</span><br></pre></td></tr></table></figure>
+
+<p>Ubuntu1804</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ cat /proc/version</span><br><span class="line">Linux version 4.15.0-189-generic (buildd@lcy02-amd64-039) (gcc version 7.5.0 (Ubuntu 7.5.0-3ubuntu1~18.04)) #200-Ubuntu SMP Wed Jun 22 19:53:37 UTC 2022</span><br></pre></td></tr></table></figure>
+
+<p><code>lsb_release -a</code>命令输出发行版信息，但Cent7OS并不包含此命令</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ lsb_release -a</span><br><span class="line">No LSB modules are available.</span><br><span class="line">Distributor ID: Ubuntu</span><br><span class="line">Description:    Ubuntu 18.04.6 LTS</span><br><span class="line">Release:        18.04</span><br><span class="line">Codename:       bionic</span><br></pre></td></tr></table></figure>
+
+<p><code>cat /etc/redhat-release</code>命令是Redhat系列独有的</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[chancel@localhost ~]$ cat /etc/redhat-release</span><br><span class="line">CentOS Linux release 7.9.2009 (Core)</span><br></pre></td></tr></table></figure>
+
+<p><code>cat /etc/*release</code>命令在大部分Linux发行版中都可以使用，是最方便使用的命令</p>
+<p>以Cent7OS为例</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[chancel@localhost ~]$ cat /etc/*release</span><br><span class="line">CentOS Linux release 7.9.2009 (Core)</span><br><span class="line">NAME=&quot;CentOS Linux&quot;</span><br><span class="line">VERSION=&quot;7 (Core)&quot;</span><br><span class="line">ID=&quot;centos&quot;</span><br><span class="line">ID_LIKE=&quot;rhel fedora&quot;</span><br><span class="line">VERSION_ID=&quot;7&quot;</span><br><span class="line">PRETTY_NAME=&quot;CentOS Linux 7 (Core)&quot;</span><br><span class="line">...</span><br><span class="line">CentOS Linux release 7.9.2009 (Core)</span><br><span class="line">CentOS Linux release 7.9.2009 (Core)</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-CPU-x2F-内存占用查看"><a href="#1-2-CPU-x2F-内存占用查看" class="headerlink" title="1.2. CPU&#x2F;内存占用查看"></a>1.2. CPU&#x2F;内存占用查看</h3><p><code>top</code>指令是最常见用于检测CPU占用情况的指令，使用效果如下</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209081929349.png" alt="img"></p>
+<p>此时按<code>P</code>以CPU占用排序，按<code>M</code>以内存占用排序，按<code>I</code>隐藏所有空闲进程，按<code>S</code>以运行时间排序</p>
+<p><code>htop</code>指令则是比<code>top</code>更简洁的显示程序，在部分发行版上需要自行安装，使用效果如下</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209081930961.png" alt="img"></p>
+<p>相较于<code>top</code>的使用，<code>htop</code>界面更清晰易懂，使用方法在界面均有提示，对用户更为友好</p>
+<p>通常情况下，<code>htop</code>需要自行安装</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># Ubuntu</span><br><span class="line">sudo apt install htop</span><br><span class="line"></span><br><span class="line"># Cent</span><br><span class="line">sudo yum install htop</span><br></pre></td></tr></table></figure>
+
+<p><code>glances</code>则是比<code>htop</code>更进一步的资源查看器</p>
+<p>不但包括常见的CPU、内存，甚至还包括当前网速以及硬件温度数据，使用效果如下</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209081931536.png" alt="img"></p>
+<p>通常情况下，<code>glances</code>需要自行安装，由于是使用Python语言开发的，所以资源占用也较大</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># Ubuntu</span><br><span class="line">sudo apt install glances</span><br><span class="line"></span><br><span class="line"># Cent</span><br><span class="line">sudo yum install glances</span><br></pre></td></tr></table></figure>
+
+<p>以上3个是我比较常用的系统资源占用查询工具，大部分情况下都非常够用</p>
+<p>其他的可能还包括<code>nmon</code>、<code>vmstat</code>等，若有兴趣也可自行查询</p>
+<h3 id="1-3-磁盘资源管理"><a href="#1-3-磁盘资源管理" class="headerlink" title="1.3. 磁盘资源管理"></a>1.3. 磁盘资源管理</h3><p><code>df -h</code>通常用于查询硬盘资源使用情况（-h代表使用以1024为单位且易读的方式显示）</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ df -h</span><br><span class="line">Filesystem      Size  Used Avail Use% Mounted on</span><br><span class="line">udev            1.9G     0  1.9G   0% /dev</span><br><span class="line">tmpfs           395M  1.3M  394M   1% /run</span><br><span class="line">/dev/vda2       126G   57G   63G  48% /</span><br><span class="line">tmpfs           2.0G     0  2.0G   0% /dev/shm</span><br><span class="line">tmpfs           5.0M     0  5.0M   0% /run/lock</span><br><span class="line">tmpfs           2.0G     0  2.0G   0% /sys/fs/cgroup</span><br><span class="line">/dev/loop0      114M  114M     0 100% /snap/core/13425</span><br><span class="line">/dev/loop1      114M  114M     0 100% /snap/core/13308</span><br><span class="line">tmpfs           395M     0  395M   0% /run/user/1000</span><br></pre></td></tr></table></figure>
+
+<p><code>fdisk -l</code>则是用于查询物理分区情况</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ sudo fdisk -l</span><br><span class="line">Disk /dev/loop0: 114 MiB, 119525376 bytes, 233448 sectors</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disk /dev/loop1: 113.9 MiB, 119418880 bytes, 233240 sectors</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disk /dev/vda: 128 GiB, 137438953472 bytes, 268435456 sectors</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disklabel type: gpt</span><br><span class="line">Disk identifier: 376C8DD5-F786-4C39-9F4E-1461BE1FA269</span><br><span class="line"></span><br><span class="line">Device     Start       End   Sectors  Size Type</span><br><span class="line">/dev/vda1   2048      4095      2048    1M BIOS boot</span><br><span class="line">/dev/vda2   4096 268433407 268429312  128G Linux filesystem</span><br></pre></td></tr></table></figure>
+
+<p>当然，<code>fdisk</code>命令本身主要还是用于管理硬盘分区，其管理过程是对话式的，类似于下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[chancel@localhost ~]$ sudo fdisk /dev/vda</span><br><span class="line">[sudo] password for chancel: </span><br><span class="line">Welcome to fdisk (util-linux 2.23.2).</span><br><span class="line"></span><br><span class="line">Changes will remain in memory only, until you decide to write them.</span><br><span class="line">Be careful before using the write command.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Command (m for help):</span><br></pre></td></tr></table></figure>
+
+<p>输入<code>m</code>可获得指令帮助，创建过程非常简单易懂</p>
+<p><code>mkfs.[format]</code>命令用于格式化硬盘，<code>[format]</code>代表硬盘格式，常见的格式如下</p>
 <ul>
-<li><strong>注意</strong>一定要使用管理员身份输入此命令。</li>
+<li>mkfs.ext2</li>
+<li>mkfs.ext3</li>
+<li>mkfs.ext4</li>
+<li>mkfs.ntfs</li>
+<li>mkfs.xfs</li>
 </ul>
+<p>在分区成功后，通常需要格式化，使用<code>mkfs.[format] /dev/[device_name]</code>进行格式化</p>
+<h3 id="1-4-网络信息管理"><a href="#1-4-网络信息管理" class="headerlink" title="1.4. 网络信息管理"></a>1.4. 网络信息管理</h3><p><code>ip</code>是常用的网络信息查看工具，是后期Linux用于替换<code>ipconfig</code>的工具</p>
+<p>常见的用法</p>
+<ul>
+<li><code>ip addr show</code>显示网路ip信息（缩写<code>ip a</code>）</li>
+<li><code>ip link show</code>显示网络接口信息（缩写<code>ip l</code>）</li>
+<li><code>ip route list</code>显示网路路由信息（缩写<code>ip r</code>）</li>
+<li><code>ip neigh show</code>显示网路ARP表信息（缩写<code>ip n</code>）</li>
+</ul>
+<p><code>ip addr</code>通常用于设置网卡的网络信息，如</p>
+<ul>
+<li><code>ip addr &#123;add|change|del&#125; 172.16.0.1/24 dev eth0</code>添加&#x2F;更改&#x2F;删除网卡ip</li>
+</ul>
+<p><code>ip link</code>通常用于控制网卡的行为，如</p>
+<ul>
+<li><code>ip link set eth0 &#123;up/down&#125;</code>用于开启关闭网卡</li>
+<li><code>ip link set eth0 promisc &#123;on/off&#125;</code>用于设置网卡混杂模式开启关闭</li>
+</ul>
+<p><code>ip route</code>通常用于设置路由信息，如</p>
+<ul>
+<li><code>ip route &#123;add/del&#125; [ip_address] via [gateway]</code>添加&#x2F;删除网关静态路由</li>
+<li><code>ip route &#123;add/del&#125; [ip_address] dev [interface]</code>添加&#x2F;删除接口静态路由</li>
+</ul>
+<p><code>ip neigh</code>通常用于王路平arp表（替换老旧的<code>arp</code>命令），如</p>
+<ul>
+<li><code>ip neigh &#123;add/dev&#125; [ip_address] dev [interface]</code>添加&#x2F;删除一个arp映射</li>
+</ul>
+<p>比较常用的是<code>ip addr</code>与<code>ip route</code>2个参数</p>
+<p>前者用于查询网络ip信息，其输出如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">~ ➤ ip a</span><br><span class="line">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000</span><br><span class="line">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00</span><br><span class="line">    inet 127.0.0.1/8 scope host lo</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 ::1/128 scope host </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc fq_codel state UP group default qlen 1000</span><br><span class="line">    link/ether 00:16:de:23:94:48 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 209.141.42.231/24 brd 209.141.42.255 scope global dynamic eth0</span><br><span class="line">       valid_lft 2591984sec preferred_lft 2591984sec</span><br><span class="line">    inet6 fe80::216:deff:fe23:9448/64 scope link </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br></pre></td></tr></table></figure>
+
+<p>后者常用于规划路由请求，如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 设置路由走网关172.16.0.1，得到公网IP为4.4.4.4</span><br><span class="line">➜  ~ ip route add 104.160.18.230 via 172.16.0.1</span><br><span class="line">➜  ~ curl https://api.chancel.me/rest/api/v1/ip</span><br><span class="line">&#123;&quot;status&quot;:1,&quot;msg&quot;:&quot;Query success&quot;,&quot;data&quot;:&#123;&quot;ip&quot;:&quot;4.4.4.4&quot;&#125;&#125;</span><br><span class="line"></span><br><span class="line"># 设置路由走网关192.168.1.1，得到公网IP为6.6.6.6</span><br><span class="line">➜  ~ ip route del 104.160.18.230 via 192.168.1.1</span><br><span class="line">➜  ~ curl https://api.chancel.me/rest/api/v1/ip</span><br><span class="line">&#123;&quot;status&quot;:1,&quot;msg&quot;:&quot;Query success&quot;,&quot;data&quot;:&#123;&quot;ip&quot;:&quot;6.6.6.6&quot;&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-硬件资源"><a href="#2-硬件资源" class="headerlink" title="2. 硬件资源"></a>2. 硬件资源</h2><h3 id="2-1-CPU信息"><a href="#2-1-CPU信息" class="headerlink" title="2.1. CPU信息"></a>2.1. CPU信息</h3><p><code>lscpu</code>和<code>cat /proc/cpuinfo</code>都可以输出CPU信息，如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ lscpu   </span><br><span class="line">Architecture:            x86_64</span><br><span class="line">  CPU op-mode(s):        32-bit, 64-bit</span><br><span class="line">  Address sizes:         48 bits physical, 48 bits virtual</span><br><span class="line">  ...</span><br><span class="line">Vulnerabilities:         </span><br><span class="line">  ...</span><br><span class="line">  Tsx async abort:       Not affected</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-内存信息"><a href="#2-2-内存信息" class="headerlink" title="2.2. 内存信息"></a>2.2. 内存信息</h3><p><code>lsmem</code>和<code>cat /proc/meminfo</code>都可以输出内存信息，如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ lsmem       </span><br><span class="line">RANGE                                 SIZE  STATE REMOVABLE  BLOCK</span><br><span class="line">0x0000000000000000-0x00000000bfffffff   3G online       yes   0-23</span><br><span class="line">0x0000000100000000-0x0000000f3fffffff  57G online       yes 32-487</span><br><span class="line"></span><br><span class="line">Memory block size:       128M</span><br><span class="line">Total online memory:      60G</span><br><span class="line">Total offline memory:      0B</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-硬盘信息"><a href="#2-3-硬盘信息" class="headerlink" title="2.3. 硬盘信息"></a>2.3. 硬盘信息</h3><p><code>lsblk</code>用于查看硬盘信息，如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ lsblk       </span><br><span class="line">NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS</span><br><span class="line">loop0         7:0    0     4K  1 loop /var/lib/snapd/snap/bare/5</span><br><span class="line">...</span><br><span class="line">loop8         7:8    0    47M  1 loop /var/lib/snapd/snap/snapd/16292</span><br><span class="line">sda           8:0    0 476.9G  0 disk </span><br><span class="line">└─sda1        8:1    0 476.9G  0 part /mnt/SDA</span><br><span class="line">nvme0n1     259:0    0 931.5G  0 disk </span><br><span class="line">├─nvme0n1p1 259:1    0   300M  0 part /boot/efi</span><br><span class="line">├─nvme0n1p2 259:2    0 866.5G  0 part /</span><br><span class="line">└─nvme0n1p3 259:3    0  64.7G  0 part [SWAP]</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-USB信息"><a href="#2-4-USB信息" class="headerlink" title="2.4. USB信息"></a>2.4. USB信息</h3><p><code>lsusb</code>用于查看USB接口信息，如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ lsusb -t</span><br><span class="line">/:  Bus 04.Port 1: Dev 1, Class=root_hub, Driver=xhci_hcd/2p, 10000M</span><br><span class="line">/:  Bus 03.Port 1: Dev 1, Class=root_hub, Driver=xhci_hcd/4p, 480M</span><br><span class="line">    |__ Port 1: Dev 2, If 0, Class=Human Interface Device, Driver=usbhid, 12M</span><br><span class="line">    |__ Port 1: Dev 2, If 1, Class=Human Interface Device, Driver=usbhid, 12M</span><br><span class="line">    |__ Port 2: Dev 3, If 0, Class=Hub, Driver=hub/4p, 480M</span><br><span class="line">        |__ Port 2: Dev 4, If 0, Class=Human Interface Device, Driver=usbhid, 12M</span><br><span class="line">        |__ Port 2: Dev 4, If 1, Class=Human Interface Device, Driver=usbhid, 12M</span><br><span class="line">        |__ Port 2: Dev 4, If 2, Class=Human Interface Device, Driver=usbhid, 12M</span><br><span class="line">/:  Bus 02.Port 1: Dev 1, Class=root_hub, Driver=xhci_hcd/2p, 10000M</span><br><span class="line">/:  Bus 01.Port 1: Dev 1, Class=root_hub, Driver=xhci_hcd/4p, 480M</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-5-lspci"><a href="#2-5-lspci" class="headerlink" title="2.5. lspci"></a>2.5. lspci</h3><p><code>lspci</code>用于提取主板上所有的硬件信息，如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ lspci</span><br><span class="line">00:00.0 Host bridge: Advanced Micro Devices, Inc. [AMD] Renoir/Cezanne Root Complex</span><br><span class="line">00:00.2 IOMMU: Advanced Micro Devices, Inc. [AMD] Renoir/Cezanne IOMMU</span><br><span class="line">...</span><br><span class="line">03:00.6 Audio device: Advanced Micro Devices, Inc. [AMD] Family 17h/19h HD Audio Controller</span><br><span class="line">04:00.0 SATA controller: Advanced Micro Devices, Inc. [AMD] FCH SATA Controller [AHCI mode] (rev 81)</span><br></pre></td></tr></table></figure>
+
+<p>如果需要更详细的pci信息，可以使用<code>lspci -v</code>或<code>lspci -vv</code></p>
+<p><code>lspci</code>通常配合<code>grep</code>用于筛查硬件信息，如<code>lspci | grep -i eth</code>可查看网络接口情况</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ lspci | grep -i eth</span><br><span class="line">02:00.0 Ethernet controller: Realtek Semiconductor Co., Ltd. RTL8111/8168/8411 PCI Express Gigabit Ethernet Controller (rev 15)</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-高级命令"><a href="#3-高级命令" class="headerlink" title="3. 高级命令"></a>3. 高级命令</h2><p>以下命令相较于上面的命令来说，能更加全面的显示系统资源与硬件信息</p>
+<h3 id="3-1-netstat"><a href="#3-1-netstat" class="headerlink" title="3.1. netstat"></a>3.1. netstat</h3><p><code>netstat</code>用于监控tcp&#x2F;ip连接信息，常用于查找某个端口的占用程序</p>
+<p>如<code>netstat -anp | grep 8384</code>便可以查询出占用8384端口的程序PID</p>
+<p><code>-a</code>代表列出所有，<code>-n</code>代表禁用反向域名解析，<code>-p</code>代表打印程序PID</p>
+<p>效果如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ netstat -atp | grep 8384</span><br><span class="line">(Not all processes could be identified, non-owned process info</span><br><span class="line"> will not be shown, you would have to be root to see it all.)</span><br><span class="line">tcp        0      0 localhost:8384          0.0.0.0:*               LISTEN      817/syncthing</span><br></pre></td></tr></table></figure>
+
+<p>使用<code>-l</code>参数，可以显示所有正在监听端口的服务程序，如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ netstat -tnlp</span><br><span class="line">(Not all processes could be identified, non-owned process info</span><br><span class="line"> will not be shown, you would have to be root to see it all.)</span><br><span class="line">Active Internet connections (only servers)</span><br><span class="line">Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    </span><br><span class="line">tcp        0      0 127.0.0.1:8384          0.0.0.0:*               LISTEN      817/syncthing       </span><br><span class="line">...   </span><br><span class="line">tcp6       0      0 :::42103                :::*                    LISTEN      796/client_linux_am</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注：<code>-p</code>参数打印出PID，但ROOT用户运行的程序普通用户无法探查其PID，故看情况需要决定是否使用<code>sudo</code></p>
+</blockquote>
+<p><code>netstat</code>也可打印网络接口信息，如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ netstat -ie</span><br><span class="line">Kernel Interface table</span><br><span class="line">enp2s0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500</span><br><span class="line">        inet 192.168.4.12  netmask 255.255.240.0  broadcast 192.168.15.255</span><br><span class="line">        inet6 fd1c:b796:b00f:3f00:28a8:42ce:82e2:eda1  prefixlen 64  scopeid 0x0&lt;global&gt;</span><br><span class="line">        inet6 fe80::fea6:9f63:51a6:3dc0  prefixlen 64  scopeid 0x20&lt;link&gt;</span><br><span class="line">        inet6 240e:47c:630:64d9:b23c:f504:1008:88df  prefixlen 64  scopeid 0x0&lt;global&gt;</span><br><span class="line">        ether 5a:bc:da:6d:f1:09  txqueuelen 1000  (Ethernet)</span><br><span class="line">        RX packets 4480503  bytes 2392967850 (2.2 GiB)</span><br><span class="line">        RX errors 0  dropped 1093  overruns 0  frame 0</span><br><span class="line">        TX packets 2206930  bytes 246464482 (235.0 MiB)</span><br><span class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span><br><span class="line"></span><br><span class="line">lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536</span><br><span class="line">        inet 127.0.0.1  netmask 255.0.0.0</span><br><span class="line">        inet6 ::1  prefixlen 128  scopeid 0x10&lt;host&gt;</span><br><span class="line">        loop  txqueuelen 1000  (Local Loopback)</span><br><span class="line">        RX packets 231260  bytes 482760756 (460.3 MiB)</span><br><span class="line">        RX errors 0  dropped 0  overruns 0  frame 0</span><br><span class="line">        TX packets 231260  bytes 482760756 (460.3 MiB)</span><br><span class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span><br></pre></td></tr></table></figure>
+
+<p><code>netstat</code>具备非常多的网络高级操作功能，若有兴趣，可参考<code>man netstat</code>进行学习</p>
+<h3 id="3-2-lsof"><a href="#3-2-lsof" class="headerlink" title="3.2. lsof"></a>3.2. lsof</h3><p>在Linux中，一切皆是文件</p>
+<p><code>lsof</code>(list open files)是一个列出当前操作系统打开文件的工具，所以<code>lsof</code>可以做到非常多的事情</p>
+<p>直接使用<code>lsof</code>会显示当前系统所有正打开的文件，由于长时间运行的操作系统拥有多个进程，单纯使用<code>lsof</code>的操作较少</p>
+<p><code>lsof</code>常用于查询资源占用情况，如</p>
+<ul>
+<li><code>lsof -c syncthing</code>显示进程syncthing正在使用的资源</li>
+<li><code>lsof -c -p 817</code>显示PID为817的进程正在使用的资源</li>
+<li><code>lsof +d /tmp</code>显示正在使用<code>/tmp</code>目录的进程列表</li>
+<li><code>lsof -i :8384</code>显示正在使用端口8384的进程</li>
+</ul>
+<p><code>lsof</code>适用场景非常广泛，如</p>
+<ul>
+<li>无法卸载文件系统时显示<code>/mnt/sda target is busy</code>，可以使用<code>lsof /mnt/sda</code>查看是什么进程正在占用目录</li>
+<li>无法启动监听端口8080程序时，可以使用<code>lsof -i :8080</code>查看是什么进程占用了端口8080</li>
+<li>…</li>
+</ul>
+<h3 id="3-3-lshw"><a href="#3-3-lshw" class="headerlink" title="3.3. lshw"></a>3.3. lshw</h3><p><code>lshw</code>命令常用于输出机器配置摘要，如</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">lshw -html &gt; my-hardware.html</span><br></pre></td></tr></table></figure>
+
+<p>除了html报告可选外，还有<code>-json</code>、<code>-xml</code>等格式可选</p>
+<p><code>-short</code>参数查看简略报告，如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ sudo lshw -short</span><br><span class="line">H/W path              Device          Class       Description</span><br><span class="line">=============================================================</span><br><span class="line">                                      system      To Be Filled By O.E.M. (To Be Filled By O.E.M.)</span><br><span class="line">/0                                    bus         X300M-STX</span><br><span class="line">...</span><br><span class="line">/0/4                                  system      Motherboard registers</span><br><span class="line">/0/5                                  system      Motherboard registers</span><br></pre></td></tr></table></figure>
+
+<p><code>-class</code>参数可指定查看部分硬件信息，如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ sudo lshw -class cpu -class disk</span><br><span class="line">  *-cpu                     </span><br><span class="line">       description: CPU</span><br><span class="line">       product: AMD Ryzen 7 PRO 4750G with Radeon Graphics</span><br><span class="line">       vendor: Advanced Micro Devices [AMD]</span><br><span class="line">       ...</span><br><span class="line">       sectorsize=512 wwid=eui.0025385211918242</span><br><span class="line">  *-disk</span><br><span class="line">       description: ATA Disk</span><br><span class="line">       ...</span><br><span class="line">       logicalsectorsize=512 sectorsize=512</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-4-inxi（推荐）"><a href="#3-4-inxi（推荐）" class="headerlink" title="3.4. inxi（推荐）"></a>3.4. inxi（推荐）</h3><p><code>inxi</code>用于获取所有硬件与系统信息，如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ inxi</span><br><span class="line">CPU: 8-core AMD Ryzen 7 PRO 4750G with Radeon Graphics (-MT MCP-)</span><br><span class="line">speed/min/max: 1594/1400/4454 MHz Kernel: 5.19.0-1-MANJARO x86_64 Up: 6h 43m</span><br><span class="line">Mem: 11918.5/60152.7 MiB (19.8%) Storage: 1.38 TiB (22.2% used) Procs: 416</span><br><span class="line">Shell: Zsh inxi: 3.3.19</span><br></pre></td></tr></table></figure>
+
+<p><code>-M</code>参数可用于获取机器硬件品牌信息</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ inxi -M</span><br><span class="line">Machine:</span><br><span class="line">  Type: Desktop Mobo: ASRock model: X300M-STX serial: &lt;superuser required&gt;</span><br><span class="line">    UEFI: American Megatrends LLC. v: P1.70 date: 07/01/2021</span><br></pre></td></tr></table></figure>
+
+<p>获取单个硬件有以下参数</p>
+<ul>
+<li><code>-C</code>CPU信息</li>
+<li><code>-A</code>声卡信息</li>
+<li><code>-N</code>网卡信息</li>
+<li><code>-D</code>硬盘信息</li>
+<li><code>-s</code>传感器温度与风扇转速</li>
+</ul>
+<p>获取系统资源信息有以下参数</p>
+<ul>
+<li><code>-p</code>硬盘分区信息</li>
+<li><code>-I</code>进程数以及开机时间等信息</li>
+<li><code>-t</code>显示5个最占用CPU&#x2F;内存的应用（使用<code>cm10</code>可修改成前10个）</li>
+<li><code>-n</code>网络接口信息</li>
+<li><code>-r</code>软件仓库信息</li>
+</ul>
+<p>同样<code>inxi</code>也支持输出机器配置报告</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ inxi -b</span><br><span class="line">System:</span><br><span class="line">  Host: KDE-Manjaro-64G Kernel: 5.19.0-1-MANJARO arch: x86_64 bits: 64</span><br><span class="line">    ...</span><br><span class="line">  Shell: Zsh inxi: 3.3.19</span><br></pre></td></tr></table></figure>
+
+<p>下面是比较全面的输出机器硬件与软件信息</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ inxi -Fza           </span><br><span class="line">System:</span><br><span class="line">  Kernel: 5.19.0-1-MANJARO arch: x86_64 bits: 64 compiler: gcc v: 12.1.0</span><br><span class="line">    parameters: BOOT_IMAGE=/boot/vmlinuz-5.19-x86_64</span><br><span class="line">    root=UUID=2ddecb6a-da82-48f6-9f5a-d810b32d623b rw quiet apparmor=1</span><br><span class="line">    security=apparmor resume=UUID=406e14e5-7ca3-4959-bb61-8bf9158da6f9</span><br><span class="line">    udev.log_priority=3</span><br><span class="line">  Desktop: KDE Plasma v: 5.24.6 tk: Qt v: 5.15.5 wm: kwin_x11 vt: 1</span><br><span class="line">    dm: SDDM Distro: Manjaro Linux base: Arch Linux</span><br><span class="line">Machine:</span><br><span class="line">  Type: Desktop Mobo: ASRock model: X300M-STX serial: &lt;superuser required&gt;</span><br><span class="line">    UEFI: American Megatrends LLC. v: P1.70 date: 07/01/2021</span><br><span class="line">CPU:</span><br><span class="line">  Info: model: AMD Ryzen 7 PRO 4750G with Radeon Graphics bits: 64</span><br><span class="line">...</span><br><span class="line">Info:</span><br><span class="line">  Processes: 416 Uptime: 6h 52m wakeups: 0 Memory: 58.74 GiB</span><br><span class="line">  used: 11.55 GiB (19.7%) Init: systemd v: 251 default: graphical</span><br><span class="line">  tool: systemctl Compilers: gcc: 12.1.0 clang: 14.0.6 Packages: 1707</span><br><span class="line">  pacman: 1701 lib: 372 flatpak: 0 snap: 6 Shell: Zsh v: 5.9</span><br><span class="line">  running-in: konsole inxi: 3.3.19</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>技术</category>
+        <category>学习</category>
+        <category>Linux</category>
       </categories>
       <tags>
-        <tag>图床</tag>
-        <tag>问题解决</tag>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -1663,6 +1633,36 @@
       </categories>
       <tags>
         <tag>技术</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>继上一期解决github上的图片无法显示的问题</title>
+    <url>/2022/08/21/%E7%BB%A7%E4%B8%8A%E4%B8%80%E6%9C%9F%E8%A7%A3%E5%86%B3github%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>​      <a href="https://movejian.github.io/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/">继上篇github图床问题</a>无法正常显示，但在<strong>github</strong>上看到正常上传，连接也并非错误，百度了一下说什么<strong>DNS</strong>被污染了。解决方法是修改<strong>hosts</strong>文件或者修改<strong>DNS</strong>。</p>
+<p>​      首先，打开<a href="https://ping.eu/nslookup">域名解析</a>网站：<a href="https://ping.eu/nslookup">https://ping.eu/nslookup</a><br>然后输入raw.githubusercontent.com如下图：</p>
+<p><img src="https://movejian.github.io/images/20220821/5.png"></p>
+<span id="more"></span>
+<p>​      我们得到图床所用域名解析到的IP(上图红框中的地址)。</p>
+<ul>
+<li>最后打开本机的<strong>host</strong>文件，其路径如下：<br><code>C:\Windows\System32\drivers\etc\hosts</code>, 然后添加如下内容(上图红框中的地址)：</li>
+</ul>
+<p><img src="https://movejian.github.io/images/20220821/6.png"></p>
+<ul>
+<li>打开<strong>CMD</strong>输入命令<code>ipconfig /flushdns</code>刷新<strong>DNS</strong>缓存,再次输入<code>ipconfig/displaydns</code></li>
+</ul>
+<p>​    如果你的<strong>hosts</strong>的文件不见了,可以通过文件设置显示系统隐藏文件来找到，依然找不到，可能是被误删了，网上有很多是通过新建文本文档解决。也可以通过下面这个命令来生成<strong>hosts</strong>文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for /f %P in (&#x27;dir %windir%\WinSxS\hosts /b /s&#x27;) do copy %P %windir%\System32\drivers\etc &amp; echo %P &amp; Notepad %P</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>注意</strong>一定要使用管理员身份输入此命令。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>图床</tag>
+        <tag>问题解决</tag>
       </tags>
   </entry>
 </search>

@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-09-26T17:45:25.590Z</updated>
+  <updated>2022-09-26T17:48:53.692Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>技能扩展 Office Tool Plus 高级教程</title>
+    <title>【 Office技能扩展】 Office Tool Plus 高级教程</title>
     <link href="http://example.com/2022/09/27/%E6%8A%80%E8%83%BD%E6%89%A9%E5%B1%95Office/"/>
     <id>http://example.com/2022/09/27/%E6%8A%80%E8%83%BD%E6%89%A9%E5%B1%95Office/</id>
     <published>2022-09-26T17:36:40.000Z</published>
-    <updated>2022-09-26T17:45:25.590Z</updated>
+    <updated>2022-09-26T17:48:53.692Z</updated>
     
     
     <summary type="html">&lt;h3 id=&quot;写在开头&quot;&gt;&lt;a href=&quot;#写在开头&quot; class=&quot;headerlink&quot; title=&quot;写在开头&quot;&gt;&lt;/a&gt;写在开头&lt;/h3&gt;&lt;p&gt;请按照正确的步骤操作，否则可能出现意外的结果。&lt;/p&gt;
@@ -37,11 +37,11 @@
   </entry>
   
   <entry>
-    <title>安装 Office Tool Plus 入门教程</title>
+    <title>【安装Office】 Office Tool Plus 入门教程</title>
     <link href="http://example.com/2022/09/27/%E5%AE%89%E8%A3%85Office/"/>
     <id>http://example.com/2022/09/27/%E5%AE%89%E8%A3%85Office/</id>
     <published>2022-09-26T17:25:32.000Z</published>
-    <updated>2022-09-26T17:45:10.696Z</updated>
+    <updated>2022-09-26T17:48:33.072Z</updated>
     
     
     <summary type="html">&lt;h2 id=&quot;写在开头&quot;&gt;&lt;a href=&quot;#写在开头&quot; class=&quot;headerlink&quot; title=&quot;写在开头&quot;&gt;&lt;/a&gt;写在开头&lt;/h2&gt;&lt;p&gt;安装 Office 是一件非常简单的事情，大家不必过于担心，更不必对自己没有信心。&lt;br&gt;本教程适用于需要全新安装 Office 的用户，若您需要修改 Office 请参阅 [&lt;a href=&quot;https://movejian.github.io/2022/09/27/%E6%8A%80%E8%83%BD%E6%89%A9%E5%B1%95Office&quot;&gt;技能扩展] Office Tool Plus 高级教程&lt;/a&gt;&lt;br&gt;任何人都可使用 Office Tool Plus 轻松地安装 Office，请认真阅读教程以避免因为疏忽出现问题。&lt;br&gt;如无特殊情况，文章中提到的 Windows 10 也适用于 Windows 11.&lt;/p&gt;</summary>
@@ -54,11 +54,11 @@
   </entry>
   
   <entry>
-    <title>疑难解答 Office Tool Plus 入门教程</title>
+    <title>【疑难解答】 Office Tool Plus 入门教程</title>
     <link href="http://example.com/2022/09/27/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94Office/"/>
     <id>http://example.com/2022/09/27/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94Office/</id>
     <published>2022-09-26T17:08:32.000Z</published>
-    <updated>2022-09-26T17:44:07.584Z</updated>
+    <updated>2022-09-26T17:48:13.835Z</updated>
     
     
     <summary type="html">&lt;h3 id=&quot;写在开头&quot;&gt;&lt;a href=&quot;#写在开头&quot; class=&quot;headerlink&quot; title=&quot;写在开头&quot;&gt;&lt;/a&gt;写在开头&lt;/h3&gt;&lt;p&gt;如果你的系统本身就有诸多毛病，建议直接重装原版系统，这是最有效最快的解决办法。&lt;/p&gt;
