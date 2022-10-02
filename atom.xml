@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-09-26T17:56:09.044Z</updated>
+  <updated>2022-10-02T17:07:29.294Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>删除爱奇艺热播视频图标(牛氓)</title>
+    <link href="http://example.com/2022/10/03/%E5%88%A0%E9%99%A4%E7%88%B1%E5%A5%87%E8%89%BA%E7%83%AD%E6%92%AD%E8%A7%86%E9%A2%91%E5%9B%BE%E6%A0%87/"/>
+    <id>http://example.com/2022/10/03/%E5%88%A0%E9%99%A4%E7%88%B1%E5%A5%87%E8%89%BA%E7%83%AD%E6%92%AD%E8%A7%86%E9%A2%91%E5%9B%BE%E6%A0%87/</id>
+    <published>2022-10-02T16:59:38.000Z</published>
+    <updated>2022-10-02T17:07:29.294Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/movejian/images/main/movejian/images202210030104950.png&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="技术" scheme="http://example.com/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    <category term="Win" scheme="http://example.com/categories/%E6%8A%80%E6%9C%AF/Win/"/>
+    
+    
+    <category term="Win" scheme="http://example.com/tags/Win/"/>
+    
+  </entry>
   
   <entry>
     <title>【 Office技能扩展】 Office Tool Plus 高级教程</title>
@@ -411,27 +438,6 @@
     
     <summary type="html">&lt;h3 id=&quot;一、前言&quot;&gt;&lt;a href=&quot;#一、前言&quot; class=&quot;headerlink&quot; title=&quot;一、前言&quot;&gt;&lt;/a&gt;一、前言&lt;/h3&gt;&lt;p&gt;自从接触了Hexo+NexT之后，发现离不开了，以后有能力的时候一定重新架构一下，使得更加个性化，最大程度的满足我们对于软件的需求，大家都知道，如果写东西在本地的话，最怕的应该就是更换电脑，还要重新搭建博客了，所以备份对于我们来说特别重要！备份博客就是本篇博客文章的主旨了，一定要攻下这座城堡。&lt;/p&gt;
 &lt;p&gt;我曾经看过Git备份Hexo博客源文件的方式，这种方式虽然能够备份Hexo博客的源文件，但是对于我这种懒人，每次更新博文都需要输入两三行重复的Git命令真是一件麻烦的事情。况且指不定哪天就搞忘push到github上了。你说是不是，所以这篇文章出现了……&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="学习" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/"/>
-    
-    <category term="Hexo" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/Hexo/"/>
-    
-    
-    <category term="技术" scheme="http://example.com/tags/%E6%8A%80%E6%9C%AF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hexo迁移备份</title>
-    <link href="http://example.com/2022/08/21/Hexo%E8%BF%81%E7%A7%BB%E5%A4%87%E4%BB%BD/"/>
-    <id>http://example.com/2022/08/21/Hexo%E8%BF%81%E7%A7%BB%E5%A4%87%E4%BB%BD/</id>
-    <published>2022-08-21T05:42:35.000Z</published>
-    <updated>2022-08-22T17:01:20.938Z</updated>
-    
-    
-    <summary type="html">&lt;h3 id=&quot;创建Git分支将Hexo博客迁移到其它电脑&quot;&gt;&lt;a href=&quot;#创建Git分支将Hexo博客迁移到其它电脑&quot; class=&quot;headerlink&quot; title=&quot;创建Git分支将Hexo博客迁移到其它电脑&quot;&gt;&lt;/a&gt;创建Git分支将Hexo博客迁移到其它电脑&lt;/h3&gt;&lt;h3 id=&quot;反省&quot;&gt;&lt;a href=&quot;#反省&quot; class=&quot;headerlink&quot; title=&quot;反省&quot;&gt;&lt;/a&gt;反省&lt;/h3&gt;&lt;p&gt;有时候就会干些蠢事，换电脑忘记吧旧电脑博客的Hexo博客备份到移动硬盘上，一个格式化啥都没了，导致丢失了所有的博客资料。（博客内容要慢慢补） 一定要养成经常备份的好习惯。。。。。。。。&lt;/p&gt;</summary>
     
     
     
