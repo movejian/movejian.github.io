@@ -206,38 +206,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Kali的DDoS攻击方法</title>
-    <url>/2022/09/21/Kali%E7%9A%84DDoS%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95/</url>
-    <content><![CDATA[<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212049992.jpeg"></p>
-<p><strong>本文章使用的是Kali Linux的2021-4-installer-amd64版本</strong> <strong>Kali Linux的安装过程本文章不做过多说明，请自行百度</strong> <strong>本帖子如果涉及侵权请联系我</strong>  </p>
-<span id="more"></span>
-
-<p>1**.**首先，打开一个终端然后<code>su root</code>进入<code>root</code></p>
-<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212050035.png" alt="img">  </p>
-<p>2.下载ddos文件包  </p>
-<p>自行百度下载</p>
-<p>3.cd到ddos包下</p>
-<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212050053.png" alt="img"> </p>
-<p> 4.用python执行<code>ddos.py</code>，输入命令：<code>python ddos.py</code></p>
-<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056870.png" alt="img">  </p>
-<p>5.再打开一个终端输入命令:<code> ping www.siediyer.cn</code>  即可获得攻击对象的IP地址。（获取IP后<code>Ctrl+C</code>可以结束<code>ping</code>）   <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212055245.png" alt="img">  </p>
-<p>6.然后回到刚刚的终端，输入<code>ping</code>到的IP地址：</p>
-<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056852.png" alt="img"></p>
-<p>  7.Attack Port即攻击端口，一般服务器默认为80（更多内容请百度）  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056029.png" alt="img"> </p>
-<p> 8.Attack Speed即攻击速度，数值越大越快，最大不能超过1000  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056295.png" alt="img">  </p>
-<p>9.按下回车，如果出现以下界面，即代表已经开始向该IP发起DDos攻击，也就成功了。  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056196.png" alt="img">   </p>
-<p>安全无边疆，努力习知识  </p>
-<p>本文章只供学习交流学习不可用于其他非法用途！！！</p>
-<p> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056473.png" alt="9"></p>
-]]></content>
-      <categories>
-        <category>学习</category>
-      </categories>
-      <tags>
-        <tag>Kali</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Linux中的挂载命令mount</title>
     <url>/2022/09/21/Linux%E4%B8%AD%E7%9A%84%E6%8C%82%E8%BD%BD%E5%91%BD%E4%BB%A4mount/</url>
     <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在 Linux GUI 中，我们通常理所当然地认为，当我们插入 USB 闪存驱动器、硬盘驱动器甚至 DVD 磁盘时，它们就可以使用了。但是在后台有一个过程，设备被安装（准备好使用）并分配了一个安装点。当使用服务器或远程连接时，并不能确定某个设备是否会自动可用，那么我们如何挂载自己的设备呢？下面我们一起来看一下！</p>
@@ -321,6 +289,38 @@
       </categories>
       <tags>
         <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Kali的DDoS攻击方法</title>
+    <url>/2022/09/21/Kali%E7%9A%84DDoS%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212049992.jpeg"></p>
+<p><strong>本文章使用的是Kali Linux的2021-4-installer-amd64版本</strong> <strong>Kali Linux的安装过程本文章不做过多说明，请自行百度</strong> <strong>本帖子如果涉及侵权请联系我</strong>  </p>
+<span id="more"></span>
+
+<p>1**.**首先，打开一个终端然后<code>su root</code>进入<code>root</code></p>
+<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212050035.png" alt="img">  </p>
+<p>2.下载ddos文件包  </p>
+<p>自行百度下载</p>
+<p>3.cd到ddos包下</p>
+<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212050053.png" alt="img"> </p>
+<p> 4.用python执行<code>ddos.py</code>，输入命令：<code>python ddos.py</code></p>
+<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056870.png" alt="img">  </p>
+<p>5.再打开一个终端输入命令:<code> ping www.siediyer.cn</code>  即可获得攻击对象的IP地址。（获取IP后<code>Ctrl+C</code>可以结束<code>ping</code>）   <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212055245.png" alt="img">  </p>
+<p>6.然后回到刚刚的终端，输入<code>ping</code>到的IP地址：</p>
+<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056852.png" alt="img"></p>
+<p>  7.Attack Port即攻击端口，一般服务器默认为80（更多内容请百度）  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056029.png" alt="img"> </p>
+<p> 8.Attack Speed即攻击速度，数值越大越快，最大不能超过1000  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056295.png" alt="img">  </p>
+<p>9.按下回车，如果出现以下界面，即代表已经开始向该IP发起DDos攻击，也就成功了。  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056196.png" alt="img">   </p>
+<p>安全无边疆，努力习知识  </p>
+<p>本文章只供学习交流学习不可用于其他非法用途！！！</p>
+<p> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056473.png" alt="9"></p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>Kali</tag>
       </tags>
   </entry>
   <entry>
@@ -576,40 +576,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Office用C2R工具在线安装激活</title>
-    <url>/2022/09/27/Office%E7%94%A8C2R%E5%B7%A5%E5%85%B7%E5%9C%A8%E7%BA%BF%E5%AE%89%E8%A3%85%E6%BF%80%E6%B4%BB/</url>
-    <content><![CDATA[<p>C2R工具下载地址：<a href="https://wwt.lanzouw.com/b03pbhjri#52pj">https://wwt.lanzouw.com/b03pbhjri#52pj</a></p>
-<p>以下来自吾爱破解论坛：<br>Win11 22H2 最新版本官网镜像下载地址（来自微软官网免费链接，不同镜像的区别就是包含的版本不同）：<br>百度网盘：<a href="https://pan.baidu.com/s/1zZUVDc0wMdzoBehTfEPobQ?pwd=sy71">https://pan.baidu.com/s/1zZUVDc0wMdzoBehTfEPobQ?pwd=sy71</a><br>提取码:sy71<br>123云盘：<a href="https://www.123pan.com/s/HfxDVv-xZQ7d">https://www.123pan.com/s/HfxDVv-xZQ7d</a> 提取码：BGio<br>TechBench：<a href="https://techbench.betaworld.cn/get.php?id=2360">https://techbench.betaworld.cn/get.php?id=2360</a><br>微软官网：<a href="https://www.microsoft.com/zh-cn/software-download/windows11/">https://www.microsoft.com/zh-cn/software-download/windows11/</a></p>
-<span id="more"></span>
-
-<p>文件信息：<br>文件名：Win11_22H2_Chinese(Simplified)_x64.iso<br>MD5: 506B5563FDA4402E3DCB846927612414<br>SHA1: EDA6B80B5E52567D22C862884D7C987C316AF844<br>CRC32: 6D69527A</p>
-<p>IOS镜像包含版本：家庭版，家庭单语言版，专业版，教育版，专业教育版，专业工作站版（6）</p>
-<p>MVS&#x2F;MSDN镜像下载（来自微软官方MVS&#x2F;MSDN付费订阅，磁力链接推荐用迅雷下载）：<br>简体中文 - 消费者版（这个版本其实就是微软官网的版本，和上面那个版本一样）：<br>zh-cn_windows_11_consumer_editions_version_22h2_x64_dvd_59cfe6ee.iso (5.14 GB)<br>SHA-256: 5D4733AD43EE51B7686B766D1DD691342A8421035E7C9FA0C936B7BABEE0BE4B<br>包含版本：家庭版、家庭单语言版、教育版、专业版、专业教育版、专业工作站版（6）<br>123云盘分流：<a href="https://www.123pan.com/s/HfxDVv-nZQ7d">https://www.123pan.com/s/HfxDVv-nZQ7d</a> 提取码:yVi4<br>百度网盘分流：<a href="https://pan.baidu.com/s/1MQswudl58d-R_UPqQ7lqXg?pwd=u7he">https://pan.baidu.com/s/1MQswudl58d-R_UPqQ7lqXg?pwd=u7he</a> 提取码:u7he<br>天翼云盘分流：<a href="https://cloud.189.cn/web/share?code=vAfIFfi2q2ym">https://cloud.189.cn/web/share?code=vAfIFfi2q2ym</a> 访问码：0bqa</p>
-<p>简体中文 - 商业版（这个是官网没有，要在微软MSDN花钱订阅的版本，和VLSC的商业版是一个版本）：<br>zh-cn_windows_11_business_editions_version_22h2_x64_dvd_914b57a5.iso (5.05 GB)<br>SHA-256: D74D24A00F83E77A189BE6BCB2E23FAD5BABC29F576E810C43282CE683F8B048<br>包含版本：教育版、企业版、专业版、专业教育版、专业工作站版（5）<br>123云盘分流：<a href="https://www.123pan.com/s/HfxDVv-2ZQ7d">https://www.123pan.com/s/HfxDVv-2ZQ7d</a> 提取码:TE1P<br>百度网盘分流：<a href="https://pan.baidu.com/s/1XbN47aPaDdc8VUlc7OXI7w?pwd=m4eg">https://pan.baidu.com/s/1XbN47aPaDdc8VUlc7OXI7w?pwd=m4eg</a> 提取码:m4eg<br>天翼云盘分流：<a href="https://cloud.189.cn/web/share?code=B7FjieMRnEje">https://cloud.189.cn/web/share?code=B7FjieMRnEje</a> 访问码：dkg4</p>
-<p>简体中文 - 家庭中文版（中国特供版本，大部分笔记本出厂自带的就是这个版本，不推荐下载）：<br>Win11_22H2_China_GGK_Chinese(Simplified)_x64.iso (4.88 GB)<br>SHA-256: 3DC5C5F88A7F076EE349BB20DAB4B2C3857BA7A8AE089AA532E9C2634ED8BFD7<br>包含版本：家庭中文版（1）<br>123云盘分流：<a href="https://www.123pan.com/s/HfxDVv-UZQ7d">https://www.123pan.com/s/HfxDVv-UZQ7d</a> 提取码:sS6e<br>百度网盘分流：<a href="https://pan.baidu.com/s/1kNeaeKEMbMfuxGyW3sluUA?pwd=k3du">https://pan.baidu.com/s/1kNeaeKEMbMfuxGyW3sluUA?pwd=k3du</a> 提取码:k3du<br>天翼云盘分流：<a href="https://cloud.189.cn/web/share?code=MJBzyameymqm">https://cloud.189.cn/web/share?code=MJBzyameymqm</a> 访问码：28hg</p>
-<p>繁體中文 - 消費者版（官網也可以下載到）：<br>SHA256：0DA9E7C321CEB12536420F21A716C3240235ED0AF48D71F065EC76AE77A58EDB<br>包含版本：家庭版、家庭單語言版、教育版、專業版、專業教育版、專業工作站版（6）<br>123雲盤分流：<a href="https://www.123pan.com/s/HfxDVv-SZQ7d">https://www.123pan.com/s/HfxDVv-SZQ7d</a> 提取碼:sVTE<br>百度網盤分流：<a href="https://pan.baidu.com/s/13tJmkqBIsi-t1S2-B5EABQ?pwd=wuyu">https://pan.baidu.com/s/13tJmkqBIsi-t1S2-B5EABQ?pwd=wuyu</a> 提取碼:wuyu<br>天翼雲盤分流：<a href="https://cloud.189.cn/web/share?code=IzYrMbMfUJBn">https://cloud.189.cn/web/share?code=IzYrMbMfUJBn</a> 訪問碼：bkk8</p>
-<p>繁體中文 - 商業版（這個版本和VLSC的繁體中文商業版其實是壹個版本，同樣是付費訂閱來的）：<br>SHA-256: 4C691D1C01CCB40275BAF979DB1A9CEC98F7DA8A8DFA59B4D2366EEC76084758<br>包含版本：教育版、企業版、專業版、專業教育版、專業工作站版（5）<br>123雲盤分流：<a href="https://www.123pan.com/s/HfxDVv-lZQ7d">https://www.123pan.com/s/HfxDVv-lZQ7d</a> 提取碼:wkWD<br>百度網盤分流：<a href="https://pan.baidu.com/s/1avGQLrDxjtXdCiuCL-OuGw?pwd=1v4f">https://pan.baidu.com/s/1avGQLrDxjtXdCiuCL-OuGw?pwd=1v4f</a> 提取碼:1v4f<br>天翼雲盤分流：<a href="https://cloud.189.cn/web/share?code=J3ABRz3q6Fvu">https://cloud.189.cn/web/share?code=J3ABRz3q6Fvu</a> 訪問碼：9m6t</p>
-<p>English - Consumer（英文消费者版本，同样可以在官网下载到）：<br>en-us_windows_11_consumer_editions_version_22h2_x64_dvd_e630fafd.iso (5.11 GB)<br>SHA-256: 5C69E6F486BC4BDAE91557DE161008458EAA40D40468C34DBBD9078952108D0A<br>Include Version：Home, Home N, Home Single Language, Education, Education N, Pro, Pro N, Pro Education, Pro Education N, Pro for Workstations, Pro N for Workstations（11）<br>123 Cloud Disk（123云盘）：<a href="https://www.123pan.com/s/HfxDVv-DZQ7d">https://www.123pan.com/s/HfxDVv-DZQ7d</a> Code:7P4U<br>Baidu Netdisk（百度网盘）：<a href="https://pan.baidu.com/s/1o2yeRWHecMsYsO2I2-3Udg?pwd=jrmn">https://pan.baidu.com/s/1o2yeRWHecMsYsO2I2-3Udg?pwd=jrmn</a> Code:jrmn<br>E Cloud（天翼云盘）：<a href="https://cloud.189.cn/web/share?code=jA7NriZFFram">https://cloud.189.cn/web/share?code=jA7NriZFFram</a> Code：td7r</p>
-<p>English - Business（英文商业版本，官网没有的版本）：<br>en-us_windows_11_business_editions_version_22h2_x64_dvd_17a08ce3.iso (5 GB)<br>SHA-256: 6E3A101C6E97D8E68F576DDBCED9BE34CBA949F750DA3C83F7D4791401068C9F<br>Include Version：Education, Education N, Enterprise, Enterprise N, Pro, Pro N, Pro Education, Pro Education N, Pro for Workstations, Pro N for Workstations（10）<br>123 Cloud Disk（123云盘）：<a href="https://www.123pan.com/s/HfxDVv-rZQ7d">https://www.123pan.com/s/HfxDVv-rZQ7d</a> Code:5yCR<br>Baidu Netdisk（百度网盘）：<a href="https://pan.baidu.com/s/1M6HtQJGjkKs7MMw1cIXF2A?pwd=7b4s">https://pan.baidu.com/s/1M6HtQJGjkKs7MMw1cIXF2A?pwd=7b4s</a> Code:7b4s<br>E Cloud（天翼云盘）：<a href="https://cloud.189.cn/web/share?code=NZzmEr7Rfemy">https://cloud.189.cn/web/share?code=NZzmEr7Rfemy</a> Code：y383</p>
-<p>PS：消费者版和商业版的区别就是包含的版本不同，我是比较喜欢商业版，因为商业版包含企业版，这个是功能最全的</p>
-<p>VLSC企业订阅版本（也是微软官方付费订阅的，这个版本与MVS&#x2F;MSDN版本的区别由于微软偷懒不想做两个版本所以没有了，但是这个版本有ARM64，MVS&#x2F;MSDN版目前还没有）：<br>简体中文 - 商业版：<br>123云盘：<a href="https://www.123pan.com/s/HfxDVv-fZQ7d">https://www.123pan.com/s/HfxDVv-fZQ7d</a> 提取码:YZix<br>百度网盘：<a href="https://pan.baidu.com/s/1OEu7MmSDbCa7_NyEbbER8w?pwd=rk65">https://pan.baidu.com/s/1OEu7MmSDbCa7_NyEbbER8w?pwd=rk65</a> 提取码:rk65<br>天翼云盘：<a href="https://cloud.189.cn/t/FJ3mUjf6fQZ3">https://cloud.189.cn/t/FJ3mUjf6fQZ3</a> 访问码:qz88<br>SHA256:D74D24A00F83E77A189BE6BCB2E23FAD5BABC29F576E810C43282CE683F8B048<br>包含版本：教育版、企业版、专业版、专业教育版、专业工作站版（5）</p>
-<p>简体中文 - ARM64版本：<br>123云盘：<a href="https://www.123pan.com/s/HfxDVv-pZQ7d">https://www.123pan.com/s/HfxDVv-pZQ7d</a> 提取码:b91o<br>百度网盘：<a href="https://pan.baidu.com/s/1on1LBzsAaYIeDBQEMQYK0Q?pwd=26tb">https://pan.baidu.com/s/1on1LBzsAaYIeDBQEMQYK0Q?pwd=26tb</a> 提取码:26tb<br>天翼云盘：<a href="https://cloud.189.cn/t/RjAVFjQviqia">https://cloud.189.cn/t/RjAVFjQviqia</a> 访问码:2vfk<br>SHA256:6C308F4139F9938E369BC987CBCC983EC293506AB29C736ABDD8284CEBBC5BF7<br>这个是给MAC和Win平板用的版本</p>
-<p>繁體中文 - 商業版：<br>123雲盤：<a href="https://www.123pan.com/s/HfxDVv-YZQ7d">https://www.123pan.com/s/HfxDVv-YZQ7d</a> 提取碼:PJCH<br>百度網盤：<a href="https://pan.baidu.com/s/1sKhZ-GQtj1ifcJH60EJPEQ?pwd=yhx5">https://pan.baidu.com/s/1sKhZ-GQtj1ifcJH60EJPEQ?pwd=yhx5</a> 提取碼:yhx5<br>天翼雲盤：<a href="https://cloud.189.cn/t/6ZNbmeEJrm6r">https://cloud.189.cn/t/6ZNbmeEJrm6r</a> 訪問碼：cfu7<br>SHA256:4C691D1C01CCB40275BAF979DB1A9CEC98F7DA8A8DFA59B4D2366EEC76084758<br>包含版本：教育版、企業版、專業版、專業教育版、專業工作站版（5）</p>
-<p>繁體中文 - ARM64版：<br>123雲盤：<a href="https://www.123pan.com/s/HfxDVv-GZQ7d">https://www.123pan.com/s/HfxDVv-GZQ7d</a> 提取碼:5Jfi<br>百度網盤：<a href="https://pan.baidu.com/s/1cJOyT1PrrNY_yYlJnr-1sw?pwd=pxwr">https://pan.baidu.com/s/1cJOyT1PrrNY_yYlJnr-1sw?pwd=pxwr</a> 提取碼:pxwr<br>天翼雲盤：<a href="https://cloud.189.cn/t/vI7vqurUjQze">https://cloud.189.cn/t/vI7vqurUjQze</a> 訪問碼:2e8c<br>SHA256:EB721E2F2B08DEDE965E18369926E9F3FD868728EB7A38A0B3909A524D791F88<br>這個是給MAC和Win平闆用的版本</p>
-<p>English - Business：<br>123 Cloud Disk：<a href="https://www.123pan.com/s/HfxDVv-PZQ7d">https://www.123pan.com/s/HfxDVv-PZQ7d</a> Code:oAY5<br>Baidu Netdisk：<a href="https://pan.baidu.com/s/1LN96MZgYf_kMj8TUAx1tyg?pwd=rcmh">https://pan.baidu.com/s/1LN96MZgYf_kMj8TUAx1tyg?pwd=rcmh</a> Code:rcmh<br>E Cloud：<a href="https://cloud.189.cn/t/Iveaeeniqqmm">https://cloud.189.cn/t/Iveaeeniqqmm</a> Code:on3h<br>SHA256:6E3A101C6E97D8E68F576DDBCED9BE34CBA949F750DA3C83F7D4791401068C9F<br>Include Version：Education, Education N, Enterprise, Enterprise N, Pro, Pro N, Pro Education, Pro Education N, Pro for Workstations, Pro N for Workstations（10）</p>
-<p>English - ARM64：<br>123 Cloud Disk：<a href="https://www.123pan.com/s/HfxDVv-XZQ7d">https://www.123pan.com/s/HfxDVv-XZQ7d</a> Code:vCmO<br>Baidu Netdisk：<a href="https://pan.baidu.com/s/1kI9vkK4b1_oeQSA_Uvr5OA?pwd=6ay5">https://pan.baidu.com/s/1kI9vkK4b1_oeQSA_Uvr5OA?pwd=6ay5</a> Code:6ay5<br>E Cloud：<a href="https://cloud.189.cn/t/IZ7N32Jv2URf">https://cloud.189.cn/t/IZ7N32Jv2URf</a> Code:azb8<br>SHA256:180C0E977B960D55DDA73F5D8E0F3094B2E27BD82C459B880CE5F51C3C49216A<br>This is a version for MAC and Win tablets</p>
-<p>Win下载地址：<a href="http://www.songyongzhi.com/">http://www.songyongzhi.com</a></p>
-<p>offcie用office tool puls（很简单的，用上这个就不需要找其他乱七八糟的了)<br><a href="https://otp.landian.vip/zh-cn/">https://otp.landian.vip/zh-cn/</a></p>
-]]></content>
-      <categories>
-        <category>转载</category>
-      </categories>
-      <tags>
-        <tag>Offce</tag>
-        <tag>Win</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Linux通过密钥对免密登录</title>
     <url>/2022/09/21/Linux%E9%80%9A%E8%BF%87%E5%AF%86%E9%92%A5%E5%AF%B9%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/</url>
     <content><![CDATA[<p>首先，说明一下我们要做的是，跳板机服务器的<code>usera</code>用户免密码登录B服务器的<code>userb</code>用户。<br>我们先使用<code>usera</code>登录跳板服务器</p>
@@ -643,6 +609,40 @@
       </categories>
       <tags>
         <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Office用C2R工具在线安装激活</title>
+    <url>/2022/09/27/Office%E7%94%A8C2R%E5%B7%A5%E5%85%B7%E5%9C%A8%E7%BA%BF%E5%AE%89%E8%A3%85%E6%BF%80%E6%B4%BB/</url>
+    <content><![CDATA[<p>C2R工具下载地址：<a href="https://wwt.lanzouw.com/b03pbhjri#52pj">https://wwt.lanzouw.com/b03pbhjri#52pj</a></p>
+<p>以下来自吾爱破解论坛：<br>Win11 22H2 最新版本官网镜像下载地址（来自微软官网免费链接，不同镜像的区别就是包含的版本不同）：<br>百度网盘：<a href="https://pan.baidu.com/s/1zZUVDc0wMdzoBehTfEPobQ?pwd=sy71">https://pan.baidu.com/s/1zZUVDc0wMdzoBehTfEPobQ?pwd=sy71</a><br>提取码:sy71<br>123云盘：<a href="https://www.123pan.com/s/HfxDVv-xZQ7d">https://www.123pan.com/s/HfxDVv-xZQ7d</a> 提取码：BGio<br>TechBench：<a href="https://techbench.betaworld.cn/get.php?id=2360">https://techbench.betaworld.cn/get.php?id=2360</a><br>微软官网：<a href="https://www.microsoft.com/zh-cn/software-download/windows11/">https://www.microsoft.com/zh-cn/software-download/windows11/</a></p>
+<span id="more"></span>
+
+<p>文件信息：<br>文件名：Win11_22H2_Chinese(Simplified)_x64.iso<br>MD5: 506B5563FDA4402E3DCB846927612414<br>SHA1: EDA6B80B5E52567D22C862884D7C987C316AF844<br>CRC32: 6D69527A</p>
+<p>IOS镜像包含版本：家庭版，家庭单语言版，专业版，教育版，专业教育版，专业工作站版（6）</p>
+<p>MVS&#x2F;MSDN镜像下载（来自微软官方MVS&#x2F;MSDN付费订阅，磁力链接推荐用迅雷下载）：<br>简体中文 - 消费者版（这个版本其实就是微软官网的版本，和上面那个版本一样）：<br>zh-cn_windows_11_consumer_editions_version_22h2_x64_dvd_59cfe6ee.iso (5.14 GB)<br>SHA-256: 5D4733AD43EE51B7686B766D1DD691342A8421035E7C9FA0C936B7BABEE0BE4B<br>包含版本：家庭版、家庭单语言版、教育版、专业版、专业教育版、专业工作站版（6）<br>123云盘分流：<a href="https://www.123pan.com/s/HfxDVv-nZQ7d">https://www.123pan.com/s/HfxDVv-nZQ7d</a> 提取码:yVi4<br>百度网盘分流：<a href="https://pan.baidu.com/s/1MQswudl58d-R_UPqQ7lqXg?pwd=u7he">https://pan.baidu.com/s/1MQswudl58d-R_UPqQ7lqXg?pwd=u7he</a> 提取码:u7he<br>天翼云盘分流：<a href="https://cloud.189.cn/web/share?code=vAfIFfi2q2ym">https://cloud.189.cn/web/share?code=vAfIFfi2q2ym</a> 访问码：0bqa</p>
+<p>简体中文 - 商业版（这个是官网没有，要在微软MSDN花钱订阅的版本，和VLSC的商业版是一个版本）：<br>zh-cn_windows_11_business_editions_version_22h2_x64_dvd_914b57a5.iso (5.05 GB)<br>SHA-256: D74D24A00F83E77A189BE6BCB2E23FAD5BABC29F576E810C43282CE683F8B048<br>包含版本：教育版、企业版、专业版、专业教育版、专业工作站版（5）<br>123云盘分流：<a href="https://www.123pan.com/s/HfxDVv-2ZQ7d">https://www.123pan.com/s/HfxDVv-2ZQ7d</a> 提取码:TE1P<br>百度网盘分流：<a href="https://pan.baidu.com/s/1XbN47aPaDdc8VUlc7OXI7w?pwd=m4eg">https://pan.baidu.com/s/1XbN47aPaDdc8VUlc7OXI7w?pwd=m4eg</a> 提取码:m4eg<br>天翼云盘分流：<a href="https://cloud.189.cn/web/share?code=B7FjieMRnEje">https://cloud.189.cn/web/share?code=B7FjieMRnEje</a> 访问码：dkg4</p>
+<p>简体中文 - 家庭中文版（中国特供版本，大部分笔记本出厂自带的就是这个版本，不推荐下载）：<br>Win11_22H2_China_GGK_Chinese(Simplified)_x64.iso (4.88 GB)<br>SHA-256: 3DC5C5F88A7F076EE349BB20DAB4B2C3857BA7A8AE089AA532E9C2634ED8BFD7<br>包含版本：家庭中文版（1）<br>123云盘分流：<a href="https://www.123pan.com/s/HfxDVv-UZQ7d">https://www.123pan.com/s/HfxDVv-UZQ7d</a> 提取码:sS6e<br>百度网盘分流：<a href="https://pan.baidu.com/s/1kNeaeKEMbMfuxGyW3sluUA?pwd=k3du">https://pan.baidu.com/s/1kNeaeKEMbMfuxGyW3sluUA?pwd=k3du</a> 提取码:k3du<br>天翼云盘分流：<a href="https://cloud.189.cn/web/share?code=MJBzyameymqm">https://cloud.189.cn/web/share?code=MJBzyameymqm</a> 访问码：28hg</p>
+<p>繁體中文 - 消費者版（官網也可以下載到）：<br>SHA256：0DA9E7C321CEB12536420F21A716C3240235ED0AF48D71F065EC76AE77A58EDB<br>包含版本：家庭版、家庭單語言版、教育版、專業版、專業教育版、專業工作站版（6）<br>123雲盤分流：<a href="https://www.123pan.com/s/HfxDVv-SZQ7d">https://www.123pan.com/s/HfxDVv-SZQ7d</a> 提取碼:sVTE<br>百度網盤分流：<a href="https://pan.baidu.com/s/13tJmkqBIsi-t1S2-B5EABQ?pwd=wuyu">https://pan.baidu.com/s/13tJmkqBIsi-t1S2-B5EABQ?pwd=wuyu</a> 提取碼:wuyu<br>天翼雲盤分流：<a href="https://cloud.189.cn/web/share?code=IzYrMbMfUJBn">https://cloud.189.cn/web/share?code=IzYrMbMfUJBn</a> 訪問碼：bkk8</p>
+<p>繁體中文 - 商業版（這個版本和VLSC的繁體中文商業版其實是壹個版本，同樣是付費訂閱來的）：<br>SHA-256: 4C691D1C01CCB40275BAF979DB1A9CEC98F7DA8A8DFA59B4D2366EEC76084758<br>包含版本：教育版、企業版、專業版、專業教育版、專業工作站版（5）<br>123雲盤分流：<a href="https://www.123pan.com/s/HfxDVv-lZQ7d">https://www.123pan.com/s/HfxDVv-lZQ7d</a> 提取碼:wkWD<br>百度網盤分流：<a href="https://pan.baidu.com/s/1avGQLrDxjtXdCiuCL-OuGw?pwd=1v4f">https://pan.baidu.com/s/1avGQLrDxjtXdCiuCL-OuGw?pwd=1v4f</a> 提取碼:1v4f<br>天翼雲盤分流：<a href="https://cloud.189.cn/web/share?code=J3ABRz3q6Fvu">https://cloud.189.cn/web/share?code=J3ABRz3q6Fvu</a> 訪問碼：9m6t</p>
+<p>English - Consumer（英文消费者版本，同样可以在官网下载到）：<br>en-us_windows_11_consumer_editions_version_22h2_x64_dvd_e630fafd.iso (5.11 GB)<br>SHA-256: 5C69E6F486BC4BDAE91557DE161008458EAA40D40468C34DBBD9078952108D0A<br>Include Version：Home, Home N, Home Single Language, Education, Education N, Pro, Pro N, Pro Education, Pro Education N, Pro for Workstations, Pro N for Workstations（11）<br>123 Cloud Disk（123云盘）：<a href="https://www.123pan.com/s/HfxDVv-DZQ7d">https://www.123pan.com/s/HfxDVv-DZQ7d</a> Code:7P4U<br>Baidu Netdisk（百度网盘）：<a href="https://pan.baidu.com/s/1o2yeRWHecMsYsO2I2-3Udg?pwd=jrmn">https://pan.baidu.com/s/1o2yeRWHecMsYsO2I2-3Udg?pwd=jrmn</a> Code:jrmn<br>E Cloud（天翼云盘）：<a href="https://cloud.189.cn/web/share?code=jA7NriZFFram">https://cloud.189.cn/web/share?code=jA7NriZFFram</a> Code：td7r</p>
+<p>English - Business（英文商业版本，官网没有的版本）：<br>en-us_windows_11_business_editions_version_22h2_x64_dvd_17a08ce3.iso (5 GB)<br>SHA-256: 6E3A101C6E97D8E68F576DDBCED9BE34CBA949F750DA3C83F7D4791401068C9F<br>Include Version：Education, Education N, Enterprise, Enterprise N, Pro, Pro N, Pro Education, Pro Education N, Pro for Workstations, Pro N for Workstations（10）<br>123 Cloud Disk（123云盘）：<a href="https://www.123pan.com/s/HfxDVv-rZQ7d">https://www.123pan.com/s/HfxDVv-rZQ7d</a> Code:5yCR<br>Baidu Netdisk（百度网盘）：<a href="https://pan.baidu.com/s/1M6HtQJGjkKs7MMw1cIXF2A?pwd=7b4s">https://pan.baidu.com/s/1M6HtQJGjkKs7MMw1cIXF2A?pwd=7b4s</a> Code:7b4s<br>E Cloud（天翼云盘）：<a href="https://cloud.189.cn/web/share?code=NZzmEr7Rfemy">https://cloud.189.cn/web/share?code=NZzmEr7Rfemy</a> Code：y383</p>
+<p>PS：消费者版和商业版的区别就是包含的版本不同，我是比较喜欢商业版，因为商业版包含企业版，这个是功能最全的</p>
+<p>VLSC企业订阅版本（也是微软官方付费订阅的，这个版本与MVS&#x2F;MSDN版本的区别由于微软偷懒不想做两个版本所以没有了，但是这个版本有ARM64，MVS&#x2F;MSDN版目前还没有）：<br>简体中文 - 商业版：<br>123云盘：<a href="https://www.123pan.com/s/HfxDVv-fZQ7d">https://www.123pan.com/s/HfxDVv-fZQ7d</a> 提取码:YZix<br>百度网盘：<a href="https://pan.baidu.com/s/1OEu7MmSDbCa7_NyEbbER8w?pwd=rk65">https://pan.baidu.com/s/1OEu7MmSDbCa7_NyEbbER8w?pwd=rk65</a> 提取码:rk65<br>天翼云盘：<a href="https://cloud.189.cn/t/FJ3mUjf6fQZ3">https://cloud.189.cn/t/FJ3mUjf6fQZ3</a> 访问码:qz88<br>SHA256:D74D24A00F83E77A189BE6BCB2E23FAD5BABC29F576E810C43282CE683F8B048<br>包含版本：教育版、企业版、专业版、专业教育版、专业工作站版（5）</p>
+<p>简体中文 - ARM64版本：<br>123云盘：<a href="https://www.123pan.com/s/HfxDVv-pZQ7d">https://www.123pan.com/s/HfxDVv-pZQ7d</a> 提取码:b91o<br>百度网盘：<a href="https://pan.baidu.com/s/1on1LBzsAaYIeDBQEMQYK0Q?pwd=26tb">https://pan.baidu.com/s/1on1LBzsAaYIeDBQEMQYK0Q?pwd=26tb</a> 提取码:26tb<br>天翼云盘：<a href="https://cloud.189.cn/t/RjAVFjQviqia">https://cloud.189.cn/t/RjAVFjQviqia</a> 访问码:2vfk<br>SHA256:6C308F4139F9938E369BC987CBCC983EC293506AB29C736ABDD8284CEBBC5BF7<br>这个是给MAC和Win平板用的版本</p>
+<p>繁體中文 - 商業版：<br>123雲盤：<a href="https://www.123pan.com/s/HfxDVv-YZQ7d">https://www.123pan.com/s/HfxDVv-YZQ7d</a> 提取碼:PJCH<br>百度網盤：<a href="https://pan.baidu.com/s/1sKhZ-GQtj1ifcJH60EJPEQ?pwd=yhx5">https://pan.baidu.com/s/1sKhZ-GQtj1ifcJH60EJPEQ?pwd=yhx5</a> 提取碼:yhx5<br>天翼雲盤：<a href="https://cloud.189.cn/t/6ZNbmeEJrm6r">https://cloud.189.cn/t/6ZNbmeEJrm6r</a> 訪問碼：cfu7<br>SHA256:4C691D1C01CCB40275BAF979DB1A9CEC98F7DA8A8DFA59B4D2366EEC76084758<br>包含版本：教育版、企業版、專業版、專業教育版、專業工作站版（5）</p>
+<p>繁體中文 - ARM64版：<br>123雲盤：<a href="https://www.123pan.com/s/HfxDVv-GZQ7d">https://www.123pan.com/s/HfxDVv-GZQ7d</a> 提取碼:5Jfi<br>百度網盤：<a href="https://pan.baidu.com/s/1cJOyT1PrrNY_yYlJnr-1sw?pwd=pxwr">https://pan.baidu.com/s/1cJOyT1PrrNY_yYlJnr-1sw?pwd=pxwr</a> 提取碼:pxwr<br>天翼雲盤：<a href="https://cloud.189.cn/t/vI7vqurUjQze">https://cloud.189.cn/t/vI7vqurUjQze</a> 訪問碼:2e8c<br>SHA256:EB721E2F2B08DEDE965E18369926E9F3FD868728EB7A38A0B3909A524D791F88<br>這個是給MAC和Win平闆用的版本</p>
+<p>English - Business：<br>123 Cloud Disk：<a href="https://www.123pan.com/s/HfxDVv-PZQ7d">https://www.123pan.com/s/HfxDVv-PZQ7d</a> Code:oAY5<br>Baidu Netdisk：<a href="https://pan.baidu.com/s/1LN96MZgYf_kMj8TUAx1tyg?pwd=rcmh">https://pan.baidu.com/s/1LN96MZgYf_kMj8TUAx1tyg?pwd=rcmh</a> Code:rcmh<br>E Cloud：<a href="https://cloud.189.cn/t/Iveaeeniqqmm">https://cloud.189.cn/t/Iveaeeniqqmm</a> Code:on3h<br>SHA256:6E3A101C6E97D8E68F576DDBCED9BE34CBA949F750DA3C83F7D4791401068C9F<br>Include Version：Education, Education N, Enterprise, Enterprise N, Pro, Pro N, Pro Education, Pro Education N, Pro for Workstations, Pro N for Workstations（10）</p>
+<p>English - ARM64：<br>123 Cloud Disk：<a href="https://www.123pan.com/s/HfxDVv-XZQ7d">https://www.123pan.com/s/HfxDVv-XZQ7d</a> Code:vCmO<br>Baidu Netdisk：<a href="https://pan.baidu.com/s/1kI9vkK4b1_oeQSA_Uvr5OA?pwd=6ay5">https://pan.baidu.com/s/1kI9vkK4b1_oeQSA_Uvr5OA?pwd=6ay5</a> Code:6ay5<br>E Cloud：<a href="https://cloud.189.cn/t/IZ7N32Jv2URf">https://cloud.189.cn/t/IZ7N32Jv2URf</a> Code:azb8<br>SHA256:180C0E977B960D55DDA73F5D8E0F3094B2E27BD82C459B880CE5F51C3C49216A<br>This is a version for MAC and Win tablets</p>
+<p>Win下载地址：<a href="http://www.songyongzhi.com/">http://www.songyongzhi.com</a></p>
+<p>offcie用office tool puls（很简单的，用上这个就不需要找其他乱七八糟的了)<br><a href="https://otp.landian.vip/zh-cn/">https://otp.landian.vip/zh-cn/</a></p>
+]]></content>
+      <categories>
+        <category>转载</category>
+      </categories>
+      <tags>
+        <tag>Offce</tag>
+        <tag>Win</tag>
       </tags>
   </entry>
   <entry>
@@ -764,26 +764,6 @@
       </tags>
   </entry>
   <entry>
-    <title>传奇内挂垃圾物品过滤</title>
-    <url>/2022/09/03/%E4%BC%A0%E5%A5%87%E5%86%85%E6%8C%82%E5%9E%83%E5%9C%BE%E7%89%A9%E5%93%81%E8%BF%87%E6%BB%A4/</url>
-    <content><![CDATA[<p> 传奇内挂过滤垃圾。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209031601159.png" alt="image-20220903160139387"></p>
-<p>先打开传奇目录 <code>D:\传奇私服\Config </code>   修改DAT档案文件，把下面内容复制粘贴进去保存即可：</p>
-<span id="more"></span>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">金创药(小量),药品类,0,0,0,0</span><br><span class="line">魔法药(小量),药品类,0,0,0,0</span><br><span class="line">肉,其它类,0,0,0,0</span><br><span class="line">布衣(男),服装类,0,0,0,0</span><br><span class="line">布衣(女),服装类,0,0,0,0</span><br><span class="line">木剑,武器类,0,0,0,0</span><br><span class="line">铁剑,武器类,0,0,0,0</span><br><span class="line">青铜剑,武器类,0,0,0,0</span><br><span class="line">轻型盔甲(男),服装类,0,0,0,0</span><br><span class="line">轻型盔甲(女),服装类,0,0,0,0</span><br><span class="line">凝霜,武器类,0,0,0,0</span><br><span class="line">短剑,武器类,0,0,0,0</span><br><span class="line">青铜斧,武器类,0,0,0,0</span><br><span class="line">重盔甲(女),服装类,0,0,0,0</span><br><span class="line">魔法长袍(女),服装类,0,0,0,0</span><br><span class="line">灵魂战衣(女),服装类,0,0,0,0</span><br><span class="line">重盔甲(男),服装类,0,0,0,0</span><br><span class="line">魔法长袍(男),服装类,0,0,0,0</span><br><span class="line">灵魂战衣(男),服装类,0,0,0,0</span><br><span class="line">海魂,武器类,0,0,0,0</span><br><span class="line">修罗,武器类,0,0,0,0</span><br><span class="line">破魂,武器类,0,0,0,0</span><br><span class="line">斩马刀,武器类,0,0,0,0</span><br><span class="line">青铜头盔,首饰类,0,0,0,0</span><br><span class="line">金项链,首饰类,0,0,0,0</span><br><span class="line">铁手镯,首饰类,0,0,0,0</span><br><span class="line">灰色药粉(中量),药品类,0,0,0,0</span><br><span class="line">黄色药粉(中量),药品类,0,0,0,0</span><br><span class="line">八荒,武器类,0,0,0,0</span><br><span class="line">玻璃戒指,首饰类,0,0,0,0</span><br><span class="line">牛角戒指,首饰类,0,0,0,0</span><br><span class="line">蓝色水晶戒指,首饰类,0,0,0,0</span><br><span class="line">黑檀项链,首饰类,0,0,0,0</span><br><span class="line">黄色水晶项链,首饰类,0,0,0,0</span><br><span class="line">黑色水晶项链,首饰类,0,0,0,0</span><br><span class="line">半月,武器类,0,0,0,0</span><br><span class="line">皮制手套,首饰类,0,0,0,0</span><br><span class="line">钢手镯,首饰类,0,0,0,0</span><br><span class="line">生铁戒指,首饰类,0,0,0,0</span><br><span class="line">金戒指,首饰类,0,0,0,0</span><br><span class="line">灯笼项链,首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链,首饰类,1,1,1,0</span><br><span class="line">魅力戒指,首饰类,0,0,0,0</span><br><span class="line">道德戒指,首饰类,0,0,0,0</span><br><span class="line">白金项链,首饰类,0,0,0,0</span><br><span class="line">降妖除魔戒指,首饰类,0,0,0,0</span><br><span class="line">偃月,武器类,0,0,0,0</span><br><span class="line">降魔,武器类,0,0,0,0</span><br><span class="line">小手镯,首饰类,0,0,0,0</span><br><span class="line">银手镯,首饰类,0,0,0,0</span><br><span class="line">大手镯,首饰类,0,0,0,0</span><br><span class="line">金创药(中量),药品类,0,0,0,0</span><br><span class="line">魔法药(中量),药品类,0,0,0,0</span><br><span class="line">黑色水晶戒指,首饰类,0,0,0,0</span><br><span class="line">魔鬼项链,首饰类,0,0,0,0</span><br><span class="line">珊瑚戒指,首饰类,0,0,0,0</span><br><span class="line">蓝翡翠项链,首饰类,0,0,0,0</span><br><span class="line">蛇眼戒指,首饰类,0,0,0,0</span><br><span class="line">琥珀项链,首饰类,0,0,0,0</span><br><span class="line">放大镜,首饰类,0,0,0,0</span><br><span class="line">珍珠戒指,首饰类,0,0,0,0</span><br><span class="line">竹笛,首饰类,0,0,0,0</span><br><span class="line">骷髅戒指,首饰类,0,0,0,0</span><br><span class="line">死神手套,首饰类,0,0,0,0</span><br><span class="line">骷髅头盔,首饰类,0,0,0,0</span><br><span class="line">魔法手镯,首饰类,0,0,0,0</span><br><span class="line">金手镯,首饰类,0,0,0,0</span><br><span class="line">道士头盔,首饰类,0,0,0,0</span><br><span class="line">凤凰明珠,首饰类,0,0,0,0</span><br><span class="line">道士手镯,首饰类,0,0,0,0</span><br><span class="line">黑檀手镯,首饰类,0,0,0,0</span><br><span class="line">铁矿,其它类,0,0,0,0</span><br><span class="line">黑铁矿,其它类,0,0,0,0</span><br><span class="line">困魔咒,其它类,0,0,0,0</span><br><span class="line">召唤骷髅,其它类,0,0,0,0</span><br><span class="line">地狱雷光,其它类,0,0,0,0</span><br><span class="line">半月弯刀,其它类,0,0,0,0</span><br><span class="line">太阳水,药品类,0,1,0,0</span><br><span class="line">强效金创药,药品类,0,1,0,0</span><br><span class="line">强效魔法药,药品类,0,1,0,0</span><br><span class="line">野蛮冲撞,其它类,0,0,0,0</span><br><span class="line">群体治疗术,其它类,0,0,0,0</span><br><span class="line">圣言术,其它类,0,0,0,0</span><br><span class="line">强效太阳水,药品类,0,1,0,0</span><br><span class="line">魔力手镯,首饰类,0,0,0,0</span><br><span class="line">攻击力药水,其它类,0,0,0,0</span><br><span class="line">道术力药水,其它类,0,0,0,0</span><br><span class="line">疾风药水,其它类,0,0,0,0</span><br><span class="line">体力强化水,其它类,0,0,0,0</span><br><span class="line">魔力强化水,其它类,0,0,0,0</span><br><span class="line">战神盔甲(男),服装类,0,0,0,0</span><br><span class="line">战神盔甲(女),服装类,0,0,0,0</span><br><span class="line">幽灵战衣(男),服装类,0,0,0,0</span><br><span class="line">幽灵战衣(女),服装类,0,0,0,0</span><br><span class="line">恶魔长袍(男),服装类,0,0,0,0</span><br><span class="line">恶魔长袍(女),服装类,0,0,0,0</span><br><span class="line">中型盔甲(男),服装类,0,0,0,0</span><br><span class="line">灯笼项链②,首饰类,1,1,1,0</span><br><span class="line">灯笼项链[残],首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链[残],首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链②,首饰类,1,1,1,0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>游戏</category>
-        <category>传奇</category>
-      </categories>
-      <tags>
-        <tag>传奇</tag>
-        <tag>外挂</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>使用HEXO-GIT-BACKUP插件备份博客源文件</title>
     <url>/2022/08/21/%E4%BD%BF%E7%94%A8HEXO-GIT-BACKUP%E6%8F%92%E4%BB%B6%E5%A4%87%E4%BB%BD%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/</url>
     <content><![CDATA[<p>在搭建好hexo博客之后也要给自己的博客进行备份，文章丢失可是很麻烦的一件事情。我的博客的数据都是直接保存在cloudstudio，用的时候总是会感觉有点问题，生怕自己哪天不小心把工作空间给删除了，那就蛮麻烦了。所以我采用了 <a href="https://github.com/coneycode/hexo-git-backup">hexo-git-backup</a> 这个工具进行备份。</p>
@@ -837,6 +817,7 @@
     <title>删除爱奇艺热播视频图标(牛氓)</title>
     <url>/2022/10/03/%E5%88%A0%E9%99%A4%E7%88%B1%E5%A5%87%E8%89%BA%E7%83%AD%E6%92%AD%E8%A7%86%E9%A2%91%E5%9B%BE%E6%A0%87/</url>
     <content><![CDATA[<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210030104950.png" alt="image-20221003010451506"></p>
+<span id="more"></span>
 <p><strong>第一步丶</strong>在开始→运行中输入 :<code>regedit</code>点击确定（或者回车）打开注册表编辑器</p>
 <p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210030101210.png" alt="image-20221003010050614"></p>
 <p><strong>第二步丶</strong>如果是Windows 10操作系统，没有开始菜单，可以使用快捷键调出运行：Win+R依次定位到：</p>
@@ -851,6 +832,26 @@
       </categories>
       <tags>
         <tag>Win</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>传奇内挂垃圾物品过滤</title>
+    <url>/2022/09/03/%E4%BC%A0%E5%A5%87%E5%86%85%E6%8C%82%E5%9E%83%E5%9C%BE%E7%89%A9%E5%93%81%E8%BF%87%E6%BB%A4/</url>
+    <content><![CDATA[<p> 传奇内挂过滤垃圾。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209031601159.png" alt="image-20220903160139387"></p>
+<p>先打开传奇目录 <code>D:\传奇私服\Config </code>   修改DAT档案文件，把下面内容复制粘贴进去保存即可：</p>
+<span id="more"></span>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">金创药(小量),药品类,0,0,0,0</span><br><span class="line">魔法药(小量),药品类,0,0,0,0</span><br><span class="line">肉,其它类,0,0,0,0</span><br><span class="line">布衣(男),服装类,0,0,0,0</span><br><span class="line">布衣(女),服装类,0,0,0,0</span><br><span class="line">木剑,武器类,0,0,0,0</span><br><span class="line">铁剑,武器类,0,0,0,0</span><br><span class="line">青铜剑,武器类,0,0,0,0</span><br><span class="line">轻型盔甲(男),服装类,0,0,0,0</span><br><span class="line">轻型盔甲(女),服装类,0,0,0,0</span><br><span class="line">凝霜,武器类,0,0,0,0</span><br><span class="line">短剑,武器类,0,0,0,0</span><br><span class="line">青铜斧,武器类,0,0,0,0</span><br><span class="line">重盔甲(女),服装类,0,0,0,0</span><br><span class="line">魔法长袍(女),服装类,0,0,0,0</span><br><span class="line">灵魂战衣(女),服装类,0,0,0,0</span><br><span class="line">重盔甲(男),服装类,0,0,0,0</span><br><span class="line">魔法长袍(男),服装类,0,0,0,0</span><br><span class="line">灵魂战衣(男),服装类,0,0,0,0</span><br><span class="line">海魂,武器类,0,0,0,0</span><br><span class="line">修罗,武器类,0,0,0,0</span><br><span class="line">破魂,武器类,0,0,0,0</span><br><span class="line">斩马刀,武器类,0,0,0,0</span><br><span class="line">青铜头盔,首饰类,0,0,0,0</span><br><span class="line">金项链,首饰类,0,0,0,0</span><br><span class="line">铁手镯,首饰类,0,0,0,0</span><br><span class="line">灰色药粉(中量),药品类,0,0,0,0</span><br><span class="line">黄色药粉(中量),药品类,0,0,0,0</span><br><span class="line">八荒,武器类,0,0,0,0</span><br><span class="line">玻璃戒指,首饰类,0,0,0,0</span><br><span class="line">牛角戒指,首饰类,0,0,0,0</span><br><span class="line">蓝色水晶戒指,首饰类,0,0,0,0</span><br><span class="line">黑檀项链,首饰类,0,0,0,0</span><br><span class="line">黄色水晶项链,首饰类,0,0,0,0</span><br><span class="line">黑色水晶项链,首饰类,0,0,0,0</span><br><span class="line">半月,武器类,0,0,0,0</span><br><span class="line">皮制手套,首饰类,0,0,0,0</span><br><span class="line">钢手镯,首饰类,0,0,0,0</span><br><span class="line">生铁戒指,首饰类,0,0,0,0</span><br><span class="line">金戒指,首饰类,0,0,0,0</span><br><span class="line">灯笼项链,首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链,首饰类,1,1,1,0</span><br><span class="line">魅力戒指,首饰类,0,0,0,0</span><br><span class="line">道德戒指,首饰类,0,0,0,0</span><br><span class="line">白金项链,首饰类,0,0,0,0</span><br><span class="line">降妖除魔戒指,首饰类,0,0,0,0</span><br><span class="line">偃月,武器类,0,0,0,0</span><br><span class="line">降魔,武器类,0,0,0,0</span><br><span class="line">小手镯,首饰类,0,0,0,0</span><br><span class="line">银手镯,首饰类,0,0,0,0</span><br><span class="line">大手镯,首饰类,0,0,0,0</span><br><span class="line">金创药(中量),药品类,0,0,0,0</span><br><span class="line">魔法药(中量),药品类,0,0,0,0</span><br><span class="line">黑色水晶戒指,首饰类,0,0,0,0</span><br><span class="line">魔鬼项链,首饰类,0,0,0,0</span><br><span class="line">珊瑚戒指,首饰类,0,0,0,0</span><br><span class="line">蓝翡翠项链,首饰类,0,0,0,0</span><br><span class="line">蛇眼戒指,首饰类,0,0,0,0</span><br><span class="line">琥珀项链,首饰类,0,0,0,0</span><br><span class="line">放大镜,首饰类,0,0,0,0</span><br><span class="line">珍珠戒指,首饰类,0,0,0,0</span><br><span class="line">竹笛,首饰类,0,0,0,0</span><br><span class="line">骷髅戒指,首饰类,0,0,0,0</span><br><span class="line">死神手套,首饰类,0,0,0,0</span><br><span class="line">骷髅头盔,首饰类,0,0,0,0</span><br><span class="line">魔法手镯,首饰类,0,0,0,0</span><br><span class="line">金手镯,首饰类,0,0,0,0</span><br><span class="line">道士头盔,首饰类,0,0,0,0</span><br><span class="line">凤凰明珠,首饰类,0,0,0,0</span><br><span class="line">道士手镯,首饰类,0,0,0,0</span><br><span class="line">黑檀手镯,首饰类,0,0,0,0</span><br><span class="line">铁矿,其它类,0,0,0,0</span><br><span class="line">黑铁矿,其它类,0,0,0,0</span><br><span class="line">困魔咒,其它类,0,0,0,0</span><br><span class="line">召唤骷髅,其它类,0,0,0,0</span><br><span class="line">地狱雷光,其它类,0,0,0,0</span><br><span class="line">半月弯刀,其它类,0,0,0,0</span><br><span class="line">太阳水,药品类,0,1,0,0</span><br><span class="line">强效金创药,药品类,0,1,0,0</span><br><span class="line">强效魔法药,药品类,0,1,0,0</span><br><span class="line">野蛮冲撞,其它类,0,0,0,0</span><br><span class="line">群体治疗术,其它类,0,0,0,0</span><br><span class="line">圣言术,其它类,0,0,0,0</span><br><span class="line">强效太阳水,药品类,0,1,0,0</span><br><span class="line">魔力手镯,首饰类,0,0,0,0</span><br><span class="line">攻击力药水,其它类,0,0,0,0</span><br><span class="line">道术力药水,其它类,0,0,0,0</span><br><span class="line">疾风药水,其它类,0,0,0,0</span><br><span class="line">体力强化水,其它类,0,0,0,0</span><br><span class="line">魔力强化水,其它类,0,0,0,0</span><br><span class="line">战神盔甲(男),服装类,0,0,0,0</span><br><span class="line">战神盔甲(女),服装类,0,0,0,0</span><br><span class="line">幽灵战衣(男),服装类,0,0,0,0</span><br><span class="line">幽灵战衣(女),服装类,0,0,0,0</span><br><span class="line">恶魔长袍(男),服装类,0,0,0,0</span><br><span class="line">恶魔长袍(女),服装类,0,0,0,0</span><br><span class="line">中型盔甲(男),服装类,0,0,0,0</span><br><span class="line">灯笼项链②,首饰类,1,1,1,0</span><br><span class="line">灯笼项链[残],首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链[残],首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链②,首饰类,1,1,1,0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>游戏</category>
+        <category>传奇</category>
+      </categories>
+      <tags>
+        <tag>传奇</tag>
+        <tag>外挂</tag>
       </tags>
   </entry>
   <entry>
@@ -988,6 +989,44 @@
 ]]></content>
       <tags>
         <tag>区块链</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>将Windows打印机变成网络打印机</title>
+    <url>/2022/09/11/%E5%B0%86Windows%E6%89%93%E5%8D%B0%E6%9C%BA%E5%8F%98%E6%88%90%E7%BD%91%E7%BB%9C%E6%89%93%E5%8D%B0%E6%9C%BA/</url>
+    <content><![CDATA[<p>大家都知道Windows的打印共享一直属于玄学，2000&#x2F;XP&#x2F;2003（NT 5.x）及以前的时代基本还算正常，经过简单的设置总能搞定，自从Vista开始的NT 6.x，尤其到了win10&#x2F;win11时代，Windows的打印共享基本上就变成了玄学，姑且不说很难搞定，就算搞定了，一个补丁也可能把它搞残废。另外，Windows的共享服务一直存在各种安全漏洞，曾经一度被勒索病毒利用，尤其是win7（不能打补丁那种），为了安全，我一般都禁用server服务。</p>
+<span id="more"></span>
+<p>但自带网络接口的打印机从来没有这么复杂，指定IP（端口基本上就是基于raw的9100），安装驱动即可搞定，完全跳过了复杂的samba协议，直接使用TCP&#x2F;IP。如同在Windows下通过http或者ftp共享文件，完全不需要考虑Windows那复杂的共享机制。</p>
+<p>但并不是所有的打印机都带网络接口，虽然现在可以买一个便宜的可以刷固件的路由器（比如坛子里15块收的优酷路由宝刷Padavan或者OpenWRT）当打印服务器使用，但毕竟硬件都不是现成的，而且，投入再小也得投入不是。</p>
+<p>那能不能将Windows直接变成类似的打印服务器呢？答案是：Raw Print Server。这是一个开源的命令行程序，官方网站：<a href="https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/">https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/</a> 。注意，下载1.0版本， 不要下载那个beta版。<a href="https://www.253874.net/attachment?id=72646">RawPrintServer100.zip</a> 也附上了1.0版本的可执行程序及程序源码。</p>
+<p>Github项目链接：<a href="https://github.com/miso-lims/rawprintserver">https://github.com/miso-lims/rawprintserver</a> (这程序从2006年就停止开发了）。</p>
+<p><strong>基本操作流程：</strong></p>
+<p>1、在作为打印服务器的Windows上安装好打印机，以HP LaserJet P1008为例，装好打印机时，最好给打印机改一个简短的名字，例如叫：HP1008。</p>
+<p>2、将rawprintserver.exe复制到Windows的system32目录。</p>
+<p>3、管理员cmd模式下执行：rawprintserver.exe install “HP1008”。注意，这里的打印机名称一定要跟你Windows控制面板中显示的打印机名称一样。该程序会安装一个rawprintserver服务，如果你在上一步操作中没有将该文件复制到system32目录，那就需要修改下对应服务注册表项中的ImagePath项，将该程序的全路径写入，否则服务启动不了。</p>
+<p>4、在打印客户端按添加网络打印机的流程（自动搜索肯定是搜不到的，所以需要手工操作），指定IP地址，默认raw:9100，然后手工指定打印机驱动安装即可。</p>
+<p>5、搞定！</p>
+<p>6、软件运行的日志强行锁死在c:\PrintServer.log，如果出现什么错误，可以查看该日志。</p>
+<p>我试过在win10下安装rawprintserver，win7_x86和win11都可以正常连接并使用。<br><em>相关地址</em><br><a href="https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/"><em>https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/</em></a></p>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>技术</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>愿你编码半生，归来仍是少年</title>
+    <url>/2019/10/21/%E6%84%BF%E4%BD%A0%E7%BC%96%E7%A0%81%E5%8D%8A%E7%94%9F%EF%BC%8C%E5%BD%92%E6%9D%A5%E4%BB%8D%E6%98%AF%E5%B0%91%E5%B9%B4/</url>
+    <content><![CDATA[<h4 id="Hello-World-不巧，我也在等你。"><a href="#Hello-World-不巧，我也在等你。" class="headerlink" title="Hello,World.不巧，我也在等你。"></a>Hello,World.不巧，我也在等你。</h4><p>​      有人说自己被社会磨平了棱角，泯灭了心性，受生活所迫，“都说是为生活所迫，生活缺从来没有被抓过；都说被社会磨去棱角，社会之恶至今无法逃脱”，我们都有权利选择自己想成为的人，并不是由社会说了算，我们都曾年少，我们都曾有棱角，社会的熔炉却在不断的炼化我们，到底是磨平了棱角，还是磨成了钢刀，就让时间来见证吧！</p>
+<p>​      常年混迹于各大网络社区，也曾愤青，如今独爱云淡风轻，只愿在滚滚红尘中揽得风花雪月独醉。</p>
+<h4 id="感谢你的到来。"><a href="#感谢你的到来。" class="headerlink" title="感谢你的到来。"></a>感谢你的到来。</h4><span id="more"></span>
+
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/8.jpg" alt="8"></p>
+]]></content>
+      <tags>
+        <tag>随心</tag>
       </tags>
   </entry>
   <entry>
@@ -1154,44 +1193,6 @@
       </tags>
   </entry>
   <entry>
-    <title>将Windows打印机变成网络打印机</title>
-    <url>/2022/09/11/%E5%B0%86Windows%E6%89%93%E5%8D%B0%E6%9C%BA%E5%8F%98%E6%88%90%E7%BD%91%E7%BB%9C%E6%89%93%E5%8D%B0%E6%9C%BA/</url>
-    <content><![CDATA[<p>大家都知道Windows的打印共享一直属于玄学，2000&#x2F;XP&#x2F;2003（NT 5.x）及以前的时代基本还算正常，经过简单的设置总能搞定，自从Vista开始的NT 6.x，尤其到了win10&#x2F;win11时代，Windows的打印共享基本上就变成了玄学，姑且不说很难搞定，就算搞定了，一个补丁也可能把它搞残废。另外，Windows的共享服务一直存在各种安全漏洞，曾经一度被勒索病毒利用，尤其是win7（不能打补丁那种），为了安全，我一般都禁用server服务。</p>
-<span id="more"></span>
-<p>但自带网络接口的打印机从来没有这么复杂，指定IP（端口基本上就是基于raw的9100），安装驱动即可搞定，完全跳过了复杂的samba协议，直接使用TCP&#x2F;IP。如同在Windows下通过http或者ftp共享文件，完全不需要考虑Windows那复杂的共享机制。</p>
-<p>但并不是所有的打印机都带网络接口，虽然现在可以买一个便宜的可以刷固件的路由器（比如坛子里15块收的优酷路由宝刷Padavan或者OpenWRT）当打印服务器使用，但毕竟硬件都不是现成的，而且，投入再小也得投入不是。</p>
-<p>那能不能将Windows直接变成类似的打印服务器呢？答案是：Raw Print Server。这是一个开源的命令行程序，官方网站：<a href="https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/">https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/</a> 。注意，下载1.0版本， 不要下载那个beta版。<a href="https://www.253874.net/attachment?id=72646">RawPrintServer100.zip</a> 也附上了1.0版本的可执行程序及程序源码。</p>
-<p>Github项目链接：<a href="https://github.com/miso-lims/rawprintserver">https://github.com/miso-lims/rawprintserver</a> (这程序从2006年就停止开发了）。</p>
-<p><strong>基本操作流程：</strong></p>
-<p>1、在作为打印服务器的Windows上安装好打印机，以HP LaserJet P1008为例，装好打印机时，最好给打印机改一个简短的名字，例如叫：HP1008。</p>
-<p>2、将rawprintserver.exe复制到Windows的system32目录。</p>
-<p>3、管理员cmd模式下执行：rawprintserver.exe install “HP1008”。注意，这里的打印机名称一定要跟你Windows控制面板中显示的打印机名称一样。该程序会安装一个rawprintserver服务，如果你在上一步操作中没有将该文件复制到system32目录，那就需要修改下对应服务注册表项中的ImagePath项，将该程序的全路径写入，否则服务启动不了。</p>
-<p>4、在打印客户端按添加网络打印机的流程（自动搜索肯定是搜不到的，所以需要手工操作），指定IP地址，默认raw:9100，然后手工指定打印机驱动安装即可。</p>
-<p>5、搞定！</p>
-<p>6、软件运行的日志强行锁死在c:\PrintServer.log，如果出现什么错误，可以查看该日志。</p>
-<p>我试过在win10下安装rawprintserver，win7_x86和win11都可以正常连接并使用。<br><em>相关地址</em><br><a href="https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/"><em>https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/</em></a></p>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>技术</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>愿你编码半生，归来仍是少年</title>
-    <url>/2019/10/21/%E6%84%BF%E4%BD%A0%E7%BC%96%E7%A0%81%E5%8D%8A%E7%94%9F%EF%BC%8C%E5%BD%92%E6%9D%A5%E4%BB%8D%E6%98%AF%E5%B0%91%E5%B9%B4/</url>
-    <content><![CDATA[<h4 id="Hello-World-不巧，我也在等你。"><a href="#Hello-World-不巧，我也在等你。" class="headerlink" title="Hello,World.不巧，我也在等你。"></a>Hello,World.不巧，我也在等你。</h4><p>​      有人说自己被社会磨平了棱角，泯灭了心性，受生活所迫，“都说是为生活所迫，生活缺从来没有被抓过；都说被社会磨去棱角，社会之恶至今无法逃脱”，我们都有权利选择自己想成为的人，并不是由社会说了算，我们都曾年少，我们都曾有棱角，社会的熔炉却在不断的炼化我们，到底是磨平了棱角，还是磨成了钢刀，就让时间来见证吧！</p>
-<p>​      常年混迹于各大网络社区，也曾愤青，如今独爱云淡风轻，只愿在滚滚红尘中揽得风花雪月独醉。</p>
-<h4 id="感谢你的到来。"><a href="#感谢你的到来。" class="headerlink" title="感谢你的到来。"></a>感谢你的到来。</h4><span id="more"></span>
-
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/8.jpg" alt="8"></p>
-]]></content>
-      <tags>
-        <tag>随心</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>【 Office技能扩展】 Office Tool Plus 高级教程</title>
     <url>/2022/09/27/%E6%8A%80%E8%83%BD%E6%89%A9%E5%B1%95Office/</url>
     <content><![CDATA[<h3 id="遵循"><a href="#遵循" class="headerlink" title="遵循"></a>遵循</h3><p>请按照正确的步骤操作，否则可能出现意外的结果。</p>
@@ -1227,85 +1228,6 @@
 <h3 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h3><p>如果本文内容有误或者有任何疑问，欢迎留言一起讨论。</p>
 <p>如果您觉得这篇文章对您有用的话，别忘了点个赞哦！</p>
 <p>坐等屏幕前的大帅哥、小姐姐打赏个鸡腿  :happy:</p>
-]]></content>
-      <tags>
-        <tag>Office</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【激活 Office】 Office Tool Plus 入门教程</title>
-    <url>/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/</url>
-    <content><![CDATA[<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>正版用户一般情况下不需要使用 Office Tool Plus 进行激活，登录账号&#x2F;输入密钥即可激活 Office。</p>
-<p>如果你是从安装教程来到这一步的，那么在这里继续跟着教程来就行。</p>
-<p>需要使用正版 Office？<a href="https://otp.landian.vip/zh-cn/#store">点击这里查看详细信息</a>。</p>
-<p><font style="background: green" size="6">如无特殊情况，文章中提到的 Windows 10 也适用于 Windows 11.</font></p>
-<span id="more"></span>
-
-<blockquote>
-<h4 id="注意⚠"><a href="#注意⚠" class="headerlink" title=" 注意⚠"></a><font style="background: yellow" size="6"> 注意⚠</font></h4><p><a href="https://kms.loli.beer/">kms.loli.beer</a> 已启用客户端限制，每个 IP 每天只允许激活 10 次，超过此限制将会拉黑此 IP 24 小时，连续多次触发限制将会被永久封禁。</p>
-</blockquote>
-<h3 id="1-开始使用"><a href="#1-开始使用" class="headerlink" title="1. 开始使用"></a>1. 开始使用</h3><blockquote>
-<p>请下载最新的包含框架的版本（with runtime），以确保你始终可以获得最好的体验。</p>
-</blockquote>
-<p>在<a href="http://otp.landian.vip/">官网下载 Office Tool Plus</a> 后，将其解压至正常位置（例如桌面），双击 Office Tool Plus 以运行。</p>
-<p><strong>为了确保激活能顺利完成，请务必使用最新版 Office Tool Plus.</strong></p>
-<h3 id="2-注意事项"><a href="#2-注意事项" class="headerlink" title="2. 注意事项"></a>2. 注意事项</h3><p><strong>+</strong> 激活开始前，请知晓以下事情：</p>
-<ol>
-<li>如果你激活出现了问题，请首先检查自己的步骤是否有误，再去检查系统是否有问题。</li>
-<li>激活出现问题时，请不要盲目去重装 Office，这几乎是毫无作用的，只会浪费时间。</li>
-<li>Office 激活完成后，所有功能正常使用，不存在什么不能登录账户这种说法。</li>
-<li>Office 的部分功能需要搭配个人&#x2F;企业账户使用。</li>
-<li>使用此处的 KMS 并不会造成电脑被控制，请放心使用。</li>
-<li>你不能使用 KMS 激活零售 (Retail) 许可证，KMS 只能激活批量 (Volume) 许可证。</li>
-<li>如果你的 Office 版本太旧会导致 Office Tool Plus 无法正常识别，请通过 Office Tool Plus 重新安装 Office.</li>
-<li>激活后，在 KMS 主机以及网络正常的情况下，系统会自动续期，不会 180 天后到期。</li>
-</ol>
-<p><strong>请务必仔细查阅教程，如因个人问题造成误解等，请自行承担所有后果。</strong></p>
-<p>激活出现了问题？请首先前往 [<a href="https://movejian.github.io/2022/09/27/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94Office">疑难解答] Office Tool Plus 入门教程</a> 查看相关信息，找不到再留言或加群交流。</p>
-<h3 id="3-清除激活信息"><a href="#3-清除激活信息" class="headerlink" title="3. 清除激活信息"></a>3. 清除激活信息</h3><p><strong>卸载 Office 是不会清除激活信息的</strong>；为了避免出现问题，请按照以下操作清除激活信息：</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270042413.png" alt="清除 Office 激活信息"></p>
-<p>如果账户授权无法撤销，在工具箱内「恢复 Office 设置为默认设置」。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270200030.png" alt="重置 Office 为默认设置"></p>
-<p>已经在上一个教程中做过了？那你可以跳过这一步了。</p>
-<h3 id="使用-Office-Tool-Plus-自动激活-Office"><a href="#使用-Office-Tool-Plus-自动激活-Office" class="headerlink" title="使用 Office Tool Plus 自动激活 Office"></a>使用 Office Tool Plus 自动激活 Office</h3><p>请确保你的 Office Tool Plus 是最新版本，过于陈旧的版本无法使用这些命令。</p>
-<p>旧版本打开命令框的快捷方式为<code>Ctrl+P</code>，最新版已修改。</p>
-<p>按下快捷键<code> Ctrl+Shift+P</code>，打开命令框，按需复制下面的命令，粘贴后回车（Enter）以执行操作。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270042398.png" alt="命令框"></p>
-<p>如果你安装了 Microsoft 365，或者你只是单纯地在遵循教程的指示，请使用以下代码进行激活：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ospp /insLicID MondoVolume /sethst:kms.coolhub.top /setprt:1688 /act</span><br></pre></td></tr></table></figure>
-
-<p><strong>上述代码可一次性激活 Office, Visio, Project，同时适用 Win 7&#x2F;8，能使用 Office 的所有功能。</strong></p>
-<p>如果你需要激活以下产品，请按照自己的需求选择：</p>
-<h5 id="Office-LTSC-2021-Visio-LTSC-2021-Project-2021"><a href="#Office-LTSC-2021-Visio-LTSC-2021-Project-2021" class="headerlink" title="Office LTSC 2021, Visio LTSC 2021, Project 2021"></a>Office LTSC 2021, Visio LTSC 2021, Project 2021</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ospp /insLicID ProPlus2021Volume /sethst:kms.coolhub.top /setprt:1688 /act</span><br><span class="line">ospp /insLicID VisioPro2021Volume /sethst:kms.coolhub.top /setprt:1688 /act</span><br><span class="line">ospp /insLicID ProjectPro2021Volume /sethst:kms.coolhub.top /setprt:1688 /act</span><br></pre></td></tr></table></figure>
-
-<h5 id="Office-Visio-Project-2019"><a href="#Office-Visio-Project-2019" class="headerlink" title="Office, Visio, Project 2019"></a>Office, Visio, Project 2019</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ospp /insLicID ProPlus2019Volume /sethst:kms.coolhub.top /setprt:1688 /act</span><br><span class="line">ospp /insLicID VisioPro2019Volume /sethst:kms.coolhub.top /setprt:1688 /act</span><br><span class="line">ospp /insLicID ProjectPro2019Volume /sethst:kms.coolhub.top /setprt:1688 /act</span><br></pre></td></tr></table></figure>
-
-<h5 id="Office-Visio-Project-2016"><a href="#Office-Visio-Project-2016" class="headerlink" title="Office, Visio, Project 2016"></a>Office, Visio, Project 2016</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ospp /insLicID ProPlusVolume /sethst:kms.coolhub.top /setprt:1688 /act</span><br><span class="line">ospp /insLicID VisioProXVolume /sethst:kms.coolhub.top /setprt:1688 /act</span><br><span class="line">ospp /insLicID ProjectProXVolume /sethst:kms.coolhub.top /setprt:1688 /act</span><br></pre></td></tr></table></figure>
-
-<h2 id="使用-Office-Tool-Plus-手动激活-Office"><a href="#使用-Office-Tool-Plus-手动激活-Office" class="headerlink" title="使用 Office Tool Plus 手动激活 Office"></a>使用 Office Tool Plus 手动激活 Office</h2><p>请优先使用自动激活，避免你遇到问题又不会解决。</p>
-<p>手动激活步骤：</p>
-<ol>
-<li>**安装 Office 批量许可证 (Volume)**，无论如何，这里你都要选批量许可证。</li>
-<li>设置一个 KMS 主机地址（可以设置端口为 1688）并保存设置。</li>
-<li>点击激活按钮，等待激活完成。</li>
-</ol>
-<h3 id="离线激活-Office"><a href="#离线激活-Office" class="headerlink" title="离线激活 Office"></a>离线激活 Office</h3><p>离线激活有两种办法：</p>
-<h5 id="电话激活，需要有效密钥"><a href="#电话激活，需要有效密钥" class="headerlink" title="电话激活，需要有效密钥"></a>电话激活，需要有效密钥</h5><p>密钥的话当然是要自己找啦，我怎么可能会有呢？</p>
-<p>找到密钥后，安装密钥，如果提示找不到许可证 SKU ID，先安装对应的许可证然后继续。</p>
-<p>然后在下拉菜单中找到「获取安装 ID」，然后拿着你的安装 ID 去获取确认 ID.</p>
-<p>然后再通过「安装确认 ID」激活 Office，这东西成败与否我不管的啊（逃）。</p>
-<h5 id="KMS-工具激活"><a href="#KMS-工具激活" class="headerlink" title="KMS 工具激活"></a>KMS 工具激活</h5><p>KMS 工具容易被封杀，使用需要自己考虑以及承担可能的后果，在此推荐两个激活工具：</p>
-<p>HEU-KMS-Activator，微信关注「<a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzA3Nzg3NjYxOQ==">知彼而知己</a>」查看历史文章获取最新版本以及下载链接。</p>
-<p>KMS-VL-ALL: <a href="https://forums.mydigitallife.net/posts/838808/">My Digital Life</a> 或者其对应的 <a href="https://github.com/abbodi1406/KMS_VL_ALL_AIO">GitHub</a>.</p>
-<h3 id="可用的-KMS-列表"><a href="#可用的-KMS-列表" class="headerlink" title="可用的 KMS 列表"></a>可用的 KMS 列表</h3><p>如果你正在用的 KMS 失效了，更换 KMS 主机并保存设置即可，无需重新安装许可证。</p>
-<p>点击<a href="https://www.coolhub.top/tech-articles/kms_list.html">查看 KMS 主机实时状态</a>列表。</p>
-<h3 id="高校正版化激活"><a href="#高校正版化激活" class="headerlink" title="高校正版化激活"></a>高校正版化激活</h3><p>高校的正版化激活只供学校的师生使用，如果你不是，那你将会没有访问权限。</p>
-<p>有的大学已购买 Office 正版授权，一般情况下，师生也能从学校的软件中心找到使用方法等。</p>
-<p>Office Tool Plus 同样支持使用此类 KMS 进行操作，步骤和手动激活说的一样，换个地址就行了。</p>
-<p>如果师生目前不在校园网内，可能需要使用学校提供的 VPN 连接后才可正常激活。</p>
-<p>下列地址均由网友提供，如有错误或新补充，可在评论区留言。</p>
-<h3 id="高校-KMS-主机地址（已认证会带-√）"><a href="#高校-KMS-主机地址（已认证会带-√）" class="headerlink" title="高校 KMS 主机地址（已认证会带 √）"></a>高校 KMS 主机地址（已认证会带 √）</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">北京大学 (√)：kms.pku.edu.cn</span><br><span class="line">清华大学 (√)：kms.cic.tsinghua.edu.cn</span><br><span class="line">复旦大学：mvls.fudan.edu.cn</span><br><span class="line">同济大学：kms.tongji.edu.cn</span><br><span class="line">苏州大学：kms.suda.edu.cn</span><br><span class="line">中山大学：kms.sysu.edu.cn</span><br><span class="line">华东理工大学 (√)：kms.ecust.edu.cn</span><br><span class="line">华北电力大学：202.204.74.218</span><br><span class="line">华南理工大学 (√)：act.msweb.scut.edu.cn</span><br><span class="line">南安普顿大学：kms.soton.ac.uk</span><br><span class="line">上海交通大学 (√)：kms.sjtu.edu.cn</span><br><span class="line">上海财经大学：kms.shufe.edu.cn</span><br><span class="line">上海师范大学：mskms.shnu.edu.cn</span><br><span class="line">上海海事大学：kms.shmtu.edu.cn</span><br><span class="line">武汉理工大学：kms.whut.edu.cn</span><br><span class="line">河南科技大学（√，需搭配特定软件使用）：kms.haust.edu.cn</span><br><span class="line">南京航空航天大学 (√)：kms.nuaa.edu.cn</span><br><span class="line">上海第二工业大学：kms.sspu.edu.cn</span><br><span class="line">中国科学技术大学：kms.ustc.edu.cn</span><br></pre></td></tr></table></figure>
-<h3 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h3><p>如果本文内容有误或者有任何疑问，欢迎留言一起讨论。<br>如果您觉得这篇文章对您有用的话，别忘了点个赞哦！<br>坐等屏幕前的大帅哥、小姐姐打赏个鸡腿 :happy</p>
 ]]></content>
       <tags>
         <tag>Office</tag>
@@ -1472,6 +1394,181 @@
       </tags>
   </entry>
   <entry>
+    <title>【激活 Office】 Office Tool Plus 入门教程</title>
+    <url>/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/</url>
+    <content><![CDATA[<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>正版用户一般情况下不需要使用 Office Tool Plus 进行激活，登录账号&#x2F;输入密钥即可激活 Office。</p>
+<p>如果你是从安装教程来到这一步的，那么在这里继续跟着教程来就行。</p>
+<p>需要使用正版 Office？<a href="https://otp.landian.vip/zh-cn/#store">点击这里查看详细信息</a>。</p>
+<p><font style="background: green" size="6">如无特殊情况，文章中提到的 Windows 10 也适用于 Windows 11.</font></p>
+<span id="more"></span>
+
+<blockquote>
+<h4 id="注意⚠"><a href="#注意⚠" class="headerlink" title=" 注意⚠"></a><font style="background: yellow" size="6"> 注意⚠</font></h4><p><a href="https://kms.loli.beer/">kms.loli.beer</a> 已启用客户端限制，每个 IP 每天只允许激活 10 次，超过此限制将会拉黑此 IP 24 小时，连续多次触发限制将会被永久封禁。</p>
+</blockquote>
+<h3 id="1-开始使用"><a href="#1-开始使用" class="headerlink" title="1. 开始使用"></a>1. 开始使用</h3><blockquote>
+<p>请下载最新的包含框架的版本（with runtime），以确保你始终可以获得最好的体验。</p>
+</blockquote>
+<p>在<a href="http://otp.landian.vip/">官网下载 Office Tool Plus</a> 后，将其解压至正常位置（例如桌面），双击 Office Tool Plus 以运行。</p>
+<p><strong>为了确保激活能顺利完成，请务必使用最新版 Office Tool Plus.</strong></p>
+<h3 id="2-注意事项"><a href="#2-注意事项" class="headerlink" title="2. 注意事项"></a>2. 注意事项</h3><p><strong>+</strong> 激活开始前，请知晓以下事情：</p>
+<ol>
+<li>如果你激活出现了问题，请首先检查自己的步骤是否有误，再去检查系统是否有问题。</li>
+<li>激活出现问题时，请不要盲目去重装 Office，这几乎是毫无作用的，只会浪费时间。</li>
+<li>Office 激活完成后，所有功能正常使用，不存在什么不能登录账户这种说法。</li>
+<li>Office 的部分功能需要搭配个人&#x2F;企业账户使用。</li>
+<li>使用此处的 KMS 并不会造成电脑被控制，请放心使用。</li>
+<li>你不能使用 KMS 激活零售 (Retail) 许可证，KMS 只能激活批量 (Volume) 许可证。</li>
+<li>如果你的 Office 版本太旧会导致 Office Tool Plus 无法正常识别，请通过 Office Tool Plus 重新安装 Office.</li>
+<li>激活后，在 KMS 主机以及网络正常的情况下，系统会自动续期，不会 180 天后到期。</li>
+</ol>
+<p><strong>请务必仔细查阅教程，如因个人问题造成误解等，请自行承担所有后果。</strong></p>
+<p>激活出现了问题？请首先前往 [<a href="https://movejian.github.io/2022/09/27/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94Office">疑难解答] Office Tool Plus 入门教程</a> 查看相关信息，找不到再留言或加群交流。</p>
+<h3 id="3-清除激活信息"><a href="#3-清除激活信息" class="headerlink" title="3. 清除激活信息"></a>3. 清除激活信息</h3><p><strong>卸载 Office 是不会清除激活信息的</strong>；为了避免出现问题，请按照以下操作清除激活信息：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270042413.png" alt="清除 Office 激活信息"></p>
+<p>如果账户授权无法撤销，在工具箱内「恢复 Office 设置为默认设置」。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270200030.png" alt="重置 Office 为默认设置"></p>
+<p>已经在上一个教程中做过了？那你可以跳过这一步了。</p>
+<h3 id="使用-Office-Tool-Plus-自动激活-Office"><a href="#使用-Office-Tool-Plus-自动激活-Office" class="headerlink" title="使用 Office Tool Plus 自动激活 Office"></a>使用 Office Tool Plus 自动激活 Office</h3><p>请确保你的 Office Tool Plus 是最新版本，过于陈旧的版本无法使用这些命令。</p>
+<p>旧版本打开命令框的快捷方式为<code>Ctrl+P</code>，最新版已修改。</p>
+<p>按下快捷键<code> Ctrl+Shift+P</code>，打开命令框，按需复制下面的命令，粘贴后回车（Enter）以执行操作。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270042398.png" alt="命令框"></p>
+<p>如果你安装了 Microsoft 365，或者你只是单纯地在遵循教程的指示，请使用以下代码进行激活：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ospp /insLicID MondoVolume /sethst:kms.coolhub.top /setprt:1688 /act</span><br></pre></td></tr></table></figure>
+
+<p><strong>上述代码可一次性激活 Office, Visio, Project，同时适用 Win 7&#x2F;8，能使用 Office 的所有功能。</strong></p>
+<p>如果你需要激活以下产品，请按照自己的需求选择：</p>
+<h5 id="Office-LTSC-2021-Visio-LTSC-2021-Project-2021"><a href="#Office-LTSC-2021-Visio-LTSC-2021-Project-2021" class="headerlink" title="Office LTSC 2021, Visio LTSC 2021, Project 2021"></a>Office LTSC 2021, Visio LTSC 2021, Project 2021</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ospp /insLicID ProPlus2021Volume /sethst:kms.coolhub.top /setprt:1688 /act</span><br><span class="line">ospp /insLicID VisioPro2021Volume /sethst:kms.coolhub.top /setprt:1688 /act</span><br><span class="line">ospp /insLicID ProjectPro2021Volume /sethst:kms.coolhub.top /setprt:1688 /act</span><br></pre></td></tr></table></figure>
+
+<h5 id="Office-Visio-Project-2019"><a href="#Office-Visio-Project-2019" class="headerlink" title="Office, Visio, Project 2019"></a>Office, Visio, Project 2019</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ospp /insLicID ProPlus2019Volume /sethst:kms.coolhub.top /setprt:1688 /act</span><br><span class="line">ospp /insLicID VisioPro2019Volume /sethst:kms.coolhub.top /setprt:1688 /act</span><br><span class="line">ospp /insLicID ProjectPro2019Volume /sethst:kms.coolhub.top /setprt:1688 /act</span><br></pre></td></tr></table></figure>
+
+<h5 id="Office-Visio-Project-2016"><a href="#Office-Visio-Project-2016" class="headerlink" title="Office, Visio, Project 2016"></a>Office, Visio, Project 2016</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ospp /insLicID ProPlusVolume /sethst:kms.coolhub.top /setprt:1688 /act</span><br><span class="line">ospp /insLicID VisioProXVolume /sethst:kms.coolhub.top /setprt:1688 /act</span><br><span class="line">ospp /insLicID ProjectProXVolume /sethst:kms.coolhub.top /setprt:1688 /act</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用-Office-Tool-Plus-手动激活-Office"><a href="#使用-Office-Tool-Plus-手动激活-Office" class="headerlink" title="使用 Office Tool Plus 手动激活 Office"></a>使用 Office Tool Plus 手动激活 Office</h2><p>请优先使用自动激活，避免你遇到问题又不会解决。</p>
+<p>手动激活步骤：</p>
+<ol>
+<li>**安装 Office 批量许可证 (Volume)**，无论如何，这里你都要选批量许可证。</li>
+<li>设置一个 KMS 主机地址（可以设置端口为 1688）并保存设置。</li>
+<li>点击激活按钮，等待激活完成。</li>
+</ol>
+<h3 id="离线激活-Office"><a href="#离线激活-Office" class="headerlink" title="离线激活 Office"></a>离线激活 Office</h3><p>离线激活有两种办法：</p>
+<h5 id="电话激活，需要有效密钥"><a href="#电话激活，需要有效密钥" class="headerlink" title="电话激活，需要有效密钥"></a>电话激活，需要有效密钥</h5><p>密钥的话当然是要自己找啦，我怎么可能会有呢？</p>
+<p>找到密钥后，安装密钥，如果提示找不到许可证 SKU ID，先安装对应的许可证然后继续。</p>
+<p>然后在下拉菜单中找到「获取安装 ID」，然后拿着你的安装 ID 去获取确认 ID.</p>
+<p>然后再通过「安装确认 ID」激活 Office，这东西成败与否我不管的啊（逃）。</p>
+<h5 id="KMS-工具激活"><a href="#KMS-工具激活" class="headerlink" title="KMS 工具激活"></a>KMS 工具激活</h5><p>KMS 工具容易被封杀，使用需要自己考虑以及承担可能的后果，在此推荐两个激活工具：</p>
+<p>HEU-KMS-Activator，微信关注「<a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzA3Nzg3NjYxOQ==">知彼而知己</a>」查看历史文章获取最新版本以及下载链接。</p>
+<p>KMS-VL-ALL: <a href="https://forums.mydigitallife.net/posts/838808/">My Digital Life</a> 或者其对应的 <a href="https://github.com/abbodi1406/KMS_VL_ALL_AIO">GitHub</a>.</p>
+<h3 id="可用的-KMS-列表"><a href="#可用的-KMS-列表" class="headerlink" title="可用的 KMS 列表"></a>可用的 KMS 列表</h3><p>如果你正在用的 KMS 失效了，更换 KMS 主机并保存设置即可，无需重新安装许可证。</p>
+<p>点击<a href="https://www.coolhub.top/tech-articles/kms_list.html">查看 KMS 主机实时状态</a>列表。</p>
+<h3 id="高校正版化激活"><a href="#高校正版化激活" class="headerlink" title="高校正版化激活"></a>高校正版化激活</h3><p>高校的正版化激活只供学校的师生使用，如果你不是，那你将会没有访问权限。</p>
+<p>有的大学已购买 Office 正版授权，一般情况下，师生也能从学校的软件中心找到使用方法等。</p>
+<p>Office Tool Plus 同样支持使用此类 KMS 进行操作，步骤和手动激活说的一样，换个地址就行了。</p>
+<p>如果师生目前不在校园网内，可能需要使用学校提供的 VPN 连接后才可正常激活。</p>
+<p>下列地址均由网友提供，如有错误或新补充，可在评论区留言。</p>
+<h3 id="高校-KMS-主机地址（已认证会带-√）"><a href="#高校-KMS-主机地址（已认证会带-√）" class="headerlink" title="高校 KMS 主机地址（已认证会带 √）"></a>高校 KMS 主机地址（已认证会带 √）</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">北京大学 (√)：kms.pku.edu.cn</span><br><span class="line">清华大学 (√)：kms.cic.tsinghua.edu.cn</span><br><span class="line">复旦大学：mvls.fudan.edu.cn</span><br><span class="line">同济大学：kms.tongji.edu.cn</span><br><span class="line">苏州大学：kms.suda.edu.cn</span><br><span class="line">中山大学：kms.sysu.edu.cn</span><br><span class="line">华东理工大学 (√)：kms.ecust.edu.cn</span><br><span class="line">华北电力大学：202.204.74.218</span><br><span class="line">华南理工大学 (√)：act.msweb.scut.edu.cn</span><br><span class="line">南安普顿大学：kms.soton.ac.uk</span><br><span class="line">上海交通大学 (√)：kms.sjtu.edu.cn</span><br><span class="line">上海财经大学：kms.shufe.edu.cn</span><br><span class="line">上海师范大学：mskms.shnu.edu.cn</span><br><span class="line">上海海事大学：kms.shmtu.edu.cn</span><br><span class="line">武汉理工大学：kms.whut.edu.cn</span><br><span class="line">河南科技大学（√，需搭配特定软件使用）：kms.haust.edu.cn</span><br><span class="line">南京航空航天大学 (√)：kms.nuaa.edu.cn</span><br><span class="line">上海第二工业大学：kms.sspu.edu.cn</span><br><span class="line">中国科学技术大学：kms.ustc.edu.cn</span><br></pre></td></tr></table></figure>
+<h3 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h3><p>如果本文内容有误或者有任何疑问，欢迎留言一起讨论。<br>如果您觉得这篇文章对您有用的话，别忘了点个赞哦！<br>坐等屏幕前的大帅哥、小姐姐打赏个鸡腿 :happy</p>
+]]></content>
+      <tags>
+        <tag>Office</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>继上一期解决github上的图片无法显示的问题</title>
+    <url>/2022/08/21/%E7%BB%A7%E4%B8%8A%E4%B8%80%E6%9C%9F%E8%A7%A3%E5%86%B3github%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>​      <a href="https://movejian.github.io/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/">继上篇github图床问题</a>无法正常显示，但在<strong>github</strong>上看到正常上传，连接也并非错误，百度了一下说什么<strong>DNS</strong>被污染了。解决方法是修改<strong>hosts</strong>文件或者修改<strong>DNS</strong>。</p>
+<p>​      首先，打开<a href="https://ping.eu/nslookup">域名解析</a>网站：<a href="https://ping.eu/nslookup">https://ping.eu/nslookup</a><br>然后输入raw.githubusercontent.com如下图：</p>
+<p><img src="https://movejian.github.io/images/20220821/5.png"></p>
+<span id="more"></span>
+<p>​      我们得到图床所用域名解析到的IP(上图红框中的地址)。</p>
+<ul>
+<li>最后打开本机的<strong>host</strong>文件，其路径如下：<br><code>C:\Windows\System32\drivers\etc\hosts</code>, 然后添加如下内容(上图红框中的地址)：</li>
+</ul>
+<p><img src="https://movejian.github.io/images/20220821/6.png"></p>
+<ul>
+<li>打开<strong>CMD</strong>输入命令<code>ipconfig /flushdns</code>刷新<strong>DNS</strong>缓存,再次输入<code>ipconfig/displaydns</code></li>
+</ul>
+<p>​    如果你的<strong>hosts</strong>的文件不见了,可以通过文件设置显示系统隐藏文件来找到，依然找不到，可能是被误删了，网上有很多是通过新建文本文档解决。也可以通过下面这个命令来生成<strong>hosts</strong>文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for /f %P in (&#x27;dir %windir%\WinSxS\hosts /b /s&#x27;) do copy %P %windir%\System32\drivers\etc &amp; echo %P &amp; Notepad %P</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>注意</strong>一定要使用管理员身份输入此命令。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>图床</tag>
+        <tag>问题解决</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>自动备份Hexo博客源文件</title>
+    <url>/2022/08/21/%E8%87%AA%E5%8A%A8%E5%A4%87%E4%BB%BDHexo%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/</url>
+    <content><![CDATA[<h3 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h3><p>自从接触了Hexo+NexT之后，发现离不开了，以后有能力的时候一定重新架构一下，使得更加个性化，最大程度的满足我们对于软件的需求，大家都知道，如果写东西在本地的话，最怕的应该就是更换电脑，还要重新搭建博客了，所以备份对于我们来说特别重要！备份博客就是本篇博客文章的主旨了，一定要攻下这座城堡。</p>
+<p>我曾经看过Git备份Hexo博客源文件的方式，这种方式虽然能够备份Hexo博客的源文件，但是对于我这种懒人，每次更新博文都需要输入两三行重复的Git命令真是一件麻烦的事情。况且指不定哪天就搞忘push到github上了。你说是不是，所以这篇文章出现了……</p>
+<span id="more"></span>
+<h3 id="二、原理"><a href="#二、原理" class="headerlink" title="二、原理"></a>二、原理</h3><p>通过监听Hexo的事件来完成自动执行Git命令进行自动备份，查阅Hexo文档，找到了Hexo的主要事件，见下表：</p>
+<table>
+<thead>
+<tr>
+<th>事件名</th>
+<th>事件发生时间</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>deployBefore</td>
+<td>在部署完成前发布</td>
+</tr>
+<tr>
+<td>deployAfter</td>
+<td>在部署成功后发布</td>
+</tr>
+<tr>
+<td>exit</td>
+<td>在 Hexo 结束前发布</td>
+</tr>
+<tr>
+<td>generateBefore</td>
+<td>在静态文件生成前发布</td>
+</tr>
+<tr>
+<td>generateAfter</td>
+<td>在静态文件生成后发布</td>
+</tr>
+<tr>
+<td>new</td>
+<td>在文章文件建立后发布</td>
+</tr>
+</tbody></table>
+<p>于是我们就可以通过监听Hexo的deployAfter事件，待上传完成之后自动运行Git备份命令，从而达到自动备份的目的。</p>
+<h3 id="三、实现"><a href="#三、实现" class="headerlink" title="三、实现"></a>三、实现</h3><h5 id="1-将Hexo目录加入Git仓库"><a href="#1-将Hexo目录加入Git仓库" class="headerlink" title="1.将Hexo目录加入Git仓库"></a>1.将Hexo目录加入Git仓库</h5><p>本脚本需要提前将Hexo加入Git仓库并与Github或者Gitee远程仓库绑定之后，才能正常工作。如果你不知道该怎样进行操作，可以参考我的另一篇博文：</p>
+<ul>
+<li>Git命令手动备份Hexo博客源文件</li>
+</ul>
+<h5 id="2-安装shelljs模块"><a href="#2-安装shelljs模块" class="headerlink" title="2.安装shelljs模块"></a>2.安装shelljs模块</h5><p>要实现这个自动备份功能，需要依赖NodeJs的一个shelljs模块,该模块重新包装了child_process,调用系统命令更加的方便。（其实就是因为我懒( ╯▽╰)）该模块需要安装后使用。</p>
+<p>在命令中键入以下命令，完成shelljs模块的安装：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install --save shelljs</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-编写自动备份脚本"><a href="#3-编写自动备份脚本" class="headerlink" title="3.编写自动备份脚本"></a>3.编写自动备份脚本</h5><p>shelljs模块安装完成后，在Hexo根目录的scripts文件夹下新建一个js文件，文件名随意取(我的文件名为:auto_backup.js)。如果没有scripts目录，请新建一个。</p>
+<p>然后在脚本中，写入以下内容：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">require(<span class="string">&#x27;shelljs/global&#x27;</span>);</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    hexo.on(<span class="string">&#x27;deployAfter&#x27;</span>, function() &#123;//当deploy完成后执行备份</span><br><span class="line">        run();</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">&#125; catch (e) &#123;</span><br><span class="line">    console.log(<span class="string">&quot;产生了一个错误啊&lt;(￣3￣)&gt; !，错误详情为：&quot;</span> + e.toString());</span><br><span class="line">&#125;</span><br><span class="line">function run() &#123;</span><br><span class="line">    <span class="keyword">if</span> (!which(<span class="string">&#x27;git&#x27;</span>)) &#123;</span><br><span class="line">        echo(<span class="string">&#x27;Sorry, this script requires git&#x27;</span>);</span><br><span class="line">        exit(<span class="number">1</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        echo(<span class="string">&quot;======================Auto Backup Begin===========================&quot;</span>);</span><br><span class="line">        cd(<span class="string">&#x27;E:/work/myblog&#x27;</span>);    //此处修改为Hexo根目录路径</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">exec</span>(<span class="string">&#x27;git add --all&#x27;</span>).code !== <span class="number">0</span>) &#123;</span><br><span class="line">            echo(<span class="string">&#x27;Error: Git add failed&#x27;</span>);</span><br><span class="line">            exit(<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">exec</span>(<span class="string">&#x27;git commit -am &quot;blog auto backup script\&#x27;s commit&quot;&#x27;</span>).code !== <span class="number">0</span>) &#123;</span><br><span class="line">            echo(<span class="string">&#x27;Error: Git commit failed&#x27;</span>);</span><br><span class="line">            exit(<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">exec</span>(<span class="string">&#x27;git push origin master&#x27;</span>).code !== <span class="number">0</span>) &#123;</span><br><span class="line">            echo(<span class="string">&#x27;Error: Git push failed&#x27;</span>);</span><br><span class="line">            exit(<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        echo(<span class="string">&quot;==================Auto Backup Complete============================&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>其中，需要修改第16行的<code>E:/work/myblog</code>路径为Hexo的根目录路径。（脚本中的路径为博主的Hexo路径）</li>
+<li>如果你的Git远程仓库名称不为<code>origin</code>的话，还需要修改第25行执行的push命令，修改成自己的远程仓库名和相应的分支名。</li>
+</ul>
+<h5 id="4-测试结果"><a href="#4-测试结果" class="headerlink" title="4.测试结果"></a>4.测试结果</h5><p>保存脚本并退出，然后执行hexo d命令，在常规结果执行出来后，将会得到类似以下结果:</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>技术</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>【疑难解答】 Office Tool Plus 入门教程</title>
     <url>/2022/09/27/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94Office/</url>
     <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>如果你的系统本身就有诸多毛病，建议直接重装原版系统，这是最有效最快的解决办法。</p>
@@ -1600,102 +1697,6 @@
 ]]></content>
       <tags>
         <tag>Office</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>继上一期解决github上的图片无法显示的问题</title>
-    <url>/2022/08/21/%E7%BB%A7%E4%B8%8A%E4%B8%80%E6%9C%9F%E8%A7%A3%E5%86%B3github%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>​      <a href="https://movejian.github.io/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/">继上篇github图床问题</a>无法正常显示，但在<strong>github</strong>上看到正常上传，连接也并非错误，百度了一下说什么<strong>DNS</strong>被污染了。解决方法是修改<strong>hosts</strong>文件或者修改<strong>DNS</strong>。</p>
-<p>​      首先，打开<a href="https://ping.eu/nslookup">域名解析</a>网站：<a href="https://ping.eu/nslookup">https://ping.eu/nslookup</a><br>然后输入raw.githubusercontent.com如下图：</p>
-<p><img src="https://movejian.github.io/images/20220821/5.png"></p>
-<span id="more"></span>
-<p>​      我们得到图床所用域名解析到的IP(上图红框中的地址)。</p>
-<ul>
-<li>最后打开本机的<strong>host</strong>文件，其路径如下：<br><code>C:\Windows\System32\drivers\etc\hosts</code>, 然后添加如下内容(上图红框中的地址)：</li>
-</ul>
-<p><img src="https://movejian.github.io/images/20220821/6.png"></p>
-<ul>
-<li>打开<strong>CMD</strong>输入命令<code>ipconfig /flushdns</code>刷新<strong>DNS</strong>缓存,再次输入<code>ipconfig/displaydns</code></li>
-</ul>
-<p>​    如果你的<strong>hosts</strong>的文件不见了,可以通过文件设置显示系统隐藏文件来找到，依然找不到，可能是被误删了，网上有很多是通过新建文本文档解决。也可以通过下面这个命令来生成<strong>hosts</strong>文件。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for /f %P in (&#x27;dir %windir%\WinSxS\hosts /b /s&#x27;) do copy %P %windir%\System32\drivers\etc &amp; echo %P &amp; Notepad %P</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><strong>注意</strong>一定要使用管理员身份输入此命令。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>图床</tag>
-        <tag>问题解决</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>自动备份Hexo博客源文件</title>
-    <url>/2022/08/21/%E8%87%AA%E5%8A%A8%E5%A4%87%E4%BB%BDHexo%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/</url>
-    <content><![CDATA[<h3 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h3><p>自从接触了Hexo+NexT之后，发现离不开了，以后有能力的时候一定重新架构一下，使得更加个性化，最大程度的满足我们对于软件的需求，大家都知道，如果写东西在本地的话，最怕的应该就是更换电脑，还要重新搭建博客了，所以备份对于我们来说特别重要！备份博客就是本篇博客文章的主旨了，一定要攻下这座城堡。</p>
-<p>我曾经看过Git备份Hexo博客源文件的方式，这种方式虽然能够备份Hexo博客的源文件，但是对于我这种懒人，每次更新博文都需要输入两三行重复的Git命令真是一件麻烦的事情。况且指不定哪天就搞忘push到github上了。你说是不是，所以这篇文章出现了……</p>
-<span id="more"></span>
-<h3 id="二、原理"><a href="#二、原理" class="headerlink" title="二、原理"></a>二、原理</h3><p>通过监听Hexo的事件来完成自动执行Git命令进行自动备份，查阅Hexo文档，找到了Hexo的主要事件，见下表：</p>
-<table>
-<thead>
-<tr>
-<th>事件名</th>
-<th>事件发生时间</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>deployBefore</td>
-<td>在部署完成前发布</td>
-</tr>
-<tr>
-<td>deployAfter</td>
-<td>在部署成功后发布</td>
-</tr>
-<tr>
-<td>exit</td>
-<td>在 Hexo 结束前发布</td>
-</tr>
-<tr>
-<td>generateBefore</td>
-<td>在静态文件生成前发布</td>
-</tr>
-<tr>
-<td>generateAfter</td>
-<td>在静态文件生成后发布</td>
-</tr>
-<tr>
-<td>new</td>
-<td>在文章文件建立后发布</td>
-</tr>
-</tbody></table>
-<p>于是我们就可以通过监听Hexo的deployAfter事件，待上传完成之后自动运行Git备份命令，从而达到自动备份的目的。</p>
-<h3 id="三、实现"><a href="#三、实现" class="headerlink" title="三、实现"></a>三、实现</h3><h5 id="1-将Hexo目录加入Git仓库"><a href="#1-将Hexo目录加入Git仓库" class="headerlink" title="1.将Hexo目录加入Git仓库"></a>1.将Hexo目录加入Git仓库</h5><p>本脚本需要提前将Hexo加入Git仓库并与Github或者Gitee远程仓库绑定之后，才能正常工作。如果你不知道该怎样进行操作，可以参考我的另一篇博文：</p>
-<ul>
-<li>Git命令手动备份Hexo博客源文件</li>
-</ul>
-<h5 id="2-安装shelljs模块"><a href="#2-安装shelljs模块" class="headerlink" title="2.安装shelljs模块"></a>2.安装shelljs模块</h5><p>要实现这个自动备份功能，需要依赖NodeJs的一个shelljs模块,该模块重新包装了child_process,调用系统命令更加的方便。（其实就是因为我懒( ╯▽╰)）该模块需要安装后使用。</p>
-<p>在命令中键入以下命令，完成shelljs模块的安装：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install --save shelljs</span><br></pre></td></tr></table></figure>
-
-<h5 id="3-编写自动备份脚本"><a href="#3-编写自动备份脚本" class="headerlink" title="3.编写自动备份脚本"></a>3.编写自动备份脚本</h5><p>shelljs模块安装完成后，在Hexo根目录的scripts文件夹下新建一个js文件，文件名随意取(我的文件名为:auto_backup.js)。如果没有scripts目录，请新建一个。</p>
-<p>然后在脚本中，写入以下内容：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">require(<span class="string">&#x27;shelljs/global&#x27;</span>);</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    hexo.on(<span class="string">&#x27;deployAfter&#x27;</span>, function() &#123;//当deploy完成后执行备份</span><br><span class="line">        run();</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">&#125; catch (e) &#123;</span><br><span class="line">    console.log(<span class="string">&quot;产生了一个错误啊&lt;(￣3￣)&gt; !，错误详情为：&quot;</span> + e.toString());</span><br><span class="line">&#125;</span><br><span class="line">function run() &#123;</span><br><span class="line">    <span class="keyword">if</span> (!which(<span class="string">&#x27;git&#x27;</span>)) &#123;</span><br><span class="line">        echo(<span class="string">&#x27;Sorry, this script requires git&#x27;</span>);</span><br><span class="line">        exit(<span class="number">1</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        echo(<span class="string">&quot;======================Auto Backup Begin===========================&quot;</span>);</span><br><span class="line">        cd(<span class="string">&#x27;E:/work/myblog&#x27;</span>);    //此处修改为Hexo根目录路径</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">exec</span>(<span class="string">&#x27;git add --all&#x27;</span>).code !== <span class="number">0</span>) &#123;</span><br><span class="line">            echo(<span class="string">&#x27;Error: Git add failed&#x27;</span>);</span><br><span class="line">            exit(<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">exec</span>(<span class="string">&#x27;git commit -am &quot;blog auto backup script\&#x27;s commit&quot;&#x27;</span>).code !== <span class="number">0</span>) &#123;</span><br><span class="line">            echo(<span class="string">&#x27;Error: Git commit failed&#x27;</span>);</span><br><span class="line">            exit(<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">exec</span>(<span class="string">&#x27;git push origin master&#x27;</span>).code !== <span class="number">0</span>) &#123;</span><br><span class="line">            echo(<span class="string">&#x27;Error: Git push failed&#x27;</span>);</span><br><span class="line">            exit(<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        echo(<span class="string">&quot;==================Auto Backup Complete============================&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>其中，需要修改第16行的<code>E:/work/myblog</code>路径为Hexo的根目录路径。（脚本中的路径为博主的Hexo路径）</li>
-<li>如果你的Git远程仓库名称不为<code>origin</code>的话，还需要修改第25行执行的push命令，修改成自己的远程仓库名和相应的分支名。</li>
-</ul>
-<h5 id="4-测试结果"><a href="#4-测试结果" class="headerlink" title="4.测试结果"></a>4.测试结果</h5><p>保存脚本并退出，然后执行hexo d命令，在常规结果执行出来后，将会得到类似以下结果:</p>
-]]></content>
-      <categories>
-        <category>学习</category>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>技术</tag>
       </tags>
   </entry>
 </search>
