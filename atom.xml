@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-10-02T17:10:49.392Z</updated>
+  <updated>2022-10-03T09:05:35.589Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>祖玛阁全地图走法汇总</title>
+    <link href="http://example.com/2022/10/03/%E7%A5%96%E7%8E%9B%E9%98%81%E5%85%A8%E5%9C%B0%E5%9B%BE%E8%B5%B0%E6%B3%95%E6%B1%87%E6%80%BB/"/>
+    <id>http://example.com/2022/10/03/%E7%A5%96%E7%8E%9B%E9%98%81%E5%85%A8%E5%9C%B0%E5%9B%BE%E8%B5%B0%E6%B3%95%E6%B1%87%E6%80%BB/</id>
+    <published>2022-10-03T08:35:58.000Z</published>
+    <updated>2022-10-03T09:05:35.589Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;在传奇游戏中祖玛阁是一个迷宫式的地图，玩家需要走出正确的进行路线才能前往下一层，每一个不同的走法都可能抵达不同的地点。熟悉走法的玩家来说这就是一个高效的练级圣地，对于不熟悉的玩家来说纵膈总共108个房间的祖玛阁怎么走?是最困扰玩家的问题之一。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="游戏" scheme="http://example.com/categories/%E6%B8%B8%E6%88%8F/"/>
+    
+    <category term="传奇" scheme="http://example.com/categories/%E6%B8%B8%E6%88%8F/%E4%BC%A0%E5%A5%87/"/>
+    
+    
+    <category term="传奇" scheme="http://example.com/tags/%E4%BC%A0%E5%A5%87/"/>
+    
+  </entry>
   
   <entry>
     <title>删除爱奇艺热播视频图标(牛氓)</title>
@@ -419,28 +440,6 @@
     
     
     <category term="插件" scheme="http://example.com/tags/%E6%8F%92%E4%BB%B6/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>自动备份Hexo博客源文件</title>
-    <link href="http://example.com/2022/08/21/%E8%87%AA%E5%8A%A8%E5%A4%87%E4%BB%BDHexo%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/"/>
-    <id>http://example.com/2022/08/21/%E8%87%AA%E5%8A%A8%E5%A4%87%E4%BB%BDHexo%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/</id>
-    <published>2022-08-21T06:11:51.000Z</published>
-    <updated>2022-08-22T15:58:41.718Z</updated>
-    
-    
-    <summary type="html">&lt;h3 id=&quot;一、前言&quot;&gt;&lt;a href=&quot;#一、前言&quot; class=&quot;headerlink&quot; title=&quot;一、前言&quot;&gt;&lt;/a&gt;一、前言&lt;/h3&gt;&lt;p&gt;自从接触了Hexo+NexT之后，发现离不开了，以后有能力的时候一定重新架构一下，使得更加个性化，最大程度的满足我们对于软件的需求，大家都知道，如果写东西在本地的话，最怕的应该就是更换电脑，还要重新搭建博客了，所以备份对于我们来说特别重要！备份博客就是本篇博客文章的主旨了，一定要攻下这座城堡。&lt;/p&gt;
-&lt;p&gt;我曾经看过Git备份Hexo博客源文件的方式，这种方式虽然能够备份Hexo博客的源文件，但是对于我这种懒人，每次更新博文都需要输入两三行重复的Git命令真是一件麻烦的事情。况且指不定哪天就搞忘push到github上了。你说是不是，所以这篇文章出现了……&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="学习" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/"/>
-    
-    <category term="Hexo" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/Hexo/"/>
-    
-    
-    <category term="技术" scheme="http://example.com/tags/%E6%8A%80%E6%9C%AF/"/>
     
   </entry>
   
