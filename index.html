@@ -179,17 +179,11 @@ var _hmt = _hmt || [];
   <blockquote>
 <p>1、mbr最多支持2T，而gpt理论上是无限制的；2、mbr最多支持四个主分区，gpt没有限制；3、win7只能用mbr分区，从Win8开始微软建议你使用gpt；4、gpt是由uefi启动的，兼容性和稳定性不如bios+mbr。</p>
 </blockquote>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210070127792.jpg"></p>
-<p><strong>MBR分区</strong></p>
-<p>MBR的意思是“主引导记录”，是IBM公司早年间提出的。它是存在于磁盘驱动器开始部分的一个特殊的启动扇区。这个扇区包含了已安装的操作系统系统信息，并用一小段代码来启动系统。如果你安装了Windows，其启动信息就放在这一段代码中——如果MBR的信息损坏或误删就不能正常启动Windows，这时候你就需要找一个引导修复软件工具来修复它就可以了。Linux系统中MBR通常会是GRUB加载器。MBR。当一台电脑启动时，它会先启动主板自带的BIOS系统，bios加载MBR，MBR再启动Windows，这就是mbr的启动过程。</p>
-<p><strong>GPT分区</strong></p>
-<p>GPT的意思是GUID Partition Table，即“全局唯一标识磁盘分区表”。他是另外一种更加先进新颖的磁盘组织方式，一种使用<code>UEFI</code>启动的磁盘组织方式。最开始是为了更好的兼容性，后来因为其更大的支持内存（mbr分区最多支持2T的磁盘），更多的兼容而被广泛使用，特别是苹果的MAC系统全部使用gpt分区。gtp不在有分区的概念，所有CDEF盘都在一段信息中存储。可以简单的理解为更先进但是使用不够广泛的技术。</p>
-<p><strong>两者区别</strong></p>
-<p>内存支持：mbr最多支持2T，而gpt理论上是无限制的。</p>
-<p>分区：mbr最多支持四个主分区，gpt没有限制。如果你想跑多系统，mbr最多4个而gpt没有限制。</p>
-<p>系统：win7只能用mbr分区，从Win8开始微软建议你使用gpt。</p>
-<p>其它：gpt是由<code>uefi</code>启动的，而<code>uefi</code>是后来才提出的概念，兼容性和稳定性不如bios+mbr。</p>
- 
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210070127792.jpg"></p> 
+      <a class="article-more-link" href="/2022/10/06/gpt%E4%B8%8Embr%E5%88%86%E5%8C%BA%E4%B8%A4%E8%80%85%E5%8C%BA%E5%88%AB/"
+        >阅读更多...</a
+      >
+       
       <!-- reward -->
       
     </div>

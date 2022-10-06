@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-10-06T17:31:32.998Z</updated>
+  <updated>2022-10-06T17:35:42.394Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -21,18 +21,13 @@
     <link href="http://example.com/2022/10/06/gpt%E4%B8%8Embr%E5%88%86%E5%8C%BA%E4%B8%A4%E8%80%85%E5%8C%BA%E5%88%AB/"/>
     <id>http://example.com/2022/10/06/gpt%E4%B8%8Embr%E5%88%86%E5%8C%BA%E4%B8%A4%E8%80%85%E5%8C%BA%E5%88%AB/</id>
     <published>2022-10-06T15:36:17.000Z</published>
-    <updated>2022-10-06T17:31:32.998Z</updated>
+    <updated>2022-10-06T17:35:42.394Z</updated>
     
     
-      
-      
-        
-        
     <summary type="html">&lt;blockquote&gt;
 &lt;p&gt;1、mbr最多支持2T，而gpt理论上是无限制的；2、mbr最多支持四个主分区，gpt没有限制；3、win7只能用mbr分区，从Win8开始微软建议你使用gpt；4、gpt是由uefi启动的，兼容性和稳定性不如bios+mbr。&lt;/p&gt;
-&lt;/blo</summary>
-        
-      
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/movejian/images/main/movejian/images202210070127792.jpg&quot;&gt;&lt;/p&gt;</summary>
     
     
     

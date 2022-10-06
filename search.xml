@@ -59,6 +59,76 @@
       </tags>
   </entry>
   <entry>
+    <title>Hexo如何迁移到新电脑</title>
+    <url>/2022/08/21/Hexo%E5%A6%82%E4%BD%95%E8%BF%81%E7%A7%BB%E5%88%B0%E6%96%B0%E7%94%B5%E8%84%91/</url>
+    <content><![CDATA[<h3 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h3><p>这是曾经发生的事情，自己对于数据备份疏忽，导致Hexo的<code>source</code>丢失，只能重新搭建博客。。。。。</p>
+<p>如何备份后续会更新，一切都是泪。。。。。</p>
+<span id="more"></span> 
+<h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p>迁移到新电脑之后，发现以前的Hexo拉到本地是无法正常使用的，这时候查找资料寻找解决办法</p>
+<p>由于旧电脑操作不当已经被格式化了，所有的源代码数据都已经被清除，所以我现在只能重新搭建博客</p>
+<h3 id="需要做的事情"><a href="#需要做的事情" class="headerlink" title="需要做的事情"></a>需要做的事情</h3><ol>
+<li><p>重新搭建博客</p>
+</li>
+<li><p>做好GIT备份</p>
+</li>
+<li><p>定期同步</p>
+</li>
+</ol>
+<h3 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h3><p>（有source等文件的情况下可以恢复）</p>
+<h4 id="1-GIT上设置秘钥"><a href="#1-GIT上设置秘钥" class="headerlink" title="1. GIT上设置秘钥"></a>1. GIT上设置秘钥</h4><p>  安装git这里就不描述了，安装完成之后，我们在终端执行<code>ssh-keygen -t rsa -C &quot;movejian@qq.com&quot;</code></p>
+<p>然后按三次回车，生成秘钥</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line">$ ssh-<span class="attribute">keygen</span> -t rsa -C <span class="string">&quot;xxxx<span class="variable">@qq</span>.com&quot;</span>(你的邮箱地址) Generating public/private rsa key pair. Enter file in which to save the key (/c/Users/xxxxxx/.ssh/id_rsa):</span><br></pre></td></tr></table></figure>
+
+<p>在<code>C:\Users\xxxx.ssh</code>下面，就可以看到秘钥了，<strong>id_rsa</strong>是私钥，千万不能泄露出去，<strong>id_rsa.pub是公钥</strong>，我们需要复制<strong>公钥</strong>里面的内容</p>
+<p>进入<a href="https://github.com/">github</a> ，选择 <code>setting</code></p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/20220821123613.png" alt="github设置"></p>
+<p>选择<code>SSH and GPG keys</code></p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/20220821123713.png" alt="key配置"></p>
+<p>选择<code>New SSH key</code></p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/20220821123810.png" alt="保存你的key到github"></p>
+<p>填写好title, 复制 rsa_public 里面的内容，点击<code>Add</code>，输入密码即可完成秘钥建立</p>
+<h4 id="2-安装node"><a href="#2-安装node" class="headerlink" title="2. 安装node"></a>2. 安装node</h4><p>  在<strong>GIT</strong>设置完成之后，我们下一步是准备好环境进行还原，首先我们需要进入 <a href="https://nodejs.cn/download/">node.js</a>的官网下载对应的安装包，比如下方的中文网站：</p>
+<p> <a href="https://nodejs.cn/download/">node.js</a>官方中文地址：<a href="https://nodejs.cn/download/">https://nodejs.cn/download/</a></p>
+<p>进入网站之后，我们需要下载对应的安装包进行安装，这里建议下LTS的版本。</p>
+<p>安装完node之后，这里不要着急，先检测一下自己是否真的安装好了，使用下面三个命令检测自己是否具备环境。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">node -v</span><br><span class="line"></span><br><span class="line">npm -v</span><br><span class="line"></span><br><span class="line">Git --version</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-安装hexo"><a href="#3-安装hexo" class="headerlink" title="3. 安装hexo"></a>3. 安装hexo</h4><p>新版本的node基本包含了<code>npm</code>这一类的工具，我们也无需手动安装，另外这里也不建议使用<code>cnpm</code>安装，建议直接使用<code>npm</code>安装即可，我们依次敲入下面的命令即可。</p>
+  <figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+<p>如果你是用的<strong>苹果系统（MAC）</strong>在前面加上<code>sudo</code></p>
+  <figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">sudo npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>  如果mac电脑在操作node命令的时候出现类似permission的字样，多半是没有权限，sudoy一下即可</p>
+</blockquote>
+<p>安装好了之后，这里可以使用如下的命令安装Hexo，同上，如果使用<strong>MAC</strong>电脑在前面加上<code>sudo</code></p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">npm install -g hexo</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-从GIT把备份拉到本地"><a href="#4-从GIT把备份拉到本地" class="headerlink" title="4. 从GIT把备份拉到本地"></a>4. 从GIT把备份拉到本地</h4><p>  这一个步骤就是使用git clone把之前的文章构建的备份拉到本地，比如这里个人的命令如下。</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">git</span> clone -b hexo https://xxxx/hexo</span><br></pre></td></tr></table></figure>
+
+<p>这一步完成之后，在本地有的只是一个对于hexo的基础架构，这时候还是不能执行hexo命令的，我们还需要执行 npm install 把node和hexo的依赖安装到当前的目录，生成对应的node_moudules 文件。</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">npm</span> install</span><br></pre></td></tr></table></figure>
+
+<p>安装完成之后，我们就可以快乐的玩耍了。</p>
+<h4 id="5-Hexo基础操作"><a href="#5-Hexo基础操作" class="headerlink" title="5. Hexo基础操作"></a>5. Hexo基础操作</h4><p>好久没有用过了，这里再次回顾一下基础的操作，其实hexo到了最后就只剩下几个操作就可以完成，比如下面的命令，把笔记软件写好的稿子放到hexo生成的文件里面，加一个<code>&lt;!-- more --&gt;</code>标签即可完成一遍笔记的输出，然后部署上去之后自动推送到github和gitee 的分支。</p>
+  <figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">hexo</span> new <span class="string">&#x27;xxx&#x27;</span>//新建一个新的主题</span><br><span class="line">hexo cl</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<p>  个人喜欢使用如下的文章模板：</p>
+  <figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line">title: &#123;&#123; <span class="attribute">title</span> &#125;&#125;</span><br><span class="line">subtitle: <span class="string">&#x27;这个人很懒，不想写副标题&#x27;</span></span><br><span class="line">author: lazytime</span><br><span class="line">url_suffix: random</span><br><span class="line">date: &#123;&#123; <span class="attribute">date</span> &#125;&#125;</span><br><span class="line">tags:</span><br><span class="line">- 无</span><br><span class="line">categories:</span><br><span class="line">- 未分类</span><br><span class="line">keywords: 请输入关键字（英文逗号分隔多个关键字）</span><br><span class="line">description: 请输入描述信息</span><br><span class="line">copyright: <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>  备份还原还是非常快的，中间除了在node的权限上卡了一下，基本上不到半小时既可以在本地快速搭建一个hexo的博客，十分方便。</p>
+<h3 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h3><p>建议每一个人有一个自己的博客，因为你不知道你的云笔记运营商哪一天会出问题，就好比之前的滴滴事件一样，另外注意平时多备份，不要像我一样傻不拉几的把硬盘格式化结果忘了把博客的内容拷出来结果全部要重写。。。。。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>技术</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo迁移备份</title>
     <url>/2022/08/21/Hexo%E8%BF%81%E7%A7%BB%E5%A4%87%E4%BB%BD/</url>
     <content><![CDATA[<h3 id="创建Git分支将Hexo博客迁移到其它电脑"><a href="#创建Git分支将Hexo博客迁移到其它电脑" class="headerlink" title="创建Git分支将Hexo博客迁移到其它电脑"></a>创建Git分支将Hexo博客迁移到其它电脑</h3><h3 id="反省"><a href="#反省" class="headerlink" title="反省"></a>反省</h3><p>有时候就会干些蠢事，换电脑忘记吧旧电脑博客的Hexo博客备份到移动硬盘上，一个格式化啥都没了，导致丢失了所有的博客资料。（博客内容要慢慢补） 一定要养成经常备份的好习惯。。。。。。。。</p>
@@ -136,73 +206,35 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo如何迁移到新电脑</title>
-    <url>/2022/08/21/Hexo%E5%A6%82%E4%BD%95%E8%BF%81%E7%A7%BB%E5%88%B0%E6%96%B0%E7%94%B5%E8%84%91/</url>
-    <content><![CDATA[<h3 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h3><p>这是曾经发生的事情，自己对于数据备份疏忽，导致Hexo的<code>source</code>丢失，只能重新搭建博客。。。。。</p>
-<p>如何备份后续会更新，一切都是泪。。。。。</p>
-<span id="more"></span> 
-<h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p>迁移到新电脑之后，发现以前的Hexo拉到本地是无法正常使用的，这时候查找资料寻找解决办法</p>
-<p>由于旧电脑操作不当已经被格式化了，所有的源代码数据都已经被清除，所以我现在只能重新搭建博客</p>
-<h3 id="需要做的事情"><a href="#需要做的事情" class="headerlink" title="需要做的事情"></a>需要做的事情</h3><ol>
-<li><p>重新搭建博客</p>
-</li>
-<li><p>做好GIT备份</p>
-</li>
-<li><p>定期同步</p>
-</li>
-</ol>
-<h3 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h3><p>（有source等文件的情况下可以恢复）</p>
-<h4 id="1-GIT上设置秘钥"><a href="#1-GIT上设置秘钥" class="headerlink" title="1. GIT上设置秘钥"></a>1. GIT上设置秘钥</h4><p>  安装git这里就不描述了，安装完成之后，我们在终端执行<code>ssh-keygen -t rsa -C &quot;movejian@qq.com&quot;</code></p>
-<p>然后按三次回车，生成秘钥</p>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line">$ ssh-<span class="attribute">keygen</span> -t rsa -C <span class="string">&quot;xxxx<span class="variable">@qq</span>.com&quot;</span>(你的邮箱地址) Generating public/private rsa key pair. Enter file in which to save the key (/c/Users/xxxxxx/.ssh/id_rsa):</span><br></pre></td></tr></table></figure>
+    <title>Kali的DDoS攻击方法</title>
+    <url>/2022/09/21/Kali%E7%9A%84DDoS%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212049992.jpeg"></p>
+<p><strong>本文章使用的是Kali Linux的2021-4-installer-amd64版本</strong> <strong>Kali Linux的安装过程本文章不做过多说明，请自行百度</strong> <strong>本帖子如果涉及侵权请联系我</strong>  </p>
+<span id="more"></span>
 
-<p>在<code>C:\Users\xxxx.ssh</code>下面，就可以看到秘钥了，<strong>id_rsa</strong>是私钥，千万不能泄露出去，<strong>id_rsa.pub是公钥</strong>，我们需要复制<strong>公钥</strong>里面的内容</p>
-<p>进入<a href="https://github.com/">github</a> ，选择 <code>setting</code></p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/20220821123613.png" alt="github设置"></p>
-<p>选择<code>SSH and GPG keys</code></p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/20220821123713.png" alt="key配置"></p>
-<p>选择<code>New SSH key</code></p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/20220821123810.png" alt="保存你的key到github"></p>
-<p>填写好title, 复制 rsa_public 里面的内容，点击<code>Add</code>，输入密码即可完成秘钥建立</p>
-<h4 id="2-安装node"><a href="#2-安装node" class="headerlink" title="2. 安装node"></a>2. 安装node</h4><p>  在<strong>GIT</strong>设置完成之后，我们下一步是准备好环境进行还原，首先我们需要进入 <a href="https://nodejs.cn/download/">node.js</a>的官网下载对应的安装包，比如下方的中文网站：</p>
-<p> <a href="https://nodejs.cn/download/">node.js</a>官方中文地址：<a href="https://nodejs.cn/download/">https://nodejs.cn/download/</a></p>
-<p>进入网站之后，我们需要下载对应的安装包进行安装，这里建议下LTS的版本。</p>
-<p>安装完node之后，这里不要着急，先检测一下自己是否真的安装好了，使用下面三个命令检测自己是否具备环境。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">node -v</span><br><span class="line"></span><br><span class="line">npm -v</span><br><span class="line"></span><br><span class="line">Git --version</span><br></pre></td></tr></table></figure>
-
-<h4 id="3-安装hexo"><a href="#3-安装hexo" class="headerlink" title="3. 安装hexo"></a>3. 安装hexo</h4><p>新版本的node基本包含了<code>npm</code>这一类的工具，我们也无需手动安装，另外这里也不建议使用<code>cnpm</code>安装，建议直接使用<code>npm</code>安装即可，我们依次敲入下面的命令即可。</p>
-  <figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
-<p>如果你是用的<strong>苹果系统（MAC）</strong>在前面加上<code>sudo</code></p>
-  <figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">sudo npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>  如果mac电脑在操作node命令的时候出现类似permission的字样，多半是没有权限，sudoy一下即可</p>
-</blockquote>
-<p>安装好了之后，这里可以使用如下的命令安装Hexo，同上，如果使用<strong>MAC</strong>电脑在前面加上<code>sudo</code></p>
-<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">npm install -g hexo</span><br></pre></td></tr></table></figure>
-
-<h4 id="4-从GIT把备份拉到本地"><a href="#4-从GIT把备份拉到本地" class="headerlink" title="4. 从GIT把备份拉到本地"></a>4. 从GIT把备份拉到本地</h4><p>  这一个步骤就是使用git clone把之前的文章构建的备份拉到本地，比如这里个人的命令如下。</p>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">git</span> clone -b hexo https://xxxx/hexo</span><br></pre></td></tr></table></figure>
-
-<p>这一步完成之后，在本地有的只是一个对于hexo的基础架构，这时候还是不能执行hexo命令的，我们还需要执行 npm install 把node和hexo的依赖安装到当前的目录，生成对应的node_moudules 文件。</p>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">npm</span> install</span><br></pre></td></tr></table></figure>
-
-<p>安装完成之后，我们就可以快乐的玩耍了。</p>
-<h4 id="5-Hexo基础操作"><a href="#5-Hexo基础操作" class="headerlink" title="5. Hexo基础操作"></a>5. Hexo基础操作</h4><p>好久没有用过了，这里再次回顾一下基础的操作，其实hexo到了最后就只剩下几个操作就可以完成，比如下面的命令，把笔记软件写好的稿子放到hexo生成的文件里面，加一个<code>&lt;!-- more --&gt;</code>标签即可完成一遍笔记的输出，然后部署上去之后自动推送到github和gitee 的分支。</p>
-  <figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">hexo</span> new <span class="string">&#x27;xxx&#x27;</span>//新建一个新的主题</span><br><span class="line">hexo cl</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-
-<p>  个人喜欢使用如下的文章模板：</p>
-  <figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line">title: &#123;&#123; <span class="attribute">title</span> &#125;&#125;</span><br><span class="line">subtitle: <span class="string">&#x27;这个人很懒，不想写副标题&#x27;</span></span><br><span class="line">author: lazytime</span><br><span class="line">url_suffix: random</span><br><span class="line">date: &#123;&#123; <span class="attribute">date</span> &#125;&#125;</span><br><span class="line">tags:</span><br><span class="line">- 无</span><br><span class="line">categories:</span><br><span class="line">- 未分类</span><br><span class="line">keywords: 请输入关键字（英文逗号分隔多个关键字）</span><br><span class="line">description: 请输入描述信息</span><br><span class="line">copyright: <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>  备份还原还是非常快的，中间除了在node的权限上卡了一下，基本上不到半小时既可以在本地快速搭建一个hexo的博客，十分方便。</p>
-<h3 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h3><p>建议每一个人有一个自己的博客，因为你不知道你的云笔记运营商哪一天会出问题，就好比之前的滴滴事件一样，另外注意平时多备份，不要像我一样傻不拉几的把硬盘格式化结果忘了把博客的内容拷出来结果全部要重写。。。。。</p>
+<p>1**.**首先，打开一个终端然后<code>su root</code>进入<code>root</code></p>
+<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212050035.png" alt="img">  </p>
+<p>2.下载ddos文件包  </p>
+<p>自行百度下载</p>
+<p>3.cd到ddos包下</p>
+<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212050053.png" alt="img"> </p>
+<p> 4.用python执行<code>ddos.py</code>，输入命令：<code>python ddos.py</code></p>
+<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056870.png" alt="img">  </p>
+<p>5.再打开一个终端输入命令:<code> ping www.siediyer.cn</code>  即可获得攻击对象的IP地址。（获取IP后<code>Ctrl+C</code>可以结束<code>ping</code>）   <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212055245.png" alt="img">  </p>
+<p>6.然后回到刚刚的终端，输入<code>ping</code>到的IP地址：</p>
+<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056852.png" alt="img"></p>
+<p>  7.Attack Port即攻击端口，一般服务器默认为80（更多内容请百度）  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056029.png" alt="img"> </p>
+<p> 8.Attack Speed即攻击速度，数值越大越快，最大不能超过1000  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056295.png" alt="img">  </p>
+<p>9.按下回车，如果出现以下界面，即代表已经开始向该IP发起DDos攻击，也就成功了。  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056196.png" alt="img">   </p>
+<p>安全无边疆，努力习知识  </p>
+<p>本文章只供学习交流学习不可用于其他非法用途！！！</p>
+<p> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056473.png" alt="9"></p>
 ]]></content>
       <categories>
         <category>学习</category>
-        <category>Hexo</category>
       </categories>
       <tags>
-        <tag>技术</tag>
+        <tag>Kali</tag>
       </tags>
   </entry>
   <entry>
@@ -289,38 +321,6 @@
       </categories>
       <tags>
         <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Kali的DDoS攻击方法</title>
-    <url>/2022/09/21/Kali%E7%9A%84DDoS%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95/</url>
-    <content><![CDATA[<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212049992.jpeg"></p>
-<p><strong>本文章使用的是Kali Linux的2021-4-installer-amd64版本</strong> <strong>Kali Linux的安装过程本文章不做过多说明，请自行百度</strong> <strong>本帖子如果涉及侵权请联系我</strong>  </p>
-<span id="more"></span>
-
-<p>1**.**首先，打开一个终端然后<code>su root</code>进入<code>root</code></p>
-<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212050035.png" alt="img">  </p>
-<p>2.下载ddos文件包  </p>
-<p>自行百度下载</p>
-<p>3.cd到ddos包下</p>
-<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212050053.png" alt="img"> </p>
-<p> 4.用python执行<code>ddos.py</code>，输入命令：<code>python ddos.py</code></p>
-<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056870.png" alt="img">  </p>
-<p>5.再打开一个终端输入命令:<code> ping www.siediyer.cn</code>  即可获得攻击对象的IP地址。（获取IP后<code>Ctrl+C</code>可以结束<code>ping</code>）   <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212055245.png" alt="img">  </p>
-<p>6.然后回到刚刚的终端，输入<code>ping</code>到的IP地址：</p>
-<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056852.png" alt="img"></p>
-<p>  7.Attack Port即攻击端口，一般服务器默认为80（更多内容请百度）  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056029.png" alt="img"> </p>
-<p> 8.Attack Speed即攻击速度，数值越大越快，最大不能超过1000  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056295.png" alt="img">  </p>
-<p>9.按下回车，如果出现以下界面，即代表已经开始向该IP发起DDos攻击，也就成功了。  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056196.png" alt="img">   </p>
-<p>安全无边疆，努力习知识  </p>
-<p>本文章只供学习交流学习不可用于其他非法用途！！！</p>
-<p> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056473.png" alt="9"></p>
-]]></content>
-      <categories>
-        <category>学习</category>
-      </categories>
-      <tags>
-        <tag>Kali</tag>
       </tags>
   </entry>
   <entry>
@@ -522,42 +522,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux通过密钥对免密登录</title>
-    <url>/2022/09/21/Linux%E9%80%9A%E8%BF%87%E5%AF%86%E9%92%A5%E5%AF%B9%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/</url>
-    <content><![CDATA[<p>首先，说明一下我们要做的是，跳板机服务器的<code>usera</code>用户免密码登录B服务器的<code>userb</code>用户。<br>我们先使用<code>usera</code>登录跳板服务器</p>
-<blockquote>
-<p>首先生成密钥对如果有则跳过这一步</p>
-</blockquote>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
-<span id="more"></span>
-<p>操作演示</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">[sera@serverA ~]$ ssh-keygen -t rsa  <span class="comment">//使用rsa算法加密</span></span><br><span class="line"><span class="title class_">Generating</span> public/private rsa key pair.</span><br><span class="line"><span class="title class_">Enter</span> file <span class="keyword">in</span> which to save the key (<span class="regexp">/home/u</span>sera/.<span class="property">ssh</span>/id_rsa): <span class="comment">//私钥默认保存路径</span></span><br><span class="line"><span class="title class_">Created</span> directory <span class="string">&#x27;/home/usera/.ssh&#x27;</span>.</span><br><span class="line"><span class="title class_">Enter</span> passphrase (empty <span class="keyword">for</span> no passphrase): <span class="comment">//在这里输入密码如果这里输入密码以后登录需要密钥和密码才能登录这里建议直接回车也就是空</span></span><br><span class="line"><span class="title class_">Enter</span> same passphrase <span class="attr">again</span>:</span><br><span class="line"><span class="title class_">Your</span> identification has been saved <span class="keyword">in</span> /home/usera/.<span class="property">ssh</span>/id_rsa.</span><br><span class="line"><span class="title class_">Your</span> public key has been saved <span class="keyword">in</span> /home/usera/.<span class="property">ssh</span>/id_rsa.<span class="property">pub</span>. <span class="comment">//公钥保存路径</span></span><br><span class="line"><span class="title class_">The</span> key fingerprint <span class="attr">is</span>:</span><br><span class="line"><span class="number">39</span>:<span class="attr">f2</span>:<span class="attr">fc</span>:<span class="number">70</span>:<span class="attr">ef</span>:<span class="attr">e9</span>:<span class="attr">bd</span>:<span class="number">05</span>:<span class="number">40</span>:6<span class="attr">e</span>:<span class="number">64</span>:<span class="attr">b0</span>:<span class="number">99</span>:<span class="number">56</span>:6<span class="attr">e</span>:<span class="number">01</span> usera@serverA</span><br><span class="line"><span class="title class_">The</span> key<span class="string">&#x27;s randomart image is:</span></span><br><span class="line"><span class="string">+--[ RSA 2048]----+</span></span><br><span class="line"><span class="string">| Eo* |</span></span><br><span class="line"><span class="string">| @ . |</span></span><br><span class="line"><span class="string">| = * |</span></span><br><span class="line"><span class="string">| o o . |</span></span><br><span class="line"><span class="string">| . S . |</span></span><br><span class="line"><span class="string">| + . . |</span></span><br><span class="line"><span class="string">| + . .|</span></span><br><span class="line"><span class="string">| + . o . |</span></span><br><span class="line"><span class="string">| .o= o. |</span></span><br><span class="line"><span class="string">+-----------------+</span></span><br></pre></td></tr></table></figure>
-
-<p>以下是截图提示</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210216196.png"></p>
-<blockquote>
-<p>id_rsa是私钥，id_rsa.pub是公钥公钥在服务器私钥在自己手上</p>
-</blockquote>
-<p>此时会在<code>/home/usera/.ssh</code>目录下生成密钥对我们使用<code>ls</code>查看一下</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">root@<span class="attr">vultr</span>:~#  ls -la .<span class="property">ssh</span></span><br><span class="line">total <span class="number">16</span></span><br><span class="line">drwx------ <span class="number">2</span> root root <span class="number">4096</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> .</span><br><span class="line">drwx------ <span class="number">5</span> root root <span class="number">4096</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">00</span> ..</span><br><span class="line">-rw------- <span class="number">1</span> root root <span class="number">1675</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> id_rsa</span><br><span class="line">-rw-r--r-- <span class="number">1</span> root root  <span class="number">398</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> id_rsa.<span class="property">pub</span></span><br></pre></td></tr></table></figure>
-
-<p>然后将公钥上传到需要登录的服务器，并以<code>userb</code>用户登录<br>至于上传方式可以用<code>scp</code>以及<code>sz</code>命令这里就介绍了<br>可以参考这篇<a href="https://shagain.club/index.php/archives/111/">文章</a></p>
-<blockquote>
-<p>上传到用户目录下的.ssh文件夹下<code>authorized_keys</code>这个文件是用来存放公钥内容的我们使用<code>cat</code>把公钥追加到<code>authorized_keys</code>这个文件就好了</p>
-</blockquote>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">cat id_rsa.<span class="property">pub</span> &gt;&gt; ~<span class="regexp">/.ssh/</span>authorized_keys    <span class="comment">//cat 公钥路径 &gt;&gt; ~/.ssh/authorized_keys</span></span><br></pre></td></tr></table></figure>
-
-<p>这样子我们就配置好了<br>另外我们要注意，<code>.ssh</code>目录的权限为<code>700</code>，其下文件<code>authorized_keys</code>和私钥的权限为<code>600</code>。否则会因为权限问题导致无法免密码登录。我们可以看到登陆后会有<code>known_hosts</code>文件生成。</p>
-]]></content>
-      <categories>
-        <category>学习</category>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Linux系统无线网卡配置</title>
     <url>/2019/12/16/Linux%E7%B3%BB%E7%BB%9F%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE/</url>
     <content><![CDATA[<h2 id="无线网卡配置"><a href="#无线网卡配置" class="headerlink" title="无线网卡配置"></a>无线网卡配置</h2><p>本文介绍在Linux 命令行界面中手动配置无线网卡的方法。目前流行的多数发行版都支持用图形界面的<code>network- manager</code>方便地进行配置，而无需使用本文所介绍的原始方法。</p>
@@ -612,6 +576,42 @@
       </tags>
   </entry>
   <entry>
+    <title>Linux通过密钥对免密登录</title>
+    <url>/2022/09/21/Linux%E9%80%9A%E8%BF%87%E5%AF%86%E9%92%A5%E5%AF%B9%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/</url>
+    <content><![CDATA[<p>首先，说明一下我们要做的是，跳板机服务器的<code>usera</code>用户免密码登录B服务器的<code>userb</code>用户。<br>我们先使用<code>usera</code>登录跳板服务器</p>
+<blockquote>
+<p>首先生成密钥对如果有则跳过这一步</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<p>操作演示</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">[sera@serverA ~]$ ssh-keygen -t rsa  <span class="comment">//使用rsa算法加密</span></span><br><span class="line"><span class="title class_">Generating</span> public/private rsa key pair.</span><br><span class="line"><span class="title class_">Enter</span> file <span class="keyword">in</span> which to save the key (<span class="regexp">/home/u</span>sera/.<span class="property">ssh</span>/id_rsa): <span class="comment">//私钥默认保存路径</span></span><br><span class="line"><span class="title class_">Created</span> directory <span class="string">&#x27;/home/usera/.ssh&#x27;</span>.</span><br><span class="line"><span class="title class_">Enter</span> passphrase (empty <span class="keyword">for</span> no passphrase): <span class="comment">//在这里输入密码如果这里输入密码以后登录需要密钥和密码才能登录这里建议直接回车也就是空</span></span><br><span class="line"><span class="title class_">Enter</span> same passphrase <span class="attr">again</span>:</span><br><span class="line"><span class="title class_">Your</span> identification has been saved <span class="keyword">in</span> /home/usera/.<span class="property">ssh</span>/id_rsa.</span><br><span class="line"><span class="title class_">Your</span> public key has been saved <span class="keyword">in</span> /home/usera/.<span class="property">ssh</span>/id_rsa.<span class="property">pub</span>. <span class="comment">//公钥保存路径</span></span><br><span class="line"><span class="title class_">The</span> key fingerprint <span class="attr">is</span>:</span><br><span class="line"><span class="number">39</span>:<span class="attr">f2</span>:<span class="attr">fc</span>:<span class="number">70</span>:<span class="attr">ef</span>:<span class="attr">e9</span>:<span class="attr">bd</span>:<span class="number">05</span>:<span class="number">40</span>:6<span class="attr">e</span>:<span class="number">64</span>:<span class="attr">b0</span>:<span class="number">99</span>:<span class="number">56</span>:6<span class="attr">e</span>:<span class="number">01</span> usera@serverA</span><br><span class="line"><span class="title class_">The</span> key<span class="string">&#x27;s randomart image is:</span></span><br><span class="line"><span class="string">+--[ RSA 2048]----+</span></span><br><span class="line"><span class="string">| Eo* |</span></span><br><span class="line"><span class="string">| @ . |</span></span><br><span class="line"><span class="string">| = * |</span></span><br><span class="line"><span class="string">| o o . |</span></span><br><span class="line"><span class="string">| . S . |</span></span><br><span class="line"><span class="string">| + . . |</span></span><br><span class="line"><span class="string">| + . .|</span></span><br><span class="line"><span class="string">| + . o . |</span></span><br><span class="line"><span class="string">| .o= o. |</span></span><br><span class="line"><span class="string">+-----------------+</span></span><br></pre></td></tr></table></figure>
+
+<p>以下是截图提示</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210216196.png"></p>
+<blockquote>
+<p>id_rsa是私钥，id_rsa.pub是公钥公钥在服务器私钥在自己手上</p>
+</blockquote>
+<p>此时会在<code>/home/usera/.ssh</code>目录下生成密钥对我们使用<code>ls</code>查看一下</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">root@<span class="attr">vultr</span>:~#  ls -la .<span class="property">ssh</span></span><br><span class="line">total <span class="number">16</span></span><br><span class="line">drwx------ <span class="number">2</span> root root <span class="number">4096</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> .</span><br><span class="line">drwx------ <span class="number">5</span> root root <span class="number">4096</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">00</span> ..</span><br><span class="line">-rw------- <span class="number">1</span> root root <span class="number">1675</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> id_rsa</span><br><span class="line">-rw-r--r-- <span class="number">1</span> root root  <span class="number">398</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> id_rsa.<span class="property">pub</span></span><br></pre></td></tr></table></figure>
+
+<p>然后将公钥上传到需要登录的服务器，并以<code>userb</code>用户登录<br>至于上传方式可以用<code>scp</code>以及<code>sz</code>命令这里就介绍了<br>可以参考这篇<a href="https://shagain.club/index.php/archives/111/">文章</a></p>
+<blockquote>
+<p>上传到用户目录下的.ssh文件夹下<code>authorized_keys</code>这个文件是用来存放公钥内容的我们使用<code>cat</code>把公钥追加到<code>authorized_keys</code>这个文件就好了</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">cat id_rsa.<span class="property">pub</span> &gt;&gt; ~<span class="regexp">/.ssh/</span>authorized_keys    <span class="comment">//cat 公钥路径 &gt;&gt; ~/.ssh/authorized_keys</span></span><br></pre></td></tr></table></figure>
+
+<p>这样子我们就配置好了<br>另外我们要注意，<code>.ssh</code>目录的权限为<code>700</code>，其下文件<code>authorized_keys</code>和私钥的权限为<code>600</code>。否则会因为权限问题导致无法免密码登录。我们可以看到登陆后会有<code>known_hosts</code>文件生成。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Office用C2R工具在线安装激活</title>
     <url>/2022/09/27/Office%E7%94%A8C2R%E5%B7%A5%E5%85%B7%E5%9C%A8%E7%BA%BF%E5%AE%89%E8%A3%85%E6%BF%80%E6%B4%BB/</url>
     <content><![CDATA[<p>C2R工具下载地址：<a href="https://wwt.lanzouw.com/b03pbhjri#52pj">https://wwt.lanzouw.com/b03pbhjri#52pj</a></p>
@@ -646,30 +646,13 @@
       </tags>
   </entry>
   <entry>
-    <title>Hello World</title>
-    <url>/2017/08/10/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
     <title>gpt与mbr分区两者区别</title>
     <url>/2022/10/06/gpt%E4%B8%8Embr%E5%88%86%E5%8C%BA%E4%B8%A4%E8%80%85%E5%8C%BA%E5%88%AB/</url>
     <content><![CDATA[<blockquote>
 <p>1、mbr最多支持2T，而gpt理论上是无限制的；2、mbr最多支持四个主分区，gpt没有限制；3、win7只能用mbr分区，从Win8开始微软建议你使用gpt；4、gpt是由uefi启动的，兼容性和稳定性不如bios+mbr。</p>
 </blockquote>
 <p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210070127792.jpg"></p>
+<span id="more"></span>
 <p><strong>MBR分区</strong></p>
 <p>MBR的意思是“主引导记录”，是IBM公司早年间提出的。它是存在于磁盘驱动器开始部分的一个特殊的启动扇区。这个扇区包含了已安装的操作系统系统信息，并用一小段代码来启动系统。如果你安装了Windows，其启动信息就放在这一段代码中——如果MBR的信息损坏或误删就不能正常启动Windows，这时候你就需要找一个引导修复软件工具来修复它就可以了。Linux系统中MBR通常会是GRUB加载器。MBR。当一台电脑启动时，它会先启动主板自带的BIOS系统，bios加载MBR，MBR再启动Windows，这就是mbr的启动过程。</p>
 <p><strong>GPT分区</strong></p>
@@ -687,6 +670,24 @@
       <tags>
         <tag>技术</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2017/08/10/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
   </entry>
   <entry>
     <title>hexo域名解析的两种方法</title>
@@ -744,26 +745,6 @@
       </tags>
   </entry>
   <entry>
-    <title>传奇内挂垃圾物品过滤</title>
-    <url>/2022/09/03/%E4%BC%A0%E5%A5%87%E5%86%85%E6%8C%82%E5%9E%83%E5%9C%BE%E7%89%A9%E5%93%81%E8%BF%87%E6%BB%A4/</url>
-    <content><![CDATA[<p> 传奇内挂过滤垃圾。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209031601159.png" alt="image-20220903160139387"></p>
-<p>先打开传奇目录 <code>D:\传奇私服\Config </code>   修改DAT档案文件，把下面内容复制粘贴进去保存即可：</p>
-<span id="more"></span>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">金创药(小量),药品类,0,0,0,0</span><br><span class="line">魔法药(小量),药品类,0,0,0,0</span><br><span class="line">肉,其它类,0,0,0,0</span><br><span class="line">布衣(男),服装类,0,0,0,0</span><br><span class="line">布衣(女),服装类,0,0,0,0</span><br><span class="line">木剑,武器类,0,0,0,0</span><br><span class="line">铁剑,武器类,0,0,0,0</span><br><span class="line">青铜剑,武器类,0,0,0,0</span><br><span class="line">轻型盔甲(男),服装类,0,0,0,0</span><br><span class="line">轻型盔甲(女),服装类,0,0,0,0</span><br><span class="line">凝霜,武器类,0,0,0,0</span><br><span class="line">短剑,武器类,0,0,0,0</span><br><span class="line">青铜斧,武器类,0,0,0,0</span><br><span class="line">重盔甲(女),服装类,0,0,0,0</span><br><span class="line">魔法长袍(女),服装类,0,0,0,0</span><br><span class="line">灵魂战衣(女),服装类,0,0,0,0</span><br><span class="line">重盔甲(男),服装类,0,0,0,0</span><br><span class="line">魔法长袍(男),服装类,0,0,0,0</span><br><span class="line">灵魂战衣(男),服装类,0,0,0,0</span><br><span class="line">海魂,武器类,0,0,0,0</span><br><span class="line">修罗,武器类,0,0,0,0</span><br><span class="line">破魂,武器类,0,0,0,0</span><br><span class="line">斩马刀,武器类,0,0,0,0</span><br><span class="line">青铜头盔,首饰类,0,0,0,0</span><br><span class="line">金项链,首饰类,0,0,0,0</span><br><span class="line">铁手镯,首饰类,0,0,0,0</span><br><span class="line">灰色药粉(中量),药品类,0,0,0,0</span><br><span class="line">黄色药粉(中量),药品类,0,0,0,0</span><br><span class="line">八荒,武器类,0,0,0,0</span><br><span class="line">玻璃戒指,首饰类,0,0,0,0</span><br><span class="line">牛角戒指,首饰类,0,0,0,0</span><br><span class="line">蓝色水晶戒指,首饰类,0,0,0,0</span><br><span class="line">黑檀项链,首饰类,0,0,0,0</span><br><span class="line">黄色水晶项链,首饰类,0,0,0,0</span><br><span class="line">黑色水晶项链,首饰类,0,0,0,0</span><br><span class="line">半月,武器类,0,0,0,0</span><br><span class="line">皮制手套,首饰类,0,0,0,0</span><br><span class="line">钢手镯,首饰类,0,0,0,0</span><br><span class="line">生铁戒指,首饰类,0,0,0,0</span><br><span class="line">金戒指,首饰类,0,0,0,0</span><br><span class="line">灯笼项链,首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链,首饰类,1,1,1,0</span><br><span class="line">魅力戒指,首饰类,0,0,0,0</span><br><span class="line">道德戒指,首饰类,0,0,0,0</span><br><span class="line">白金项链,首饰类,0,0,0,0</span><br><span class="line">降妖除魔戒指,首饰类,0,0,0,0</span><br><span class="line">偃月,武器类,0,0,0,0</span><br><span class="line">降魔,武器类,0,0,0,0</span><br><span class="line">小手镯,首饰类,0,0,0,0</span><br><span class="line">银手镯,首饰类,0,0,0,0</span><br><span class="line">大手镯,首饰类,0,0,0,0</span><br><span class="line">金创药(中量),药品类,0,0,0,0</span><br><span class="line">魔法药(中量),药品类,0,0,0,0</span><br><span class="line">黑色水晶戒指,首饰类,0,0,0,0</span><br><span class="line">魔鬼项链,首饰类,0,0,0,0</span><br><span class="line">珊瑚戒指,首饰类,0,0,0,0</span><br><span class="line">蓝翡翠项链,首饰类,0,0,0,0</span><br><span class="line">蛇眼戒指,首饰类,0,0,0,0</span><br><span class="line">琥珀项链,首饰类,0,0,0,0</span><br><span class="line">放大镜,首饰类,0,0,0,0</span><br><span class="line">珍珠戒指,首饰类,0,0,0,0</span><br><span class="line">竹笛,首饰类,0,0,0,0</span><br><span class="line">骷髅戒指,首饰类,0,0,0,0</span><br><span class="line">死神手套,首饰类,0,0,0,0</span><br><span class="line">骷髅头盔,首饰类,0,0,0,0</span><br><span class="line">魔法手镯,首饰类,0,0,0,0</span><br><span class="line">金手镯,首饰类,0,0,0,0</span><br><span class="line">道士头盔,首饰类,0,0,0,0</span><br><span class="line">凤凰明珠,首饰类,0,0,0,0</span><br><span class="line">道士手镯,首饰类,0,0,0,0</span><br><span class="line">黑檀手镯,首饰类,0,0,0,0</span><br><span class="line">铁矿,其它类,0,0,0,0</span><br><span class="line">黑铁矿,其它类,0,0,0,0</span><br><span class="line">困魔咒,其它类,0,0,0,0</span><br><span class="line">召唤骷髅,其它类,0,0,0,0</span><br><span class="line">地狱雷光,其它类,0,0,0,0</span><br><span class="line">半月弯刀,其它类,0,0,0,0</span><br><span class="line">太阳水,药品类,0,1,0,0</span><br><span class="line">强效金创药,药品类,0,1,0,0</span><br><span class="line">强效魔法药,药品类,0,1,0,0</span><br><span class="line">野蛮冲撞,其它类,0,0,0,0</span><br><span class="line">群体治疗术,其它类,0,0,0,0</span><br><span class="line">圣言术,其它类,0,0,0,0</span><br><span class="line">强效太阳水,药品类,0,1,0,0</span><br><span class="line">魔力手镯,首饰类,0,0,0,0</span><br><span class="line">攻击力药水,其它类,0,0,0,0</span><br><span class="line">道术力药水,其它类,0,0,0,0</span><br><span class="line">疾风药水,其它类,0,0,0,0</span><br><span class="line">体力强化水,其它类,0,0,0,0</span><br><span class="line">魔力强化水,其它类,0,0,0,0</span><br><span class="line">战神盔甲(男),服装类,0,0,0,0</span><br><span class="line">战神盔甲(女),服装类,0,0,0,0</span><br><span class="line">幽灵战衣(男),服装类,0,0,0,0</span><br><span class="line">幽灵战衣(女),服装类,0,0,0,0</span><br><span class="line">恶魔长袍(男),服装类,0,0,0,0</span><br><span class="line">恶魔长袍(女),服装类,0,0,0,0</span><br><span class="line">中型盔甲(男),服装类,0,0,0,0</span><br><span class="line">灯笼项链②,首饰类,1,1,1,0</span><br><span class="line">灯笼项链[残],首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链[残],首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链②,首饰类,1,1,1,0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>游戏</category>
-        <category>传奇</category>
-      </categories>
-      <tags>
-        <tag>传奇</tag>
-        <tag>外挂</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>vscode配置picgo的github的图床</title>
     <url>/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/</url>
     <content><![CDATA[<p>vscode+github+picgo 搭建 markdown 图床</p>
@@ -809,24 +790,23 @@
       </tags>
   </entry>
   <entry>
-    <title>删除爱奇艺热播视频图标(牛氓)</title>
-    <url>/2022/10/03/%E5%88%A0%E9%99%A4%E7%88%B1%E5%A5%87%E8%89%BA%E7%83%AD%E6%92%AD%E8%A7%86%E9%A2%91%E5%9B%BE%E6%A0%87/</url>
-    <content><![CDATA[<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210030104950.png" alt="image-20221003010451506"></p>
+    <title>传奇内挂垃圾物品过滤</title>
+    <url>/2022/09/03/%E4%BC%A0%E5%A5%87%E5%86%85%E6%8C%82%E5%9E%83%E5%9C%BE%E7%89%A9%E5%93%81%E8%BF%87%E6%BB%A4/</url>
+    <content><![CDATA[<p> 传奇内挂过滤垃圾。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209031601159.png" alt="image-20220903160139387"></p>
+<p>先打开传奇目录 <code>D:\传奇私服\Config </code>   修改DAT档案文件，把下面内容复制粘贴进去保存即可：</p>
 <span id="more"></span>
-<p><strong>第一步丶</strong>在开始→运行中输入 :<code>regedit</code>点击确定（或者回车）打开注册表编辑器</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210030101210.png" alt="image-20221003010050614"></p>
-<p><strong>第二步丶</strong>如果是Windows 10操作系统，没有开始菜单，可以使用快捷键调出运行：Win+R依次定位到：</p>
-<p><code>计算机\HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace</code></p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210030105035.png" alt="image-20221003010143205"></p>
-<p>（代码文字或有不同，直接删掉就可以）此位置还有在我的电脑文件夹中其他的图标。</p>
-<p><strong>第三步丶</strong>如有异常，也可删除对应的项：PPS图标→ 360云盘图标→ 百度云盘图标→ 如果还是赖着不走，不妨再在注册表中按F3键，调出查找，输入关键词：爱奇艺视频，进行搜索，见一个，删除一个。清理干净之后，右键点击图标就能删除了。</p>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">金创药(小量),药品类,0,0,0,0</span><br><span class="line">魔法药(小量),药品类,0,0,0,0</span><br><span class="line">肉,其它类,0,0,0,0</span><br><span class="line">布衣(男),服装类,0,0,0,0</span><br><span class="line">布衣(女),服装类,0,0,0,0</span><br><span class="line">木剑,武器类,0,0,0,0</span><br><span class="line">铁剑,武器类,0,0,0,0</span><br><span class="line">青铜剑,武器类,0,0,0,0</span><br><span class="line">轻型盔甲(男),服装类,0,0,0,0</span><br><span class="line">轻型盔甲(女),服装类,0,0,0,0</span><br><span class="line">凝霜,武器类,0,0,0,0</span><br><span class="line">短剑,武器类,0,0,0,0</span><br><span class="line">青铜斧,武器类,0,0,0,0</span><br><span class="line">重盔甲(女),服装类,0,0,0,0</span><br><span class="line">魔法长袍(女),服装类,0,0,0,0</span><br><span class="line">灵魂战衣(女),服装类,0,0,0,0</span><br><span class="line">重盔甲(男),服装类,0,0,0,0</span><br><span class="line">魔法长袍(男),服装类,0,0,0,0</span><br><span class="line">灵魂战衣(男),服装类,0,0,0,0</span><br><span class="line">海魂,武器类,0,0,0,0</span><br><span class="line">修罗,武器类,0,0,0,0</span><br><span class="line">破魂,武器类,0,0,0,0</span><br><span class="line">斩马刀,武器类,0,0,0,0</span><br><span class="line">青铜头盔,首饰类,0,0,0,0</span><br><span class="line">金项链,首饰类,0,0,0,0</span><br><span class="line">铁手镯,首饰类,0,0,0,0</span><br><span class="line">灰色药粉(中量),药品类,0,0,0,0</span><br><span class="line">黄色药粉(中量),药品类,0,0,0,0</span><br><span class="line">八荒,武器类,0,0,0,0</span><br><span class="line">玻璃戒指,首饰类,0,0,0,0</span><br><span class="line">牛角戒指,首饰类,0,0,0,0</span><br><span class="line">蓝色水晶戒指,首饰类,0,0,0,0</span><br><span class="line">黑檀项链,首饰类,0,0,0,0</span><br><span class="line">黄色水晶项链,首饰类,0,0,0,0</span><br><span class="line">黑色水晶项链,首饰类,0,0,0,0</span><br><span class="line">半月,武器类,0,0,0,0</span><br><span class="line">皮制手套,首饰类,0,0,0,0</span><br><span class="line">钢手镯,首饰类,0,0,0,0</span><br><span class="line">生铁戒指,首饰类,0,0,0,0</span><br><span class="line">金戒指,首饰类,0,0,0,0</span><br><span class="line">灯笼项链,首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链,首饰类,1,1,1,0</span><br><span class="line">魅力戒指,首饰类,0,0,0,0</span><br><span class="line">道德戒指,首饰类,0,0,0,0</span><br><span class="line">白金项链,首饰类,0,0,0,0</span><br><span class="line">降妖除魔戒指,首饰类,0,0,0,0</span><br><span class="line">偃月,武器类,0,0,0,0</span><br><span class="line">降魔,武器类,0,0,0,0</span><br><span class="line">小手镯,首饰类,0,0,0,0</span><br><span class="line">银手镯,首饰类,0,0,0,0</span><br><span class="line">大手镯,首饰类,0,0,0,0</span><br><span class="line">金创药(中量),药品类,0,0,0,0</span><br><span class="line">魔法药(中量),药品类,0,0,0,0</span><br><span class="line">黑色水晶戒指,首饰类,0,0,0,0</span><br><span class="line">魔鬼项链,首饰类,0,0,0,0</span><br><span class="line">珊瑚戒指,首饰类,0,0,0,0</span><br><span class="line">蓝翡翠项链,首饰类,0,0,0,0</span><br><span class="line">蛇眼戒指,首饰类,0,0,0,0</span><br><span class="line">琥珀项链,首饰类,0,0,0,0</span><br><span class="line">放大镜,首饰类,0,0,0,0</span><br><span class="line">珍珠戒指,首饰类,0,0,0,0</span><br><span class="line">竹笛,首饰类,0,0,0,0</span><br><span class="line">骷髅戒指,首饰类,0,0,0,0</span><br><span class="line">死神手套,首饰类,0,0,0,0</span><br><span class="line">骷髅头盔,首饰类,0,0,0,0</span><br><span class="line">魔法手镯,首饰类,0,0,0,0</span><br><span class="line">金手镯,首饰类,0,0,0,0</span><br><span class="line">道士头盔,首饰类,0,0,0,0</span><br><span class="line">凤凰明珠,首饰类,0,0,0,0</span><br><span class="line">道士手镯,首饰类,0,0,0,0</span><br><span class="line">黑檀手镯,首饰类,0,0,0,0</span><br><span class="line">铁矿,其它类,0,0,0,0</span><br><span class="line">黑铁矿,其它类,0,0,0,0</span><br><span class="line">困魔咒,其它类,0,0,0,0</span><br><span class="line">召唤骷髅,其它类,0,0,0,0</span><br><span class="line">地狱雷光,其它类,0,0,0,0</span><br><span class="line">半月弯刀,其它类,0,0,0,0</span><br><span class="line">太阳水,药品类,0,1,0,0</span><br><span class="line">强效金创药,药品类,0,1,0,0</span><br><span class="line">强效魔法药,药品类,0,1,0,0</span><br><span class="line">野蛮冲撞,其它类,0,0,0,0</span><br><span class="line">群体治疗术,其它类,0,0,0,0</span><br><span class="line">圣言术,其它类,0,0,0,0</span><br><span class="line">强效太阳水,药品类,0,1,0,0</span><br><span class="line">魔力手镯,首饰类,0,0,0,0</span><br><span class="line">攻击力药水,其它类,0,0,0,0</span><br><span class="line">道术力药水,其它类,0,0,0,0</span><br><span class="line">疾风药水,其它类,0,0,0,0</span><br><span class="line">体力强化水,其它类,0,0,0,0</span><br><span class="line">魔力强化水,其它类,0,0,0,0</span><br><span class="line">战神盔甲(男),服装类,0,0,0,0</span><br><span class="line">战神盔甲(女),服装类,0,0,0,0</span><br><span class="line">幽灵战衣(男),服装类,0,0,0,0</span><br><span class="line">幽灵战衣(女),服装类,0,0,0,0</span><br><span class="line">恶魔长袍(男),服装类,0,0,0,0</span><br><span class="line">恶魔长袍(女),服装类,0,0,0,0</span><br><span class="line">中型盔甲(男),服装类,0,0,0,0</span><br><span class="line">灯笼项链②,首饰类,1,1,1,0</span><br><span class="line">灯笼项链[残],首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链[残],首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链②,首饰类,1,1,1,0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
-        <category>技术</category>
-        <category>Win</category>
+        <category>游戏</category>
+        <category>传奇</category>
       </categories>
       <tags>
-        <tag>Win</tag>
+        <tag>传奇</tag>
+        <tag>外挂</tag>
       </tags>
   </entry>
   <entry>
@@ -877,6 +857,27 @@
       </categories>
       <tags>
         <tag>插件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>删除爱奇艺热播视频图标(牛氓)</title>
+    <url>/2022/10/03/%E5%88%A0%E9%99%A4%E7%88%B1%E5%A5%87%E8%89%BA%E7%83%AD%E6%92%AD%E8%A7%86%E9%A2%91%E5%9B%BE%E6%A0%87/</url>
+    <content><![CDATA[<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210030104950.png" alt="image-20221003010451506"></p>
+<span id="more"></span>
+<p><strong>第一步丶</strong>在开始→运行中输入 :<code>regedit</code>点击确定（或者回车）打开注册表编辑器</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210030101210.png" alt="image-20221003010050614"></p>
+<p><strong>第二步丶</strong>如果是Windows 10操作系统，没有开始菜单，可以使用快捷键调出运行：Win+R依次定位到：</p>
+<p><code>计算机\HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace</code></p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210030105035.png" alt="image-20221003010143205"></p>
+<p>（代码文字或有不同，直接删掉就可以）此位置还有在我的电脑文件夹中其他的图标。</p>
+<p><strong>第三步丶</strong>如有异常，也可删除对应的项：PPS图标→ 360云盘图标→ 百度云盘图标→ 如果还是赖着不走，不妨再在注册表中按F3键，调出查找，输入关键词：爱奇艺视频，进行搜索，见一个，删除一个。清理干净之后，右键点击图标就能删除了。</p>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>Win</category>
+      </categories>
+      <tags>
+        <tag>Win</tag>
       </tags>
   </entry>
   <entry>
@@ -1180,6 +1181,31 @@
       </tags>
   </entry>
   <entry>
+    <title>将Windows打印机变成网络打印机</title>
+    <url>/2022/09/11/%E5%B0%86Windows%E6%89%93%E5%8D%B0%E6%9C%BA%E5%8F%98%E6%88%90%E7%BD%91%E7%BB%9C%E6%89%93%E5%8D%B0%E6%9C%BA/</url>
+    <content><![CDATA[<p>大家都知道Windows的打印共享一直属于玄学，2000&#x2F;XP&#x2F;2003（NT 5.x）及以前的时代基本还算正常，经过简单的设置总能搞定，自从Vista开始的NT 6.x，尤其到了win10&#x2F;win11时代，Windows的打印共享基本上就变成了玄学，姑且不说很难搞定，就算搞定了，一个补丁也可能把它搞残废。另外，Windows的共享服务一直存在各种安全漏洞，曾经一度被勒索病毒利用，尤其是win7（不能打补丁那种），为了安全，我一般都禁用server服务。</p>
+<span id="more"></span>
+<p>但自带网络接口的打印机从来没有这么复杂，指定IP（端口基本上就是基于raw的9100），安装驱动即可搞定，完全跳过了复杂的samba协议，直接使用TCP&#x2F;IP。如同在Windows下通过http或者ftp共享文件，完全不需要考虑Windows那复杂的共享机制。</p>
+<p>但并不是所有的打印机都带网络接口，虽然现在可以买一个便宜的可以刷固件的路由器（比如坛子里15块收的优酷路由宝刷Padavan或者OpenWRT）当打印服务器使用，但毕竟硬件都不是现成的，而且，投入再小也得投入不是。</p>
+<p>那能不能将Windows直接变成类似的打印服务器呢？答案是：Raw Print Server。这是一个开源的命令行程序，官方网站：<a href="https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/">https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/</a> 。注意，下载1.0版本， 不要下载那个beta版。<a href="https://www.253874.net/attachment?id=72646">RawPrintServer100.zip</a> 也附上了1.0版本的可执行程序及程序源码。</p>
+<p>Github项目链接：<a href="https://github.com/miso-lims/rawprintserver">https://github.com/miso-lims/rawprintserver</a> (这程序从2006年就停止开发了）。</p>
+<p><strong>基本操作流程：</strong></p>
+<p>1、在作为打印服务器的Windows上安装好打印机，以HP LaserJet P1008为例，装好打印机时，最好给打印机改一个简短的名字，例如叫：HP1008。</p>
+<p>2、将rawprintserver.exe复制到Windows的system32目录。</p>
+<p>3、管理员cmd模式下执行：rawprintserver.exe install “HP1008”。注意，这里的打印机名称一定要跟你Windows控制面板中显示的打印机名称一样。该程序会安装一个rawprintserver服务，如果你在上一步操作中没有将该文件复制到system32目录，那就需要修改下对应服务注册表项中的ImagePath项，将该程序的全路径写入，否则服务启动不了。</p>
+<p>4、在打印客户端按添加网络打印机的流程（自动搜索肯定是搜不到的，所以需要手工操作），指定IP地址，默认raw:9100，然后手工指定打印机驱动安装即可。</p>
+<p>5、搞定！</p>
+<p>6、软件运行的日志强行锁死在c:\PrintServer.log，如果出现什么错误，可以查看该日志。</p>
+<p>我试过在win10下安装rawprintserver，win7_x86和win11都可以正常连接并使用。<br><em>相关地址</em><br><a href="https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/"><em>https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/</em></a></p>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>技术</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>愿你编码半生，归来仍是少年</title>
     <url>/2019/10/21/%E6%84%BF%E4%BD%A0%E7%BC%96%E7%A0%81%E5%8D%8A%E7%94%9F%EF%BC%8C%E5%BD%92%E6%9D%A5%E4%BB%8D%E6%98%AF%E5%B0%91%E5%B9%B4/</url>
     <content><![CDATA[<h4 id="Hello-World-不巧，我也在等你。"><a href="#Hello-World-不巧，我也在等你。" class="headerlink" title="Hello,World.不巧，我也在等你。"></a>Hello,World.不巧，我也在等你。</h4><p>​      有人说自己被社会磨平了棱角，泯灭了心性，受生活所迫，“都说是为生活所迫，生活缺从来没有被抓过；都说被社会磨去棱角，社会之恶至今无法逃脱”，我们都有权利选择自己想成为的人，并不是由社会说了算，我们都曾年少，我们都曾有棱角，社会的熔炉却在不断的炼化我们，到底是磨平了棱角，还是磨成了钢刀，就让时间来见证吧！</p>
@@ -1310,31 +1336,6 @@
 ]]></content>
       <tags>
         <tag>Office</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>将Windows打印机变成网络打印机</title>
-    <url>/2022/09/11/%E5%B0%86Windows%E6%89%93%E5%8D%B0%E6%9C%BA%E5%8F%98%E6%88%90%E7%BD%91%E7%BB%9C%E6%89%93%E5%8D%B0%E6%9C%BA/</url>
-    <content><![CDATA[<p>大家都知道Windows的打印共享一直属于玄学，2000&#x2F;XP&#x2F;2003（NT 5.x）及以前的时代基本还算正常，经过简单的设置总能搞定，自从Vista开始的NT 6.x，尤其到了win10&#x2F;win11时代，Windows的打印共享基本上就变成了玄学，姑且不说很难搞定，就算搞定了，一个补丁也可能把它搞残废。另外，Windows的共享服务一直存在各种安全漏洞，曾经一度被勒索病毒利用，尤其是win7（不能打补丁那种），为了安全，我一般都禁用server服务。</p>
-<span id="more"></span>
-<p>但自带网络接口的打印机从来没有这么复杂，指定IP（端口基本上就是基于raw的9100），安装驱动即可搞定，完全跳过了复杂的samba协议，直接使用TCP&#x2F;IP。如同在Windows下通过http或者ftp共享文件，完全不需要考虑Windows那复杂的共享机制。</p>
-<p>但并不是所有的打印机都带网络接口，虽然现在可以买一个便宜的可以刷固件的路由器（比如坛子里15块收的优酷路由宝刷Padavan或者OpenWRT）当打印服务器使用，但毕竟硬件都不是现成的，而且，投入再小也得投入不是。</p>
-<p>那能不能将Windows直接变成类似的打印服务器呢？答案是：Raw Print Server。这是一个开源的命令行程序，官方网站：<a href="https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/">https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/</a> 。注意，下载1.0版本， 不要下载那个beta版。<a href="https://www.253874.net/attachment?id=72646">RawPrintServer100.zip</a> 也附上了1.0版本的可执行程序及程序源码。</p>
-<p>Github项目链接：<a href="https://github.com/miso-lims/rawprintserver">https://github.com/miso-lims/rawprintserver</a> (这程序从2006年就停止开发了）。</p>
-<p><strong>基本操作流程：</strong></p>
-<p>1、在作为打印服务器的Windows上安装好打印机，以HP LaserJet P1008为例，装好打印机时，最好给打印机改一个简短的名字，例如叫：HP1008。</p>
-<p>2、将rawprintserver.exe复制到Windows的system32目录。</p>
-<p>3、管理员cmd模式下执行：rawprintserver.exe install “HP1008”。注意，这里的打印机名称一定要跟你Windows控制面板中显示的打印机名称一样。该程序会安装一个rawprintserver服务，如果你在上一步操作中没有将该文件复制到system32目录，那就需要修改下对应服务注册表项中的ImagePath项，将该程序的全路径写入，否则服务启动不了。</p>
-<p>4、在打印客户端按添加网络打印机的流程（自动搜索肯定是搜不到的，所以需要手工操作），指定IP地址，默认raw:9100，然后手工指定打印机驱动安装即可。</p>
-<p>5、搞定！</p>
-<p>6、软件运行的日志强行锁死在c:\PrintServer.log，如果出现什么错误，可以查看该日志。</p>
-<p>我试过在win10下安装rawprintserver，win7_x86和win11都可以正常连接并使用。<br><em>相关地址</em><br><a href="https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/"><em>https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/</em></a></p>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>技术</tag>
       </tags>
   </entry>
   <entry>

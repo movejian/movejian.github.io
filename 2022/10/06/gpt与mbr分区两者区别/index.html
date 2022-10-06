@@ -121,6 +121,7 @@ var _hmt = _hmt || [];
 <p>1、mbr最多支持2T，而gpt理论上是无限制的；2、mbr最多支持四个主分区，gpt没有限制；3、win7只能用mbr分区，从Win8开始微软建议你使用gpt；4、gpt是由uefi启动的，兼容性和稳定性不如bios+mbr。</p>
 </blockquote>
 <p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210070127792.jpg"></p>
+<span id="more"></span>
 <p><strong>MBR分区</strong></p>
 <p>MBR的意思是“主引导记录”，是IBM公司早年间提出的。它是存在于磁盘驱动器开始部分的一个特殊的启动扇区。这个扇区包含了已安装的操作系统系统信息，并用一小段代码来启动系统。如果你安装了Windows，其启动信息就放在这一段代码中——如果MBR的信息损坏或误删就不能正常启动Windows，这时候你就需要找一个引导修复软件工具来修复它就可以了。Linux系统中MBR通常会是GRUB加载器。MBR。当一台电脑启动时，它会先启动主板自带的BIOS系统，bios加载MBR，MBR再启动Windows，这就是mbr的启动过程。</p>
 <p><strong>GPT分区</strong></p>
