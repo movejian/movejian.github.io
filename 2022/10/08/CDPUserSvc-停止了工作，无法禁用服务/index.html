@@ -91,7 +91,7 @@ var _hmt = _hmt || [];
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">888</span>
+            <span class="post-count">1.4k</span>
         </span>
     </span>
 
@@ -100,7 +100,7 @@ var _hmt = _hmt || [];
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">3 分钟</span>
+            <span class="post-count">5 分钟</span>
         </span>
     </span>
 </div>
@@ -115,7 +115,20 @@ var _hmt = _hmt || [];
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>最近在桌面环境中，winserver2016（win10）系统开机会报：CDPUserSvc_随机字符 已停止了工作，打开服务查看发现，描述中显示错误，无法显示；禁用服务，同样报错，无法禁止；</p>
+  <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>今天跟大家讲解下有关电脑方面的小知识什么是CDPUserSvc?如何进行相关操作 ，相信对电脑感兴趣的小伙伴们对这个话题应该也很关注吧，小编也收集到了有关什么是CDPUserSvc?如何进行相关操作 的相关资料，希望大家看到了会喜欢。</p>
+<p>最近有用户反映，自己的Win10系统电脑在开机的时候出现了一个问题，CDPUserSvc停止了工作，第一次遇到这种情况，不知道是什么，自然野不会处理该问题， 　　</p>
+<p>在Win10系统中我们可能会看到CDPUserSvc_随机数字，这样的服务，很多用户不知道CDPUserSvc服务是什么，相要操作禁止启动，却提示参数错误，那么CDPUserSvc服务有什么作用，可以禁用吗 又如何禁用呢 当它运行出问题时又该如何决解 电脑配置网小编告诉大家这个问题的处理方式。</p>
+<span id="more"></span>
+<blockquote>
+<p>CDPUserSvc服务是什么官方描述：它是连接设备平台服务的一部分。CDP服务：此服务用于连接设备和通用glass场景 　　貌似普通用户没什么用，大家不禁用也好，如果要禁用可以参考下面方法。</p>
+</blockquote>
+<h3 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h3><p>CDPUserSvc服务禁用方法：运行regedit打开这个子项<code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\ </code>　</p>
+<p>将下面子项属性修改</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">OneSyncSvc的start属性修改为3 </span><br><span class="line">OneSyncSvc_随机数字 的start属性修改为3</span><br><span class="line">UserDataSvc的start属性修改为3</span><br><span class="line">UserDataSvc_随机数字 的start属性修改为3</span><br><span class="line">CDPSvc的start属性修改为3</span><br><span class="line">CDPUserSvc的start属性修改为3</span><br><span class="line">CDPUserSvc_随机数字 的start属性修改为3</span><br></pre></td></tr></table></figure>
+
+<p>　之的我们再重启，这个服务就不会启动了，如果要恢复，改回原值即可。</p>
+<p>以上事件是小编对什么是CDPUserSvc?如何进行相关操作 所了解到的所有相关资料希望能帮助到大家。</p>
+<h3 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h3><p>winserver10（win2016）系统开机会报：CDPUserSvc_随机字符 已停止了工作，打开服务查看发现，描述中显示错误，无法显示；禁用服务，同样报错，无法禁止；</p>
 <p>![image-20221008004422112](D:\Program Files\PicGo\临时储存\image-20221008004422112.png)</p>
 <p>我们到日志里面查看事件反映过来的错误信息</p>
 <p>对应OS事件台信息：</p>

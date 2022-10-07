@@ -172,36 +172,13 @@ var _hmt = _hmt || [];
       
     <div class="article-entry" itemprop="articleBody">
        
-  <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>最近在桌面环境中，winserver2016（win10）系统开机会报：CDPUserSvc_随机字符 已停止了工作，打开服务查看发现，描述中显示错误，无法显示；禁用服务，同样报错，无法禁止；</p>
-<p>![image-20221008004422112](D:\Program Files\PicGo\临时储存\image-20221008004422112.png)</p>
-<p>我们到日志里面查看事件反映过来的错误信息</p>
-<p>对应OS事件台信息：</p>
-<p>![image-20221008004740315](D:\Program Files\PicGo\临时储存\image-20221008004740315.png)</p>
-<p>禁止服务处理<br>CDP服务（Connected Devices Platform Service，CDPUserSvc），它是连接设备平台服务的一部分。CDP服务：此服务用于连接设备和通用glass场景；与其一起的还有一个服务为：OneSyncSvc_字符，此服务同步邮件、联系人、日历和其他各种用户数据。如停止该服务，依赖于此功能的邮件和其他应用程序将无法工作。而UserDataSvc_字符串，该服务提供应用程序访问结构化用户数据，包括联系人信息，日历、消息和其他内容。如果你停止服务，使用此数据的应用程序可能无法正常工作。</p>
-<p>CDP对应的dll文件：C:\Windows\System32\cdpusersvc.dll；CDPUserSvc后跟的字符串，是对于当前登录到服务器的每个用户，都生成一个唯一编号的服务副本；</p>
-<p>1、cmd输入：get-service | where Name -like “cdpu*” 确认该服务；或者get-service | where Name -like “26211f6” 列出CDPUserSvc后跟字符串相关的所有服务</p>
-<p>![在这里插入图片描述](D:\Program Files\PicGo\临时储存\20201030154553719.png)</p>
-<p>然后执行：net stop CDPUserSvc_字符串，关停服务</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">C:\Windows\system32&gt; get-service | where Name -like &quot;*26211f6*&quot;</span><br><span class="line"></span><br><span class="line">Status   Name               DisplayName                           </span><br><span class="line">------   ----               -----------                           </span><br><span class="line">Running  CDPUserSvc_26211f6 CDPUserSvc_26211f6                    </span><br><span class="line">Running  OneSyncSvc_26211f6 Sync Host_26211f6                     </span><br><span class="line">Stopped  PimIndexMainten... Contact Data_26211f6                  </span><br><span class="line">Stopped  UnistoreSvc_262... User Data Storage_26211f6             </span><br><span class="line">Stopped  UserDataSvc_262... User Data Access_26211f6              </span><br><span class="line">Stopped  WpnUserService_... Windows Push Notifications User Ser...</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>参考地址：<a target="_blank" rel="noopener" href="https://gallery.technet.microsoft.com/Function-disabling-system-cfd6359e?redir=0">https://gallery.technet.microsoft.com/Function-disabling-system-cfd6359e?redir=0</a><br>另外cmd里输入：<br>sfc&#x2F;scannow<br>DISM &#x2F;Online &#x2F;Cleanup-Image &#x2F;RestoreHealth<br>执行完成后，再禁用尝试。</p>
-<p>2、cmd输入regedit，打开注册表，定位到HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\CDPUserSvc<br>将”Start” 项值从 “2” (Automatic) 修改为 “4” (Disabled).</p>
-<p>其余服务：<br>OneSyncSvc的start属性修改为3</p>
-<p>OneSyncSvc_随机数字 的start属性修改为3</p>
-<p>UserDataSvc的start属性修改为3</p>
-<p>UserDataSvc_随机数字 的start属性修改为3</p>
-<p>CDPSvc的start属性修改为3</p>
-<p>CDPUserSvc的start属性修改为3</p>
-<p>CDPUserSvc_随机数字 的start属性修改为3</p>
-<p>4、实际微软对此，曾发布过补丁包：<a target="_blank" rel="noopener" href="https://support.microsoft.com/en-us/help/4053579/windows-10-update-kb4053579%EF%BC%8C%E5%AE%89%E8%A3%85%E8%AF%A5%E8%A1%A5%E4%B8%81%E5%8F%AF%E8%A7%A3%E5%86%B3%E8%AF%A5%E9%97%AE%E9%A2%98%E3%80%82">https://support.microsoft.com/en-us/help/4053579/windows-10-update-kb4053579，安装该补丁可解决该问题。</a><br>![image-20221008005056443](D:\Program Files\PicGo\临时储存\image-20221008005056443.png)</p>
-<p>该补丁包主要解决其中一项就是：<br>Addresses issue where, after you install KB4041688, KB4052231, or KB4048953, the error “CDPUserSvc_XXXX has stopped working” appears. Additionally, this resolves the logging of Event ID 1000 in the Application event log. It notes that svchost.exe_CDPUserSvc_XXXX stopped working and the faulting module name is “cdp.dll”.<br>![img](D:\Program Files\PicGo\临时储存\watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3hpbWVuamlhbnh1ZQ&#x3D;&#x3D;,size_16,color_FFFFFF,t_70#pic_center.png)</p>
-<p>关联信息介绍：<a target="_blank" rel="noopener" href="https://www.tenforums.com/general-support/58863-connected-devices-platform-service-what-does-do.html?cf_chl_jschl_tk=44a45b4ffd2bfd1309834dda81453da70568ec1a-1604044379-0-AYNPBnMfVIxwosrLX0LWu1VrOq0MZaQfmsaF4cDbb6jSuDRxHB2XUw6opE7zTzPRAyyaEH37dv7ZIWcxe6XQmlIXhonh1noqYpvUAFn_ABNNbDlKIffgJj1zh7TtCxqhKvXzdLfsLuto0JWpUr6ZcRd6gX-l3hg6MUYMzBnIwg5xcciYBOxeiSAN0GRhGw43Fk7h2BOCrfiSyq_vNZg7FpQ88VvOVk09SfQxR9heSMddXqClssCpHGtyDZoOwlikYTmLaqaq2R_OW9ynrzawZisYOwtn2risLj72Ag9e9nicRYgWtbbZsDfQgyDbnYVsU2CMQ4TDJQHAKb0m2EOt7mSKzXJZLTG5d97tJjyz23CLTWIB1IN3DaNsJuiOpoeqnA#post763502">https://www.tenforums.com/general-support/58863-connected-devices-platform-service-what-does-do.html?cf_chl_jschl_tk=44a45b4ffd2bfd1309834dda81453da70568ec1a-1604044379-0-AYNPBnMfVIxwosrLX0LWu1VrOq0MZaQfmsaF4cDbb6jSuDRxHB2XUw6opE7zTzPRAyyaEH37dv7ZIWcxe6XQmlIXhonh1noqYpvUAFn_ABNNbDlKIffgJj1zh7TtCxqhKvXzdLfsLuto0JWpUr6ZcRd6gX-l3hg6MUYMzBnIwg5xcciYBOxeiSAN0GRhGw43Fk7h2BOCrfiSyq_vNZg7FpQ88VvOVk09SfQxR9heSMddXqClssCpHGtyDZoOwlikYTmLaqaq2R_OW9ynrzawZisYOwtn2risLj72Ag9e9nicRYgWtbbZsDfQgyDbnYVsU2CMQ4TDJQHAKb0m2EOt7mSKzXJZLTG5d97tJjyz23CLTWIB1IN3DaNsJuiOpoeqnA#post763502</a><br>另外，安装此更新会触发其他问题：<br>![在这里插入图片描述](D:\Program Files\PicGo\临时储存\watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3hpbWVuamlhbnh1ZQ&#x3D;&#x3D;,size_16,color_FFFFFF,t_70.png)</p>
-<p>![在这里插入图片描述](D:\Program Files\PicGo\临时储存\watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3hpbWVuamlhbnh1ZQ&#x3D;&#x3D;,size_16,color_FFFFFF,t_70-166516152577110.png)</p>
-<p>5、命令禁止：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sc config CDPUserSvc start= disabled</span><br><span class="line">reg add “HKLM\System\CurrentControlSet\Services\PimIndexMaintenanceSvc” /v “Start” /t REG_DWORD /d “4” /f</span><br><span class="line">reg add “HKLM\System\CurrentControlSet\Services\UserDataSvc” /v “Start” /t REG_DWORD /d “4” /f</span><br><span class="line">reg add “HKLM\System\CurrentControlSet\Services\UnistoreSvc” /v “Start” /t REG_DWORD /d “4” /f</span><br></pre></td></tr></table></figure>
-
-<p>脚本下载地址：<a target="_blank" rel="noopener" href="https://download.csdn.net/download/ximenjianxue/13078314%EF%BC%8C%E5%8F%AF%E7%A6%81%E7%94%A8windows">https://download.csdn.net/download/ximenjianxue/13078314，可禁用windows</a> server 2016无用的服务。</p>
- 
+  <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>今天跟大家讲解下有关电脑方面的小知识什么是CDPUserSvc?如何进行相关操作 ，相信对电脑感兴趣的小伙伴们对这个话题应该也很关注吧，小编也收集到了有关什么是CDPUserSvc?如何进行相关操作 的相关资料，希望大家看到了会喜欢。</p>
+<p>最近有用户反映，自己的Win10系统电脑在开机的时候出现了一个问题，CDPUserSvc停止了工作，第一次遇到这种情况，不知道是什么，自然野不会处理该问题， 　　</p>
+<p>在Win10系统中我们可能会看到CDPUserSvc_随机数字，这样的服务，很多用户不知道CDPUserSvc服务是什么，相要操作禁止启动，却提示参数错误，那么CDPUserSvc服务有什么作用，可以禁用吗 又如何禁用呢 当它运行出问题时又该如何决解 电脑配置网小编告诉大家这个问题的处理方式。</p> 
+      <a class="article-more-link" href="/2022/10/08/CDPUserSvc-%E5%81%9C%E6%AD%A2%E4%BA%86%E5%B7%A5%E4%BD%9C%EF%BC%8C%E6%97%A0%E6%B3%95%E7%A6%81%E7%94%A8%E6%9C%8D%E5%8A%A1/"
+        >阅读更多...</a
+      >
+       
       <!-- reward -->
       
     </div>

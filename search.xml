@@ -3,7 +3,20 @@
   <entry>
     <title>CDPUserSvc_***停止了工作，无法禁用服务</title>
     <url>/2022/10/08/CDPUserSvc-%E5%81%9C%E6%AD%A2%E4%BA%86%E5%B7%A5%E4%BD%9C%EF%BC%8C%E6%97%A0%E6%B3%95%E7%A6%81%E7%94%A8%E6%9C%8D%E5%8A%A1/</url>
-    <content><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>最近在桌面环境中，winserver2016（win10）系统开机会报：CDPUserSvc_随机字符 已停止了工作，打开服务查看发现，描述中显示错误，无法显示；禁用服务，同样报错，无法禁止；</p>
+    <content><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>今天跟大家讲解下有关电脑方面的小知识什么是CDPUserSvc?如何进行相关操作 ，相信对电脑感兴趣的小伙伴们对这个话题应该也很关注吧，小编也收集到了有关什么是CDPUserSvc?如何进行相关操作 的相关资料，希望大家看到了会喜欢。</p>
+<p>最近有用户反映，自己的Win10系统电脑在开机的时候出现了一个问题，CDPUserSvc停止了工作，第一次遇到这种情况，不知道是什么，自然野不会处理该问题， 　　</p>
+<p>在Win10系统中我们可能会看到CDPUserSvc_随机数字，这样的服务，很多用户不知道CDPUserSvc服务是什么，相要操作禁止启动，却提示参数错误，那么CDPUserSvc服务有什么作用，可以禁用吗 又如何禁用呢 当它运行出问题时又该如何决解 电脑配置网小编告诉大家这个问题的处理方式。</p>
+<span id="more"></span>
+<blockquote>
+<p>CDPUserSvc服务是什么官方描述：它是连接设备平台服务的一部分。CDP服务：此服务用于连接设备和通用glass场景 　　貌似普通用户没什么用，大家不禁用也好，如果要禁用可以参考下面方法。</p>
+</blockquote>
+<h3 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h3><p>CDPUserSvc服务禁用方法：运行regedit打开这个子项<code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\ </code>　</p>
+<p>将下面子项属性修改</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">OneSyncSvc的start属性修改为3 </span><br><span class="line">OneSyncSvc_随机数字 的start属性修改为3</span><br><span class="line">UserDataSvc的start属性修改为3</span><br><span class="line">UserDataSvc_随机数字 的start属性修改为3</span><br><span class="line">CDPSvc的start属性修改为3</span><br><span class="line">CDPUserSvc的start属性修改为3</span><br><span class="line">CDPUserSvc_随机数字 的start属性修改为3</span><br></pre></td></tr></table></figure>
+
+<p>　之的我们再重启，这个服务就不会启动了，如果要恢复，改回原值即可。</p>
+<p>以上事件是小编对什么是CDPUserSvc?如何进行相关操作 所了解到的所有相关资料希望能帮助到大家。</p>
+<h3 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h3><p>winserver10（win2016）系统开机会报：CDPUserSvc_随机字符 已停止了工作，打开服务查看发现，描述中显示错误，无法显示；禁用服务，同样报错，无法禁止；</p>
 <p>![image-20221008004422112](D:\Program Files\PicGo\临时储存\image-20221008004422112.png)</p>
 <p>我们到日志里面查看事件反映过来的错误信息</p>
 <p>对应OS事件台信息：</p>
@@ -361,96 +374,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux系统无线网卡配置</title>
-    <url>/2019/12/16/Linux%E7%B3%BB%E7%BB%9F%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<h2 id="无线网卡配置"><a href="#无线网卡配置" class="headerlink" title="无线网卡配置"></a>无线网卡配置</h2><p>本文介绍在Linux 命令行界面中手动配置无线网卡的方法。目前流行的多数发行版都支持用图形界面的<code>network- manager</code>方便地进行配置，而无需使用本文所介绍的原始方法。</p>
-<p>下面介绍使用<code>iwconfig</code>和<code>ifconfig</code>等命令在命令行状态下配置无线网络。前题是无线网卡驱动已经正确安装，并被系统正确识别。</p>
-<span id="more"></span>
-<h2 id="大体思路"><a href="#大体思路" class="headerlink" title="大体思路"></a>大体思路</h2><p>工作的大体思路如下：</p>
-<ol>
-<li>用<code>iwconfig</code>开启无线网卡的电源，并查找区域内的无线网络</li>
-<li>连接到相应的无线网络</li>
-<li>通过<code>ifconfig</code>启用无线网卡，并获取IP（如果使用DHCP的话）</li>
-</ol>
-<h2 id="具体过程"><a href="#具体过程" class="headerlink" title="具体过程"></a>具体过程</h2><ol>
-<li>打开无线网卡电源</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 txpower on</span><br></pre></td></tr></table></figure>
-<h4 id="无线网络的信号灯应该亮了。"><a href="#无线网络的信号灯应该亮了。" class="headerlink" title="无线网络的信号灯应该亮了。"></a>无线网络的信号灯应该亮了。</h4><ol start="2">
-<li>列出区域内的无线网络<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwlist wlan0 scan</span><br></pre></td></tr></table></figure></li>
-<li>假设要连接到网络MyHome（即essid为MyHome的网络），那么输入命令</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 essid <span class="string">&quot;MyHome&quot;</span> </span><br></pre></td></tr></table></figure>
-<p><em>#如果网络是加密的，密码是0123456789，那么就输入命令#</em></p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 essid <span class="string">&quot;MyHome&quot;</span> key <span class="number">0123</span><span class="literal">-4567-89</span></span><br></pre></td></tr></table></figure>
-<ol start="4">
-<li>如果正常的话，输入</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br></pre></td></tr></table></figure>
-<h4 id="就可以看到连接正常的各项参数了。"><a href="#就可以看到连接正常的各项参数了。" class="headerlink" title="就可以看到连接正常的各项参数了。"></a>就可以看到连接正常的各项参数了。</h4><ol start="5">
-<li>启用无线网卡</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ifconfig wlan0 up</span><br></pre></td></tr></table></figure>
-
-<ol start="6">
-<li>如果是用DHCP获取IP的，那么用dhclient 或dhcpcd获取ip</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">dhcpcd wlan0</span><br></pre></td></tr></table></figure>
-
-<p>或</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">dhclient wlan0</span><br></pre></td></tr></table></figure>
-
-<ol start="7">
-<li>现在无线网卡应该可以正常使用了。</li>
-</ol>
-<h3 id="PS"><a href="#PS" class="headerlink" title="PS:"></a>PS:</h3><p>   如果现在还不能联网。那么点击网络图标。选择链接到隐藏的无线网络。输入找到的网络的名字。<br>      图形化的网络管理程序是<code>System-&gt;Preferences-&gt;Network Connections</code>。打开程序后，点击无线网络项目，点击add增加一个新的无线网络。  给出任意的<code>Connection Name</code>。<code>SSID</code>中输入无限网络的名字。<code>wireless security</code>中选择一种合适的加密类型。key中输入无限网络的密码。 </p>
-<p>   其他字段都不修改。 执行后，应该能够链接无限网络。  可以使用<code>iwconfig wlan0</code>命令查看是否正确连接无线网络。</p>
-<h6 id="未正确链接无线网络的输出："><a href="#未正确链接无线网络的输出：" class="headerlink" title="未正确链接无线网络的输出："></a>未正确链接无线网络的输出：</h6><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br><span class="line">wlan0     IEEE <span class="number">802.11</span>abg  ESSID:off/any </span><br><span class="line">          Mode:Managed  Access Point: Not<span class="literal">-Associated</span>   Tx<span class="literal">-Power</span>=<span class="number">0</span> dBm  </span><br><span class="line">          Retry  long limit:<span class="number">7</span>   RTS thr:off   Fragment thr:off</span><br><span class="line">          Power Management:off</span><br></pre></td></tr></table></figure>
-
-<h6 id="正确链接无线网络后的输出："><a href="#正确链接无线网络后的输出：" class="headerlink" title="正确链接无线网络后的输出："></a>正确链接无线网络后的输出：</h6><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br><span class="line">wlan0     IEEE <span class="number">802.11</span>abg  ESSID:<span class="string">&quot;MyHome&quot;</span> </span><br><span class="line">          Mode:Managed  Frequency:<span class="number">2.437</span> GHz  Access Point: <span class="number">00</span>:<span class="number">26</span>:DS:<span class="number">43</span>:<span class="number">1</span>A:A8  </span><br><span class="line">          Bit Rate=<span class="number">54</span> Mb/s   Tx<span class="literal">-Power</span>=<span class="number">0</span> dBm  </span><br><span class="line">          Retry  long limit:<span class="number">7</span>   RTS thr:off   Fragment thr:off</span><br><span class="line">          Power Management:off</span><br><span class="line">          Link Quality=<span class="number">65</span>/<span class="number">70</span>  Signal level=<span class="literal">-45</span> dBm </span><br><span class="line">          Rx invalid nwid:<span class="number">0</span>  Rx invalid crypt:<span class="number">0</span>  Rx invalid frag:<span class="number">0</span></span><br><span class="line">          Tx excessive retries:<span class="number">0</span>  Invalid misc:<span class="number">0</span>   Missed beacon:<span class="number">0</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>Linux</tag>
-        <tag>无线网卡</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux通过密钥对免密登录</title>
-    <url>/2022/09/21/Linux%E9%80%9A%E8%BF%87%E5%AF%86%E9%92%A5%E5%AF%B9%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/</url>
-    <content><![CDATA[<p>首先，说明一下我们要做的是，跳板机服务器的<code>usera</code>用户免密码登录B服务器的<code>userb</code>用户。<br>我们先使用<code>usera</code>登录跳板服务器</p>
-<blockquote>
-<p>首先生成密钥对如果有则跳过这一步</p>
-</blockquote>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
-<span id="more"></span>
-<p>操作演示</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">[sera@serverA ~]$ ssh-keygen -t rsa  <span class="comment">//使用rsa算法加密</span></span><br><span class="line"><span class="title class_">Generating</span> public/private rsa key pair.</span><br><span class="line"><span class="title class_">Enter</span> file <span class="keyword">in</span> which to save the key (<span class="regexp">/home/u</span>sera/.<span class="property">ssh</span>/id_rsa): <span class="comment">//私钥默认保存路径</span></span><br><span class="line"><span class="title class_">Created</span> directory <span class="string">&#x27;/home/usera/.ssh&#x27;</span>.</span><br><span class="line"><span class="title class_">Enter</span> passphrase (empty <span class="keyword">for</span> no passphrase): <span class="comment">//在这里输入密码如果这里输入密码以后登录需要密钥和密码才能登录这里建议直接回车也就是空</span></span><br><span class="line"><span class="title class_">Enter</span> same passphrase <span class="attr">again</span>:</span><br><span class="line"><span class="title class_">Your</span> identification has been saved <span class="keyword">in</span> /home/usera/.<span class="property">ssh</span>/id_rsa.</span><br><span class="line"><span class="title class_">Your</span> public key has been saved <span class="keyword">in</span> /home/usera/.<span class="property">ssh</span>/id_rsa.<span class="property">pub</span>. <span class="comment">//公钥保存路径</span></span><br><span class="line"><span class="title class_">The</span> key fingerprint <span class="attr">is</span>:</span><br><span class="line"><span class="number">39</span>:<span class="attr">f2</span>:<span class="attr">fc</span>:<span class="number">70</span>:<span class="attr">ef</span>:<span class="attr">e9</span>:<span class="attr">bd</span>:<span class="number">05</span>:<span class="number">40</span>:6<span class="attr">e</span>:<span class="number">64</span>:<span class="attr">b0</span>:<span class="number">99</span>:<span class="number">56</span>:6<span class="attr">e</span>:<span class="number">01</span> usera@serverA</span><br><span class="line"><span class="title class_">The</span> key<span class="string">&#x27;s randomart image is:</span></span><br><span class="line"><span class="string">+--[ RSA 2048]----+</span></span><br><span class="line"><span class="string">| Eo* |</span></span><br><span class="line"><span class="string">| @ . |</span></span><br><span class="line"><span class="string">| = * |</span></span><br><span class="line"><span class="string">| o o . |</span></span><br><span class="line"><span class="string">| . S . |</span></span><br><span class="line"><span class="string">| + . . |</span></span><br><span class="line"><span class="string">| + . .|</span></span><br><span class="line"><span class="string">| + . o . |</span></span><br><span class="line"><span class="string">| .o= o. |</span></span><br><span class="line"><span class="string">+-----------------+</span></span><br></pre></td></tr></table></figure>
-
-<p>以下是截图提示</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210216196.png"></p>
-<blockquote>
-<p>id_rsa是私钥，id_rsa.pub是公钥公钥在服务器私钥在自己手上</p>
-</blockquote>
-<p>此时会在<code>/home/usera/.ssh</code>目录下生成密钥对我们使用<code>ls</code>查看一下</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">root@<span class="attr">vultr</span>:~#  ls -la .<span class="property">ssh</span></span><br><span class="line">total <span class="number">16</span></span><br><span class="line">drwx------ <span class="number">2</span> root root <span class="number">4096</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> .</span><br><span class="line">drwx------ <span class="number">5</span> root root <span class="number">4096</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">00</span> ..</span><br><span class="line">-rw------- <span class="number">1</span> root root <span class="number">1675</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> id_rsa</span><br><span class="line">-rw-r--r-- <span class="number">1</span> root root  <span class="number">398</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> id_rsa.<span class="property">pub</span></span><br></pre></td></tr></table></figure>
-
-<p>然后将公钥上传到需要登录的服务器，并以<code>userb</code>用户登录<br>至于上传方式可以用<code>scp</code>以及<code>sz</code>命令这里就介绍了<br>可以参考这篇<a href="https://shagain.club/index.php/archives/111/">文章</a></p>
-<blockquote>
-<p>上传到用户目录下的.ssh文件夹下<code>authorized_keys</code>这个文件是用来存放公钥内容的我们使用<code>cat</code>把公钥追加到<code>authorized_keys</code>这个文件就好了</p>
-</blockquote>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">cat id_rsa.<span class="property">pub</span> &gt;&gt; ~<span class="regexp">/.ssh/</span>authorized_keys    <span class="comment">//cat 公钥路径 &gt;&gt; ~/.ssh/authorized_keys</span></span><br></pre></td></tr></table></figure>
-
-<p>这样子我们就配置好了<br>另外我们要注意，<code>.ssh</code>目录的权限为<code>700</code>，其下文件<code>authorized_keys</code>和私钥的权限为<code>600</code>。否则会因为权限问题导致无法免密码登录。我们可以看到登陆后会有<code>known_hosts</code>文件生成。</p>
-]]></content>
-      <categories>
-        <category>学习</category>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Linux查看硬件信息与系统资源</title>
     <url>/2022/09/06/Linux%E6%9F%A5%E7%9C%8B%E7%A1%AC%E4%BB%B6%E4%BF%A1%E6%81%AF%E4%B8%8E%E7%B3%BB%E7%BB%9F%E8%B5%84%E6%BA%90/</url>
     <content><![CDATA[<p>Linux下经常需要查看系统资源或硬件资源，与之对应的命令行也是非常多</p>
@@ -649,29 +572,93 @@
       </tags>
   </entry>
   <entry>
-    <title>gpt与mbr分区两者区别</title>
-    <url>/2022/10/06/gpt%E4%B8%8Embr%E5%88%86%E5%8C%BA%E4%B8%A4%E8%80%85%E5%8C%BA%E5%88%AB/</url>
-    <content><![CDATA[<blockquote>
-<p>1、mbr最多支持2T，而gpt理论上是无限制的；2、mbr最多支持四个主分区，gpt没有限制；3、win7只能用mbr分区，从Win8开始微软建议你使用gpt；4、gpt是由uefi启动的，兼容性和稳定性不如bios+mbr。</p>
-</blockquote>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210070127792.jpg"></p>
+    <title>Linux系统无线网卡配置</title>
+    <url>/2019/12/16/Linux%E7%B3%BB%E7%BB%9F%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h2 id="无线网卡配置"><a href="#无线网卡配置" class="headerlink" title="无线网卡配置"></a>无线网卡配置</h2><p>本文介绍在Linux 命令行界面中手动配置无线网卡的方法。目前流行的多数发行版都支持用图形界面的<code>network- manager</code>方便地进行配置，而无需使用本文所介绍的原始方法。</p>
+<p>下面介绍使用<code>iwconfig</code>和<code>ifconfig</code>等命令在命令行状态下配置无线网络。前题是无线网卡驱动已经正确安装，并被系统正确识别。</p>
 <span id="more"></span>
-<p><strong>MBR分区</strong></p>
-<p>MBR的意思是“主引导记录”，是IBM公司早年间提出的。它是存在于磁盘驱动器开始部分的一个特殊的启动扇区。这个扇区包含了已安装的操作系统系统信息，并用一小段代码来启动系统。如果你安装了Windows，其启动信息就放在这一段代码中——如果MBR的信息损坏或误删就不能正常启动Windows，这时候你就需要找一个引导修复软件工具来修复它就可以了。Linux系统中MBR通常会是GRUB加载器。MBR。当一台电脑启动时，它会先启动主板自带的BIOS系统，bios加载MBR，MBR再启动Windows，这就是mbr的启动过程。</p>
-<p><strong>GPT分区</strong></p>
-<p>GPT的意思是GUID Partition Table，即“全局唯一标识磁盘分区表”。他是另外一种更加先进新颖的磁盘组织方式，一种使用<code>UEFI</code>启动的磁盘组织方式。最开始是为了更好的兼容性，后来因为其更大的支持内存（mbr分区最多支持2T的磁盘），更多的兼容而被广泛使用，特别是苹果的MAC系统全部使用gpt分区。gtp不在有分区的概念，所有CDEF盘都在一段信息中存储。可以简单的理解为更先进但是使用不够广泛的技术。</p>
-<p><strong>两者区别</strong></p>
-<p>内存支持：mbr最多支持2T，而gpt理论上是无限制的。</p>
-<p>分区：mbr最多支持四个主分区，gpt没有限制。如果你想跑多系统，mbr最多4个而gpt没有限制。</p>
-<p>系统：win7只能用mbr分区，从Win8开始微软建议你使用gpt。</p>
-<p>其它：gpt是由<code>uefi</code>启动的，而<code>uefi</code>是后来才提出的概念，兼容性和稳定性不如bios+mbr。</p>
+<h2 id="大体思路"><a href="#大体思路" class="headerlink" title="大体思路"></a>大体思路</h2><p>工作的大体思路如下：</p>
+<ol>
+<li>用<code>iwconfig</code>开启无线网卡的电源，并查找区域内的无线网络</li>
+<li>连接到相应的无线网络</li>
+<li>通过<code>ifconfig</code>启用无线网卡，并获取IP（如果使用DHCP的话）</li>
+</ol>
+<h2 id="具体过程"><a href="#具体过程" class="headerlink" title="具体过程"></a>具体过程</h2><ol>
+<li>打开无线网卡电源</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 txpower on</span><br></pre></td></tr></table></figure>
+<h4 id="无线网络的信号灯应该亮了。"><a href="#无线网络的信号灯应该亮了。" class="headerlink" title="无线网络的信号灯应该亮了。"></a>无线网络的信号灯应该亮了。</h4><ol start="2">
+<li>列出区域内的无线网络<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwlist wlan0 scan</span><br></pre></td></tr></table></figure></li>
+<li>假设要连接到网络MyHome（即essid为MyHome的网络），那么输入命令</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 essid <span class="string">&quot;MyHome&quot;</span> </span><br></pre></td></tr></table></figure>
+<p><em>#如果网络是加密的，密码是0123456789，那么就输入命令#</em></p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 essid <span class="string">&quot;MyHome&quot;</span> key <span class="number">0123</span><span class="literal">-4567-89</span></span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>如果正常的话，输入</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br></pre></td></tr></table></figure>
+<h4 id="就可以看到连接正常的各项参数了。"><a href="#就可以看到连接正常的各项参数了。" class="headerlink" title="就可以看到连接正常的各项参数了。"></a>就可以看到连接正常的各项参数了。</h4><ol start="5">
+<li>启用无线网卡</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ifconfig wlan0 up</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>如果是用DHCP获取IP的，那么用dhclient 或dhcpcd获取ip</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">dhcpcd wlan0</span><br></pre></td></tr></table></figure>
+
+<p>或</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">dhclient wlan0</span><br></pre></td></tr></table></figure>
+
+<ol start="7">
+<li>现在无线网卡应该可以正常使用了。</li>
+</ol>
+<h3 id="PS"><a href="#PS" class="headerlink" title="PS:"></a>PS:</h3><p>   如果现在还不能联网。那么点击网络图标。选择链接到隐藏的无线网络。输入找到的网络的名字。<br>      图形化的网络管理程序是<code>System-&gt;Preferences-&gt;Network Connections</code>。打开程序后，点击无线网络项目，点击add增加一个新的无线网络。  给出任意的<code>Connection Name</code>。<code>SSID</code>中输入无限网络的名字。<code>wireless security</code>中选择一种合适的加密类型。key中输入无限网络的密码。 </p>
+<p>   其他字段都不修改。 执行后，应该能够链接无限网络。  可以使用<code>iwconfig wlan0</code>命令查看是否正确连接无线网络。</p>
+<h6 id="未正确链接无线网络的输出："><a href="#未正确链接无线网络的输出：" class="headerlink" title="未正确链接无线网络的输出："></a>未正确链接无线网络的输出：</h6><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br><span class="line">wlan0     IEEE <span class="number">802.11</span>abg  ESSID:off/any </span><br><span class="line">          Mode:Managed  Access Point: Not<span class="literal">-Associated</span>   Tx<span class="literal">-Power</span>=<span class="number">0</span> dBm  </span><br><span class="line">          Retry  long limit:<span class="number">7</span>   RTS thr:off   Fragment thr:off</span><br><span class="line">          Power Management:off</span><br></pre></td></tr></table></figure>
+
+<h6 id="正确链接无线网络后的输出："><a href="#正确链接无线网络后的输出：" class="headerlink" title="正确链接无线网络后的输出："></a>正确链接无线网络后的输出：</h6><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br><span class="line">wlan0     IEEE <span class="number">802.11</span>abg  ESSID:<span class="string">&quot;MyHome&quot;</span> </span><br><span class="line">          Mode:Managed  Frequency:<span class="number">2.437</span> GHz  Access Point: <span class="number">00</span>:<span class="number">26</span>:DS:<span class="number">43</span>:<span class="number">1</span>A:A8  </span><br><span class="line">          Bit Rate=<span class="number">54</span> Mb/s   Tx<span class="literal">-Power</span>=<span class="number">0</span> dBm  </span><br><span class="line">          Retry  long limit:<span class="number">7</span>   RTS thr:off   Fragment thr:off</span><br><span class="line">          Power Management:off</span><br><span class="line">          Link Quality=<span class="number">65</span>/<span class="number">70</span>  Signal level=<span class="literal">-45</span> dBm </span><br><span class="line">          Rx invalid nwid:<span class="number">0</span>  Rx invalid crypt:<span class="number">0</span>  Rx invalid frag:<span class="number">0</span></span><br><span class="line">          Tx excessive retries:<span class="number">0</span>  Invalid misc:<span class="number">0</span>   Missed beacon:<span class="number">0</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>Linux</tag>
+        <tag>无线网卡</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux通过密钥对免密登录</title>
+    <url>/2022/09/21/Linux%E9%80%9A%E8%BF%87%E5%AF%86%E9%92%A5%E5%AF%B9%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/</url>
+    <content><![CDATA[<p>首先，说明一下我们要做的是，跳板机服务器的<code>usera</code>用户免密码登录B服务器的<code>userb</code>用户。<br>我们先使用<code>usera</code>登录跳板服务器</p>
+<blockquote>
+<p>首先生成密钥对如果有则跳过这一步</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<p>操作演示</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">[sera@serverA ~]$ ssh-keygen -t rsa  <span class="comment">//使用rsa算法加密</span></span><br><span class="line"><span class="title class_">Generating</span> public/private rsa key pair.</span><br><span class="line"><span class="title class_">Enter</span> file <span class="keyword">in</span> which to save the key (<span class="regexp">/home/u</span>sera/.<span class="property">ssh</span>/id_rsa): <span class="comment">//私钥默认保存路径</span></span><br><span class="line"><span class="title class_">Created</span> directory <span class="string">&#x27;/home/usera/.ssh&#x27;</span>.</span><br><span class="line"><span class="title class_">Enter</span> passphrase (empty <span class="keyword">for</span> no passphrase): <span class="comment">//在这里输入密码如果这里输入密码以后登录需要密钥和密码才能登录这里建议直接回车也就是空</span></span><br><span class="line"><span class="title class_">Enter</span> same passphrase <span class="attr">again</span>:</span><br><span class="line"><span class="title class_">Your</span> identification has been saved <span class="keyword">in</span> /home/usera/.<span class="property">ssh</span>/id_rsa.</span><br><span class="line"><span class="title class_">Your</span> public key has been saved <span class="keyword">in</span> /home/usera/.<span class="property">ssh</span>/id_rsa.<span class="property">pub</span>. <span class="comment">//公钥保存路径</span></span><br><span class="line"><span class="title class_">The</span> key fingerprint <span class="attr">is</span>:</span><br><span class="line"><span class="number">39</span>:<span class="attr">f2</span>:<span class="attr">fc</span>:<span class="number">70</span>:<span class="attr">ef</span>:<span class="attr">e9</span>:<span class="attr">bd</span>:<span class="number">05</span>:<span class="number">40</span>:6<span class="attr">e</span>:<span class="number">64</span>:<span class="attr">b0</span>:<span class="number">99</span>:<span class="number">56</span>:6<span class="attr">e</span>:<span class="number">01</span> usera@serverA</span><br><span class="line"><span class="title class_">The</span> key<span class="string">&#x27;s randomart image is:</span></span><br><span class="line"><span class="string">+--[ RSA 2048]----+</span></span><br><span class="line"><span class="string">| Eo* |</span></span><br><span class="line"><span class="string">| @ . |</span></span><br><span class="line"><span class="string">| = * |</span></span><br><span class="line"><span class="string">| o o . |</span></span><br><span class="line"><span class="string">| . S . |</span></span><br><span class="line"><span class="string">| + . . |</span></span><br><span class="line"><span class="string">| + . .|</span></span><br><span class="line"><span class="string">| + . o . |</span></span><br><span class="line"><span class="string">| .o= o. |</span></span><br><span class="line"><span class="string">+-----------------+</span></span><br></pre></td></tr></table></figure>
+
+<p>以下是截图提示</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210216196.png"></p>
+<blockquote>
+<p>id_rsa是私钥，id_rsa.pub是公钥公钥在服务器私钥在自己手上</p>
+</blockquote>
+<p>此时会在<code>/home/usera/.ssh</code>目录下生成密钥对我们使用<code>ls</code>查看一下</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">root@<span class="attr">vultr</span>:~#  ls -la .<span class="property">ssh</span></span><br><span class="line">total <span class="number">16</span></span><br><span class="line">drwx------ <span class="number">2</span> root root <span class="number">4096</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> .</span><br><span class="line">drwx------ <span class="number">5</span> root root <span class="number">4096</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">00</span> ..</span><br><span class="line">-rw------- <span class="number">1</span> root root <span class="number">1675</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> id_rsa</span><br><span class="line">-rw-r--r-- <span class="number">1</span> root root  <span class="number">398</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> id_rsa.<span class="property">pub</span></span><br></pre></td></tr></table></figure>
+
+<p>然后将公钥上传到需要登录的服务器，并以<code>userb</code>用户登录<br>至于上传方式可以用<code>scp</code>以及<code>sz</code>命令这里就介绍了<br>可以参考这篇<a href="https://shagain.club/index.php/archives/111/">文章</a></p>
+<blockquote>
+<p>上传到用户目录下的.ssh文件夹下<code>authorized_keys</code>这个文件是用来存放公钥内容的我们使用<code>cat</code>把公钥追加到<code>authorized_keys</code>这个文件就好了</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">cat id_rsa.<span class="property">pub</span> &gt;&gt; ~<span class="regexp">/.ssh/</span>authorized_keys    <span class="comment">//cat 公钥路径 &gt;&gt; ~/.ssh/authorized_keys</span></span><br></pre></td></tr></table></figure>
+
+<p>这样子我们就配置好了<br>另外我们要注意，<code>.ssh</code>目录的权限为<code>700</code>，其下文件<code>authorized_keys</code>和私钥的权限为<code>600</code>。否则会因为权限问题导致无法免密码登录。我们可以看到登陆后会有<code>known_hosts</code>文件生成。</p>
 ]]></content>
       <categories>
-        <category>技术</category>
-        <category>Win</category>
+        <category>学习</category>
+        <category>Linux</category>
       </categories>
       <tags>
-        <tag>技术</tag>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -706,6 +693,32 @@
       <tags>
         <tag>Win</tag>
         <tag>Office</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>gpt与mbr分区两者区别</title>
+    <url>/2022/10/06/gpt%E4%B8%8Embr%E5%88%86%E5%8C%BA%E4%B8%A4%E8%80%85%E5%8C%BA%E5%88%AB/</url>
+    <content><![CDATA[<blockquote>
+<p>1、mbr最多支持2T，而gpt理论上是无限制的；2、mbr最多支持四个主分区，gpt没有限制；3、win7只能用mbr分区，从Win8开始微软建议你使用gpt；4、gpt是由uefi启动的，兼容性和稳定性不如bios+mbr。</p>
+</blockquote>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210070127792.jpg"></p>
+<span id="more"></span>
+<p><strong>MBR分区</strong></p>
+<p>MBR的意思是“主引导记录”，是IBM公司早年间提出的。它是存在于磁盘驱动器开始部分的一个特殊的启动扇区。这个扇区包含了已安装的操作系统系统信息，并用一小段代码来启动系统。如果你安装了Windows，其启动信息就放在这一段代码中——如果MBR的信息损坏或误删就不能正常启动Windows，这时候你就需要找一个引导修复软件工具来修复它就可以了。Linux系统中MBR通常会是GRUB加载器。MBR。当一台电脑启动时，它会先启动主板自带的BIOS系统，bios加载MBR，MBR再启动Windows，这就是mbr的启动过程。</p>
+<p><strong>GPT分区</strong></p>
+<p>GPT的意思是GUID Partition Table，即“全局唯一标识磁盘分区表”。他是另外一种更加先进新颖的磁盘组织方式，一种使用<code>UEFI</code>启动的磁盘组织方式。最开始是为了更好的兼容性，后来因为其更大的支持内存（mbr分区最多支持2T的磁盘），更多的兼容而被广泛使用，特别是苹果的MAC系统全部使用gpt分区。gtp不在有分区的概念，所有CDEF盘都在一段信息中存储。可以简单的理解为更先进但是使用不够广泛的技术。</p>
+<p><strong>两者区别</strong></p>
+<p>内存支持：mbr最多支持2T，而gpt理论上是无限制的。</p>
+<p>分区：mbr最多支持四个主分区，gpt没有限制。如果你想跑多系统，mbr最多4个而gpt没有限制。</p>
+<p>系统：win7只能用mbr分区，从Win8开始微软建议你使用gpt。</p>
+<p>其它：gpt是由<code>uefi</code>启动的，而<code>uefi</code>是后来才提出的概念，兼容性和稳定性不如bios+mbr。</p>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>Win</category>
+      </categories>
+      <tags>
+        <tag>技术</tag>
       </tags>
   </entry>
   <entry>
