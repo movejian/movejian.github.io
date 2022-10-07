@@ -1,31 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>HOOK微信获取聊天消息</title>
-    <url>/2022/09/21/HOOK%E5%BE%AE%E4%BF%A1%E8%8E%B7%E5%8F%96%E8%81%8A%E5%A4%A9%E6%B6%88%E6%81%AF/</url>
-    <content><![CDATA[<blockquote>
-<div class="wp-block-argon-admonition admonition shadow-sm" style="border-left-color:#660000"><div class="admonition-title" style="background-color:#dd0000"><span>警告</span></div><div class="admonition-body"><font color=red>网络不是法外之地，本篇文章仅供技术交流，相关具体实现过程我将省略！</font></div></div>
-</blockquote>
-<h2 id="获取微信处理消息的函数"><a href="#获取微信处理消息的函数" class="headerlink" title="获取微信处理消息的函数"></a>获取微信处理消息的函数</h2><p>我们可以反复向通过CE搜索消息，获取消息所在的内存地址，然后下硬件写入断点，在栈里找到相关函数，这里你可以自行按上面方法进行搜索。</p>
-<span id="more"></span>
-
-<h2 id="使用MinHook-hook该消息函数"><a href="#使用MinHook-hook该消息函数" class="headerlink" title="使用MinHook hook该消息函数"></a>使用MinHook hook该消息函数</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// Initialize MinHook.</span><br><span class="line">if (MH_Initialize() != MH_OK)</span><br><span class="line">&#123;</span><br><span class="line">return 1;</span><br><span class="line">&#125;</span><br><span class="line">DWORD windllAddress = (DWORD)GetModuleHandle(L&quot;WeChatWin.dll&quot;);</span><br><span class="line">if (windllAddress == 0) &#123;</span><br><span class="line">printf(&quot;Module Address Get Error: 0x%x\n&quot;, windllAddress);</span><br><span class="line">return 0;</span><br><span class="line">&#125;</span><br><span class="line">DWORD ReceiveHookAddress = windllAddress + 0x*****; // 偏移地址请查看下方</span><br><span class="line"> </span><br><span class="line">// Create a hook for MessageBoxW, in disabled state.</span><br><span class="line">if (MH_CreateHook((LPVOID)ReceiveHookAddress, &amp;ReceiveWxMessage,</span><br><span class="line">reinterpret_cast&lt;LPVOID*&gt;(&amp;_receiveMsgFunc)) != MH_OK)</span><br><span class="line">&#123;</span><br><span class="line">printf(&quot;MH_CreateHook Error: 0x%x\n&quot;, ReceiveHookAddress);</span><br><span class="line">return 0;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<h2 id="消息Hook函数"><a href="#消息Hook函数" class="headerlink" title="消息Hook函数"></a>消息Hook函数</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">void ReceiveWxMessage(DWORD r_eax)</span><br><span class="line">&#123;</span><br><span class="line">try</span><br><span class="line">&#123;</span><br><span class="line">// 检查进程是否有权限访问指定的内存块</span><br><span class="line">if (IsBadReadPtr((void*)r_eax, 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgTypeOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgContentOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + WxidOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + GroupMsgSenderOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgSourceOffset), 4)</span><br><span class="line">) &#123;</span><br><span class="line">return;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">// 取出消息内容</span><br><span class="line">LPVOID pContent = *((LPVOID*)(r_eax + MsgContentOffset));</span><br><span class="line"> </span><br><span class="line">// 取出微信ID/群ID</span><br><span class="line">LPVOID pWxid = *((LPVOID*)(r_eax + WxidOffset));</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">if (!wcscmp((wchar_t*)pWxid, L&quot;filehelper&quot;)) &#123;</span><br><span class="line">wprintf(L&quot;Receive Msg\n Wechat ID: %ws \n Content: %ws\n&quot;, (wchar_t*)pWxid, (wchar_t*)pContent);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line">catch (...)</span><br><span class="line">&#123;</span><br><span class="line">OutputDebugStringA(&quot;消息异常&quot;);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<h2 id="Hook效果"><a href="#Hook效果" class="headerlink" title="Hook效果"></a>Hook效果</h2><p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210322614.png"></p>
-<blockquote>
-<p>接收函数具体地址：windllAddress + 0x1086F0;</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>微信</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Centos7安装时引导错误以及解决方案</title>
     <url>/2019/11/19/Centos7%E5%AE%89%E8%A3%85%E6%97%B6%E5%BC%95%E5%AF%BC%E9%94%99%E8%AF%AF%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</url>
     <content><![CDATA[<p>Centos7安装时引导错误以及解决方案<br>使用U盘刻录方式安装CentOS7.6，但是发现安装初始化时候发生错误，本以为是U盘刻录或者是镜像的问题，但是反复刻录多遍仍然出错。后来在CentOS中文社区，发现使用UltraISO刻录安装时就可能出现初始化引导错误1.一般情况下</p>
@@ -56,6 +31,63 @@
 ]]></content>
       <tags>
         <tag>Centos7</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HOOK微信获取聊天消息</title>
+    <url>/2022/09/21/HOOK%E5%BE%AE%E4%BF%A1%E8%8E%B7%E5%8F%96%E8%81%8A%E5%A4%A9%E6%B6%88%E6%81%AF/</url>
+    <content><![CDATA[<blockquote>
+<div class="wp-block-argon-admonition admonition shadow-sm" style="border-left-color:#660000"><div class="admonition-title" style="background-color:#dd0000"><span>警告</span></div><div class="admonition-body"><font color=red>网络不是法外之地，本篇文章仅供技术交流，相关具体实现过程我将省略！</font></div></div>
+</blockquote>
+<h2 id="获取微信处理消息的函数"><a href="#获取微信处理消息的函数" class="headerlink" title="获取微信处理消息的函数"></a>获取微信处理消息的函数</h2><p>我们可以反复向通过CE搜索消息，获取消息所在的内存地址，然后下硬件写入断点，在栈里找到相关函数，这里你可以自行按上面方法进行搜索。</p>
+<span id="more"></span>
+
+<h2 id="使用MinHook-hook该消息函数"><a href="#使用MinHook-hook该消息函数" class="headerlink" title="使用MinHook hook该消息函数"></a>使用MinHook hook该消息函数</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// Initialize MinHook.</span><br><span class="line">if (MH_Initialize() != MH_OK)</span><br><span class="line">&#123;</span><br><span class="line">return 1;</span><br><span class="line">&#125;</span><br><span class="line">DWORD windllAddress = (DWORD)GetModuleHandle(L&quot;WeChatWin.dll&quot;);</span><br><span class="line">if (windllAddress == 0) &#123;</span><br><span class="line">printf(&quot;Module Address Get Error: 0x%x\n&quot;, windllAddress);</span><br><span class="line">return 0;</span><br><span class="line">&#125;</span><br><span class="line">DWORD ReceiveHookAddress = windllAddress + 0x*****; // 偏移地址请查看下方</span><br><span class="line"> </span><br><span class="line">// Create a hook for MessageBoxW, in disabled state.</span><br><span class="line">if (MH_CreateHook((LPVOID)ReceiveHookAddress, &amp;ReceiveWxMessage,</span><br><span class="line">reinterpret_cast&lt;LPVOID*&gt;(&amp;_receiveMsgFunc)) != MH_OK)</span><br><span class="line">&#123;</span><br><span class="line">printf(&quot;MH_CreateHook Error: 0x%x\n&quot;, ReceiveHookAddress);</span><br><span class="line">return 0;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h2 id="消息Hook函数"><a href="#消息Hook函数" class="headerlink" title="消息Hook函数"></a>消息Hook函数</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">void ReceiveWxMessage(DWORD r_eax)</span><br><span class="line">&#123;</span><br><span class="line">try</span><br><span class="line">&#123;</span><br><span class="line">// 检查进程是否有权限访问指定的内存块</span><br><span class="line">if (IsBadReadPtr((void*)r_eax, 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgTypeOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgContentOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + WxidOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + GroupMsgSenderOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgSourceOffset), 4)</span><br><span class="line">) &#123;</span><br><span class="line">return;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">// 取出消息内容</span><br><span class="line">LPVOID pContent = *((LPVOID*)(r_eax + MsgContentOffset));</span><br><span class="line"> </span><br><span class="line">// 取出微信ID/群ID</span><br><span class="line">LPVOID pWxid = *((LPVOID*)(r_eax + WxidOffset));</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">if (!wcscmp((wchar_t*)pWxid, L&quot;filehelper&quot;)) &#123;</span><br><span class="line">wprintf(L&quot;Receive Msg\n Wechat ID: %ws \n Content: %ws\n&quot;, (wchar_t*)pWxid, (wchar_t*)pContent);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line">catch (...)</span><br><span class="line">&#123;</span><br><span class="line">OutputDebugStringA(&quot;消息异常&quot;);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h2 id="Hook效果"><a href="#Hook效果" class="headerlink" title="Hook效果"></a>Hook效果</h2><p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210322614.png"></p>
+<blockquote>
+<p>接收函数具体地址：windllAddress + 0x1086F0;</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>微信</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Kali的DDoS攻击方法</title>
+    <url>/2022/09/21/Kali%E7%9A%84DDoS%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212049992.jpeg"></p>
+<p><strong>本文章使用的是Kali Linux的2021-4-installer-amd64版本</strong> <strong>Kali Linux的安装过程本文章不做过多说明，请自行百度</strong> <strong>本帖子如果涉及侵权请联系我</strong>  </p>
+<span id="more"></span>
+
+<p>1**.**首先，打开一个终端然后<code>su root</code>进入<code>root</code></p>
+<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212050035.png" alt="img">  </p>
+<p>2.下载ddos文件包  </p>
+<p>自行百度下载</p>
+<p>3.cd到ddos包下</p>
+<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212050053.png" alt="img"> </p>
+<p> 4.用python执行<code>ddos.py</code>，输入命令：<code>python ddos.py</code></p>
+<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056870.png" alt="img">  </p>
+<p>5.再打开一个终端输入命令:<code> ping www.siediyer.cn</code>  即可获得攻击对象的IP地址。（获取IP后<code>Ctrl+C</code>可以结束<code>ping</code>）   <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212055245.png" alt="img">  </p>
+<p>6.然后回到刚刚的终端，输入<code>ping</code>到的IP地址：</p>
+<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056852.png" alt="img"></p>
+<p>  7.Attack Port即攻击端口，一般服务器默认为80（更多内容请百度）  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056029.png" alt="img"> </p>
+<p> 8.Attack Speed即攻击速度，数值越大越快，最大不能超过1000  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056295.png" alt="img">  </p>
+<p>9.按下回车，如果出现以下界面，即代表已经开始向该IP发起DDos攻击，也就成功了。  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056196.png" alt="img">   </p>
+<p>安全无边疆，努力习知识  </p>
+<p>本文章只供学习交流学习不可用于其他非法用途！！！</p>
+<p> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056473.png" alt="9"></p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>Kali</tag>
       </tags>
   </entry>
   <entry>
@@ -126,201 +158,6 @@
       </categories>
       <tags>
         <tag>技术</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo迁移备份</title>
-    <url>/2022/08/21/Hexo%E8%BF%81%E7%A7%BB%E5%A4%87%E4%BB%BD/</url>
-    <content><![CDATA[<h3 id="创建Git分支将Hexo博客迁移到其它电脑"><a href="#创建Git分支将Hexo博客迁移到其它电脑" class="headerlink" title="创建Git分支将Hexo博客迁移到其它电脑"></a>创建Git分支将Hexo博客迁移到其它电脑</h3><h3 id="反省"><a href="#反省" class="headerlink" title="反省"></a>反省</h3><p>有时候就会干些蠢事，换电脑忘记吧旧电脑博客的Hexo博客备份到移动硬盘上，一个格式化啥都没了，导致丢失了所有的博客资料。（博客内容要慢慢补） 一定要养成经常备份的好习惯。。。。。。。。</p>
-<span id="more"></span>
-<h3 id="迁移前准备：安装hexo博客必要的软件"><a href="#迁移前准备：安装hexo博客必要的软件" class="headerlink" title="迁移前准备：安装hexo博客必要的软件"></a>迁移前准备：安装hexo博客必要的软件</h3><ul>
-<li>下载安装Git客户端</li>
-<li>安装node js</li>
-<li>从git 仓库拉去原来的项目</li>
-</ul>
-<h3 id="采取方式"><a href="#采取方式" class="headerlink" title="采取方式"></a>采取方式</h3><ol>
-<li>采取新建仓库的方式</li>
-<li>分支存放源代码</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone 你的 github 博客地址，这里就不给地址给自己打广告了</span><br></pre></td></tr></table></figure>
-
-<h3 id="必备文件"><a href="#必备文件" class="headerlink" title="必备文件"></a>必备文件</h3><table>
-<thead>
-<tr>
-<th>文件(夹)</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>scaffolds&#x2F;</td>
-<td>博客文章模板</td>
-</tr>
-<tr>
-<td>source&#x2F;</td>
-<td>所有的博客文章</td>
-</tr>
-<tr>
-<td>themes&#x2F;</td>
-<td>网站主题</td>
-</tr>
-<tr>
-<td>.gitignore</td>
-<td>push时需忽略的文件</td>
-</tr>
-<tr>
-<td>package.json</td>
-<td>依赖包的名称和版本号</td>
-</tr>
-</tbody></table>
-<h3 id="备份流程"><a href="#备份流程" class="headerlink" title="备份流程"></a>备份流程</h3><h5 id="1-拉取已经部署上去的项目"><a href="#1-拉取已经部署上去的项目" class="headerlink" title="1. 拉取已经部署上去的项目"></a>1. 拉取已经部署上去的项目</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/lazyTimes/lazyTimes.github.io.git</span><br></pre></td></tr></table></figure>
-
-<h5 id="2-拷贝需要备份的-原数据"><a href="#2-拷贝需要备份的-原数据" class="headerlink" title="2. 拷贝需要备份的 原数据"></a>2. 拷贝需要备份的 <font color="#000066">原数据</font></h5><p>具体查看上方的必备文件</p>
-<p>参考截图:</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211351777.png" alt="image-20220821135153686"></p>
-<h5 id="3-删除主题的-git-配置"><a href="#3-删除主题的-git-配置" class="headerlink" title="3. 删除主题的.git 配置"></a>3. 删除主题的.git 配置</h5><p>执行如下命令删除不必要的内容</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rm -rf thems/next/.git*</span><br></pre></td></tr></table></figure>
-
-<h5 id="4-创建名为hexo的分支"><a href="#4-创建名为hexo的分支" class="headerlink" title="4. 创建名为hexo的分支"></a>4. 创建名为hexo的分支</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git checkout -b hexo</span><br></pre></td></tr></table></figure>
-
-<h5 id="5-把文件存放到暂存区"><a href="#5-把文件存放到暂存区" class="headerlink" title="5. 把文件存放到暂存区"></a>5. 把文件存放到暂存区</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git add --all</span><br></pre></td></tr></table></figure>
-
-<h5 id="6-提交变更"><a href="#6-提交变更" class="headerlink" title="6. 提交变更"></a>6. 提交变更</h5><p>先提交所有的改动内容</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git commit -m &quot;hexo-2&quot;</span><br></pre></td></tr></table></figure>
-
-<p>然后使用如下命令把内容推送到分支</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git push --set-upstream origin hexo</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>如果没有在Git config 设置用户名和密码，推送的时候会提示设置，根据提示设置用户名和密码即可</p>
-</blockquote>
-<h5 id="7-源码推到分支上"><a href="#7-源码推到分支上" class="headerlink" title="7. 源码推到分支上"></a>7. 源码推到分支上</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ git add .</span><br><span class="line">$ git commit -m &quot;xxxx&quot;</span><br><span class="line">$ git push origin hexo</span><br></pre></td></tr></table></figure>
-
-<h3 id="更加推荐的方式"><a href="#更加推荐的方式" class="headerlink" title="更加推荐的方式"></a>更加推荐的方式</h3><p>为了保证我们的源码的一些敏感配置不泄露，建议使用私有仓库进行存储，然而，我是无所谓&#x3D;-&#x3D;</p>
-]]></content>
-      <categories>
-        <category>学习</category>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>技术</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Kali的DDoS攻击方法</title>
-    <url>/2022/09/21/Kali%E7%9A%84DDoS%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95/</url>
-    <content><![CDATA[<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212049992.jpeg"></p>
-<p><strong>本文章使用的是Kali Linux的2021-4-installer-amd64版本</strong> <strong>Kali Linux的安装过程本文章不做过多说明，请自行百度</strong> <strong>本帖子如果涉及侵权请联系我</strong>  </p>
-<span id="more"></span>
-
-<p>1**.**首先，打开一个终端然后<code>su root</code>进入<code>root</code></p>
-<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212050035.png" alt="img">  </p>
-<p>2.下载ddos文件包  </p>
-<p>自行百度下载</p>
-<p>3.cd到ddos包下</p>
-<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212050053.png" alt="img"> </p>
-<p> 4.用python执行<code>ddos.py</code>，输入命令：<code>python ddos.py</code></p>
-<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056870.png" alt="img">  </p>
-<p>5.再打开一个终端输入命令:<code> ping www.siediyer.cn</code>  即可获得攻击对象的IP地址。（获取IP后<code>Ctrl+C</code>可以结束<code>ping</code>）   <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212055245.png" alt="img">  </p>
-<p>6.然后回到刚刚的终端，输入<code>ping</code>到的IP地址：</p>
-<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056852.png" alt="img"></p>
-<p>  7.Attack Port即攻击端口，一般服务器默认为80（更多内容请百度）  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056029.png" alt="img"> </p>
-<p> 8.Attack Speed即攻击速度，数值越大越快，最大不能超过1000  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056295.png" alt="img">  </p>
-<p>9.按下回车，如果出现以下界面，即代表已经开始向该IP发起DDos攻击，也就成功了。  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056196.png" alt="img">   </p>
-<p>安全无边疆，努力习知识  </p>
-<p>本文章只供学习交流学习不可用于其他非法用途！！！</p>
-<p> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056473.png" alt="9"></p>
-]]></content>
-      <categories>
-        <category>学习</category>
-      </categories>
-      <tags>
-        <tag>Kali</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux中的挂载命令mount</title>
-    <url>/2022/09/21/Linux%E4%B8%AD%E7%9A%84%E6%8C%82%E8%BD%BD%E5%91%BD%E4%BB%A4mount/</url>
-    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在 Linux GUI 中，我们通常理所当然地认为，当我们插入 USB 闪存驱动器、硬盘驱动器甚至 DVD 磁盘时，它们就可以使用了。但是在后台有一个过程，设备被安装（准备好使用）并分配了一个安装点。当使用服务器或远程连接时，并不能确定某个设备是否会自动可用，那么我们如何挂载自己的设备呢？下面我们一起来看一下！</p>
-<span id="more"></span>
-<h3 id="mount是什么？"><a href="#mount是什么？" class="headerlink" title="mount是什么？"></a>mount是什么？</h3><p>Linux文件系统中的所有文件都以<code>/ </code>为根的大树的形式排列。这些文件可以根据您的分区表分布在各种设备上，最初你的父目录安装（即附加）到这棵树的<code>/</code> ，其他的可以手动挂载使用<code>GUI</code>界面（如果可用）或使用挂载命令。</p>
-<p><code>mount</code>命令用于将设备上找到的文件系统挂载到以 <code>/</code> 为根的大树结构（Linux文件系统）上。相反，另一个命令<code>umount</code>可用于从树中分离这些设备。</p>
-<h3 id="mount的初级用法"><a href="#mount的初级用法" class="headerlink" title="mount的初级用法"></a>mount的初级用法</h3><p><code>mount</code>命令挂载存储设备或文件系统，使其可访问并将其附加到现有目录结构。</p>
-<h4 id="语法："><a href="#语法：" class="headerlink" title="语法："></a>语法：</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mount -t 类型设备目录</span><br></pre></td></tr></table></figure>
-
-<p>这告诉内核将设备上找到的文件系统（类型为type）附加到目录<code>dir</code>。<code>dir</code>之前的内容（如果有）、<code>owner</code>和<code>mode</code>变得不可见，只要这个文件系统保持挂载，路径名dir指的是设备上文件系统的根目录。如果没有提到目标目录，默认情况下，它将设备挂载在 <code>/etc/fstab</code> 文件中。</p>
-<h4 id="其他形式："><a href="#其他形式：" class="headerlink" title="其他形式："></a>其他形式：</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mount [-l|-h|-V]</span><br><span class="line">mount -a [-fFnrsvw] [-t fstype] [-O optlist]</span><br><span class="line">mount [-fnrsvw] [-o options] device|dir</span><br><span class="line">mount [-fnrsvw] [-t fstype] [-o options] device dir</span><br></pre></td></tr></table></figure>
-
-<p>这些命令告诉内核将在设备上找到的文件系统附加到<code>dir</code>。</p>
-<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><p>要将硬盘驱动器的第二个分区挂载到现有目录<code>/media/PHOTOS</code>（挂载点）：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mount /dev/hda2 /media/PHOTOS</span><br></pre></td></tr></table></figure>
-
-<p> 显示所有已安装的分区：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mount</span><br><span class="line">proc on /proc type proc (rw) </span><br><span class="line">sysfs on /sys type sysfs (rw) </span><br><span class="line">devpts on /dev/pts type devpts (rw,gid=5,mode=620) </span><br><span class="line">/dev/sda1 on /boot type ext3 (rw ) </span><br><span class="line">/tmp on /var/tmp type none (rw,noexec,nosuid,bind) </span><br><span class="line">10.4.0.4:/srv/export/setup_server on /nfs/setup_server type nfs (ro,addr=10.4.0.4)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>如果需要卸载刚才的分区：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ umount /dev/hda2</span><br></pre></td></tr></table></figure>
-
-<p>参照挂载点卸载：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ umount /media/PHOTOS</span><br></pre></td></tr></table></figure>
-
-<p>使用特定选项重新挂载分区：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mount -o remount,rw /dev/hda2</span><br></pre></td></tr></table></figure>
-
-<h3 id="umount的初级用法"><a href="#umount的初级用法" class="headerlink" title="umount的初级用法"></a>umount的初级用法</h3><p><code>umount</code>命令从文件层次结构中分离指定的文件系统。一个文件系统是通过给出它被安装的目录来指定的。提供文件系统所在的特殊设备也可以工作，但这是一种过时的方法，主要是因为如果该设备安装在多个目录上，它会失败。</p>
-<p>但是需要注意，文件系统在繁忙时无法卸载 。例如，当它上面有打开的文件时，或者当某个进程在那里有它的工作目录时，或者当它上面的交换文件正在使用时，<code>umount</code>将无法成功。</p>
-<p>有些无法使用<code>umount</code>的进程甚至可能是<code>umount</code>本身——例如，<code>umount</code>打开公共C库，而后者又可能打开了语言环境文件，如果它们在相关设备上，则会阻止它被卸载。即使出现这种冲突，“惰性”卸载（参见下面卸载选项部分中的-l ）也会尝试卸载。</p>
-<h3 id="高级用法"><a href="#高级用法" class="headerlink" title="高级用法"></a>高级用法</h3><ul>
-<li>显示有关已安装文件系统的信息：</li>
-</ul>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210149077.png"></p>
-<ul>
-<li>挂载文件系统：</li>
-</ul>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210150279.png"></p>
-<ul>
-<li><p>显示版本信息：</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210151979.png"></p>
-</li>
-<li><p>卸载文件系统：</p>
-</li>
-</ul>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210151025.png"></p>
-<h3 id="绑定挂载"><a href="#绑定挂载" class="headerlink" title="绑定挂载"></a>绑定挂载</h3><p>绑定挂载允许将文件系统层次结构或文件挂载到不同的挂载点。与符号链接不同，文件系统本身不存在绑定挂载。在下面的例子中，路径&#x2F;olddir将被挂载在<code>/newdir</code></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mount --bind /olddir /newdir</span><br></pre></td></tr></table></figure>
-
-<h3 id="如何在-Linux-上挂载和卸载驱动器"><a href="#如何在-Linux-上挂载和卸载驱动器" class="headerlink" title="如何在 Linux 上挂载和卸载驱动器"></a>如何在 Linux 上挂载和卸载驱动器</h3><p>可以使用终端安装 SSD、USB 闪存驱动器、HDD 和 ISO 映像。在终端仿真器中使用命令行界面 (CLI) 可以让我们更好地控制何时安装驱动器以及它们在文件系统中的安装位置。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210123639.png"></p>
-<ol>
-<li>使用<code>lsblk</code>命令识别 USB 驱动器。在结果中，您可能会看到许多标记为“循环”的条目。但是，您正在寻找被列为<code>sda</code>或<code>sdb</code>的结果，以识别连接到您的系统的物理磁盘。比较所连接驱动器的列出容量通常可以帮助您发现目标驱动器的名称。在我们的例子中，我们可以将 USB 驱动器识别为 <code>sdb1</code>。</li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210123811.png"></p>
-<ol start="2">
-<li>创建一个目录来挂载 USB 驱动器。当外部驱动器自动挂载时，它通常挂载在媒体目录中。但是使用 CLI，我们可以创建并指定一个目录，我们将在其中挂载我们的 <code>pendrive</code>。请注意，我们需要使用<code>sudo</code>来调用<code>root</code>权限，以便在媒体目录中创建一个目录。</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo mkdir /media/pendrive</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>使用<code>mount</code>命令将 U 盘挂载到<code>/media/pendrive</code>目录。<code>mount</code>命令具有以下语法；</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo mount /dev/sdb1 /media/pendrive</span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li><p>通过重新运行<code>lsblk</code>检查驱动器是否已安装。</p>
-<blockquote>
-<p>请注意， <code>lsblk</code>输出中的最后一列列出了列出设备的挂载点，如果列出了挂载点，则确认该设备已挂载。</p>
-</blockquote>
-</li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210124550.png"></p>
-<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>使用<code>mount</code>命令我们可以更好地控制在 Linux 中挂载和卸载磁盘，并掌握一些技巧，在连接的驱动器无法自动正确挂载时可能会有所帮助。</p>
-<p>在探索以前使用的系统的旧备份映像或想要查看 Linux 发行版映像内容以进行探索或学习时，能够使用循环设备挂载磁盘映像非常有用。</p>
-]]></content>
-      <categories>
-        <category>学习</category>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -512,6 +349,92 @@
 
 <p>下面是比较全面的输出机器硬件与软件信息</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">➜  ~ inxi -Fza           </span><br><span class="line">System:</span><br><span class="line">  Kernel: 5.19.0-1-MANJARO arch: x86_64 bits: 64 compiler: gcc v: 12.1.0</span><br><span class="line">    parameters: BOOT_IMAGE=/boot/vmlinuz-5.19-x86_64</span><br><span class="line">    root=UUID=2ddecb6a-da82-48f6-9f5a-d810b32d623b rw quiet apparmor=1</span><br><span class="line">    security=apparmor resume=UUID=406e14e5-7ca3-4959-bb61-8bf9158da6f9</span><br><span class="line">    udev.log_priority=3</span><br><span class="line">  Desktop: KDE Plasma v: 5.24.6 tk: Qt v: 5.15.5 wm: kwin_x11 vt: 1</span><br><span class="line">    dm: SDDM Distro: Manjaro Linux base: Arch Linux</span><br><span class="line">Machine:</span><br><span class="line">  Type: Desktop Mobo: ASRock model: X300M-STX serial: &lt;superuser required&gt;</span><br><span class="line">    UEFI: American Megatrends LLC. v: P1.70 date: 07/01/2021</span><br><span class="line">CPU:</span><br><span class="line">  Info: model: AMD Ryzen 7 PRO 4750G with Radeon Graphics bits: 64</span><br><span class="line">...</span><br><span class="line">Info:</span><br><span class="line">  Processes: 416 Uptime: 6h 52m wakeups: 0 Memory: 58.74 GiB</span><br><span class="line">  used: 11.55 GiB (19.7%) Init: systemd v: 251 default: graphical</span><br><span class="line">  tool: systemctl Compilers: gcc: 12.1.0 clang: 14.0.6 Packages: 1707</span><br><span class="line">  pacman: 1701 lib: 372 flatpak: 0 snap: 6 Shell: Zsh v: 5.9</span><br><span class="line">  running-in: konsole inxi: 3.3.19</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>学习</category>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux中的挂载命令mount</title>
+    <url>/2022/09/21/Linux%E4%B8%AD%E7%9A%84%E6%8C%82%E8%BD%BD%E5%91%BD%E4%BB%A4mount/</url>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在 Linux GUI 中，我们通常理所当然地认为，当我们插入 USB 闪存驱动器、硬盘驱动器甚至 DVD 磁盘时，它们就可以使用了。但是在后台有一个过程，设备被安装（准备好使用）并分配了一个安装点。当使用服务器或远程连接时，并不能确定某个设备是否会自动可用，那么我们如何挂载自己的设备呢？下面我们一起来看一下！</p>
+<span id="more"></span>
+<h3 id="mount是什么？"><a href="#mount是什么？" class="headerlink" title="mount是什么？"></a>mount是什么？</h3><p>Linux文件系统中的所有文件都以<code>/ </code>为根的大树的形式排列。这些文件可以根据您的分区表分布在各种设备上，最初你的父目录安装（即附加）到这棵树的<code>/</code> ，其他的可以手动挂载使用<code>GUI</code>界面（如果可用）或使用挂载命令。</p>
+<p><code>mount</code>命令用于将设备上找到的文件系统挂载到以 <code>/</code> 为根的大树结构（Linux文件系统）上。相反，另一个命令<code>umount</code>可用于从树中分离这些设备。</p>
+<h3 id="mount的初级用法"><a href="#mount的初级用法" class="headerlink" title="mount的初级用法"></a>mount的初级用法</h3><p><code>mount</code>命令挂载存储设备或文件系统，使其可访问并将其附加到现有目录结构。</p>
+<h4 id="语法："><a href="#语法：" class="headerlink" title="语法："></a>语法：</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mount -t 类型设备目录</span><br></pre></td></tr></table></figure>
+
+<p>这告诉内核将设备上找到的文件系统（类型为type）附加到目录<code>dir</code>。<code>dir</code>之前的内容（如果有）、<code>owner</code>和<code>mode</code>变得不可见，只要这个文件系统保持挂载，路径名dir指的是设备上文件系统的根目录。如果没有提到目标目录，默认情况下，它将设备挂载在 <code>/etc/fstab</code> 文件中。</p>
+<h4 id="其他形式："><a href="#其他形式：" class="headerlink" title="其他形式："></a>其他形式：</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mount [-l|-h|-V]</span><br><span class="line">mount -a [-fFnrsvw] [-t fstype] [-O optlist]</span><br><span class="line">mount [-fnrsvw] [-o options] device|dir</span><br><span class="line">mount [-fnrsvw] [-t fstype] [-o options] device dir</span><br></pre></td></tr></table></figure>
+
+<p>这些命令告诉内核将在设备上找到的文件系统附加到<code>dir</code>。</p>
+<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><p>要将硬盘驱动器的第二个分区挂载到现有目录<code>/media/PHOTOS</code>（挂载点）：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mount /dev/hda2 /media/PHOTOS</span><br></pre></td></tr></table></figure>
+
+<p> 显示所有已安装的分区：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mount</span><br><span class="line">proc on /proc type proc (rw) </span><br><span class="line">sysfs on /sys type sysfs (rw) </span><br><span class="line">devpts on /dev/pts type devpts (rw,gid=5,mode=620) </span><br><span class="line">/dev/sda1 on /boot type ext3 (rw ) </span><br><span class="line">/tmp on /var/tmp type none (rw,noexec,nosuid,bind) </span><br><span class="line">10.4.0.4:/srv/export/setup_server on /nfs/setup_server type nfs (ro,addr=10.4.0.4)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>如果需要卸载刚才的分区：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ umount /dev/hda2</span><br></pre></td></tr></table></figure>
+
+<p>参照挂载点卸载：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ umount /media/PHOTOS</span><br></pre></td></tr></table></figure>
+
+<p>使用特定选项重新挂载分区：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mount -o remount,rw /dev/hda2</span><br></pre></td></tr></table></figure>
+
+<h3 id="umount的初级用法"><a href="#umount的初级用法" class="headerlink" title="umount的初级用法"></a>umount的初级用法</h3><p><code>umount</code>命令从文件层次结构中分离指定的文件系统。一个文件系统是通过给出它被安装的目录来指定的。提供文件系统所在的特殊设备也可以工作，但这是一种过时的方法，主要是因为如果该设备安装在多个目录上，它会失败。</p>
+<p>但是需要注意，文件系统在繁忙时无法卸载 。例如，当它上面有打开的文件时，或者当某个进程在那里有它的工作目录时，或者当它上面的交换文件正在使用时，<code>umount</code>将无法成功。</p>
+<p>有些无法使用<code>umount</code>的进程甚至可能是<code>umount</code>本身——例如，<code>umount</code>打开公共C库，而后者又可能打开了语言环境文件，如果它们在相关设备上，则会阻止它被卸载。即使出现这种冲突，“惰性”卸载（参见下面卸载选项部分中的-l ）也会尝试卸载。</p>
+<h3 id="高级用法"><a href="#高级用法" class="headerlink" title="高级用法"></a>高级用法</h3><ul>
+<li>显示有关已安装文件系统的信息：</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210149077.png"></p>
+<ul>
+<li>挂载文件系统：</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210150279.png"></p>
+<ul>
+<li><p>显示版本信息：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210151979.png"></p>
+</li>
+<li><p>卸载文件系统：</p>
+</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210151025.png"></p>
+<h3 id="绑定挂载"><a href="#绑定挂载" class="headerlink" title="绑定挂载"></a>绑定挂载</h3><p>绑定挂载允许将文件系统层次结构或文件挂载到不同的挂载点。与符号链接不同，文件系统本身不存在绑定挂载。在下面的例子中，路径&#x2F;olddir将被挂载在<code>/newdir</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mount --bind /olddir /newdir</span><br></pre></td></tr></table></figure>
+
+<h3 id="如何在-Linux-上挂载和卸载驱动器"><a href="#如何在-Linux-上挂载和卸载驱动器" class="headerlink" title="如何在 Linux 上挂载和卸载驱动器"></a>如何在 Linux 上挂载和卸载驱动器</h3><p>可以使用终端安装 SSD、USB 闪存驱动器、HDD 和 ISO 映像。在终端仿真器中使用命令行界面 (CLI) 可以让我们更好地控制何时安装驱动器以及它们在文件系统中的安装位置。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210123639.png"></p>
+<ol>
+<li>使用<code>lsblk</code>命令识别 USB 驱动器。在结果中，您可能会看到许多标记为“循环”的条目。但是，您正在寻找被列为<code>sda</code>或<code>sdb</code>的结果，以识别连接到您的系统的物理磁盘。比较所连接驱动器的列出容量通常可以帮助您发现目标驱动器的名称。在我们的例子中，我们可以将 USB 驱动器识别为 <code>sdb1</code>。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210123811.png"></p>
+<ol start="2">
+<li>创建一个目录来挂载 USB 驱动器。当外部驱动器自动挂载时，它通常挂载在媒体目录中。但是使用 CLI，我们可以创建并指定一个目录，我们将在其中挂载我们的 <code>pendrive</code>。请注意，我们需要使用<code>sudo</code>来调用<code>root</code>权限，以便在媒体目录中创建一个目录。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo mkdir /media/pendrive</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>使用<code>mount</code>命令将 U 盘挂载到<code>/media/pendrive</code>目录。<code>mount</code>命令具有以下语法；</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo mount /dev/sdb1 /media/pendrive</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li><p>通过重新运行<code>lsblk</code>检查驱动器是否已安装。</p>
+<blockquote>
+<p>请注意， <code>lsblk</code>输出中的最后一列列出了列出设备的挂载点，如果列出了挂载点，则确认该设备已挂载。</p>
+</blockquote>
+</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210124550.png"></p>
+<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>使用<code>mount</code>命令我们可以更好地控制在 Linux 中挂载和卸载磁盘，并掌握一些技巧，在连接的驱动器无法自动正确挂载时可能会有所帮助。</p>
+<p>在探索以前使用的系统的旧备份映像或想要查看 Linux 发行版映像内容以进行探索或学习时，能够使用循环设备挂载磁盘映像非常有用。</p>
 ]]></content>
       <categories>
         <category>学习</category>
@@ -857,6 +780,38 @@
       </categories>
       <tags>
         <tag>插件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>修改hosts文件(win系统)</title>
+    <url>/2022/10/07/%E4%BF%AE%E6%94%B9hosts%E6%96%87%E4%BB%B6/</url>
+    <content><![CDATA[<h3 id="hosts作用介绍"><a href="#hosts作用介绍" class="headerlink" title="hosts作用介绍"></a>hosts作用介绍</h3><p>hosts是一个没有扩展名的系统文件，可以用记事本等工具打开，<strong>其作用就是将一些常用的网址域名与其对应的IP地址建立一个关联“数据库”</strong>，当用户在浏览器中输入一个需要登录的网址时，系统会首先自动从Hosts文件中寻找对应的IP地址，一旦找到，系统会立即打开对应网页，如果没有找到，则系统会再将网址提交DNS域名解析服务器进行IP地址的解析。</p>
+<p>需要注意的是，Hosts文件配置的映射是静态的，如果网络上的计算机更改了请及时更新IP地址，否则将不能访问。</p>
+<span id="more"></span>
+<h3 id="修改hosts"><a href="#修改hosts" class="headerlink" title="修改hosts"></a>修改hosts</h3><ol>
+<li>hosts文件路径：<code>C:\Windows\system32\drivers\etc</code></li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210072028616.png" alt="在这里插入图片描述"></p>
+<ol start="2">
+<li>找到hosts文件所在位置后，不要直接去修改该文件，会出现权限不足，无法修改的问题。具体方法是，<strong>在hosts文件上点击鼠标右键，在弹出的选项中，点击打开”属性”</strong></li>
+<li><strong>打开hosts文件属性后，切换到“安全”选项卡，先点击选中需要更改权限的用户或应用程序包，然后点击下方的“编辑”在弹出的编辑权限操作界面，，勾选上下方的“修改”和“写入”权限，完成后，点击右下角的“应用”就可以了，直接给完全控制权限也没问题。</strong></li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210072028119.png" alt="在这里插入图片描述"></p>
+<ol start="4">
+<li><p>应用后弹出一个“Windows安全”提示框，这里我们无需理会，直接点击“是”即可</p>
+</li>
+<li><p>然后用记事本打开即可修改</p>
+</li>
+<li><p>按照<code>ip地址+空格+网址域名</code>修改</p>
+<p>如：<code>112.91.133.72 download.visualstudio.microsoft.com</code></p>
+</li>
+<li><p>如果修改hosts后不生效的话，可能是因为DNS缓存，然后我们清空DNS缓存<br>具体方法：命令行(win + R 输入cmd 按enter)输入<code>ipconfig /flushdns</code>，最好是在获取管理员权限下执行命令。</p>
+</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210072027410.png" alt="在这里插入图片描述"></p>
+]]></content>
+      <tags>
+        <tag>hosts</tag>
       </tags>
   </entry>
   <entry>
@@ -1747,6 +1702,83 @@
 <li>如果你的Git远程仓库名称不为<code>origin</code>的话，还需要修改第25行执行的push命令，修改成自己的远程仓库名和相应的分支名。</li>
 </ul>
 <h5 id="4-测试结果"><a href="#4-测试结果" class="headerlink" title="4.测试结果"></a>4.测试结果</h5><p>保存脚本并退出，然后执行hexo d命令，在常规结果执行出来后，将会得到类似以下结果:</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>技术</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo迁移备份</title>
+    <url>/2022/08/21/Hexo%E8%BF%81%E7%A7%BB%E5%A4%87%E4%BB%BD/</url>
+    <content><![CDATA[<h3 id="创建Git分支将Hexo博客迁移到其它电脑"><a href="#创建Git分支将Hexo博客迁移到其它电脑" class="headerlink" title="创建Git分支将Hexo博客迁移到其它电脑"></a>创建Git分支将Hexo博客迁移到其它电脑</h3><h3 id="反省"><a href="#反省" class="headerlink" title="反省"></a>反省</h3><p>有时候就会干些蠢事，换电脑忘记吧旧电脑博客的Hexo博客备份到移动硬盘上，一个格式化啥都没了，导致丢失了所有的博客资料。（博客内容要慢慢补） 一定要养成经常备份的好习惯。。。。。。。。</p>
+<span id="more"></span>
+<h3 id="迁移前准备：安装hexo博客必要的软件"><a href="#迁移前准备：安装hexo博客必要的软件" class="headerlink" title="迁移前准备：安装hexo博客必要的软件"></a>迁移前准备：安装hexo博客必要的软件</h3><ul>
+<li>下载安装Git客户端</li>
+<li>安装node js</li>
+<li>从git 仓库拉去原来的项目</li>
+</ul>
+<h3 id="采取方式"><a href="#采取方式" class="headerlink" title="采取方式"></a>采取方式</h3><ol>
+<li>采取新建仓库的方式</li>
+<li>分支存放源代码</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone 你的 github 博客地址，这里就不给地址给自己打广告了</span><br></pre></td></tr></table></figure>
+
+<h3 id="必备文件"><a href="#必备文件" class="headerlink" title="必备文件"></a>必备文件</h3><table>
+<thead>
+<tr>
+<th>文件(夹)</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>scaffolds&#x2F;</td>
+<td>博客文章模板</td>
+</tr>
+<tr>
+<td>source&#x2F;</td>
+<td>所有的博客文章</td>
+</tr>
+<tr>
+<td>themes&#x2F;</td>
+<td>网站主题</td>
+</tr>
+<tr>
+<td>.gitignore</td>
+<td>push时需忽略的文件</td>
+</tr>
+<tr>
+<td>package.json</td>
+<td>依赖包的名称和版本号</td>
+</tr>
+</tbody></table>
+<h3 id="备份流程"><a href="#备份流程" class="headerlink" title="备份流程"></a>备份流程</h3><h5 id="1-拉取已经部署上去的项目"><a href="#1-拉取已经部署上去的项目" class="headerlink" title="1. 拉取已经部署上去的项目"></a>1. 拉取已经部署上去的项目</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/lazyTimes/lazyTimes.github.io.git</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-拷贝需要备份的-原数据"><a href="#2-拷贝需要备份的-原数据" class="headerlink" title="2. 拷贝需要备份的 原数据"></a>2. 拷贝需要备份的 <font color="#000066">原数据</font></h5><p>具体查看上方的必备文件</p>
+<p>参考截图:</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211351777.png" alt="image-20220821135153686"></p>
+<h5 id="3-删除主题的-git-配置"><a href="#3-删除主题的-git-配置" class="headerlink" title="3. 删除主题的.git 配置"></a>3. 删除主题的.git 配置</h5><p>执行如下命令删除不必要的内容</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rm -rf thems/next/.git*</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-创建名为hexo的分支"><a href="#4-创建名为hexo的分支" class="headerlink" title="4. 创建名为hexo的分支"></a>4. 创建名为hexo的分支</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git checkout -b hexo</span><br></pre></td></tr></table></figure>
+
+<h5 id="5-把文件存放到暂存区"><a href="#5-把文件存放到暂存区" class="headerlink" title="5. 把文件存放到暂存区"></a>5. 把文件存放到暂存区</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git add --all</span><br></pre></td></tr></table></figure>
+
+<h5 id="6-提交变更"><a href="#6-提交变更" class="headerlink" title="6. 提交变更"></a>6. 提交变更</h5><p>先提交所有的改动内容</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git commit -m &quot;hexo-2&quot;</span><br></pre></td></tr></table></figure>
+
+<p>然后使用如下命令把内容推送到分支</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git push --set-upstream origin hexo</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果没有在Git config 设置用户名和密码，推送的时候会提示设置，根据提示设置用户名和密码即可</p>
+</blockquote>
+<h5 id="7-源码推到分支上"><a href="#7-源码推到分支上" class="headerlink" title="7. 源码推到分支上"></a>7. 源码推到分支上</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ git add .</span><br><span class="line">$ git commit -m &quot;xxxx&quot;</span><br><span class="line">$ git push origin hexo</span><br></pre></td></tr></table></figure>
+
+<h3 id="更加推荐的方式"><a href="#更加推荐的方式" class="headerlink" title="更加推荐的方式"></a>更加推荐的方式</h3><p>为了保证我们的源码的一些敏感配置不泄露，建议使用私有仓库进行存储，然而，我是无所谓&#x3D;-&#x3D;</p>
 ]]></content>
       <categories>
         <category>学习</category>

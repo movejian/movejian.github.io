@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-10-06T17:35:42.394Z</updated>
+  <updated>2022-10-07T12:38:25.187Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,24 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>修改hosts文件(win系统)</title>
+    <link href="http://example.com/2022/10/07/%E4%BF%AE%E6%94%B9hosts%E6%96%87%E4%BB%B6/"/>
+    <id>http://example.com/2022/10/07/%E4%BF%AE%E6%94%B9hosts%E6%96%87%E4%BB%B6/</id>
+    <published>2022-10-07T12:26:24.000Z</published>
+    <updated>2022-10-07T12:38:25.187Z</updated>
+    
+    
+    <summary type="html">&lt;h3 id=&quot;hosts作用介绍&quot;&gt;&lt;a href=&quot;#hosts作用介绍&quot; class=&quot;headerlink&quot; title=&quot;hosts作用介绍&quot;&gt;&lt;/a&gt;hosts作用介绍&lt;/h3&gt;&lt;p&gt;hosts是一个没有扩展名的系统文件，可以用记事本等工具打开，&lt;strong&gt;其作用就是将一些常用的网址域名与其对应的IP地址建立一个关联“数据库”&lt;/strong&gt;，当用户在浏览器中输入一个需要登录的网址时，系统会首先自动从Hosts文件中寻找对应的IP地址，一旦找到，系统会立即打开对应网页，如果没有找到，则系统会再将网址提交DNS域名解析服务器进行IP地址的解析。&lt;/p&gt;
+&lt;p&gt;需要注意的是，Hosts文件配置的映射是静态的，如果网络上的计算机更改了请及时更新IP地址，否则将不能访问。&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="hosts" scheme="http://example.com/tags/hosts/"/>
+    
+  </entry>
   
   <entry>
     <title>gpt与mbr分区两者区别</title>
@@ -424,24 +442,6 @@
     <category term="幻境" scheme="http://example.com/tags/%E5%B9%BB%E5%A2%83/"/>
     
     <category term="攻略" scheme="http://example.com/tags/%E6%94%BB%E7%95%A5/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>npm安装卸载命令</title>
-    <link href="http://example.com/2022/08/23/npm%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BD%E5%91%BD%E4%BB%A4/"/>
-    <id>http://example.com/2022/08/23/npm%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BD%E5%91%BD%E4%BB%A4/</id>
-    <published>2022-08-22T16:25:36.000Z</published>
-    <updated>2022-08-22T16:34:22.780Z</updated>
-    
-    
-    <summary type="html">&lt;h2 id=&quot;npm安装模块&quot;&gt;&lt;a href=&quot;#npm安装模块&quot; class=&quot;headerlink&quot; title=&quot;npm安装模块&quot;&gt;&lt;/a&gt;npm安装模块&lt;/h2&gt;&lt;p&gt;利用 npm 安装xxx模块到当前命令行所在目录；&lt;/p&gt;
-&lt;figure class=&quot;highlight plaintext&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;npm install xxx&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</summary>
-    
-    
-    
-    
-    <category term="命令" scheme="http://example.com/tags/%E5%91%BD%E4%BB%A4/"/>
     
   </entry>
   
