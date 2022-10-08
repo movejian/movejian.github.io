@@ -746,6 +746,33 @@
 ]]></content>
   </entry>
   <entry>
+    <title>hexo域名解析的两种方法</title>
+    <url>/2022/08/19/hexo%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>想要在浏览器里面输入域名到达某个地址。必不可少的一步就是要告诉全世界的电脑，这个域名现在指向这个地方啦。<br>而这一步就是由 dns 服务器来负责的。<br>我们需要做的就是将域名与固定的 ip 地址绑定起来 (A)，或者是与某已有域名绑定起来（CNAME）.</p>
+<p>下面我们以阿里云购买的域名为例</p>
+<h2 id="域名解析"><a href="#域名解析" class="headerlink" title="域名解析"></a>域名解析</h2><h3 id="方法一（不推荐）"><a href="#方法一（不推荐）" class="headerlink" title="方法一（不推荐）"></a>方法一（不推荐）</h3><p>首先获取自己 github 的二级域名的 IP 地址，win­dows 下直接在 cmd 里 Ping 一下自己的博客就会得到 IP 地址：</p>
+<span id="more"></span>
+
+<p><img src="https://movejian.github.io/images/20220819/cmd.png"></p>
+<p>我的 ip 是 185.199.111.153</p>
+<p>下面通过 DNS 域名解析将购买的域名指向 github 的二级域名：user­name.github.io，<br>进入阿里云的管理控制台 - 云解析 DNS，进入域名的解析设置，将得到的 IP 地址填到记录值一栏，点击确定就 OK 了。填完以后的解析列表会出现：</p>
+<p><img src="https://movejian.github.io/images/20220819/yumi.png"><br>记录值就是自己 github 的二级域名的 IP 地址。</p>
+<p>方法二（推荐）<br>直接解析域名的 CNAME 记录到你的 Git 二级域名，不要使用方法一中的 A 记录，因为 ip 地址可能会一段时间之后会改变 (由于网络地址转换协议 NAT)，所以建议记录类型选择 CNAME 进行解析，记录值填的就是 user­name.github.io，比如：</p>
+<p><img src="https://movejian.github.io/images/20220819/yumi2.png"></p>
+<p>如果你只用 github 的二级域名作为博客的地址，那么线路类型选择默认就可以了。</p>
+<h2 id="设置CNAME"><a href="#设置CNAME" class="headerlink" title="设置CNAME"></a>设置CNAME</h2><p>在 hexo 项目下，source 文件夹下面创建 CNAME 文件（没有后缀名的），在里面写上购买的域名。比如：<br>test­blog.top</p>
+<p><img src="https://movejian.github.io/images/20220819/CNAME.png"></p>
+<p>在 github 上面，打开 user­name.github.io 项目的（Set­tings）设置，然后在  Pages 选项,点击蓝色的按钮Add a domain 设置里填上购买的域名。比如：</p>
+<p><img src="https://movejian.github.io/images/20220819/domain.png"></p>
+<blockquote>
+<p>现在即可通过原二级域名和新域名访问hexo博客啦。</p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>域名</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>npm安装卸载命令</title>
     <url>/2022/08/23/npm%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BD%E5%91%BD%E4%BB%A4/</url>
     <content><![CDATA[<h2 id="npm安装模块"><a href="#npm安装模块" class="headerlink" title="npm安装模块"></a>npm安装模块</h2><p>利用 npm 安装xxx模块到当前命令行所在目录；</p>
@@ -816,33 +843,6 @@
       </categories>
       <tags>
         <tag>技术</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hexo域名解析的两种方法</title>
-    <url>/2022/08/19/hexo%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>想要在浏览器里面输入域名到达某个地址。必不可少的一步就是要告诉全世界的电脑，这个域名现在指向这个地方啦。<br>而这一步就是由 dns 服务器来负责的。<br>我们需要做的就是将域名与固定的 ip 地址绑定起来 (A)，或者是与某已有域名绑定起来（CNAME）.</p>
-<p>下面我们以阿里云购买的域名为例</p>
-<h2 id="域名解析"><a href="#域名解析" class="headerlink" title="域名解析"></a>域名解析</h2><h3 id="方法一（不推荐）"><a href="#方法一（不推荐）" class="headerlink" title="方法一（不推荐）"></a>方法一（不推荐）</h3><p>首先获取自己 github 的二级域名的 IP 地址，win­dows 下直接在 cmd 里 Ping 一下自己的博客就会得到 IP 地址：</p>
-<span id="more"></span>
-
-<p><img src="https://movejian.github.io/images/20220819/cmd.png"></p>
-<p>我的 ip 是 185.199.111.153</p>
-<p>下面通过 DNS 域名解析将购买的域名指向 github 的二级域名：user­name.github.io，<br>进入阿里云的管理控制台 - 云解析 DNS，进入域名的解析设置，将得到的 IP 地址填到记录值一栏，点击确定就 OK 了。填完以后的解析列表会出现：</p>
-<p><img src="https://movejian.github.io/images/20220819/yumi.png"><br>记录值就是自己 github 的二级域名的 IP 地址。</p>
-<p>方法二（推荐）<br>直接解析域名的 CNAME 记录到你的 Git 二级域名，不要使用方法一中的 A 记录，因为 ip 地址可能会一段时间之后会改变 (由于网络地址转换协议 NAT)，所以建议记录类型选择 CNAME 进行解析，记录值填的就是 user­name.github.io，比如：</p>
-<p><img src="https://movejian.github.io/images/20220819/yumi2.png"></p>
-<p>如果你只用 github 的二级域名作为博客的地址，那么线路类型选择默认就可以了。</p>
-<h2 id="设置CNAME"><a href="#设置CNAME" class="headerlink" title="设置CNAME"></a>设置CNAME</h2><p>在 hexo 项目下，source 文件夹下面创建 CNAME 文件（没有后缀名的），在里面写上购买的域名。比如：<br>test­blog.top</p>
-<p><img src="https://movejian.github.io/images/20220819/CNAME.png"></p>
-<p>在 github 上面，打开 user­name.github.io 项目的（Set­tings）设置，然后在  Pages 选项,点击蓝色的按钮Add a domain 设置里填上购买的域名。比如：</p>
-<p><img src="https://movejian.github.io/images/20220819/domain.png"></p>
-<blockquote>
-<p>现在即可通过原二级域名和新域名访问hexo博客啦。</p>
-</blockquote>
-]]></content>
-      <tags>
-        <tag>域名</tag>
       </tags>
   </entry>
   <entry>
