@@ -95,7 +95,7 @@ var _hmt = _hmt || [];
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">1.6k</span>
+            <span class="post-count">1.5k</span>
         </span>
     </span>
 
@@ -104,7 +104,7 @@ var _hmt = _hmt || [];
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">6 分钟</span>
+            <span class="post-count">5 分钟</span>
         </span>
     </span>
 </div>
@@ -136,7 +136,7 @@ var _hmt = _hmt || [];
 </blockquote>
 <p>安装系统的方法不多做介绍。安装系统重启后<strong>停留在选择地区的配置界面</strong>。</p>
 <h5 id="2、-进入-Audit-Mode"><a href="#2、-进入-Audit-Mode" class="headerlink" title="2、 进入 Audit Mode"></a>2、 进入 <code>Audit Mode</code></h5><p>在系统配置选择地区的界面，按下 <code>Ctrl+Shift+F3</code> ，这时 windows 会重启，进入 <code>Audit Mode</code> ，然后显示一个 <code>System Preparation Tool</code>（系统准备工具） ，点击取消，将它关闭。</p>
-<p>![关闭System Preparation Tool](D:\Program Files\PicGo\临时储存\watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5rGf5Z-O5pKF5Zi055qE5bed576M,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center.png)</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210082119244.png"></p>
 <h5 id="3、-新建relocate-xml"><a href="#3、-新建relocate-xml" class="headerlink" title="3、 新建relocate.xml"></a>3、 新建<code>relocate.xml</code></h5><p>现在你可以将电脑连接到网络了。</p>
 <p>接下来我们要使用<code>System Preparation Tool (Sysprep)</code>工具来设置用户路径。这个工具会执行一个xml 文件中的配置（也就是<code>relocate.xml</code>）<br>我们现在只需要一个非常简单的xml配置文件，只需包含以下内容：</p>
 <ul>
@@ -147,7 +147,7 @@ var _hmt = _hmt || [];
 </ul>
 <p>新建<code>relocate.xml</code>，并使用记事本打开</p>
 <blockquote>
-<h3 id="警告，在操作之前，请先读一下这个："><a href="#警告，在操作之前，请先读一下这个：" class="headerlink" title="警告，在操作之前，请先读一下这个："></a><font color='red'>警告，在操作之前，请先读一下这个：</font></h3><p>1、Windows 以字母来标识盘符，但是当安装了 windows 重启之后，本来你想把用户目录安装到 <code>d</code>盘，但这个盘符可能会发生改变，比如变成了<code> e</code>盘，这个时候就会失败，所以一定要确定好盘符(在开始之前理顺盘符)。<br>2、xml 文件保存到磁盘根目录（不能是 <code>C</code>盘），例如我把它保存到了：<code>D:\relocate.xml</code><br>3、部分计算机在<code>Audit Mode</code>下因为缺少驱动，键盘无法使用，可以借助其他计算机编写，并拷贝，也可以完全用鼠标操作完成，看个人能力。</p>
+<p><font weight:bold size=5 color='red'>警告，在操作之前，请先读一下这个：</font><br>1、Windows 以字母来标识盘符，但是当安装了 windows 重启之后，本来你想把用户目录安装到 <code>d</code>盘，但这个盘符可能会发生改变，比如变成了<code> e</code>盘，这个时候就会失败，所以一定要确定好盘符(在开始之前理顺盘符)。<br>2、xml 文件保存到磁盘根目录（不能是 <code>C</code>盘），例如我把它保存到了：<code>D:\relocate.xml</code><br>3、部分计算机在<code>Audit Mode</code>下因为缺少驱动，键盘无法使用，可以借助其他计算机编写，并拷贝，也可以完全用鼠标操作完成，看个人能力。</p>
 </blockquote>
 <p>将以下代码粘贴到配置文件中</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;unattend xmlns=&quot;urn:schemas-microsoft-com:unattend&quot;&gt;</span><br><span class="line">	&lt;settings pass=&quot;oobeSystem&quot;&gt;</span><br><span class="line">		&lt;component name=&quot;Microsoft-Windows-Shell-Setup&quot; processorArchitecture=&quot;amd64&quot; publicKeyToken=&quot;31bf3856ad364e35&quot; language=&quot;neutral&quot; versionScope=&quot;nonSxS&quot; xmlns:wcm=&quot;http://schemas.microsoft.com/WMIConfig/2002/State&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;</span><br><span class="line">			&lt;FolderLocations&gt;</span><br><span class="line">				&lt;ProfilesDirectory&gt;D:\Users&lt;/ProfilesDirectory&gt;</span><br><span class="line">			&lt;/FolderLocations&gt;</span><br><span class="line">		&lt;/component&gt;</span><br><span class="line">	&lt;/settings&gt;</span><br><span class="line">&lt;/unattend&gt;</span><br></pre></td></tr></table></figure>
@@ -164,7 +164,7 @@ var _hmt = _hmt || [];
 <p>上述命令告诉系统从<code>Windows\System32\Sysprep</code>运行 <code>Sysprep</code>，执行<code>D:\relocate.xml</code>中的指令，为<font color='red'>OOBE（the firlst boot of newly installed Windows）</font> 重启准备系统，最后重启。</p>
 <h5 id="5、完成"><a href="#5、完成" class="headerlink" title="5、完成"></a>5、完成</h5><p>完成上述操作后，自动重启进入系统，检查<code>User</code>录已经移动到了<code>D:\</code></p>
 <h4 id="二、-在已经安装好的-Windows-系统上迁移用户目录-不推荐"><a href="#二、-在已经安装好的-Windows-系统上迁移用户目录-不推荐" class="headerlink" title="二、 在已经安装好的 Windows 系统上迁移用户目录(不推荐)"></a><em><strong>二、 在已经安装好的 Windows 系统上迁移用户目录</strong></em>(不推荐)</h4><blockquote>
-<p><font size=5 color='red'>警告：操作之前，一定要先创建一个系统映像，做好备份。</font><br>对一个 OEM 预先安装的 Windows 使用 Sysprep 是非常危险的。电脑厂商可能有他们自己的 unattended answer file，这样可能就会忽略掉你的 unattended file。在这个过程中可能会出各种错误，所以不建议操作。<br>如果中途出错了，你的备份文件可以帮助你恢复。<br>这个操作非常有可能导致你的电脑恢复出厂设置。<br><font size=5 >警告****1703 或者更高版本，请不要禁用已存在的用户！！！</font><br>在 Win10 1703 或更高版本上，千万不要禁用现有用户，因为禁用现有用户可能会让你无法登录 Windows，进而需要重装。</p>
+<p><font size=5 color='red'>警告：操作之前，一定要先创建一个系统映像，做好备份。</font><br>对一个 OEM 预先安装的 Windows 使用 Sysprep 是非常危险的。电脑厂商可能有他们自己的 unattended answer file，这样可能就会忽略掉你的 unattended file。在这个过程中可能会出各种错误，所以不建议操作。<br>如果中途出错了，你的备份文件可以帮助你恢复。<br>这个操作非常有可能导致你的电脑恢复出厂设置。<br><font weight:bold size=5 >警告****1703 或者更高版本，请不要禁用已存在的用户！！！</font><br>在 Win10 1703 或更高版本上，千万不要禁用现有用户，因为禁用现有用户可能会让你无法登录 Windows，进而需要重装。</p>
 </blockquote>
 <h5 id="1、-新建relocate-xml"><a href="#1、-新建relocate-xml" class="headerlink" title="1、 新建relocate.xml"></a>1、 新建relocate.xml</h5><p>按照上面说过的步骤新建一个<code>relocate.xml</code>文件</p>
 <h5 id="2、-运行-Sysprep"><a href="#2、-运行-Sysprep" class="headerlink" title="2、 运行 Sysprep"></a>2、 运行<code> Sysprep</code></h5><p>按照上面说过的步骤运行<code>Sysprep</code></p>
