@@ -164,7 +164,7 @@ var _hmt = _hmt || [];
 <p>上述命令告诉系统从<code>Windows\System32\Sysprep</code>运行 <code>Sysprep</code>，执行<code>D:\relocate.xml</code>中的指令，为<font color='red'>OOBE（the firlst boot of newly installed Windows）</font> 重启准备系统，最后重启。</p>
 <h5 id="5、完成"><a href="#5、完成" class="headerlink" title="5、完成"></a>5、完成</h5><p>完成上述操作后，自动重启进入系统，检查<code>User</code>录已经移动到了<code>D:\</code></p>
 <h4 id="二、-在已经安装好的-Windows-系统上迁移用户目录-不推荐"><a href="#二、-在已经安装好的-Windows-系统上迁移用户目录-不推荐" class="headerlink" title="二、 在已经安装好的 Windows 系统上迁移用户目录(不推荐)"></a><em><strong>二、 在已经安装好的 Windows 系统上迁移用户目录</strong></em>(不推荐)</h4><blockquote>
-<p><font size=5 color='red'>警告：操作之前，一定要先创建一个系统映像，做好备份。</font><br>对一个 OEM 预先安装的 Windows 使用 Sysprep 是非常危险的。电脑厂商可能有他们自己的 unattended answer file，这样可能就会忽略掉你的 unattended file。在这个过程中可能会出各种错误，所以不建议操作。<br>如果中途出错了，你的备份文件可以帮助你恢复。<br>这个操作非常有可能导致你的电脑恢复出厂设置。<br><font weight:bold size=5 >警告****1703 或者更高版本，请不要禁用已存在的用户！！！</font><br>在 Win10 1703 或更高版本上，千万不要禁用现有用户，因为禁用现有用户可能会让你无法登录 Windows，进而需要重装。</p>
+<p><font weight:bold size=5 color='red'>警告：操作之前，一定要先创建一个系统映像，做好备份。</font><br>对一个 OEM 预先安装的 Windows 使用 Sysprep 是非常危险的。电脑厂商可能有他们自己的 unattended answer file，这样可能就会忽略掉你的 unattended file。在这个过程中可能会出各种错误，所以不建议操作。<br>如果中途出错了，你的备份文件可以帮助你恢复。<br>这个操作非常有可能导致你的电脑恢复出厂设置。<br><font weight:bold size=5 >警告****1703 或者更高版本，请不要禁用已存在的用户！！！</font><br>在 Win10 1703 或更高版本上，千万不要禁用现有用户，因为禁用现有用户可能会让你无法登录 Windows，进而需要重装。</p>
 </blockquote>
 <h5 id="1、-新建relocate-xml"><a href="#1、-新建relocate-xml" class="headerlink" title="1、 新建relocate.xml"></a>1、 新建relocate.xml</h5><p>按照上面说过的步骤新建一个<code>relocate.xml</code>文件</p>
 <h5 id="2、-运行-Sysprep"><a href="#2、-运行-Sysprep" class="headerlink" title="2、 运行 Sysprep"></a>2、 运行<code> Sysprep</code></h5><p>按照上面说过的步骤运行<code>Sysprep</code></p>

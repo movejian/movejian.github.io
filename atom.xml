@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-10-08T13:23:24.685Z</updated>
+  <updated>2022-10-08T13:40:13.101Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://example.com/2022/10/08/%E5%B0%86Windows%E7%9A%84%E6%96%87%E6%A1%A3%E7%9B%AE%E5%BD%95%E8%BF%81%E7%A7%BB%E5%88%B0%E5%85%B6%E4%BB%96%E7%9B%98%E4%B8%8B/"/>
     <id>http://example.com/2022/10/08/%E5%B0%86Windows%E7%9A%84%E6%96%87%E6%A1%A3%E7%9B%AE%E5%BD%95%E8%BF%81%E7%A7%BB%E5%88%B0%E5%85%B6%E4%BB%96%E7%9B%98%E4%B8%8B/</id>
     <published>2022-10-08T12:00:06.000Z</published>
-    <updated>2022-10-08T13:23:24.685Z</updated>
+    <updated>2022-10-08T13:40:13.101Z</updated>
     
     
     <summary type="html">&lt;p&gt;问题描述&lt;br&gt;C盘（系统盘）爆红，检查了一下&lt;code&gt;C:\Users\&lt;/code&gt;我的用户名 快&lt;code&gt;100G&lt;/code&gt;，除了正常的 &lt;code&gt;下载（Downloads）&lt;/code&gt;、&lt;code&gt;文档（Documents）&lt;/code&gt;、&lt;code&gt;图片（Pictures）&lt;/code&gt;等等几个目录外，还有一个隐藏目录 &lt;code&gt;AppData&lt;/code&gt; ，将近70G的一个目录。&lt;code&gt;C:\Users\用户名\AppData&lt;/code&gt;里面一般有三个文件夹，分别是 &lt;code&gt;Local &lt;/code&gt;，&lt;code&gt;LocalLow&lt;/code&gt; ，&lt;code&gt;Roaming&lt;/code&gt;，简单地来说，都是用来存放软件的配置文件和临时文件的，里面有很多以软件名称或软件公司命名的文件夹，还有用户帐户的配置文件。随着系统使用时间的增加和安装软件的增多，&lt;code&gt;AppData&lt;/code&gt; 占用的空间会越来越大。&lt;/p&gt;

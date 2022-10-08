@@ -632,42 +632,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux通过密钥对免密登录</title>
-    <url>/2022/09/21/Linux%E9%80%9A%E8%BF%87%E5%AF%86%E9%92%A5%E5%AF%B9%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/</url>
-    <content><![CDATA[<p>首先，说明一下我们要做的是，跳板机服务器的<code>usera</code>用户免密码登录B服务器的<code>userb</code>用户。<br>我们先使用<code>usera</code>登录跳板服务器</p>
-<blockquote>
-<p>首先生成密钥对如果有则跳过这一步</p>
-</blockquote>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
-<span id="more"></span>
-<p>操作演示</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">[sera@serverA ~]$ ssh-keygen -t rsa  <span class="comment">//使用rsa算法加密</span></span><br><span class="line"><span class="title class_">Generating</span> public/private rsa key pair.</span><br><span class="line"><span class="title class_">Enter</span> file <span class="keyword">in</span> which to save the key (<span class="regexp">/home/u</span>sera/.<span class="property">ssh</span>/id_rsa): <span class="comment">//私钥默认保存路径</span></span><br><span class="line"><span class="title class_">Created</span> directory <span class="string">&#x27;/home/usera/.ssh&#x27;</span>.</span><br><span class="line"><span class="title class_">Enter</span> passphrase (empty <span class="keyword">for</span> no passphrase): <span class="comment">//在这里输入密码如果这里输入密码以后登录需要密钥和密码才能登录这里建议直接回车也就是空</span></span><br><span class="line"><span class="title class_">Enter</span> same passphrase <span class="attr">again</span>:</span><br><span class="line"><span class="title class_">Your</span> identification has been saved <span class="keyword">in</span> /home/usera/.<span class="property">ssh</span>/id_rsa.</span><br><span class="line"><span class="title class_">Your</span> public key has been saved <span class="keyword">in</span> /home/usera/.<span class="property">ssh</span>/id_rsa.<span class="property">pub</span>. <span class="comment">//公钥保存路径</span></span><br><span class="line"><span class="title class_">The</span> key fingerprint <span class="attr">is</span>:</span><br><span class="line"><span class="number">39</span>:<span class="attr">f2</span>:<span class="attr">fc</span>:<span class="number">70</span>:<span class="attr">ef</span>:<span class="attr">e9</span>:<span class="attr">bd</span>:<span class="number">05</span>:<span class="number">40</span>:6<span class="attr">e</span>:<span class="number">64</span>:<span class="attr">b0</span>:<span class="number">99</span>:<span class="number">56</span>:6<span class="attr">e</span>:<span class="number">01</span> usera@serverA</span><br><span class="line"><span class="title class_">The</span> key<span class="string">&#x27;s randomart image is:</span></span><br><span class="line"><span class="string">+--[ RSA 2048]----+</span></span><br><span class="line"><span class="string">| Eo* |</span></span><br><span class="line"><span class="string">| @ . |</span></span><br><span class="line"><span class="string">| = * |</span></span><br><span class="line"><span class="string">| o o . |</span></span><br><span class="line"><span class="string">| . S . |</span></span><br><span class="line"><span class="string">| + . . |</span></span><br><span class="line"><span class="string">| + . .|</span></span><br><span class="line"><span class="string">| + . o . |</span></span><br><span class="line"><span class="string">| .o= o. |</span></span><br><span class="line"><span class="string">+-----------------+</span></span><br></pre></td></tr></table></figure>
-
-<p>以下是截图提示</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210216196.png"></p>
-<blockquote>
-<p>id_rsa是私钥，id_rsa.pub是公钥公钥在服务器私钥在自己手上</p>
-</blockquote>
-<p>此时会在<code>/home/usera/.ssh</code>目录下生成密钥对我们使用<code>ls</code>查看一下</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">root@<span class="attr">vultr</span>:~#  ls -la .<span class="property">ssh</span></span><br><span class="line">total <span class="number">16</span></span><br><span class="line">drwx------ <span class="number">2</span> root root <span class="number">4096</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> .</span><br><span class="line">drwx------ <span class="number">5</span> root root <span class="number">4096</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">00</span> ..</span><br><span class="line">-rw------- <span class="number">1</span> root root <span class="number">1675</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> id_rsa</span><br><span class="line">-rw-r--r-- <span class="number">1</span> root root  <span class="number">398</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> id_rsa.<span class="property">pub</span></span><br></pre></td></tr></table></figure>
-
-<p>然后将公钥上传到需要登录的服务器，并以<code>userb</code>用户登录<br>至于上传方式可以用<code>scp</code>以及<code>sz</code>命令这里就介绍了<br>可以参考这篇<a href="https://shagain.club/index.php/archives/111/">文章</a></p>
-<blockquote>
-<p>上传到用户目录下的.ssh文件夹下<code>authorized_keys</code>这个文件是用来存放公钥内容的我们使用<code>cat</code>把公钥追加到<code>authorized_keys</code>这个文件就好了</p>
-</blockquote>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">cat id_rsa.<span class="property">pub</span> &gt;&gt; ~<span class="regexp">/.ssh/</span>authorized_keys    <span class="comment">//cat 公钥路径 &gt;&gt; ~/.ssh/authorized_keys</span></span><br></pre></td></tr></table></figure>
-
-<p>这样子我们就配置好了<br>另外我们要注意，<code>.ssh</code>目录的权限为<code>700</code>，其下文件<code>authorized_keys</code>和私钥的权限为<code>600</code>。否则会因为权限问题导致无法免密码登录。我们可以看到登陆后会有<code>known_hosts</code>文件生成。</p>
-]]></content>
-      <categories>
-        <category>学习</category>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Office用C2R工具在线安装激活</title>
     <url>/2022/09/27/Office%E7%94%A8C2R%E5%B7%A5%E5%85%B7%E5%9C%A8%E7%BA%BF%E5%AE%89%E8%A3%85%E6%BF%80%E6%B4%BB/</url>
     <content><![CDATA[<p>C2R工具下载地址：<a href="https://wwt.lanzouw.com/b03pbhjri#52pj">https://wwt.lanzouw.com/b03pbhjri#52pj</a></p>
@@ -725,6 +689,42 @@
       </categories>
       <tags>
         <tag>技术</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux通过密钥对免密登录</title>
+    <url>/2022/09/21/Linux%E9%80%9A%E8%BF%87%E5%AF%86%E9%92%A5%E5%AF%B9%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/</url>
+    <content><![CDATA[<p>首先，说明一下我们要做的是，跳板机服务器的<code>usera</code>用户免密码登录B服务器的<code>userb</code>用户。<br>我们先使用<code>usera</code>登录跳板服务器</p>
+<blockquote>
+<p>首先生成密钥对如果有则跳过这一步</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<p>操作演示</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">[sera@serverA ~]$ ssh-keygen -t rsa  <span class="comment">//使用rsa算法加密</span></span><br><span class="line"><span class="title class_">Generating</span> public/private rsa key pair.</span><br><span class="line"><span class="title class_">Enter</span> file <span class="keyword">in</span> which to save the key (<span class="regexp">/home/u</span>sera/.<span class="property">ssh</span>/id_rsa): <span class="comment">//私钥默认保存路径</span></span><br><span class="line"><span class="title class_">Created</span> directory <span class="string">&#x27;/home/usera/.ssh&#x27;</span>.</span><br><span class="line"><span class="title class_">Enter</span> passphrase (empty <span class="keyword">for</span> no passphrase): <span class="comment">//在这里输入密码如果这里输入密码以后登录需要密钥和密码才能登录这里建议直接回车也就是空</span></span><br><span class="line"><span class="title class_">Enter</span> same passphrase <span class="attr">again</span>:</span><br><span class="line"><span class="title class_">Your</span> identification has been saved <span class="keyword">in</span> /home/usera/.<span class="property">ssh</span>/id_rsa.</span><br><span class="line"><span class="title class_">Your</span> public key has been saved <span class="keyword">in</span> /home/usera/.<span class="property">ssh</span>/id_rsa.<span class="property">pub</span>. <span class="comment">//公钥保存路径</span></span><br><span class="line"><span class="title class_">The</span> key fingerprint <span class="attr">is</span>:</span><br><span class="line"><span class="number">39</span>:<span class="attr">f2</span>:<span class="attr">fc</span>:<span class="number">70</span>:<span class="attr">ef</span>:<span class="attr">e9</span>:<span class="attr">bd</span>:<span class="number">05</span>:<span class="number">40</span>:6<span class="attr">e</span>:<span class="number">64</span>:<span class="attr">b0</span>:<span class="number">99</span>:<span class="number">56</span>:6<span class="attr">e</span>:<span class="number">01</span> usera@serverA</span><br><span class="line"><span class="title class_">The</span> key<span class="string">&#x27;s randomart image is:</span></span><br><span class="line"><span class="string">+--[ RSA 2048]----+</span></span><br><span class="line"><span class="string">| Eo* |</span></span><br><span class="line"><span class="string">| @ . |</span></span><br><span class="line"><span class="string">| = * |</span></span><br><span class="line"><span class="string">| o o . |</span></span><br><span class="line"><span class="string">| . S . |</span></span><br><span class="line"><span class="string">| + . . |</span></span><br><span class="line"><span class="string">| + . .|</span></span><br><span class="line"><span class="string">| + . o . |</span></span><br><span class="line"><span class="string">| .o= o. |</span></span><br><span class="line"><span class="string">+-----------------+</span></span><br></pre></td></tr></table></figure>
+
+<p>以下是截图提示</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210216196.png"></p>
+<blockquote>
+<p>id_rsa是私钥，id_rsa.pub是公钥公钥在服务器私钥在自己手上</p>
+</blockquote>
+<p>此时会在<code>/home/usera/.ssh</code>目录下生成密钥对我们使用<code>ls</code>查看一下</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">root@<span class="attr">vultr</span>:~#  ls -la .<span class="property">ssh</span></span><br><span class="line">total <span class="number">16</span></span><br><span class="line">drwx------ <span class="number">2</span> root root <span class="number">4096</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> .</span><br><span class="line">drwx------ <span class="number">5</span> root root <span class="number">4096</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">00</span> ..</span><br><span class="line">-rw------- <span class="number">1</span> root root <span class="number">1675</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> id_rsa</span><br><span class="line">-rw-r--r-- <span class="number">1</span> root root  <span class="number">398</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> id_rsa.<span class="property">pub</span></span><br></pre></td></tr></table></figure>
+
+<p>然后将公钥上传到需要登录的服务器，并以<code>userb</code>用户登录<br>至于上传方式可以用<code>scp</code>以及<code>sz</code>命令这里就介绍了<br>可以参考这篇<a href="https://shagain.club/index.php/archives/111/">文章</a></p>
+<blockquote>
+<p>上传到用户目录下的.ssh文件夹下<code>authorized_keys</code>这个文件是用来存放公钥内容的我们使用<code>cat</code>把公钥追加到<code>authorized_keys</code>这个文件就好了</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">cat id_rsa.<span class="property">pub</span> &gt;&gt; ~<span class="regexp">/.ssh/</span>authorized_keys    <span class="comment">//cat 公钥路径 &gt;&gt; ~/.ssh/authorized_keys</span></span><br></pre></td></tr></table></figure>
+
+<p>这样子我们就配置好了<br>另外我们要注意，<code>.ssh</code>目录的权限为<code>700</code>，其下文件<code>authorized_keys</code>和私钥的权限为<code>600</code>。否则会因为权限问题导致无法免密码登录。我们可以看到登陆后会有<code>known_hosts</code>文件生成。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -892,38 +892,6 @@
       </tags>
   </entry>
   <entry>
-    <title>修改hosts文件(win系统)</title>
-    <url>/2022/10/07/%E4%BF%AE%E6%94%B9hosts%E6%96%87%E4%BB%B6/</url>
-    <content><![CDATA[<h3 id="hosts作用介绍"><a href="#hosts作用介绍" class="headerlink" title="hosts作用介绍"></a>hosts作用介绍</h3><p>hosts是一个没有扩展名的系统文件，可以用记事本等工具打开，<strong>其作用就是将一些常用的网址域名与其对应的IP地址建立一个关联“数据库”</strong>，当用户在浏览器中输入一个需要登录的网址时，系统会首先自动从Hosts文件中寻找对应的IP地址，一旦找到，系统会立即打开对应网页，如果没有找到，则系统会再将网址提交DNS域名解析服务器进行IP地址的解析。</p>
-<p>需要注意的是，Hosts文件配置的映射是静态的，如果网络上的计算机更改了请及时更新IP地址，否则将不能访问。</p>
-<span id="more"></span>
-<h3 id="修改hosts"><a href="#修改hosts" class="headerlink" title="修改hosts"></a>修改hosts</h3><ol>
-<li>hosts文件路径：<code>C:\Windows\system32\drivers\etc</code></li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210072028616.png" alt="在这里插入图片描述"></p>
-<ol start="2">
-<li>找到hosts文件所在位置后，不要直接去修改该文件，会出现权限不足，无法修改的问题。具体方法是，<strong>在hosts文件上点击鼠标右键，在弹出的选项中，点击打开”属性”</strong></li>
-<li><strong>打开hosts文件属性后，切换到“安全”选项卡，先点击选中需要更改权限的用户或应用程序包，然后点击下方的“编辑”在弹出的编辑权限操作界面，，勾选上下方的“修改”和“写入”权限，完成后，点击右下角的“应用”就可以了，直接给完全控制权限也没问题。</strong></li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210072028119.png" alt="在这里插入图片描述"></p>
-<ol start="4">
-<li><p>应用后弹出一个“Windows安全”提示框，这里我们无需理会，直接点击“是”即可</p>
-</li>
-<li><p>然后用记事本打开即可修改</p>
-</li>
-<li><p>按照<code>ip地址+空格+网址域名</code>修改</p>
-<p>如：<code>112.91.133.72 download.visualstudio.microsoft.com</code></p>
-</li>
-<li><p>如果修改hosts后不生效的话，可能是因为DNS缓存，然后我们清空DNS缓存<br>具体方法：命令行(win + R 输入cmd 按enter)输入<code>ipconfig /flushdns</code>，最好是在获取管理员权限下执行命令。</p>
-</li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210072027410.png" alt="在这里插入图片描述"></p>
-]]></content>
-      <tags>
-        <tag>hosts</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>使用HEXO-GIT-BACKUP插件备份博客源文件</title>
     <url>/2022/08/21/%E4%BD%BF%E7%94%A8HEXO-GIT-BACKUP%E6%8F%92%E4%BB%B6%E5%A4%87%E4%BB%BD%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/</url>
     <content><![CDATA[<p>在搭建好hexo博客之后也要给自己的博客进行备份，文章丢失可是很麻烦的一件事情。我的博客的数据都是直接保存在cloudstudio，用的时候总是会感觉有点问题，生怕自己哪天不小心把工作空间给删除了，那就蛮麻烦了。所以我采用了 <a href="https://github.com/coneycode/hexo-git-backup">hexo-git-backup</a> 这个工具进行备份。</p>
@@ -971,6 +939,38 @@
       </categories>
       <tags>
         <tag>插件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>修改hosts文件(win系统)</title>
+    <url>/2022/10/07/%E4%BF%AE%E6%94%B9hosts%E6%96%87%E4%BB%B6/</url>
+    <content><![CDATA[<h3 id="hosts作用介绍"><a href="#hosts作用介绍" class="headerlink" title="hosts作用介绍"></a>hosts作用介绍</h3><p>hosts是一个没有扩展名的系统文件，可以用记事本等工具打开，<strong>其作用就是将一些常用的网址域名与其对应的IP地址建立一个关联“数据库”</strong>，当用户在浏览器中输入一个需要登录的网址时，系统会首先自动从Hosts文件中寻找对应的IP地址，一旦找到，系统会立即打开对应网页，如果没有找到，则系统会再将网址提交DNS域名解析服务器进行IP地址的解析。</p>
+<p>需要注意的是，Hosts文件配置的映射是静态的，如果网络上的计算机更改了请及时更新IP地址，否则将不能访问。</p>
+<span id="more"></span>
+<h3 id="修改hosts"><a href="#修改hosts" class="headerlink" title="修改hosts"></a>修改hosts</h3><ol>
+<li>hosts文件路径：<code>C:\Windows\system32\drivers\etc</code></li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210072028616.png" alt="在这里插入图片描述"></p>
+<ol start="2">
+<li>找到hosts文件所在位置后，不要直接去修改该文件，会出现权限不足，无法修改的问题。具体方法是，<strong>在hosts文件上点击鼠标右键，在弹出的选项中，点击打开”属性”</strong></li>
+<li><strong>打开hosts文件属性后，切换到“安全”选项卡，先点击选中需要更改权限的用户或应用程序包，然后点击下方的“编辑”在弹出的编辑权限操作界面，，勾选上下方的“修改”和“写入”权限，完成后，点击右下角的“应用”就可以了，直接给完全控制权限也没问题。</strong></li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210072028119.png" alt="在这里插入图片描述"></p>
+<ol start="4">
+<li><p>应用后弹出一个“Windows安全”提示框，这里我们无需理会，直接点击“是”即可</p>
+</li>
+<li><p>然后用记事本打开即可修改</p>
+</li>
+<li><p>按照<code>ip地址+空格+网址域名</code>修改</p>
+<p>如：<code>112.91.133.72 download.visualstudio.microsoft.com</code></p>
+</li>
+<li><p>如果修改hosts后不生效的话，可能是因为DNS缓存，然后我们清空DNS缓存<br>具体方法：命令行(win + R 输入cmd 按enter)输入<code>ipconfig /flushdns</code>，最好是在获取管理员权限下执行命令。</p>
+</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210072027410.png" alt="在这里插入图片描述"></p>
+]]></content>
+      <tags>
+        <tag>hosts</tag>
       </tags>
   </entry>
   <entry>
@@ -1367,7 +1367,7 @@
 <p>上述命令告诉系统从<code>Windows\System32\Sysprep</code>运行 <code>Sysprep</code>，执行<code>D:\relocate.xml</code>中的指令，为<font color='red'>OOBE（the firlst boot of newly installed Windows）</font> 重启准备系统，最后重启。</p>
 <h5 id="5、完成"><a href="#5、完成" class="headerlink" title="5、完成"></a>5、完成</h5><p>完成上述操作后，自动重启进入系统，检查<code>User</code>录已经移动到了<code>D:\</code></p>
 <h4 id="二、-在已经安装好的-Windows-系统上迁移用户目录-不推荐"><a href="#二、-在已经安装好的-Windows-系统上迁移用户目录-不推荐" class="headerlink" title="二、 在已经安装好的 Windows 系统上迁移用户目录(不推荐)"></a><em><strong>二、 在已经安装好的 Windows 系统上迁移用户目录</strong></em>(不推荐)</h4><blockquote>
-<p><font size=5 color='red'>警告：操作之前，一定要先创建一个系统映像，做好备份。</font><br>对一个 OEM 预先安装的 Windows 使用 Sysprep 是非常危险的。电脑厂商可能有他们自己的 unattended answer file，这样可能就会忽略掉你的 unattended file。在这个过程中可能会出各种错误，所以不建议操作。<br>如果中途出错了，你的备份文件可以帮助你恢复。<br>这个操作非常有可能导致你的电脑恢复出厂设置。<br><font weight:bold size=5 >警告****1703 或者更高版本，请不要禁用已存在的用户！！！</font><br>在 Win10 1703 或更高版本上，千万不要禁用现有用户，因为禁用现有用户可能会让你无法登录 Windows，进而需要重装。</p>
+<p><font weight:bold size=5 color='red'>警告：操作之前，一定要先创建一个系统映像，做好备份。</font><br>对一个 OEM 预先安装的 Windows 使用 Sysprep 是非常危险的。电脑厂商可能有他们自己的 unattended answer file，这样可能就会忽略掉你的 unattended file。在这个过程中可能会出各种错误，所以不建议操作。<br>如果中途出错了，你的备份文件可以帮助你恢复。<br>这个操作非常有可能导致你的电脑恢复出厂设置。<br><font weight:bold size=5 >警告****1703 或者更高版本，请不要禁用已存在的用户！！！</font><br>在 Win10 1703 或更高版本上，千万不要禁用现有用户，因为禁用现有用户可能会让你无法登录 Windows，进而需要重装。</p>
 </blockquote>
 <h5 id="1、-新建relocate-xml"><a href="#1、-新建relocate-xml" class="headerlink" title="1、 新建relocate.xml"></a>1、 新建relocate.xml</h5><p>按照上面说过的步骤新建一个<code>relocate.xml</code>文件</p>
 <h5 id="2、-运行-Sysprep"><a href="#2、-运行-Sysprep" class="headerlink" title="2、 运行 Sysprep"></a>2、 运行<code> Sysprep</code></h5><p>按照上面说过的步骤运行<code>Sysprep</code></p>
@@ -1813,6 +1813,36 @@
       </tags>
   </entry>
   <entry>
+    <title>继上一期解决github上的图片无法显示的问题</title>
+    <url>/2022/08/21/%E7%BB%A7%E4%B8%8A%E4%B8%80%E6%9C%9F%E8%A7%A3%E5%86%B3github%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>​      <a href="https://movejian.github.io/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/">继上篇github图床问题</a>无法正常显示，但在<strong>github</strong>上看到正常上传，连接也并非错误，百度了一下说什么<strong>DNS</strong>被污染了。解决方法是修改<strong>hosts</strong>文件或者修改<strong>DNS</strong>。</p>
+<p>​      首先，打开<a href="https://ping.eu/nslookup">域名解析</a>网站：<a href="https://ping.eu/nslookup">https://ping.eu/nslookup</a><br>然后输入raw.githubusercontent.com如下图：</p>
+<p><img src="https://movejian.github.io/images/20220821/5.png"></p>
+<span id="more"></span>
+<p>​      我们得到图床所用域名解析到的IP(上图红框中的地址)。</p>
+<ul>
+<li>最后打开本机的<strong>host</strong>文件，其路径如下：<br><code>C:\Windows\System32\drivers\etc\hosts</code>, 然后添加如下内容(上图红框中的地址)：</li>
+</ul>
+<p><img src="https://movejian.github.io/images/20220821/6.png"></p>
+<ul>
+<li>打开<strong>CMD</strong>输入命令<code>ipconfig /flushdns</code>刷新<strong>DNS</strong>缓存,再次输入<code>ipconfig/displaydns</code></li>
+</ul>
+<p>​    如果你的<strong>hosts</strong>的文件不见了,可以通过文件设置显示系统隐藏文件来找到，依然找不到，可能是被误删了，网上有很多是通过新建文本文档解决。也可以通过下面这个命令来生成<strong>hosts</strong>文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for /f %P in (&#x27;dir %windir%\WinSxS\hosts /b /s&#x27;) do copy %P %windir%\System32\drivers\etc &amp; echo %P &amp; Notepad %P</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>注意</strong>一定要使用管理员身份输入此命令。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>图床</tag>
+        <tag>问题解决</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>祖玛阁全地图走法汇总</title>
     <url>/2022/10/03/%E7%A5%96%E7%8E%9B%E9%98%81%E5%85%A8%E5%9C%B0%E5%9B%BE%E8%B5%B0%E6%B3%95%E6%B1%87%E6%80%BB/</url>
     <content><![CDATA[<p>在传奇游戏中祖玛阁是一个迷宫式的地图，玩家需要走出正确的进行路线才能前往下一层，每一个不同的走法都可能抵达不同的地点。熟悉走法的玩家来说这就是一个高效的练级圣地，对于不熟悉的玩家来说纵膈总共108个房间的祖玛阁怎么走?是最困扰玩家的问题之一。</p>
@@ -1841,36 +1871,6 @@
       </categories>
       <tags>
         <tag>传奇</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>继上一期解决github上的图片无法显示的问题</title>
-    <url>/2022/08/21/%E7%BB%A7%E4%B8%8A%E4%B8%80%E6%9C%9F%E8%A7%A3%E5%86%B3github%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>​      <a href="https://movejian.github.io/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/">继上篇github图床问题</a>无法正常显示，但在<strong>github</strong>上看到正常上传，连接也并非错误，百度了一下说什么<strong>DNS</strong>被污染了。解决方法是修改<strong>hosts</strong>文件或者修改<strong>DNS</strong>。</p>
-<p>​      首先，打开<a href="https://ping.eu/nslookup">域名解析</a>网站：<a href="https://ping.eu/nslookup">https://ping.eu/nslookup</a><br>然后输入raw.githubusercontent.com如下图：</p>
-<p><img src="https://movejian.github.io/images/20220821/5.png"></p>
-<span id="more"></span>
-<p>​      我们得到图床所用域名解析到的IP(上图红框中的地址)。</p>
-<ul>
-<li>最后打开本机的<strong>host</strong>文件，其路径如下：<br><code>C:\Windows\System32\drivers\etc\hosts</code>, 然后添加如下内容(上图红框中的地址)：</li>
-</ul>
-<p><img src="https://movejian.github.io/images/20220821/6.png"></p>
-<ul>
-<li>打开<strong>CMD</strong>输入命令<code>ipconfig /flushdns</code>刷新<strong>DNS</strong>缓存,再次输入<code>ipconfig/displaydns</code></li>
-</ul>
-<p>​    如果你的<strong>hosts</strong>的文件不见了,可以通过文件设置显示系统隐藏文件来找到，依然找不到，可能是被误删了，网上有很多是通过新建文本文档解决。也可以通过下面这个命令来生成<strong>hosts</strong>文件。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for /f %P in (&#x27;dir %windir%\WinSxS\hosts /b /s&#x27;) do copy %P %windir%\System32\drivers\etc &amp; echo %P &amp; Notepad %P</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><strong>注意</strong>一定要使用管理员身份输入此命令。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>图床</tag>
-        <tag>问题解决</tag>
       </tags>
   </entry>
   <entry>
