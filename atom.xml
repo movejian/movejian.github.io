@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-10-07T17:40:12.781Z</updated>
+  <updated>2022-10-08T13:10:52.584Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>将Windows的文档目录迁移到其他盘下</title>
+    <link href="http://example.com/2022/10/08/%E5%B0%86Windows%E7%9A%84%E6%96%87%E6%A1%A3%E7%9B%AE%E5%BD%95%E8%BF%81%E7%A7%BB%E5%88%B0%E5%85%B6%E4%BB%96%E7%9B%98%E4%B8%8B/"/>
+    <id>http://example.com/2022/10/08/%E5%B0%86Windows%E7%9A%84%E6%96%87%E6%A1%A3%E7%9B%AE%E5%BD%95%E8%BF%81%E7%A7%BB%E5%88%B0%E5%85%B6%E4%BB%96%E7%9B%98%E4%B8%8B/</id>
+    <published>2022-10-08T12:00:06.000Z</published>
+    <updated>2022-10-08T13:10:52.584Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;问题描述&lt;br&gt;C盘（系统盘）爆红，检查了一下&lt;code&gt;C:\Users\&lt;/code&gt;我的用户名 快&lt;code&gt;100G&lt;/code&gt;，除了正常的 &lt;code&gt;下载（Downloads）&lt;/code&gt;、&lt;code&gt;文档（Documents）&lt;/code&gt;、&lt;code&gt;图片（Pictures）&lt;/code&gt;等等几个目录外，还有一个隐藏目录 &lt;code&gt;AppData&lt;/code&gt; ，将近70G的一个目录。&lt;code&gt;C:\Users\用户名\AppData&lt;/code&gt;里面一般有三个文件夹，分别是 &lt;code&gt;Local &lt;/code&gt;，&lt;code&gt;LocalLow&lt;/code&gt; ，&lt;code&gt;Roaming&lt;/code&gt;，简单地来说，都是用来存放软件的配置文件和临时文件的，里面有很多以软件名称或软件公司命名的文件夹，还有用户帐户的配置文件。随着系统使用时间的增加和安装软件的增多，&lt;code&gt;AppData&lt;/code&gt; 占用的空间会越来越大。&lt;/p&gt;
+&lt;p&gt;思考： 如何才能把&lt;code&gt;C:\Users&lt;/code&gt;整个目录放到其他盘。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="学习" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/"/>
+    
+    <category term="Win" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/Win/"/>
+    
+    
+    <category term="Win" scheme="http://example.com/tags/Win/"/>
+    
+  </entry>
   
   <entry>
     <title>win10系统电脑图标不见了</title>
@@ -407,31 +429,6 @@
     
     
     <category term="Linux" scheme="http://example.com/tags/Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>传奇内挂垃圾物品过滤</title>
-    <link href="http://example.com/2022/09/03/%E4%BC%A0%E5%A5%87%E5%86%85%E6%8C%82%E5%9E%83%E5%9C%BE%E7%89%A9%E5%93%81%E8%BF%87%E6%BB%A4/"/>
-    <id>http://example.com/2022/09/03/%E4%BC%A0%E5%A5%87%E5%86%85%E6%8C%82%E5%9E%83%E5%9C%BE%E7%89%A9%E5%93%81%E8%BF%87%E6%BB%A4/</id>
-    <published>2022-09-03T07:52:03.000Z</published>
-    <updated>2022-09-03T08:07:03.675Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt; 传奇内挂过滤垃圾。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/movejian/images/main/movejian/images202209031601159.png&quot; alt=&quot;image-20220903160139387&quot;&gt;&lt;/p&gt;
-&lt;p&gt;先打开传奇目录 &lt;code&gt;D:\传奇私服\Config &lt;/code&gt;   修改DAT档案文件，把下面内容复制粘贴进去保存即可：&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="游戏" scheme="http://example.com/categories/%E6%B8%B8%E6%88%8F/"/>
-    
-    <category term="传奇" scheme="http://example.com/categories/%E6%B8%B8%E6%88%8F/%E4%BC%A0%E5%A5%87/"/>
-    
-    
-    <category term="传奇" scheme="http://example.com/tags/%E4%BC%A0%E5%A5%87/"/>
-    
-    <category term="外挂" scheme="http://example.com/tags/%E5%A4%96%E6%8C%82/"/>
     
   </entry>
   
