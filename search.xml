@@ -728,6 +728,24 @@
       </tags>
   </entry>
   <entry>
+    <title>Hello World</title>
+    <url>/2017/08/10/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
     <title>hexo域名解析的两种方法</title>
     <url>/2022/08/19/hexo%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>想要在浏览器里面输入域名到达某个地址。必不可少的一步就是要告诉全世界的电脑，这个域名现在指向这个地方啦。<br>而这一步就是由 dns 服务器来负责的。<br>我们需要做的就是将域名与固定的 ip 地址绑定起来 (A)，或者是与某已有域名绑定起来（CNAME）.</p>
@@ -753,24 +771,6 @@
       <tags>
         <tag>域名</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2017/08/10/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
   </entry>
   <entry>
     <title>npm安装卸载命令</title>
@@ -892,6 +892,38 @@
       </tags>
   </entry>
   <entry>
+    <title>修改hosts文件(win系统)</title>
+    <url>/2022/10/07/%E4%BF%AE%E6%94%B9hosts%E6%96%87%E4%BB%B6/</url>
+    <content><![CDATA[<h3 id="hosts作用介绍"><a href="#hosts作用介绍" class="headerlink" title="hosts作用介绍"></a>hosts作用介绍</h3><p>hosts是一个没有扩展名的系统文件，可以用记事本等工具打开，<strong>其作用就是将一些常用的网址域名与其对应的IP地址建立一个关联“数据库”</strong>，当用户在浏览器中输入一个需要登录的网址时，系统会首先自动从Hosts文件中寻找对应的IP地址，一旦找到，系统会立即打开对应网页，如果没有找到，则系统会再将网址提交DNS域名解析服务器进行IP地址的解析。</p>
+<p>需要注意的是，Hosts文件配置的映射是静态的，如果网络上的计算机更改了请及时更新IP地址，否则将不能访问。</p>
+<span id="more"></span>
+<h3 id="修改hosts"><a href="#修改hosts" class="headerlink" title="修改hosts"></a>修改hosts</h3><ol>
+<li>hosts文件路径：<code>C:\Windows\system32\drivers\etc</code></li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210072028616.png" alt="在这里插入图片描述"></p>
+<ol start="2">
+<li>找到hosts文件所在位置后，不要直接去修改该文件，会出现权限不足，无法修改的问题。具体方法是，<strong>在hosts文件上点击鼠标右键，在弹出的选项中，点击打开”属性”</strong></li>
+<li><strong>打开hosts文件属性后，切换到“安全”选项卡，先点击选中需要更改权限的用户或应用程序包，然后点击下方的“编辑”在弹出的编辑权限操作界面，，勾选上下方的“修改”和“写入”权限，完成后，点击右下角的“应用”就可以了，直接给完全控制权限也没问题。</strong></li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210072028119.png" alt="在这里插入图片描述"></p>
+<ol start="4">
+<li><p>应用后弹出一个“Windows安全”提示框，这里我们无需理会，直接点击“是”即可</p>
+</li>
+<li><p>然后用记事本打开即可修改</p>
+</li>
+<li><p>按照<code>ip地址+空格+网址域名</code>修改</p>
+<p>如：<code>112.91.133.72 download.visualstudio.microsoft.com</code></p>
+</li>
+<li><p>如果修改hosts后不生效的话，可能是因为DNS缓存，然后我们清空DNS缓存<br>具体方法：命令行(win + R 输入cmd 按enter)输入<code>ipconfig /flushdns</code>，最好是在获取管理员权限下执行命令。</p>
+</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210072027410.png" alt="在这里插入图片描述"></p>
+]]></content>
+      <tags>
+        <tag>hosts</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用HEXO-GIT-BACKUP插件备份博客源文件</title>
     <url>/2022/08/21/%E4%BD%BF%E7%94%A8HEXO-GIT-BACKUP%E6%8F%92%E4%BB%B6%E5%A4%87%E4%BB%BD%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/</url>
     <content><![CDATA[<p>在搭建好hexo博客之后也要给自己的博客进行备份，文章丢失可是很麻烦的一件事情。我的博客的数据都是直接保存在cloudstudio，用的时候总是会感觉有点问题，生怕自己哪天不小心把工作空间给删除了，那就蛮麻烦了。所以我采用了 <a href="https://github.com/coneycode/hexo-git-backup">hexo-git-backup</a> 这个工具进行备份。</p>
@@ -939,38 +971,6 @@
       </categories>
       <tags>
         <tag>插件</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>修改hosts文件(win系统)</title>
-    <url>/2022/10/07/%E4%BF%AE%E6%94%B9hosts%E6%96%87%E4%BB%B6/</url>
-    <content><![CDATA[<h3 id="hosts作用介绍"><a href="#hosts作用介绍" class="headerlink" title="hosts作用介绍"></a>hosts作用介绍</h3><p>hosts是一个没有扩展名的系统文件，可以用记事本等工具打开，<strong>其作用就是将一些常用的网址域名与其对应的IP地址建立一个关联“数据库”</strong>，当用户在浏览器中输入一个需要登录的网址时，系统会首先自动从Hosts文件中寻找对应的IP地址，一旦找到，系统会立即打开对应网页，如果没有找到，则系统会再将网址提交DNS域名解析服务器进行IP地址的解析。</p>
-<p>需要注意的是，Hosts文件配置的映射是静态的，如果网络上的计算机更改了请及时更新IP地址，否则将不能访问。</p>
-<span id="more"></span>
-<h3 id="修改hosts"><a href="#修改hosts" class="headerlink" title="修改hosts"></a>修改hosts</h3><ol>
-<li>hosts文件路径：<code>C:\Windows\system32\drivers\etc</code></li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210072028616.png" alt="在这里插入图片描述"></p>
-<ol start="2">
-<li>找到hosts文件所在位置后，不要直接去修改该文件，会出现权限不足，无法修改的问题。具体方法是，<strong>在hosts文件上点击鼠标右键，在弹出的选项中，点击打开”属性”</strong></li>
-<li><strong>打开hosts文件属性后，切换到“安全”选项卡，先点击选中需要更改权限的用户或应用程序包，然后点击下方的“编辑”在弹出的编辑权限操作界面，，勾选上下方的“修改”和“写入”权限，完成后，点击右下角的“应用”就可以了，直接给完全控制权限也没问题。</strong></li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210072028119.png" alt="在这里插入图片描述"></p>
-<ol start="4">
-<li><p>应用后弹出一个“Windows安全”提示框，这里我们无需理会，直接点击“是”即可</p>
-</li>
-<li><p>然后用记事本打开即可修改</p>
-</li>
-<li><p>按照<code>ip地址+空格+网址域名</code>修改</p>
-<p>如：<code>112.91.133.72 download.visualstudio.microsoft.com</code></p>
-</li>
-<li><p>如果修改hosts后不生效的话，可能是因为DNS缓存，然后我们清空DNS缓存<br>具体方法：命令行(win + R 输入cmd 按enter)输入<code>ipconfig /flushdns</code>，最好是在获取管理员权限下执行命令。</p>
-</li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210072027410.png" alt="在这里插入图片描述"></p>
-]]></content>
-      <tags>
-        <tag>hosts</tag>
       </tags>
   </entry>
   <entry>
@@ -1022,110 +1022,6 @@
       </categories>
       <tags>
         <tag>随笔</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【安装Office】 Office Tool Plus 入门教程</title>
-    <url>/2022/09/27/%E5%AE%89%E8%A3%85Office/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>安装 Office 是一件非常简单的事情，大家不必过于担心，更不必对自己没有信心。<br>本教程适用于需要全新安装 Office 的用户，若您需要修改 Office 请参阅 [<a href="https://movejian.github.io/2022/09/27/%E6%8A%80%E8%83%BD%E6%89%A9%E5%B1%95Office">技能扩展] Office Tool Plus 高级教程</a><br>任何人都可使用 Office Tool Plus 轻松地安装 Office，请认真阅读教程以避免因为疏忽出现问题。<br>如无特殊情况，文章中提到的 Windows 10 也适用于 Windows 11.</p>
-<span id="more"></span>
-
-<h3 id="1-开始使用"><a href="#1-开始使用" class="headerlink" title="1. 开始使用"></a>1. 开始使用</h3><p>请下载最新的包含框架的版本（with runtime），以确保你始终可以获得最好的体验。<br>在<a href="http://otp.landian.vip/">官网下载 Office Tool Plus</a> 后，将其解压至正常位置（例如桌面），双击 Office Tool Plus 以运行。<br>为了获得最佳体验，若 Office Tool Plus 提示有更新，请更新后继续操作。### 2. 注意事项</p>
-<h4 id="安装开始前，请知晓以下事情："><a href="#安装开始前，请知晓以下事情：" class="headerlink" title="安装开始前，请知晓以下事情："></a>安装开始前，请知晓以下事情：</h4><ol>
-<li>使用 Office Tool Plus 安装的 Office 是官方原版，非破解、非精简。</li>
-<li>教程没提到的产品就不要随便安装，别问，问就是不推荐。</li>
-<li>教程没提到的设置就不要随便乱动，别问，不懂就不要动。</li>
-<li>建议勾选下载后再部署，能避免因为网络不佳而卡住不动。</li>
-<li>安装 Office 出现问题时，请根据提供的错误信息排查问题；更详细的错误信息可以在 【工具箱】-&gt;【收集 Office 安装日志】获得。</li>
-</ol>
-<p>Office 安装程序出现问题跟我们没有太大关系哈。举个例子，你叫了个外卖，但是送到后你觉得太难吃，这能怪骑手吗？这不能。做人要讲理，不能随便污蔑别人。</p>
-<p>如果你有任何疑问，可前往 [<a href="https://movejian.github.io/2022/09/27/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94Office">疑难解答] Office Tool Plus 入门教程</a> 查看相关问题解答。</p>
-<h4 id="安装开始前，请做好以下事情："><a href="#安装开始前，请做好以下事情：" class="headerlink" title="安装开始前，请做好以下事情："></a>安装开始前，请做好以下事情：</h4><ol>
-<li>卸载 WPS，两者共存容易出问题（没有问题当我没说）。</li>
-<li>卸载旧版本 Office，按照标准流程操作，请勿直接强制移除。</li>
-<li>清除旧版本激活信息，在 [激活] -&gt; [许可证管理] -&gt; [子菜单] -&gt; [清除激活状态]。</li>
-<li>清除 Office 设置，在 [工具箱] -&gt; [重置 Office 为默认设置]。</li>
-</ol>
-<p>附图为清除激活信息：</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270128402.png" alt="清除 Office 激活信息"></p>
-<p>附图为重置 Office 的设置：</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270128335.png" alt="重置 Office 为默认设置"></p>
-<h3 id="3-部署-Office"><a href="#3-部署-Office" class="headerlink" title="3. 部署 Office"></a>3. 部署 Office</h3><p>不知道自己有没有正版 Office？个人用户 <a href="https://account.microsoft.com/services/">&gt;&gt;点击这里检查&lt;&lt;</a>，企业用户 <a href="https://portal.office.com/account/?ref=MeControl#subscriptions">&gt;&gt;点击这里检查&lt;&lt;</a>。</p>
-<p>需要使用正版 Office？<a href="https://otp.landian.vip/zh-cn/#store">点击这里查看详细信息</a>。</p>
-<p>以下提到的安装方法或者产品都是合适的（差不多），不会有任何问题，请放心使用。</p>
-<hr>
-<p>自动安装：</p>
-<h5 id="一键安装"><a href="#一键安装" class="headerlink" title="一键安装"></a>一键安装</h5><p>如果你什么都不懂，或者，你只是想要个能用的 Office，那么使用一键安装代码是最合适的：</p>
-<p>确保自己使用的是最新版的 Office Tool Plus，按下 Ctrl + Shift + P 打开命令框，输入以下命令：</p>
-<p>旧版本打开命令框的快捷方式为 Ctrl + P，最新版已修改。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270130407.png" alt="命令框"></p>
-<p>安装 Microsoft 365 企业应用版（Word, PowerPoint, Excel）：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy /addProduct O365ProPlusRetail_zh-cn_Access,Bing,Groove,Lync,OneDrive,OneNote,Outlook,Publisher,Teams /channel Current /downloadFirst</span><br></pre></td></tr></table></figure>
-
-<p>安装 Microsoft 365 企业应用版（Word, PowerPoint, Excel）+ Visio 2016：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy /addProduct O365ProPlusRetail_zh-cn_Access,Bing,Groove,Lync,OneDrive,OneNote,Outlook,Publisher,Teams /addProduct VisioProRetail_zh-cn_Groove,OneDrive /channel Current /downloadFirst</span><br></pre></td></tr></table></figure>
-
-<p>输入命令后请按回车（Enter）以执行命令，然后耐心等待安装完成。</p>
-<p>安装完成后，请务必使用 [<a href="https://movejian.github.io/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B">激活 Office] Office Tool Plus 入门教程</a> 中的一键激活代码进行激活</p>
-<hr>
-<p>手动安装：</p>
-<p>转到 Office Tool Plus 的部署页面，按照以下提示操作。</p>
-<h4 id="必须做的事情"><a href="#必须做的事情" class="headerlink" title="必须做的事情"></a>必须做的事情</h4><ol>
-<li>添加产品：看下面的选项，选一个合适自己的来学习。</li>
-<li>添加语言：点一下「添加语言」就行，软件会自动匹配合适的语言。不要把“仅部署校对工具”打勾，除非你知道这是什么。</li>
-</ol>
-<h5 id="我有正版-Office"><a href="#我有正版-Office" class="headerlink" title="我有正版 Office"></a>我有正版 Office</h5><p>如果你有 Office 正版，比如你自己购买了 Microsoft 365 家庭版，安装的时候选择这个即可。</p>
-<p>当然现在也有不少人去网上白嫖什么 365 订阅，基本都是安装 Microsoft 365 企业应用版（O365ProPlusRetail）。</p>
-<p>如果学校&#x2F;企业提供了 2019&#x2F;2021 批量许可授权，安装这个也可。</p>
-<p>无论如何，你必须要安装对应的产品，否则你将无法通过账户&#x2F;密钥激活你的 Office。</p>
-<p>如果你有 Office 的正版授权，但是没有 Visio，又想装？</p>
-<p>Office, Visio 和 Project 三个产品的授权是可以分开处理的，所以你不必担心搞 Visio 会影响 Office.</p>
-<h5 id="有什么好选择吗？"><a href="#有什么好选择吗？" class="headerlink" title="有什么好选择吗？"></a>有什么好选择吗？</h5><p>当然有啦~</p>
-<p>Office 选择：Microsoft 365 企业应用版 (O365ProPlusRetail)</p>
-<p>Visio 选择：Visio 专业版 2016 (VisioProRetail)</p>
-<p>Project 选择：Project 专业版 2016 (ProjectProRetail)</p>
-<p>当然，Visio 和 Project 是需要才选，不需要或者看不懂就不需要管啦。</p>
-<h5 id="我要安装年份版-Office（例如-Office-2021）"><a href="#我要安装年份版-Office（例如-Office-2021）" class="headerlink" title="我要安装年份版 Office（例如 Office 2021）"></a>我要安装年份版 Office（例如 Office 2021）</h5><p>有一说一，年份版没有你想的那么好的哦，如果不是强迫症建议看上面那条。</p>
-<p>针对非正版用户，你只可以安装批量许可产品以便使用 KMS 激活。</p>
-<p>安装批量版时，需要使用对应的 Office 2019&#x2F;2021 企业长期版通道，否则会无法安装。</p>
-<p>Office 2021：</p>
-<p>Office LTSC 专业增强版 2021 - 批量许可证 (ProPlus2021Volume)</p>
-<p>Visio LTSC 专业版 2021 - 批量许可证 (VisioPro2021Volume)</p>
-<p>Project 专业版 2021 - 批量许可证 (ProjectPro2021Volume)</p>
-<p>Office 2019：</p>
-<p>Office 专业增强版 2019 - 批量许可证 (ProPlus2019Volume)</p>
-<p>Visio 专业版 2019 - 批量许可证 (VisioPro2019Volume)</p>
-<p>Project 专业版 2019 - 批量许可证 (ProjectPro2019Volume)</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">PS：不要问我为什么 2021 叫 LTSC，名字是微软起的有问题问微软去。</span><br></pre></td></tr></table></figure>
-
-<h5 id="我是-Windows-7-x2F-8-x2F-8-1-用户"><a href="#我是-Windows-7-x2F-8-x2F-8-1-用户" class="headerlink" title="我是 Windows 7&#x2F;8&#x2F;8.1 用户"></a>我是 Windows 7&#x2F;8&#x2F;8.1 用户</h5><p>由于系统原因，我们推荐按照第二条选项进行处理，这样确保可以进行正常安装。</p>
-<p>不要问我 Office 2019&#x2F;2021 能不能装，问就是说不能，别人说可以的话你问别人去。</p>
-<h5 id="（额外补充内容）什么系统能装什么样的-Office？"><a href="#（额外补充内容）什么系统能装什么样的-Office？" class="headerlink" title="（额外补充内容）什么系统能装什么样的 Office？"></a>（额外补充内容）什么系统能装什么样的 Office？</h5><p>目前 Office Tool Plus 中有 Office 2016、2019、2021、365 可供安装。</p>
-<p>Windows 10 和 11 无限制，可以安装任何版本的 Office。</p>
-<p>Windows 8 和 8.1 只可以安装部分产品，如果将部署模块从「Office 部署工具」更改到「Office Tool Plus」也可以安装任意产品。</p>
-<p>Windows 7 只可以安装 Office 2016 或 365，并且只能够使用「当前通道」。即使你更改部署模块，Office 2019&#x2F;2021 也不一定能安装成功。</p>
-<p>如果你的安装包是从别的地方下载的，那，那就别来问我，我也不知道你下载的是什么。</p>
-<h4 id="可以做的事情"><a href="#可以做的事情" class="headerlink" title="可以做的事情"></a>可以做的事情</h4><ol>
-<li>应用程序：选自己能看懂的就行，一般就是 Word, PowerPoint, Excel.</li>
-<li>通道：“当前通道”就行，Office 2019&#x2F;2021 批量许可证请选 Office 2019&#x2F;2021 企业长期版。</li>
-<li>体系结构：32 位兼容性好；64 位兼容性稍差且体积大，但处理大数据能力稍强。</li>
-<li>部署模式：那肯定要选安装啊，要不然怎么安装。</li>
-<li>安装模块：如没有特殊要求，请勿选择 Office Tool Plus.</li>
-<li>下载后再部署：如果网不行，最好把这个选上，免得安装卡进度卡半天。</li>
-</ol>
-<p>产品和语言弄好后即可开始部署 Office，其余设置不需要更改。</p>
-<p>部署时请耐心等待，不要强制结束安装程序或重启计算机。</p>
-<h3 id="4-视频教程"><a href="#4-视频教程" class="headerlink" title="4. 视频教程"></a>4. 视频教程</h3><p>视频教程更新不及时，建议看本文即可。</p>
-<p>bilibili：<a href="https://www.bilibili.com/video/BV1eU4y1V7NU">https://www.bilibili.com/video/BV1eU4y1V7NU</a></p>
-<p>YouTube：<a href="https://www.youtube.com/watch?v=p90V9_D-8Go">https://www.youtube.com/watch?v=p90V9_D-8Go</a></p>
-<h3 id="5-离线安装包"><a href="#5-离线安装包" class="headerlink" title="5. 离线安装包"></a>5. 离线安装包</h3><p>如果因为网络问题下载缓慢或者无法下载 Office，你可以下载 ISO 文件使用。</p>
-<p><a href="https://otp.landian.vip/zh-cn/download.html">下载站点</a>（云图小镇、OneDrive）中包含有 Office ISO.</p>
-<p>Office ISO 文件不需要解压，双击打开即可挂载使用（Win 7 除外）。</p>
-<h3 id="6-激活-Office"><a href="#6-激活-Office" class="headerlink" title="6. 激活 Office"></a>6. 激活 Office</h3><p>如果你是正版用户，一般情况下是不需要借助 Office Tool Plus 激活 Office 的，在 Office 应用程序中登录自己的微软账号，或者输入你的正版密钥即可激活 Office。</p>
-<p><a href="https://movejian.github.io/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B">【点击此处】前往另一个教程查看如何激活 Office</a></p>
-]]></content>
-      <tags>
-        <tag>Office</tag>
       </tags>
   </entry>
   <entry>
@@ -1236,6 +1132,110 @@
       </tags>
   </entry>
   <entry>
+    <title>【安装Office】 Office Tool Plus 入门教程</title>
+    <url>/2022/09/27/%E5%AE%89%E8%A3%85Office/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>安装 Office 是一件非常简单的事情，大家不必过于担心，更不必对自己没有信心。<br>本教程适用于需要全新安装 Office 的用户，若您需要修改 Office 请参阅 [<a href="https://movejian.github.io/2022/09/27/%E6%8A%80%E8%83%BD%E6%89%A9%E5%B1%95Office">技能扩展] Office Tool Plus 高级教程</a><br>任何人都可使用 Office Tool Plus 轻松地安装 Office，请认真阅读教程以避免因为疏忽出现问题。<br>如无特殊情况，文章中提到的 Windows 10 也适用于 Windows 11.</p>
+<span id="more"></span>
+
+<h3 id="1-开始使用"><a href="#1-开始使用" class="headerlink" title="1. 开始使用"></a>1. 开始使用</h3><p>请下载最新的包含框架的版本（with runtime），以确保你始终可以获得最好的体验。<br>在<a href="http://otp.landian.vip/">官网下载 Office Tool Plus</a> 后，将其解压至正常位置（例如桌面），双击 Office Tool Plus 以运行。<br>为了获得最佳体验，若 Office Tool Plus 提示有更新，请更新后继续操作。### 2. 注意事项</p>
+<h4 id="安装开始前，请知晓以下事情："><a href="#安装开始前，请知晓以下事情：" class="headerlink" title="安装开始前，请知晓以下事情："></a>安装开始前，请知晓以下事情：</h4><ol>
+<li>使用 Office Tool Plus 安装的 Office 是官方原版，非破解、非精简。</li>
+<li>教程没提到的产品就不要随便安装，别问，问就是不推荐。</li>
+<li>教程没提到的设置就不要随便乱动，别问，不懂就不要动。</li>
+<li>建议勾选下载后再部署，能避免因为网络不佳而卡住不动。</li>
+<li>安装 Office 出现问题时，请根据提供的错误信息排查问题；更详细的错误信息可以在 【工具箱】-&gt;【收集 Office 安装日志】获得。</li>
+</ol>
+<p>Office 安装程序出现问题跟我们没有太大关系哈。举个例子，你叫了个外卖，但是送到后你觉得太难吃，这能怪骑手吗？这不能。做人要讲理，不能随便污蔑别人。</p>
+<p>如果你有任何疑问，可前往 [<a href="https://movejian.github.io/2022/09/27/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94Office">疑难解答] Office Tool Plus 入门教程</a> 查看相关问题解答。</p>
+<h4 id="安装开始前，请做好以下事情："><a href="#安装开始前，请做好以下事情：" class="headerlink" title="安装开始前，请做好以下事情："></a>安装开始前，请做好以下事情：</h4><ol>
+<li>卸载 WPS，两者共存容易出问题（没有问题当我没说）。</li>
+<li>卸载旧版本 Office，按照标准流程操作，请勿直接强制移除。</li>
+<li>清除旧版本激活信息，在 [激活] -&gt; [许可证管理] -&gt; [子菜单] -&gt; [清除激活状态]。</li>
+<li>清除 Office 设置，在 [工具箱] -&gt; [重置 Office 为默认设置]。</li>
+</ol>
+<p>附图为清除激活信息：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270128402.png" alt="清除 Office 激活信息"></p>
+<p>附图为重置 Office 的设置：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270128335.png" alt="重置 Office 为默认设置"></p>
+<h3 id="3-部署-Office"><a href="#3-部署-Office" class="headerlink" title="3. 部署 Office"></a>3. 部署 Office</h3><p>不知道自己有没有正版 Office？个人用户 <a href="https://account.microsoft.com/services/">&gt;&gt;点击这里检查&lt;&lt;</a>，企业用户 <a href="https://portal.office.com/account/?ref=MeControl#subscriptions">&gt;&gt;点击这里检查&lt;&lt;</a>。</p>
+<p>需要使用正版 Office？<a href="https://otp.landian.vip/zh-cn/#store">点击这里查看详细信息</a>。</p>
+<p>以下提到的安装方法或者产品都是合适的（差不多），不会有任何问题，请放心使用。</p>
+<hr>
+<p>自动安装：</p>
+<h5 id="一键安装"><a href="#一键安装" class="headerlink" title="一键安装"></a>一键安装</h5><p>如果你什么都不懂，或者，你只是想要个能用的 Office，那么使用一键安装代码是最合适的：</p>
+<p>确保自己使用的是最新版的 Office Tool Plus，按下 Ctrl + Shift + P 打开命令框，输入以下命令：</p>
+<p>旧版本打开命令框的快捷方式为 Ctrl + P，最新版已修改。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270130407.png" alt="命令框"></p>
+<p>安装 Microsoft 365 企业应用版（Word, PowerPoint, Excel）：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy /addProduct O365ProPlusRetail_zh-cn_Access,Bing,Groove,Lync,OneDrive,OneNote,Outlook,Publisher,Teams /channel Current /downloadFirst</span><br></pre></td></tr></table></figure>
+
+<p>安装 Microsoft 365 企业应用版（Word, PowerPoint, Excel）+ Visio 2016：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy /addProduct O365ProPlusRetail_zh-cn_Access,Bing,Groove,Lync,OneDrive,OneNote,Outlook,Publisher,Teams /addProduct VisioProRetail_zh-cn_Groove,OneDrive /channel Current /downloadFirst</span><br></pre></td></tr></table></figure>
+
+<p>输入命令后请按回车（Enter）以执行命令，然后耐心等待安装完成。</p>
+<p>安装完成后，请务必使用 [<a href="https://movejian.github.io/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B">激活 Office] Office Tool Plus 入门教程</a> 中的一键激活代码进行激活</p>
+<hr>
+<p>手动安装：</p>
+<p>转到 Office Tool Plus 的部署页面，按照以下提示操作。</p>
+<h4 id="必须做的事情"><a href="#必须做的事情" class="headerlink" title="必须做的事情"></a>必须做的事情</h4><ol>
+<li>添加产品：看下面的选项，选一个合适自己的来学习。</li>
+<li>添加语言：点一下「添加语言」就行，软件会自动匹配合适的语言。不要把“仅部署校对工具”打勾，除非你知道这是什么。</li>
+</ol>
+<h5 id="我有正版-Office"><a href="#我有正版-Office" class="headerlink" title="我有正版 Office"></a>我有正版 Office</h5><p>如果你有 Office 正版，比如你自己购买了 Microsoft 365 家庭版，安装的时候选择这个即可。</p>
+<p>当然现在也有不少人去网上白嫖什么 365 订阅，基本都是安装 Microsoft 365 企业应用版（O365ProPlusRetail）。</p>
+<p>如果学校&#x2F;企业提供了 2019&#x2F;2021 批量许可授权，安装这个也可。</p>
+<p>无论如何，你必须要安装对应的产品，否则你将无法通过账户&#x2F;密钥激活你的 Office。</p>
+<p>如果你有 Office 的正版授权，但是没有 Visio，又想装？</p>
+<p>Office, Visio 和 Project 三个产品的授权是可以分开处理的，所以你不必担心搞 Visio 会影响 Office.</p>
+<h5 id="有什么好选择吗？"><a href="#有什么好选择吗？" class="headerlink" title="有什么好选择吗？"></a>有什么好选择吗？</h5><p>当然有啦~</p>
+<p>Office 选择：Microsoft 365 企业应用版 (O365ProPlusRetail)</p>
+<p>Visio 选择：Visio 专业版 2016 (VisioProRetail)</p>
+<p>Project 选择：Project 专业版 2016 (ProjectProRetail)</p>
+<p>当然，Visio 和 Project 是需要才选，不需要或者看不懂就不需要管啦。</p>
+<h5 id="我要安装年份版-Office（例如-Office-2021）"><a href="#我要安装年份版-Office（例如-Office-2021）" class="headerlink" title="我要安装年份版 Office（例如 Office 2021）"></a>我要安装年份版 Office（例如 Office 2021）</h5><p>有一说一，年份版没有你想的那么好的哦，如果不是强迫症建议看上面那条。</p>
+<p>针对非正版用户，你只可以安装批量许可产品以便使用 KMS 激活。</p>
+<p>安装批量版时，需要使用对应的 Office 2019&#x2F;2021 企业长期版通道，否则会无法安装。</p>
+<p>Office 2021：</p>
+<p>Office LTSC 专业增强版 2021 - 批量许可证 (ProPlus2021Volume)</p>
+<p>Visio LTSC 专业版 2021 - 批量许可证 (VisioPro2021Volume)</p>
+<p>Project 专业版 2021 - 批量许可证 (ProjectPro2021Volume)</p>
+<p>Office 2019：</p>
+<p>Office 专业增强版 2019 - 批量许可证 (ProPlus2019Volume)</p>
+<p>Visio 专业版 2019 - 批量许可证 (VisioPro2019Volume)</p>
+<p>Project 专业版 2019 - 批量许可证 (ProjectPro2019Volume)</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">PS：不要问我为什么 2021 叫 LTSC，名字是微软起的有问题问微软去。</span><br></pre></td></tr></table></figure>
+
+<h5 id="我是-Windows-7-x2F-8-x2F-8-1-用户"><a href="#我是-Windows-7-x2F-8-x2F-8-1-用户" class="headerlink" title="我是 Windows 7&#x2F;8&#x2F;8.1 用户"></a>我是 Windows 7&#x2F;8&#x2F;8.1 用户</h5><p>由于系统原因，我们推荐按照第二条选项进行处理，这样确保可以进行正常安装。</p>
+<p>不要问我 Office 2019&#x2F;2021 能不能装，问就是说不能，别人说可以的话你问别人去。</p>
+<h5 id="（额外补充内容）什么系统能装什么样的-Office？"><a href="#（额外补充内容）什么系统能装什么样的-Office？" class="headerlink" title="（额外补充内容）什么系统能装什么样的 Office？"></a>（额外补充内容）什么系统能装什么样的 Office？</h5><p>目前 Office Tool Plus 中有 Office 2016、2019、2021、365 可供安装。</p>
+<p>Windows 10 和 11 无限制，可以安装任何版本的 Office。</p>
+<p>Windows 8 和 8.1 只可以安装部分产品，如果将部署模块从「Office 部署工具」更改到「Office Tool Plus」也可以安装任意产品。</p>
+<p>Windows 7 只可以安装 Office 2016 或 365，并且只能够使用「当前通道」。即使你更改部署模块，Office 2019&#x2F;2021 也不一定能安装成功。</p>
+<p>如果你的安装包是从别的地方下载的，那，那就别来问我，我也不知道你下载的是什么。</p>
+<h4 id="可以做的事情"><a href="#可以做的事情" class="headerlink" title="可以做的事情"></a>可以做的事情</h4><ol>
+<li>应用程序：选自己能看懂的就行，一般就是 Word, PowerPoint, Excel.</li>
+<li>通道：“当前通道”就行，Office 2019&#x2F;2021 批量许可证请选 Office 2019&#x2F;2021 企业长期版。</li>
+<li>体系结构：32 位兼容性好；64 位兼容性稍差且体积大，但处理大数据能力稍强。</li>
+<li>部署模式：那肯定要选安装啊，要不然怎么安装。</li>
+<li>安装模块：如没有特殊要求，请勿选择 Office Tool Plus.</li>
+<li>下载后再部署：如果网不行，最好把这个选上，免得安装卡进度卡半天。</li>
+</ol>
+<p>产品和语言弄好后即可开始部署 Office，其余设置不需要更改。</p>
+<p>部署时请耐心等待，不要强制结束安装程序或重启计算机。</p>
+<h3 id="4-视频教程"><a href="#4-视频教程" class="headerlink" title="4. 视频教程"></a>4. 视频教程</h3><p>视频教程更新不及时，建议看本文即可。</p>
+<p>bilibili：<a href="https://www.bilibili.com/video/BV1eU4y1V7NU">https://www.bilibili.com/video/BV1eU4y1V7NU</a></p>
+<p>YouTube：<a href="https://www.youtube.com/watch?v=p90V9_D-8Go">https://www.youtube.com/watch?v=p90V9_D-8Go</a></p>
+<h3 id="5-离线安装包"><a href="#5-离线安装包" class="headerlink" title="5. 离线安装包"></a>5. 离线安装包</h3><p>如果因为网络问题下载缓慢或者无法下载 Office，你可以下载 ISO 文件使用。</p>
+<p><a href="https://otp.landian.vip/zh-cn/download.html">下载站点</a>（云图小镇、OneDrive）中包含有 Office ISO.</p>
+<p>Office ISO 文件不需要解压，双击打开即可挂载使用（Win 7 除外）。</p>
+<h3 id="6-激活-Office"><a href="#6-激活-Office" class="headerlink" title="6. 激活 Office"></a>6. 激活 Office</h3><p>如果你是正版用户，一般情况下是不需要借助 Office Tool Plus 激活 Office 的，在 Office 应用程序中登录自己的微软账号，或者输入你的正版密钥即可激活 Office。</p>
+<p><a href="https://movejian.github.io/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B">【点击此处】前往另一个教程查看如何激活 Office</a></p>
+]]></content>
+      <tags>
+        <tag>Office</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>实战kali破解wifi密码 全网最详细的保姆级教程</title>
     <url>/2022/09/21/%E5%AE%9E%E6%88%98kali%E7%A0%B4%E8%A7%A3wifi%E5%AF%86%E7%A0%81/</url>
     <content><![CDATA[<h2 id="kali官网"><a href="#kali官网" class="headerlink" title="kali官网"></a>kali官网</h2><hr>
@@ -1320,19 +1320,6 @@
       </tags>
   </entry>
   <entry>
-    <title>愿你编码半生，归来仍是少年</title>
-    <url>/2019/10/21/%E6%84%BF%E4%BD%A0%E7%BC%96%E7%A0%81%E5%8D%8A%E7%94%9F%EF%BC%8C%E5%BD%92%E6%9D%A5%E4%BB%8D%E6%98%AF%E5%B0%91%E5%B9%B4/</url>
-    <content><![CDATA[<h4 id="Hello-World-不巧，我也在等你。"><a href="#Hello-World-不巧，我也在等你。" class="headerlink" title="Hello,World.不巧，我也在等你。"></a>Hello,World.不巧，我也在等你。</h4><p>​      有人说自己被社会磨平了棱角，泯灭了心性，受生活所迫，“都说是为生活所迫，生活缺从来没有被抓过；都说被社会磨去棱角，社会之恶至今无法逃脱”，我们都有权利选择自己想成为的人，并不是由社会说了算，我们都曾年少，我们都曾有棱角，社会的熔炉却在不断的炼化我们，到底是磨平了棱角，还是磨成了钢刀，就让时间来见证吧！</p>
-<p>​      常年混迹于各大网络社区，也曾愤青，如今独爱云淡风轻，只愿在滚滚红尘中揽得风花雪月独醉。</p>
-<h4 id="感谢你的到来。"><a href="#感谢你的到来。" class="headerlink" title="感谢你的到来。"></a>感谢你的到来。</h4><span id="more"></span>
-
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/8.jpg" alt="8"></p>
-]]></content>
-      <tags>
-        <tag>随心</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>将Windows的文档目录迁移到其他盘下</title>
     <url>/2022/10/08/%E5%B0%86Windows%E7%9A%84%E6%96%87%E6%A1%A3%E7%9B%AE%E5%BD%95%E8%BF%81%E7%A7%BB%E5%88%B0%E5%85%B6%E4%BB%96%E7%9B%98%E4%B8%8B/</url>
     <content><![CDATA[<p>问题描述<br>C盘（系统盘）爆红，检查了一下<code>C:\Users\</code>我的用户名 快<code>100G</code>，除了正常的 <code>下载（Downloads）</code>、<code>文档（Documents）</code>、<code>图片（Pictures）</code>等等几个目录外，还有一个隐藏目录 <code>AppData</code> ，将近70G的一个目录。<code>C:\Users\用户名\AppData</code>里面一般有三个文件夹，分别是 <code>Local </code>，<code>LocalLow</code> ，<code>Roaming</code>，简单地来说，都是用来存放软件的配置文件和临时文件的，里面有很多以软件名称或软件公司命名的文件夹，还有用户帐户的配置文件。随着系统使用时间的增加和安装软件的增多，<code>AppData</code> 占用的空间会越来越大。</p>
@@ -1399,6 +1386,19 @@
       </categories>
       <tags>
         <tag>Win</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>愿你编码半生，归来仍是少年</title>
+    <url>/2019/10/21/%E6%84%BF%E4%BD%A0%E7%BC%96%E7%A0%81%E5%8D%8A%E7%94%9F%EF%BC%8C%E5%BD%92%E6%9D%A5%E4%BB%8D%E6%98%AF%E5%B0%91%E5%B9%B4/</url>
+    <content><![CDATA[<h4 id="Hello-World-不巧，我也在等你。"><a href="#Hello-World-不巧，我也在等你。" class="headerlink" title="Hello,World.不巧，我也在等你。"></a>Hello,World.不巧，我也在等你。</h4><p>​      有人说自己被社会磨平了棱角，泯灭了心性，受生活所迫，“都说是为生活所迫，生活缺从来没有被抓过；都说被社会磨去棱角，社会之恶至今无法逃脱”，我们都有权利选择自己想成为的人，并不是由社会说了算，我们都曾年少，我们都曾有棱角，社会的熔炉却在不断的炼化我们，到底是磨平了棱角，还是磨成了钢刀，就让时间来见证吧！</p>
+<p>​      常年混迹于各大网络社区，也曾愤青，如今独爱云淡风轻，只愿在滚滚红尘中揽得风花雪月独醉。</p>
+<h4 id="感谢你的到来。"><a href="#感谢你的到来。" class="headerlink" title="感谢你的到来。"></a>感谢你的到来。</h4><span id="more"></span>
+
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/8.jpg" alt="8"></p>
+]]></content>
+      <tags>
+        <tag>随心</tag>
       </tags>
   </entry>
   <entry>
@@ -1682,37 +1682,6 @@
       </tags>
   </entry>
   <entry>
-    <title>祖玛阁全地图走法汇总</title>
-    <url>/2022/10/03/%E7%A5%96%E7%8E%9B%E9%98%81%E5%85%A8%E5%9C%B0%E5%9B%BE%E8%B5%B0%E6%B3%95%E6%B1%87%E6%80%BB/</url>
-    <content><![CDATA[<p>在传奇游戏中祖玛阁是一个迷宫式的地图，玩家需要走出正确的进行路线才能前往下一层，每一个不同的走法都可能抵达不同的地点。熟悉走法的玩家来说这就是一个高效的练级圣地，对于不熟悉的玩家来说纵膈总共108个房间的祖玛阁怎么走?是最困扰玩家的问题之一。</p>
-<span id="more"></span>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210031640196.jpeg" alt="img"></p>
-<p>祖玛阁怎么走</p>
-<p>祖玛阁五层到祖玛阁六层：左、上、上、上、右;</p>
-<p>祖玛阁六层到祖玛阁五层：上、上、上、上、上、下;</p>
-<p>祖玛阁五层到祖玛阁药店：右、左;</p>
-<p>祖玛阁六层到祖玛阁药店：左、左、上、左;</p>
-<p>祖玛阁药店到祖玛阁五层：左、左、左、左、上、上、上、下;</p>
-<p>祖玛阁药店到祖玛阁六层：右、右、左、右、右;</p>
-<p>祖玛阁七层到祖玛阁药店：上、左、左、左、上、左;</p>
-<p>祖玛阁药店到祖玛阁五层：左、左、左、左、上、上、上、下;</p>
-<p>祖玛阁药店到祖玛阁七层：上、下、下、上、下、上、下、上、右;</p>
-<p>祖玛阁五层到祖玛阁七层：左、上、上、上、右;</p>
-<p>祖玛七层到祖玛阁五层：上、上、上、上、上、下</p>
-<p>祖玛阁中任意房间都可以到祖玛阁药店，一直往左走，直到看见有2个卫士的房间后，再向上走，再向左走。如果还是没有看见药店，重复这种走法，最多3次即可抵达祖玛阁药店。</p>
-<p>以上就是本站为玩家带来的祖玛阁走法攻略，希望能对不会走祖玛阁的玩家提供帮助！</p>
-<p>再给玩家们上一张坐标地图</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210031704767.webp"></p>
-]]></content>
-      <categories>
-        <category>游戏</category>
-        <category>传奇</category>
-      </categories>
-      <tags>
-        <tag>传奇</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>【疑难解答】 Office Tool Plus 入门教程</title>
     <url>/2022/09/27/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94Office/</url>
     <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>如果你的系统本身就有诸多毛病，建议直接重装原版系统，这是最有效最快的解决办法。</p>
@@ -1841,6 +1810,37 @@
 ]]></content>
       <tags>
         <tag>Office</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>祖玛阁全地图走法汇总</title>
+    <url>/2022/10/03/%E7%A5%96%E7%8E%9B%E9%98%81%E5%85%A8%E5%9C%B0%E5%9B%BE%E8%B5%B0%E6%B3%95%E6%B1%87%E6%80%BB/</url>
+    <content><![CDATA[<p>在传奇游戏中祖玛阁是一个迷宫式的地图，玩家需要走出正确的进行路线才能前往下一层，每一个不同的走法都可能抵达不同的地点。熟悉走法的玩家来说这就是一个高效的练级圣地，对于不熟悉的玩家来说纵膈总共108个房间的祖玛阁怎么走?是最困扰玩家的问题之一。</p>
+<span id="more"></span>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210031640196.jpeg" alt="img"></p>
+<p>祖玛阁怎么走</p>
+<p>祖玛阁五层到祖玛阁六层：左、上、上、上、右;</p>
+<p>祖玛阁六层到祖玛阁五层：上、上、上、上、上、下;</p>
+<p>祖玛阁五层到祖玛阁药店：右、左;</p>
+<p>祖玛阁六层到祖玛阁药店：左、左、上、左;</p>
+<p>祖玛阁药店到祖玛阁五层：左、左、左、左、上、上、上、下;</p>
+<p>祖玛阁药店到祖玛阁六层：右、右、左、右、右;</p>
+<p>祖玛阁七层到祖玛阁药店：上、左、左、左、上、左;</p>
+<p>祖玛阁药店到祖玛阁五层：左、左、左、左、上、上、上、下;</p>
+<p>祖玛阁药店到祖玛阁七层：上、下、下、上、下、上、下、上、右;</p>
+<p>祖玛阁五层到祖玛阁七层：左、上、上、上、右;</p>
+<p>祖玛七层到祖玛阁五层：上、上、上、上、上、下</p>
+<p>祖玛阁中任意房间都可以到祖玛阁药店，一直往左走，直到看见有2个卫士的房间后，再向上走，再向左走。如果还是没有看见药店，重复这种走法，最多3次即可抵达祖玛阁药店。</p>
+<p>以上就是本站为玩家带来的祖玛阁走法攻略，希望能对不会走祖玛阁的玩家提供帮助！</p>
+<p>再给玩家们上一张坐标地图</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210031704767.webp"></p>
+]]></content>
+      <categories>
+        <category>游戏</category>
+        <category>传奇</category>
+      </categories>
+      <tags>
+        <tag>传奇</tag>
       </tags>
   </entry>
   <entry>
