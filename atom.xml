@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-10-08T13:40:13.101Z</updated>
+  <updated>2022-10-24T12:42:30.575Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>程序员的青春饭</title>
+    <link href="http://example.com/2022/10/24/%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E9%9D%92%E6%98%A5%E9%A5%AD/"/>
+    <id>http://example.com/2022/10/24/%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E9%9D%92%E6%98%A5%E9%A5%AD/</id>
+    <published>2022-10-24T12:31:26.000Z</published>
+    <updated>2022-10-24T12:42:30.575Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/movejian/images/main/movejian/images202210242036293.png&quot; alt=&quot;img&quot;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;　　&amp;gt; 　　在程序员节这一天，我们与多位从业者进行了探讨。他们中很多人存在焦虑，尤其到了中年，面对职场与家庭的重重压力，他们的生活真的有不堪吗？&lt;/p&gt;
+&lt;/blockquote&gt;</summary>
+    
+    
+    
+    
+    <category term="随笔" scheme="http://example.com/tags/%E9%9A%8F%E7%AC%94/"/>
+    
+  </entry>
   
   <entry>
     <title>将Windows的文档目录迁移到其他盘下</title>
@@ -405,30 +425,6 @@
     
     
     <category term="技术" scheme="http://example.com/tags/%E6%8A%80%E6%9C%AF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux查看硬件信息与系统资源</title>
-    <link href="http://example.com/2022/09/06/Linux%E6%9F%A5%E7%9C%8B%E7%A1%AC%E4%BB%B6%E4%BF%A1%E6%81%AF%E4%B8%8E%E7%B3%BB%E7%BB%9F%E8%B5%84%E6%BA%90/"/>
-    <id>http://example.com/2022/09/06/Linux%E6%9F%A5%E7%9C%8B%E7%A1%AC%E4%BB%B6%E4%BF%A1%E6%81%AF%E4%B8%8E%E7%B3%BB%E7%BB%9F%E8%B5%84%E6%BA%90/</id>
-    <published>2022-09-06T10:04:30.000Z</published>
-    <updated>2022-09-08T11:35:32.161Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;Linux下经常需要查看系统资源或硬件资源，与之对应的命令行也是非常多&lt;/p&gt;
-&lt;p&gt;本文将根据使用经验，将常见的查询方法总结罗列一遍以供参考&lt;/p&gt;
-&lt;p&gt;以下指令以Ubuntu1804、Cent7OS作为测试平台&lt;/p&gt;
-&lt;h2 id=&quot;1-系统资源&quot;&gt;&lt;a href=&quot;#1-系统资源&quot; class=&quot;headerlink&quot; title=&quot;1. 系统资源&quot;&gt;&lt;/a&gt;1. 系统资源&lt;/h2&gt;&lt;h3 id=&quot;1-1-Linux发行版与内核&quot;&gt;&lt;a href=&quot;#1-1-Linux发行版与内核&quot; class=&quot;headerlink&quot; title=&quot;1.1. Linux发行版与内核&quot;&gt;&lt;/a&gt;1.1. Linux发行版与内核&lt;/h3&gt;&lt;p&gt;&lt;code&gt;uname -r&lt;/code&gt;命令输出发行版与内核信息，大部分发行版基本均带有此命令，但输出中未必包含发行版全称信息&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="学习" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/"/>
-    
-    <category term="Linux" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/Linux/"/>
-    
-    
-    <category term="Linux" scheme="http://example.com/tags/Linux/"/>
     
   </entry>
   
