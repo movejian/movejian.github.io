@@ -294,92 +294,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux中的挂载命令mount</title>
-    <url>/2022/09/21/Linux%E4%B8%AD%E7%9A%84%E6%8C%82%E8%BD%BD%E5%91%BD%E4%BB%A4mount/</url>
-    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在 Linux GUI 中，我们通常理所当然地认为，当我们插入 USB 闪存驱动器、硬盘驱动器甚至 DVD 磁盘时，它们就可以使用了。但是在后台有一个过程，设备被安装（准备好使用）并分配了一个安装点。当使用服务器或远程连接时，并不能确定某个设备是否会自动可用，那么我们如何挂载自己的设备呢？下面我们一起来看一下！</p>
-<span id="more"></span>
-<h3 id="mount是什么？"><a href="#mount是什么？" class="headerlink" title="mount是什么？"></a>mount是什么？</h3><p>Linux文件系统中的所有文件都以<code>/ </code>为根的大树的形式排列。这些文件可以根据您的分区表分布在各种设备上，最初你的父目录安装（即附加）到这棵树的<code>/</code> ，其他的可以手动挂载使用<code>GUI</code>界面（如果可用）或使用挂载命令。</p>
-<p><code>mount</code>命令用于将设备上找到的文件系统挂载到以 <code>/</code> 为根的大树结构（Linux文件系统）上。相反，另一个命令<code>umount</code>可用于从树中分离这些设备。</p>
-<h3 id="mount的初级用法"><a href="#mount的初级用法" class="headerlink" title="mount的初级用法"></a>mount的初级用法</h3><p><code>mount</code>命令挂载存储设备或文件系统，使其可访问并将其附加到现有目录结构。</p>
-<h4 id="语法："><a href="#语法：" class="headerlink" title="语法："></a>语法：</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mount -t 类型设备目录</span><br></pre></td></tr></table></figure>
-
-<p>这告诉内核将设备上找到的文件系统（类型为type）附加到目录<code>dir</code>。<code>dir</code>之前的内容（如果有）、<code>owner</code>和<code>mode</code>变得不可见，只要这个文件系统保持挂载，路径名dir指的是设备上文件系统的根目录。如果没有提到目标目录，默认情况下，它将设备挂载在 <code>/etc/fstab</code> 文件中。</p>
-<h4 id="其他形式："><a href="#其他形式：" class="headerlink" title="其他形式："></a>其他形式：</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mount [-l|-h|-V]</span><br><span class="line">mount -a [-fFnrsvw] [-t fstype] [-O optlist]</span><br><span class="line">mount [-fnrsvw] [-o options] device|dir</span><br><span class="line">mount [-fnrsvw] [-t fstype] [-o options] device dir</span><br></pre></td></tr></table></figure>
-
-<p>这些命令告诉内核将在设备上找到的文件系统附加到<code>dir</code>。</p>
-<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><p>要将硬盘驱动器的第二个分区挂载到现有目录<code>/media/PHOTOS</code>（挂载点）：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mount /dev/hda2 /media/PHOTOS</span><br></pre></td></tr></table></figure>
-
-<p> 显示所有已安装的分区：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mount</span><br><span class="line">proc on /proc type proc (rw) </span><br><span class="line">sysfs on /sys type sysfs (rw) </span><br><span class="line">devpts on /dev/pts type devpts (rw,gid=5,mode=620) </span><br><span class="line">/dev/sda1 on /boot type ext3 (rw ) </span><br><span class="line">/tmp on /var/tmp type none (rw,noexec,nosuid,bind) </span><br><span class="line">10.4.0.4:/srv/export/setup_server on /nfs/setup_server type nfs (ro,addr=10.4.0.4)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>如果需要卸载刚才的分区：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ umount /dev/hda2</span><br></pre></td></tr></table></figure>
-
-<p>参照挂载点卸载：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ umount /media/PHOTOS</span><br></pre></td></tr></table></figure>
-
-<p>使用特定选项重新挂载分区：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mount -o remount,rw /dev/hda2</span><br></pre></td></tr></table></figure>
-
-<h3 id="umount的初级用法"><a href="#umount的初级用法" class="headerlink" title="umount的初级用法"></a>umount的初级用法</h3><p><code>umount</code>命令从文件层次结构中分离指定的文件系统。一个文件系统是通过给出它被安装的目录来指定的。提供文件系统所在的特殊设备也可以工作，但这是一种过时的方法，主要是因为如果该设备安装在多个目录上，它会失败。</p>
-<p>但是需要注意，文件系统在繁忙时无法卸载 。例如，当它上面有打开的文件时，或者当某个进程在那里有它的工作目录时，或者当它上面的交换文件正在使用时，<code>umount</code>将无法成功。</p>
-<p>有些无法使用<code>umount</code>的进程甚至可能是<code>umount</code>本身——例如，<code>umount</code>打开公共C库，而后者又可能打开了语言环境文件，如果它们在相关设备上，则会阻止它被卸载。即使出现这种冲突，“惰性”卸载（参见下面卸载选项部分中的-l ）也会尝试卸载。</p>
-<h3 id="高级用法"><a href="#高级用法" class="headerlink" title="高级用法"></a>高级用法</h3><ul>
-<li>显示有关已安装文件系统的信息：</li>
-</ul>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210149077.png"></p>
-<ul>
-<li>挂载文件系统：</li>
-</ul>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210150279.png"></p>
-<ul>
-<li><p>显示版本信息：</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210151979.png"></p>
-</li>
-<li><p>卸载文件系统：</p>
-</li>
-</ul>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210151025.png"></p>
-<h3 id="绑定挂载"><a href="#绑定挂载" class="headerlink" title="绑定挂载"></a>绑定挂载</h3><p>绑定挂载允许将文件系统层次结构或文件挂载到不同的挂载点。与符号链接不同，文件系统本身不存在绑定挂载。在下面的例子中，路径&#x2F;olddir将被挂载在<code>/newdir</code></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mount --bind /olddir /newdir</span><br></pre></td></tr></table></figure>
-
-<h3 id="如何在-Linux-上挂载和卸载驱动器"><a href="#如何在-Linux-上挂载和卸载驱动器" class="headerlink" title="如何在 Linux 上挂载和卸载驱动器"></a>如何在 Linux 上挂载和卸载驱动器</h3><p>可以使用终端安装 SSD、USB 闪存驱动器、HDD 和 ISO 映像。在终端仿真器中使用命令行界面 (CLI) 可以让我们更好地控制何时安装驱动器以及它们在文件系统中的安装位置。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210123639.png"></p>
-<ol>
-<li>使用<code>lsblk</code>命令识别 USB 驱动器。在结果中，您可能会看到许多标记为“循环”的条目。但是，您正在寻找被列为<code>sda</code>或<code>sdb</code>的结果，以识别连接到您的系统的物理磁盘。比较所连接驱动器的列出容量通常可以帮助您发现目标驱动器的名称。在我们的例子中，我们可以将 USB 驱动器识别为 <code>sdb1</code>。</li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210123811.png"></p>
-<ol start="2">
-<li>创建一个目录来挂载 USB 驱动器。当外部驱动器自动挂载时，它通常挂载在媒体目录中。但是使用 CLI，我们可以创建并指定一个目录，我们将在其中挂载我们的 <code>pendrive</code>。请注意，我们需要使用<code>sudo</code>来调用<code>root</code>权限，以便在媒体目录中创建一个目录。</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo mkdir /media/pendrive</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>使用<code>mount</code>命令将 U 盘挂载到<code>/media/pendrive</code>目录。<code>mount</code>命令具有以下语法；</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo mount /dev/sdb1 /media/pendrive</span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li><p>通过重新运行<code>lsblk</code>检查驱动器是否已安装。</p>
-<blockquote>
-<p>请注意， <code>lsblk</code>输出中的最后一列列出了列出设备的挂载点，如果列出了挂载点，则确认该设备已挂载。</p>
-</blockquote>
-</li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210124550.png"></p>
-<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>使用<code>mount</code>命令我们可以更好地控制在 Linux 中挂载和卸载磁盘，并掌握一些技巧，在连接的驱动器无法自动正确挂载时可能会有所帮助。</p>
-<p>在探索以前使用的系统的旧备份映像或想要查看 Linux 发行版映像内容以进行探索或学习时，能够使用循环设备挂载磁盘映像非常有用。</p>
-]]></content>
-      <categories>
-        <category>学习</category>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Linux查看硬件信息与系统资源</title>
     <url>/2022/09/06/Linux%E6%9F%A5%E7%9C%8B%E7%A1%AC%E4%BB%B6%E4%BF%A1%E6%81%AF%E4%B8%8E%E7%B3%BB%E7%BB%9F%E8%B5%84%E6%BA%90/</url>
     <content><![CDATA[<p>Linux下经常需要查看系统资源或硬件资源，与之对应的命令行也是非常多</p>
@@ -578,6 +492,92 @@
       </tags>
   </entry>
   <entry>
+    <title>Linux中的挂载命令mount</title>
+    <url>/2022/09/21/Linux%E4%B8%AD%E7%9A%84%E6%8C%82%E8%BD%BD%E5%91%BD%E4%BB%A4mount/</url>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在 Linux GUI 中，我们通常理所当然地认为，当我们插入 USB 闪存驱动器、硬盘驱动器甚至 DVD 磁盘时，它们就可以使用了。但是在后台有一个过程，设备被安装（准备好使用）并分配了一个安装点。当使用服务器或远程连接时，并不能确定某个设备是否会自动可用，那么我们如何挂载自己的设备呢？下面我们一起来看一下！</p>
+<span id="more"></span>
+<h3 id="mount是什么？"><a href="#mount是什么？" class="headerlink" title="mount是什么？"></a>mount是什么？</h3><p>Linux文件系统中的所有文件都以<code>/ </code>为根的大树的形式排列。这些文件可以根据您的分区表分布在各种设备上，最初你的父目录安装（即附加）到这棵树的<code>/</code> ，其他的可以手动挂载使用<code>GUI</code>界面（如果可用）或使用挂载命令。</p>
+<p><code>mount</code>命令用于将设备上找到的文件系统挂载到以 <code>/</code> 为根的大树结构（Linux文件系统）上。相反，另一个命令<code>umount</code>可用于从树中分离这些设备。</p>
+<h3 id="mount的初级用法"><a href="#mount的初级用法" class="headerlink" title="mount的初级用法"></a>mount的初级用法</h3><p><code>mount</code>命令挂载存储设备或文件系统，使其可访问并将其附加到现有目录结构。</p>
+<h4 id="语法："><a href="#语法：" class="headerlink" title="语法："></a>语法：</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mount -t 类型设备目录</span><br></pre></td></tr></table></figure>
+
+<p>这告诉内核将设备上找到的文件系统（类型为type）附加到目录<code>dir</code>。<code>dir</code>之前的内容（如果有）、<code>owner</code>和<code>mode</code>变得不可见，只要这个文件系统保持挂载，路径名dir指的是设备上文件系统的根目录。如果没有提到目标目录，默认情况下，它将设备挂载在 <code>/etc/fstab</code> 文件中。</p>
+<h4 id="其他形式："><a href="#其他形式：" class="headerlink" title="其他形式："></a>其他形式：</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mount [-l|-h|-V]</span><br><span class="line">mount -a [-fFnrsvw] [-t fstype] [-O optlist]</span><br><span class="line">mount [-fnrsvw] [-o options] device|dir</span><br><span class="line">mount [-fnrsvw] [-t fstype] [-o options] device dir</span><br></pre></td></tr></table></figure>
+
+<p>这些命令告诉内核将在设备上找到的文件系统附加到<code>dir</code>。</p>
+<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><p>要将硬盘驱动器的第二个分区挂载到现有目录<code>/media/PHOTOS</code>（挂载点）：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mount /dev/hda2 /media/PHOTOS</span><br></pre></td></tr></table></figure>
+
+<p> 显示所有已安装的分区：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mount</span><br><span class="line">proc on /proc type proc (rw) </span><br><span class="line">sysfs on /sys type sysfs (rw) </span><br><span class="line">devpts on /dev/pts type devpts (rw,gid=5,mode=620) </span><br><span class="line">/dev/sda1 on /boot type ext3 (rw ) </span><br><span class="line">/tmp on /var/tmp type none (rw,noexec,nosuid,bind) </span><br><span class="line">10.4.0.4:/srv/export/setup_server on /nfs/setup_server type nfs (ro,addr=10.4.0.4)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>如果需要卸载刚才的分区：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ umount /dev/hda2</span><br></pre></td></tr></table></figure>
+
+<p>参照挂载点卸载：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ umount /media/PHOTOS</span><br></pre></td></tr></table></figure>
+
+<p>使用特定选项重新挂载分区：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mount -o remount,rw /dev/hda2</span><br></pre></td></tr></table></figure>
+
+<h3 id="umount的初级用法"><a href="#umount的初级用法" class="headerlink" title="umount的初级用法"></a>umount的初级用法</h3><p><code>umount</code>命令从文件层次结构中分离指定的文件系统。一个文件系统是通过给出它被安装的目录来指定的。提供文件系统所在的特殊设备也可以工作，但这是一种过时的方法，主要是因为如果该设备安装在多个目录上，它会失败。</p>
+<p>但是需要注意，文件系统在繁忙时无法卸载 。例如，当它上面有打开的文件时，或者当某个进程在那里有它的工作目录时，或者当它上面的交换文件正在使用时，<code>umount</code>将无法成功。</p>
+<p>有些无法使用<code>umount</code>的进程甚至可能是<code>umount</code>本身——例如，<code>umount</code>打开公共C库，而后者又可能打开了语言环境文件，如果它们在相关设备上，则会阻止它被卸载。即使出现这种冲突，“惰性”卸载（参见下面卸载选项部分中的-l ）也会尝试卸载。</p>
+<h3 id="高级用法"><a href="#高级用法" class="headerlink" title="高级用法"></a>高级用法</h3><ul>
+<li>显示有关已安装文件系统的信息：</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210149077.png"></p>
+<ul>
+<li>挂载文件系统：</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210150279.png"></p>
+<ul>
+<li><p>显示版本信息：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210151979.png"></p>
+</li>
+<li><p>卸载文件系统：</p>
+</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210151025.png"></p>
+<h3 id="绑定挂载"><a href="#绑定挂载" class="headerlink" title="绑定挂载"></a>绑定挂载</h3><p>绑定挂载允许将文件系统层次结构或文件挂载到不同的挂载点。与符号链接不同，文件系统本身不存在绑定挂载。在下面的例子中，路径&#x2F;olddir将被挂载在<code>/newdir</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mount --bind /olddir /newdir</span><br></pre></td></tr></table></figure>
+
+<h3 id="如何在-Linux-上挂载和卸载驱动器"><a href="#如何在-Linux-上挂载和卸载驱动器" class="headerlink" title="如何在 Linux 上挂载和卸载驱动器"></a>如何在 Linux 上挂载和卸载驱动器</h3><p>可以使用终端安装 SSD、USB 闪存驱动器、HDD 和 ISO 映像。在终端仿真器中使用命令行界面 (CLI) 可以让我们更好地控制何时安装驱动器以及它们在文件系统中的安装位置。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210123639.png"></p>
+<ol>
+<li>使用<code>lsblk</code>命令识别 USB 驱动器。在结果中，您可能会看到许多标记为“循环”的条目。但是，您正在寻找被列为<code>sda</code>或<code>sdb</code>的结果，以识别连接到您的系统的物理磁盘。比较所连接驱动器的列出容量通常可以帮助您发现目标驱动器的名称。在我们的例子中，我们可以将 USB 驱动器识别为 <code>sdb1</code>。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210123811.png"></p>
+<ol start="2">
+<li>创建一个目录来挂载 USB 驱动器。当外部驱动器自动挂载时，它通常挂载在媒体目录中。但是使用 CLI，我们可以创建并指定一个目录，我们将在其中挂载我们的 <code>pendrive</code>。请注意，我们需要使用<code>sudo</code>来调用<code>root</code>权限，以便在媒体目录中创建一个目录。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo mkdir /media/pendrive</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>使用<code>mount</code>命令将 U 盘挂载到<code>/media/pendrive</code>目录。<code>mount</code>命令具有以下语法；</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo mount /dev/sdb1 /media/pendrive</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li><p>通过重新运行<code>lsblk</code>检查驱动器是否已安装。</p>
+<blockquote>
+<p>请注意， <code>lsblk</code>输出中的最后一列列出了列出设备的挂载点，如果列出了挂载点，则确认该设备已挂载。</p>
+</blockquote>
+</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210124550.png"></p>
+<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>使用<code>mount</code>命令我们可以更好地控制在 Linux 中挂载和卸载磁盘，并掌握一些技巧，在连接的驱动器无法自动正确挂载时可能会有所帮助。</p>
+<p>在探索以前使用的系统的旧备份映像或想要查看 Linux 发行版映像内容以进行探索或学习时，能够使用循环设备挂载磁盘映像非常有用。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Linux系统无线网卡配置</title>
     <url>/2019/12/16/Linux%E7%B3%BB%E7%BB%9F%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE/</url>
     <content><![CDATA[<h2 id="无线网卡配置"><a href="#无线网卡配置" class="headerlink" title="无线网卡配置"></a>无线网卡配置</h2><p>本文介绍在Linux 命令行界面中手动配置无线网卡的方法。目前流行的多数发行版都支持用图形界面的<code>network- manager</code>方便地进行配置，而无需使用本文所介绍的原始方法。</p>
@@ -668,32 +668,6 @@
       </tags>
   </entry>
   <entry>
-    <title>gpt与mbr分区两者区别</title>
-    <url>/2022/10/06/gpt%E4%B8%8Embr%E5%88%86%E5%8C%BA%E4%B8%A4%E8%80%85%E5%8C%BA%E5%88%AB/</url>
-    <content><![CDATA[<blockquote>
-<p>1、mbr最多支持2T，而gpt理论上是无限制的；2、mbr最多支持四个主分区，gpt没有限制；3、win7只能用mbr分区，从Win8开始微软建议你使用gpt；4、gpt是由uefi启动的，兼容性和稳定性不如bios+mbr。</p>
-</blockquote>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210070127792.jpg"></p>
-<span id="more"></span>
-<p><strong>MBR分区</strong></p>
-<p>MBR的意思是“主引导记录”，是IBM公司早年间提出的。它是存在于磁盘驱动器开始部分的一个特殊的启动扇区。这个扇区包含了已安装的操作系统系统信息，并用一小段代码来启动系统。如果你安装了Windows，其启动信息就放在这一段代码中——如果MBR的信息损坏或误删就不能正常启动Windows，这时候你就需要找一个引导修复软件工具来修复它就可以了。Linux系统中MBR通常会是GRUB加载器。MBR。当一台电脑启动时，它会先启动主板自带的BIOS系统，bios加载MBR，MBR再启动Windows，这就是mbr的启动过程。</p>
-<p><strong>GPT分区</strong></p>
-<p>GPT的意思是GUID Partition Table，即“全局唯一标识磁盘分区表”。他是另外一种更加先进新颖的磁盘组织方式，一种使用<code>UEFI</code>启动的磁盘组织方式。最开始是为了更好的兼容性，后来因为其更大的支持内存（mbr分区最多支持2T的磁盘），更多的兼容而被广泛使用，特别是苹果的MAC系统全部使用gpt分区。gtp不在有分区的概念，所有CDEF盘都在一段信息中存储。可以简单的理解为更先进但是使用不够广泛的技术。</p>
-<p><strong>两者区别</strong></p>
-<p>内存支持：mbr最多支持2T，而gpt理论上是无限制的。</p>
-<p>分区：mbr最多支持四个主分区，gpt没有限制。如果你想跑多系统，mbr最多4个而gpt没有限制。</p>
-<p>系统：win7只能用mbr分区，从Win8开始微软建议你使用gpt。</p>
-<p>其它：gpt是由<code>uefi</code>启动的，而<code>uefi</code>是后来才提出的概念，兼容性和稳定性不如bios+mbr。</p>
-]]></content>
-      <categories>
-        <category>技术</category>
-        <category>Win</category>
-      </categories>
-      <tags>
-        <tag>技术</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Office用C2R工具在线安装激活</title>
     <url>/2022/09/27/Office%E7%94%A8C2R%E5%B7%A5%E5%85%B7%E5%9C%A8%E7%BA%BF%E5%AE%89%E8%A3%85%E6%BF%80%E6%B4%BB/</url>
     <content><![CDATA[<p>C2R工具下载地址：<a href="https://wwt.lanzouw.com/b03pbhjri#52pj">https://wwt.lanzouw.com/b03pbhjri#52pj</a></p>
@@ -728,6 +702,32 @@
       </tags>
   </entry>
   <entry>
+    <title>gpt与mbr分区两者区别</title>
+    <url>/2022/10/06/gpt%E4%B8%8Embr%E5%88%86%E5%8C%BA%E4%B8%A4%E8%80%85%E5%8C%BA%E5%88%AB/</url>
+    <content><![CDATA[<blockquote>
+<p>1、mbr最多支持2T，而gpt理论上是无限制的；2、mbr最多支持四个主分区，gpt没有限制；3、win7只能用mbr分区，从Win8开始微软建议你使用gpt；4、gpt是由uefi启动的，兼容性和稳定性不如bios+mbr。</p>
+</blockquote>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210070127792.jpg"></p>
+<span id="more"></span>
+<p><strong>MBR分区</strong></p>
+<p>MBR的意思是“主引导记录”，是IBM公司早年间提出的。它是存在于磁盘驱动器开始部分的一个特殊的启动扇区。这个扇区包含了已安装的操作系统系统信息，并用一小段代码来启动系统。如果你安装了Windows，其启动信息就放在这一段代码中——如果MBR的信息损坏或误删就不能正常启动Windows，这时候你就需要找一个引导修复软件工具来修复它就可以了。Linux系统中MBR通常会是GRUB加载器。MBR。当一台电脑启动时，它会先启动主板自带的BIOS系统，bios加载MBR，MBR再启动Windows，这就是mbr的启动过程。</p>
+<p><strong>GPT分区</strong></p>
+<p>GPT的意思是GUID Partition Table，即“全局唯一标识磁盘分区表”。他是另外一种更加先进新颖的磁盘组织方式，一种使用<code>UEFI</code>启动的磁盘组织方式。最开始是为了更好的兼容性，后来因为其更大的支持内存（mbr分区最多支持2T的磁盘），更多的兼容而被广泛使用，特别是苹果的MAC系统全部使用gpt分区。gtp不在有分区的概念，所有CDEF盘都在一段信息中存储。可以简单的理解为更先进但是使用不够广泛的技术。</p>
+<p><strong>两者区别</strong></p>
+<p>内存支持：mbr最多支持2T，而gpt理论上是无限制的。</p>
+<p>分区：mbr最多支持四个主分区，gpt没有限制。如果你想跑多系统，mbr最多4个而gpt没有限制。</p>
+<p>系统：win7只能用mbr分区，从Win8开始微软建议你使用gpt。</p>
+<p>其它：gpt是由<code>uefi</code>启动的，而<code>uefi</code>是后来才提出的概念，兼容性和稳定性不如bios+mbr。</p>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>Win</category>
+      </categories>
+      <tags>
+        <tag>技术</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hello World</title>
     <url>/2017/08/10/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
@@ -744,33 +744,6 @@
 
 <p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
-  </entry>
-  <entry>
-    <title>hexo域名解析的两种方法</title>
-    <url>/2022/08/19/hexo%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>想要在浏览器里面输入域名到达某个地址。必不可少的一步就是要告诉全世界的电脑，这个域名现在指向这个地方啦。<br>而这一步就是由 dns 服务器来负责的。<br>我们需要做的就是将域名与固定的 ip 地址绑定起来 (A)，或者是与某已有域名绑定起来（CNAME）.</p>
-<p>下面我们以阿里云购买的域名为例</p>
-<h2 id="域名解析"><a href="#域名解析" class="headerlink" title="域名解析"></a>域名解析</h2><h3 id="方法一（不推荐）"><a href="#方法一（不推荐）" class="headerlink" title="方法一（不推荐）"></a>方法一（不推荐）</h3><p>首先获取自己 github 的二级域名的 IP 地址，win­dows 下直接在 cmd 里 Ping 一下自己的博客就会得到 IP 地址：</p>
-<span id="more"></span>
-
-<p><img src="https://movejian.github.io/images/20220819/cmd.png"></p>
-<p>我的 ip 是 185.199.111.153</p>
-<p>下面通过 DNS 域名解析将购买的域名指向 github 的二级域名：user­name.github.io，<br>进入阿里云的管理控制台 - 云解析 DNS，进入域名的解析设置，将得到的 IP 地址填到记录值一栏，点击确定就 OK 了。填完以后的解析列表会出现：</p>
-<p><img src="https://movejian.github.io/images/20220819/yumi.png"><br>记录值就是自己 github 的二级域名的 IP 地址。</p>
-<p>方法二（推荐）<br>直接解析域名的 CNAME 记录到你的 Git 二级域名，不要使用方法一中的 A 记录，因为 ip 地址可能会一段时间之后会改变 (由于网络地址转换协议 NAT)，所以建议记录类型选择 CNAME 进行解析，记录值填的就是 user­name.github.io，比如：</p>
-<p><img src="https://movejian.github.io/images/20220819/yumi2.png"></p>
-<p>如果你只用 github 的二级域名作为博客的地址，那么线路类型选择默认就可以了。</p>
-<h2 id="设置CNAME"><a href="#设置CNAME" class="headerlink" title="设置CNAME"></a>设置CNAME</h2><p>在 hexo 项目下，source 文件夹下面创建 CNAME 文件（没有后缀名的），在里面写上购买的域名。比如：<br>test­blog.top</p>
-<p><img src="https://movejian.github.io/images/20220819/CNAME.png"></p>
-<p>在 github 上面，打开 user­name.github.io 项目的（Set­tings）设置，然后在  Pages 选项,点击蓝色的按钮Add a domain 设置里填上购买的域名。比如：</p>
-<p><img src="https://movejian.github.io/images/20220819/domain.png"></p>
-<blockquote>
-<p>现在即可通过原二级域名和新域名访问hexo博客啦。</p>
-</blockquote>
-]]></content>
-      <tags>
-        <tag>域名</tag>
-      </tags>
   </entry>
   <entry>
     <title>npm安装卸载命令</title>
@@ -846,26 +819,6 @@
       </tags>
   </entry>
   <entry>
-    <title>传奇内挂垃圾物品过滤</title>
-    <url>/2022/09/03/%E4%BC%A0%E5%A5%87%E5%86%85%E6%8C%82%E5%9E%83%E5%9C%BE%E7%89%A9%E5%93%81%E8%BF%87%E6%BB%A4/</url>
-    <content><![CDATA[<p> 传奇内挂过滤垃圾。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209031601159.png" alt="image-20220903160139387"></p>
-<p>先打开传奇目录 <code>D:\传奇私服\Config </code>   修改DAT档案文件，把下面内容复制粘贴进去保存即可：</p>
-<span id="more"></span>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">金创药(小量),药品类,0,0,0,0</span><br><span class="line">魔法药(小量),药品类,0,0,0,0</span><br><span class="line">肉,其它类,0,0,0,0</span><br><span class="line">布衣(男),服装类,0,0,0,0</span><br><span class="line">布衣(女),服装类,0,0,0,0</span><br><span class="line">木剑,武器类,0,0,0,0</span><br><span class="line">铁剑,武器类,0,0,0,0</span><br><span class="line">青铜剑,武器类,0,0,0,0</span><br><span class="line">轻型盔甲(男),服装类,0,0,0,0</span><br><span class="line">轻型盔甲(女),服装类,0,0,0,0</span><br><span class="line">凝霜,武器类,0,0,0,0</span><br><span class="line">短剑,武器类,0,0,0,0</span><br><span class="line">青铜斧,武器类,0,0,0,0</span><br><span class="line">重盔甲(女),服装类,0,0,0,0</span><br><span class="line">魔法长袍(女),服装类,0,0,0,0</span><br><span class="line">灵魂战衣(女),服装类,0,0,0,0</span><br><span class="line">重盔甲(男),服装类,0,0,0,0</span><br><span class="line">魔法长袍(男),服装类,0,0,0,0</span><br><span class="line">灵魂战衣(男),服装类,0,0,0,0</span><br><span class="line">海魂,武器类,0,0,0,0</span><br><span class="line">修罗,武器类,0,0,0,0</span><br><span class="line">破魂,武器类,0,0,0,0</span><br><span class="line">斩马刀,武器类,0,0,0,0</span><br><span class="line">青铜头盔,首饰类,0,0,0,0</span><br><span class="line">金项链,首饰类,0,0,0,0</span><br><span class="line">铁手镯,首饰类,0,0,0,0</span><br><span class="line">灰色药粉(中量),药品类,0,0,0,0</span><br><span class="line">黄色药粉(中量),药品类,0,0,0,0</span><br><span class="line">八荒,武器类,0,0,0,0</span><br><span class="line">玻璃戒指,首饰类,0,0,0,0</span><br><span class="line">牛角戒指,首饰类,0,0,0,0</span><br><span class="line">蓝色水晶戒指,首饰类,0,0,0,0</span><br><span class="line">黑檀项链,首饰类,0,0,0,0</span><br><span class="line">黄色水晶项链,首饰类,0,0,0,0</span><br><span class="line">黑色水晶项链,首饰类,0,0,0,0</span><br><span class="line">半月,武器类,0,0,0,0</span><br><span class="line">皮制手套,首饰类,0,0,0,0</span><br><span class="line">钢手镯,首饰类,0,0,0,0</span><br><span class="line">生铁戒指,首饰类,0,0,0,0</span><br><span class="line">金戒指,首饰类,0,0,0,0</span><br><span class="line">灯笼项链,首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链,首饰类,1,1,1,0</span><br><span class="line">魅力戒指,首饰类,0,0,0,0</span><br><span class="line">道德戒指,首饰类,0,0,0,0</span><br><span class="line">白金项链,首饰类,0,0,0,0</span><br><span class="line">降妖除魔戒指,首饰类,0,0,0,0</span><br><span class="line">偃月,武器类,0,0,0,0</span><br><span class="line">降魔,武器类,0,0,0,0</span><br><span class="line">小手镯,首饰类,0,0,0,0</span><br><span class="line">银手镯,首饰类,0,0,0,0</span><br><span class="line">大手镯,首饰类,0,0,0,0</span><br><span class="line">金创药(中量),药品类,0,0,0,0</span><br><span class="line">魔法药(中量),药品类,0,0,0,0</span><br><span class="line">黑色水晶戒指,首饰类,0,0,0,0</span><br><span class="line">魔鬼项链,首饰类,0,0,0,0</span><br><span class="line">珊瑚戒指,首饰类,0,0,0,0</span><br><span class="line">蓝翡翠项链,首饰类,0,0,0,0</span><br><span class="line">蛇眼戒指,首饰类,0,0,0,0</span><br><span class="line">琥珀项链,首饰类,0,0,0,0</span><br><span class="line">放大镜,首饰类,0,0,0,0</span><br><span class="line">珍珠戒指,首饰类,0,0,0,0</span><br><span class="line">竹笛,首饰类,0,0,0,0</span><br><span class="line">骷髅戒指,首饰类,0,0,0,0</span><br><span class="line">死神手套,首饰类,0,0,0,0</span><br><span class="line">骷髅头盔,首饰类,0,0,0,0</span><br><span class="line">魔法手镯,首饰类,0,0,0,0</span><br><span class="line">金手镯,首饰类,0,0,0,0</span><br><span class="line">道士头盔,首饰类,0,0,0,0</span><br><span class="line">凤凰明珠,首饰类,0,0,0,0</span><br><span class="line">道士手镯,首饰类,0,0,0,0</span><br><span class="line">黑檀手镯,首饰类,0,0,0,0</span><br><span class="line">铁矿,其它类,0,0,0,0</span><br><span class="line">黑铁矿,其它类,0,0,0,0</span><br><span class="line">困魔咒,其它类,0,0,0,0</span><br><span class="line">召唤骷髅,其它类,0,0,0,0</span><br><span class="line">地狱雷光,其它类,0,0,0,0</span><br><span class="line">半月弯刀,其它类,0,0,0,0</span><br><span class="line">太阳水,药品类,0,1,0,0</span><br><span class="line">强效金创药,药品类,0,1,0,0</span><br><span class="line">强效魔法药,药品类,0,1,0,0</span><br><span class="line">野蛮冲撞,其它类,0,0,0,0</span><br><span class="line">群体治疗术,其它类,0,0,0,0</span><br><span class="line">圣言术,其它类,0,0,0,0</span><br><span class="line">强效太阳水,药品类,0,1,0,0</span><br><span class="line">魔力手镯,首饰类,0,0,0,0</span><br><span class="line">攻击力药水,其它类,0,0,0,0</span><br><span class="line">道术力药水,其它类,0,0,0,0</span><br><span class="line">疾风药水,其它类,0,0,0,0</span><br><span class="line">体力强化水,其它类,0,0,0,0</span><br><span class="line">魔力强化水,其它类,0,0,0,0</span><br><span class="line">战神盔甲(男),服装类,0,0,0,0</span><br><span class="line">战神盔甲(女),服装类,0,0,0,0</span><br><span class="line">幽灵战衣(男),服装类,0,0,0,0</span><br><span class="line">幽灵战衣(女),服装类,0,0,0,0</span><br><span class="line">恶魔长袍(男),服装类,0,0,0,0</span><br><span class="line">恶魔长袍(女),服装类,0,0,0,0</span><br><span class="line">中型盔甲(男),服装类,0,0,0,0</span><br><span class="line">灯笼项链②,首饰类,1,1,1,0</span><br><span class="line">灯笼项链[残],首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链[残],首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链②,首饰类,1,1,1,0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>游戏</category>
-        <category>传奇</category>
-      </categories>
-      <tags>
-        <tag>传奇</tag>
-        <tag>外挂</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>win10系统电脑图标不见了</title>
     <url>/2022/10/08/win10%E7%B3%BB%E7%BB%9F%E7%94%B5%E8%84%91%E5%9B%BE%E6%A0%87%E4%B8%8D%E8%A7%81%E4%BA%86/</url>
     <content><![CDATA[<p>我的电脑图标没了怎么办？，恢复只需4步。刚安装了win10.刚打开的时候发现桌面上没有我的电脑图标，很多人都很不舒服，所以win我的电脑图标没了怎么办？现在小编教你怎么找回<code>我的电脑</code>图标。</p>
@@ -889,6 +842,26 @@
 ]]></content>
       <tags>
         <tag>Win</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>传奇内挂垃圾物品过滤</title>
+    <url>/2022/09/03/%E4%BC%A0%E5%A5%87%E5%86%85%E6%8C%82%E5%9E%83%E5%9C%BE%E7%89%A9%E5%93%81%E8%BF%87%E6%BB%A4/</url>
+    <content><![CDATA[<p> 传奇内挂过滤垃圾。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209031601159.png" alt="image-20220903160139387"></p>
+<p>先打开传奇目录 <code>D:\传奇私服\Config </code>   修改DAT档案文件，把下面内容复制粘贴进去保存即可：</p>
+<span id="more"></span>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">金创药(小量),药品类,0,0,0,0</span><br><span class="line">魔法药(小量),药品类,0,0,0,0</span><br><span class="line">肉,其它类,0,0,0,0</span><br><span class="line">布衣(男),服装类,0,0,0,0</span><br><span class="line">布衣(女),服装类,0,0,0,0</span><br><span class="line">木剑,武器类,0,0,0,0</span><br><span class="line">铁剑,武器类,0,0,0,0</span><br><span class="line">青铜剑,武器类,0,0,0,0</span><br><span class="line">轻型盔甲(男),服装类,0,0,0,0</span><br><span class="line">轻型盔甲(女),服装类,0,0,0,0</span><br><span class="line">凝霜,武器类,0,0,0,0</span><br><span class="line">短剑,武器类,0,0,0,0</span><br><span class="line">青铜斧,武器类,0,0,0,0</span><br><span class="line">重盔甲(女),服装类,0,0,0,0</span><br><span class="line">魔法长袍(女),服装类,0,0,0,0</span><br><span class="line">灵魂战衣(女),服装类,0,0,0,0</span><br><span class="line">重盔甲(男),服装类,0,0,0,0</span><br><span class="line">魔法长袍(男),服装类,0,0,0,0</span><br><span class="line">灵魂战衣(男),服装类,0,0,0,0</span><br><span class="line">海魂,武器类,0,0,0,0</span><br><span class="line">修罗,武器类,0,0,0,0</span><br><span class="line">破魂,武器类,0,0,0,0</span><br><span class="line">斩马刀,武器类,0,0,0,0</span><br><span class="line">青铜头盔,首饰类,0,0,0,0</span><br><span class="line">金项链,首饰类,0,0,0,0</span><br><span class="line">铁手镯,首饰类,0,0,0,0</span><br><span class="line">灰色药粉(中量),药品类,0,0,0,0</span><br><span class="line">黄色药粉(中量),药品类,0,0,0,0</span><br><span class="line">八荒,武器类,0,0,0,0</span><br><span class="line">玻璃戒指,首饰类,0,0,0,0</span><br><span class="line">牛角戒指,首饰类,0,0,0,0</span><br><span class="line">蓝色水晶戒指,首饰类,0,0,0,0</span><br><span class="line">黑檀项链,首饰类,0,0,0,0</span><br><span class="line">黄色水晶项链,首饰类,0,0,0,0</span><br><span class="line">黑色水晶项链,首饰类,0,0,0,0</span><br><span class="line">半月,武器类,0,0,0,0</span><br><span class="line">皮制手套,首饰类,0,0,0,0</span><br><span class="line">钢手镯,首饰类,0,0,0,0</span><br><span class="line">生铁戒指,首饰类,0,0,0,0</span><br><span class="line">金戒指,首饰类,0,0,0,0</span><br><span class="line">灯笼项链,首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链,首饰类,1,1,1,0</span><br><span class="line">魅力戒指,首饰类,0,0,0,0</span><br><span class="line">道德戒指,首饰类,0,0,0,0</span><br><span class="line">白金项链,首饰类,0,0,0,0</span><br><span class="line">降妖除魔戒指,首饰类,0,0,0,0</span><br><span class="line">偃月,武器类,0,0,0,0</span><br><span class="line">降魔,武器类,0,0,0,0</span><br><span class="line">小手镯,首饰类,0,0,0,0</span><br><span class="line">银手镯,首饰类,0,0,0,0</span><br><span class="line">大手镯,首饰类,0,0,0,0</span><br><span class="line">金创药(中量),药品类,0,0,0,0</span><br><span class="line">魔法药(中量),药品类,0,0,0,0</span><br><span class="line">黑色水晶戒指,首饰类,0,0,0,0</span><br><span class="line">魔鬼项链,首饰类,0,0,0,0</span><br><span class="line">珊瑚戒指,首饰类,0,0,0,0</span><br><span class="line">蓝翡翠项链,首饰类,0,0,0,0</span><br><span class="line">蛇眼戒指,首饰类,0,0,0,0</span><br><span class="line">琥珀项链,首饰类,0,0,0,0</span><br><span class="line">放大镜,首饰类,0,0,0,0</span><br><span class="line">珍珠戒指,首饰类,0,0,0,0</span><br><span class="line">竹笛,首饰类,0,0,0,0</span><br><span class="line">骷髅戒指,首饰类,0,0,0,0</span><br><span class="line">死神手套,首饰类,0,0,0,0</span><br><span class="line">骷髅头盔,首饰类,0,0,0,0</span><br><span class="line">魔法手镯,首饰类,0,0,0,0</span><br><span class="line">金手镯,首饰类,0,0,0,0</span><br><span class="line">道士头盔,首饰类,0,0,0,0</span><br><span class="line">凤凰明珠,首饰类,0,0,0,0</span><br><span class="line">道士手镯,首饰类,0,0,0,0</span><br><span class="line">黑檀手镯,首饰类,0,0,0,0</span><br><span class="line">铁矿,其它类,0,0,0,0</span><br><span class="line">黑铁矿,其它类,0,0,0,0</span><br><span class="line">困魔咒,其它类,0,0,0,0</span><br><span class="line">召唤骷髅,其它类,0,0,0,0</span><br><span class="line">地狱雷光,其它类,0,0,0,0</span><br><span class="line">半月弯刀,其它类,0,0,0,0</span><br><span class="line">太阳水,药品类,0,1,0,0</span><br><span class="line">强效金创药,药品类,0,1,0,0</span><br><span class="line">强效魔法药,药品类,0,1,0,0</span><br><span class="line">野蛮冲撞,其它类,0,0,0,0</span><br><span class="line">群体治疗术,其它类,0,0,0,0</span><br><span class="line">圣言术,其它类,0,0,0,0</span><br><span class="line">强效太阳水,药品类,0,1,0,0</span><br><span class="line">魔力手镯,首饰类,0,0,0,0</span><br><span class="line">攻击力药水,其它类,0,0,0,0</span><br><span class="line">道术力药水,其它类,0,0,0,0</span><br><span class="line">疾风药水,其它类,0,0,0,0</span><br><span class="line">体力强化水,其它类,0,0,0,0</span><br><span class="line">魔力强化水,其它类,0,0,0,0</span><br><span class="line">战神盔甲(男),服装类,0,0,0,0</span><br><span class="line">战神盔甲(女),服装类,0,0,0,0</span><br><span class="line">幽灵战衣(男),服装类,0,0,0,0</span><br><span class="line">幽灵战衣(女),服装类,0,0,0,0</span><br><span class="line">恶魔长袍(男),服装类,0,0,0,0</span><br><span class="line">恶魔长袍(女),服装类,0,0,0,0</span><br><span class="line">中型盔甲(男),服装类,0,0,0,0</span><br><span class="line">灯笼项链②,首饰类,1,1,1,0</span><br><span class="line">灯笼项链[残],首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链[残],首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链②,首饰类,1,1,1,0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>游戏</category>
+        <category>传奇</category>
+      </categories>
+      <tags>
+        <tag>传奇</tag>
+        <tag>外挂</tag>
       </tags>
   </entry>
   <entry>
@@ -974,6 +947,33 @@
       </tags>
   </entry>
   <entry>
+    <title>hexo域名解析的两种方法</title>
+    <url>/2022/08/19/hexo%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>想要在浏览器里面输入域名到达某个地址。必不可少的一步就是要告诉全世界的电脑，这个域名现在指向这个地方啦。<br>而这一步就是由 dns 服务器来负责的。<br>我们需要做的就是将域名与固定的 ip 地址绑定起来 (A)，或者是与某已有域名绑定起来（CNAME）.</p>
+<p>下面我们以阿里云购买的域名为例</p>
+<h2 id="域名解析"><a href="#域名解析" class="headerlink" title="域名解析"></a>域名解析</h2><h3 id="方法一（不推荐）"><a href="#方法一（不推荐）" class="headerlink" title="方法一（不推荐）"></a>方法一（不推荐）</h3><p>首先获取自己 github 的二级域名的 IP 地址，win­dows 下直接在 cmd 里 Ping 一下自己的博客就会得到 IP 地址：</p>
+<span id="more"></span>
+
+<p><img src="https://movejian.github.io/images/20220819/cmd.png"></p>
+<p>我的 ip 是 185.199.111.153</p>
+<p>下面通过 DNS 域名解析将购买的域名指向 github 的二级域名：user­name.github.io，<br>进入阿里云的管理控制台 - 云解析 DNS，进入域名的解析设置，将得到的 IP 地址填到记录值一栏，点击确定就 OK 了。填完以后的解析列表会出现：</p>
+<p><img src="https://movejian.github.io/images/20220819/yumi.png"><br>记录值就是自己 github 的二级域名的 IP 地址。</p>
+<p>方法二（推荐）<br>直接解析域名的 CNAME 记录到你的 Git 二级域名，不要使用方法一中的 A 记录，因为 ip 地址可能会一段时间之后会改变 (由于网络地址转换协议 NAT)，所以建议记录类型选择 CNAME 进行解析，记录值填的就是 user­name.github.io，比如：</p>
+<p><img src="https://movejian.github.io/images/20220819/yumi2.png"></p>
+<p>如果你只用 github 的二级域名作为博客的地址，那么线路类型选择默认就可以了。</p>
+<h2 id="设置CNAME"><a href="#设置CNAME" class="headerlink" title="设置CNAME"></a>设置CNAME</h2><p>在 hexo 项目下，source 文件夹下面创建 CNAME 文件（没有后缀名的），在里面写上购买的域名。比如：<br>test­blog.top</p>
+<p><img src="https://movejian.github.io/images/20220819/CNAME.png"></p>
+<p>在 github 上面，打开 user­name.github.io 项目的（Set­tings）设置，然后在  Pages 选项,点击蓝色的按钮Add a domain 设置里填上购买的域名。比如：</p>
+<p><img src="https://movejian.github.io/images/20220819/domain.png"></p>
+<blockquote>
+<p>现在即可通过原二级域名和新域名访问hexo博客啦。</p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>域名</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>删除爱奇艺热播视频图标(牛氓)</title>
     <url>/2022/10/03/%E5%88%A0%E9%99%A4%E7%88%B1%E5%A5%87%E8%89%BA%E7%83%AD%E6%92%AD%E8%A7%86%E9%A2%91%E5%9B%BE%E6%A0%87/</url>
     <content><![CDATA[<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210030104950.png" alt="image-20221003010451506"></p>
@@ -1022,110 +1022,6 @@
       </categories>
       <tags>
         <tag>随笔</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【安装Office】 Office Tool Plus 入门教程</title>
-    <url>/2022/09/27/%E5%AE%89%E8%A3%85Office/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>安装 Office 是一件非常简单的事情，大家不必过于担心，更不必对自己没有信心。<br>本教程适用于需要全新安装 Office 的用户，若您需要修改 Office 请参阅 [<a href="https://movejian.github.io/2022/09/27/%E6%8A%80%E8%83%BD%E6%89%A9%E5%B1%95Office">技能扩展] Office Tool Plus 高级教程</a><br>任何人都可使用 Office Tool Plus 轻松地安装 Office，请认真阅读教程以避免因为疏忽出现问题。<br>如无特殊情况，文章中提到的 Windows 10 也适用于 Windows 11.</p>
-<span id="more"></span>
-
-<h3 id="1-开始使用"><a href="#1-开始使用" class="headerlink" title="1. 开始使用"></a>1. 开始使用</h3><p>请下载最新的包含框架的版本（with runtime），以确保你始终可以获得最好的体验。<br>在<a href="http://otp.landian.vip/">官网下载 Office Tool Plus</a> 后，将其解压至正常位置（例如桌面），双击 Office Tool Plus 以运行。<br>为了获得最佳体验，若 Office Tool Plus 提示有更新，请更新后继续操作。### 2. 注意事项</p>
-<h4 id="安装开始前，请知晓以下事情："><a href="#安装开始前，请知晓以下事情：" class="headerlink" title="安装开始前，请知晓以下事情："></a>安装开始前，请知晓以下事情：</h4><ol>
-<li>使用 Office Tool Plus 安装的 Office 是官方原版，非破解、非精简。</li>
-<li>教程没提到的产品就不要随便安装，别问，问就是不推荐。</li>
-<li>教程没提到的设置就不要随便乱动，别问，不懂就不要动。</li>
-<li>建议勾选下载后再部署，能避免因为网络不佳而卡住不动。</li>
-<li>安装 Office 出现问题时，请根据提供的错误信息排查问题；更详细的错误信息可以在 【工具箱】-&gt;【收集 Office 安装日志】获得。</li>
-</ol>
-<p>Office 安装程序出现问题跟我们没有太大关系哈。举个例子，你叫了个外卖，但是送到后你觉得太难吃，这能怪骑手吗？这不能。做人要讲理，不能随便污蔑别人。</p>
-<p>如果你有任何疑问，可前往 [<a href="https://movejian.github.io/2022/09/27/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94Office">疑难解答] Office Tool Plus 入门教程</a> 查看相关问题解答。</p>
-<h4 id="安装开始前，请做好以下事情："><a href="#安装开始前，请做好以下事情：" class="headerlink" title="安装开始前，请做好以下事情："></a>安装开始前，请做好以下事情：</h4><ol>
-<li>卸载 WPS，两者共存容易出问题（没有问题当我没说）。</li>
-<li>卸载旧版本 Office，按照标准流程操作，请勿直接强制移除。</li>
-<li>清除旧版本激活信息，在 [激活] -&gt; [许可证管理] -&gt; [子菜单] -&gt; [清除激活状态]。</li>
-<li>清除 Office 设置，在 [工具箱] -&gt; [重置 Office 为默认设置]。</li>
-</ol>
-<p>附图为清除激活信息：</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270128402.png" alt="清除 Office 激活信息"></p>
-<p>附图为重置 Office 的设置：</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270128335.png" alt="重置 Office 为默认设置"></p>
-<h3 id="3-部署-Office"><a href="#3-部署-Office" class="headerlink" title="3. 部署 Office"></a>3. 部署 Office</h3><p>不知道自己有没有正版 Office？个人用户 <a href="https://account.microsoft.com/services/">&gt;&gt;点击这里检查&lt;&lt;</a>，企业用户 <a href="https://portal.office.com/account/?ref=MeControl#subscriptions">&gt;&gt;点击这里检查&lt;&lt;</a>。</p>
-<p>需要使用正版 Office？<a href="https://otp.landian.vip/zh-cn/#store">点击这里查看详细信息</a>。</p>
-<p>以下提到的安装方法或者产品都是合适的（差不多），不会有任何问题，请放心使用。</p>
-<hr>
-<p>自动安装：</p>
-<h5 id="一键安装"><a href="#一键安装" class="headerlink" title="一键安装"></a>一键安装</h5><p>如果你什么都不懂，或者，你只是想要个能用的 Office，那么使用一键安装代码是最合适的：</p>
-<p>确保自己使用的是最新版的 Office Tool Plus，按下 Ctrl + Shift + P 打开命令框，输入以下命令：</p>
-<p>旧版本打开命令框的快捷方式为 Ctrl + P，最新版已修改。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270130407.png" alt="命令框"></p>
-<p>安装 Microsoft 365 企业应用版（Word, PowerPoint, Excel）：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy /addProduct O365ProPlusRetail_zh-cn_Access,Bing,Groove,Lync,OneDrive,OneNote,Outlook,Publisher,Teams /channel Current /downloadFirst</span><br></pre></td></tr></table></figure>
-
-<p>安装 Microsoft 365 企业应用版（Word, PowerPoint, Excel）+ Visio 2016：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy /addProduct O365ProPlusRetail_zh-cn_Access,Bing,Groove,Lync,OneDrive,OneNote,Outlook,Publisher,Teams /addProduct VisioProRetail_zh-cn_Groove,OneDrive /channel Current /downloadFirst</span><br></pre></td></tr></table></figure>
-
-<p>输入命令后请按回车（Enter）以执行命令，然后耐心等待安装完成。</p>
-<p>安装完成后，请务必使用 [<a href="https://movejian.github.io/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B">激活 Office] Office Tool Plus 入门教程</a> 中的一键激活代码进行激活</p>
-<hr>
-<p>手动安装：</p>
-<p>转到 Office Tool Plus 的部署页面，按照以下提示操作。</p>
-<h4 id="必须做的事情"><a href="#必须做的事情" class="headerlink" title="必须做的事情"></a>必须做的事情</h4><ol>
-<li>添加产品：看下面的选项，选一个合适自己的来学习。</li>
-<li>添加语言：点一下「添加语言」就行，软件会自动匹配合适的语言。不要把“仅部署校对工具”打勾，除非你知道这是什么。</li>
-</ol>
-<h5 id="我有正版-Office"><a href="#我有正版-Office" class="headerlink" title="我有正版 Office"></a>我有正版 Office</h5><p>如果你有 Office 正版，比如你自己购买了 Microsoft 365 家庭版，安装的时候选择这个即可。</p>
-<p>当然现在也有不少人去网上白嫖什么 365 订阅，基本都是安装 Microsoft 365 企业应用版（O365ProPlusRetail）。</p>
-<p>如果学校&#x2F;企业提供了 2019&#x2F;2021 批量许可授权，安装这个也可。</p>
-<p>无论如何，你必须要安装对应的产品，否则你将无法通过账户&#x2F;密钥激活你的 Office。</p>
-<p>如果你有 Office 的正版授权，但是没有 Visio，又想装？</p>
-<p>Office, Visio 和 Project 三个产品的授权是可以分开处理的，所以你不必担心搞 Visio 会影响 Office.</p>
-<h5 id="有什么好选择吗？"><a href="#有什么好选择吗？" class="headerlink" title="有什么好选择吗？"></a>有什么好选择吗？</h5><p>当然有啦~</p>
-<p>Office 选择：Microsoft 365 企业应用版 (O365ProPlusRetail)</p>
-<p>Visio 选择：Visio 专业版 2016 (VisioProRetail)</p>
-<p>Project 选择：Project 专业版 2016 (ProjectProRetail)</p>
-<p>当然，Visio 和 Project 是需要才选，不需要或者看不懂就不需要管啦。</p>
-<h5 id="我要安装年份版-Office（例如-Office-2021）"><a href="#我要安装年份版-Office（例如-Office-2021）" class="headerlink" title="我要安装年份版 Office（例如 Office 2021）"></a>我要安装年份版 Office（例如 Office 2021）</h5><p>有一说一，年份版没有你想的那么好的哦，如果不是强迫症建议看上面那条。</p>
-<p>针对非正版用户，你只可以安装批量许可产品以便使用 KMS 激活。</p>
-<p>安装批量版时，需要使用对应的 Office 2019&#x2F;2021 企业长期版通道，否则会无法安装。</p>
-<p>Office 2021：</p>
-<p>Office LTSC 专业增强版 2021 - 批量许可证 (ProPlus2021Volume)</p>
-<p>Visio LTSC 专业版 2021 - 批量许可证 (VisioPro2021Volume)</p>
-<p>Project 专业版 2021 - 批量许可证 (ProjectPro2021Volume)</p>
-<p>Office 2019：</p>
-<p>Office 专业增强版 2019 - 批量许可证 (ProPlus2019Volume)</p>
-<p>Visio 专业版 2019 - 批量许可证 (VisioPro2019Volume)</p>
-<p>Project 专业版 2019 - 批量许可证 (ProjectPro2019Volume)</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">PS：不要问我为什么 2021 叫 LTSC，名字是微软起的有问题问微软去。</span><br></pre></td></tr></table></figure>
-
-<h5 id="我是-Windows-7-x2F-8-x2F-8-1-用户"><a href="#我是-Windows-7-x2F-8-x2F-8-1-用户" class="headerlink" title="我是 Windows 7&#x2F;8&#x2F;8.1 用户"></a>我是 Windows 7&#x2F;8&#x2F;8.1 用户</h5><p>由于系统原因，我们推荐按照第二条选项进行处理，这样确保可以进行正常安装。</p>
-<p>不要问我 Office 2019&#x2F;2021 能不能装，问就是说不能，别人说可以的话你问别人去。</p>
-<h5 id="（额外补充内容）什么系统能装什么样的-Office？"><a href="#（额外补充内容）什么系统能装什么样的-Office？" class="headerlink" title="（额外补充内容）什么系统能装什么样的 Office？"></a>（额外补充内容）什么系统能装什么样的 Office？</h5><p>目前 Office Tool Plus 中有 Office 2016、2019、2021、365 可供安装。</p>
-<p>Windows 10 和 11 无限制，可以安装任何版本的 Office。</p>
-<p>Windows 8 和 8.1 只可以安装部分产品，如果将部署模块从「Office 部署工具」更改到「Office Tool Plus」也可以安装任意产品。</p>
-<p>Windows 7 只可以安装 Office 2016 或 365，并且只能够使用「当前通道」。即使你更改部署模块，Office 2019&#x2F;2021 也不一定能安装成功。</p>
-<p>如果你的安装包是从别的地方下载的，那，那就别来问我，我也不知道你下载的是什么。</p>
-<h4 id="可以做的事情"><a href="#可以做的事情" class="headerlink" title="可以做的事情"></a>可以做的事情</h4><ol>
-<li>应用程序：选自己能看懂的就行，一般就是 Word, PowerPoint, Excel.</li>
-<li>通道：“当前通道”就行，Office 2019&#x2F;2021 批量许可证请选 Office 2019&#x2F;2021 企业长期版。</li>
-<li>体系结构：32 位兼容性好；64 位兼容性稍差且体积大，但处理大数据能力稍强。</li>
-<li>部署模式：那肯定要选安装啊，要不然怎么安装。</li>
-<li>安装模块：如没有特殊要求，请勿选择 Office Tool Plus.</li>
-<li>下载后再部署：如果网不行，最好把这个选上，免得安装卡进度卡半天。</li>
-</ol>
-<p>产品和语言弄好后即可开始部署 Office，其余设置不需要更改。</p>
-<p>部署时请耐心等待，不要强制结束安装程序或重启计算机。</p>
-<h3 id="4-视频教程"><a href="#4-视频教程" class="headerlink" title="4. 视频教程"></a>4. 视频教程</h3><p>视频教程更新不及时，建议看本文即可。</p>
-<p>bilibili：<a href="https://www.bilibili.com/video/BV1eU4y1V7NU">https://www.bilibili.com/video/BV1eU4y1V7NU</a></p>
-<p>YouTube：<a href="https://www.youtube.com/watch?v=p90V9_D-8Go">https://www.youtube.com/watch?v=p90V9_D-8Go</a></p>
-<h3 id="5-离线安装包"><a href="#5-离线安装包" class="headerlink" title="5. 离线安装包"></a>5. 离线安装包</h3><p>如果因为网络问题下载缓慢或者无法下载 Office，你可以下载 ISO 文件使用。</p>
-<p><a href="https://otp.landian.vip/zh-cn/download.html">下载站点</a>（云图小镇、OneDrive）中包含有 Office ISO.</p>
-<p>Office ISO 文件不需要解压，双击打开即可挂载使用（Win 7 除外）。</p>
-<h3 id="6-激活-Office"><a href="#6-激活-Office" class="headerlink" title="6. 激活 Office"></a>6. 激活 Office</h3><p>如果你是正版用户，一般情况下是不需要借助 Office Tool Plus 激活 Office 的，在 Office 应用程序中登录自己的微软账号，或者输入你的正版密钥即可激活 Office。</p>
-<p><a href="https://movejian.github.io/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B">【点击此处】前往另一个教程查看如何激活 Office</a></p>
-]]></content>
-      <tags>
-        <tag>Office</tag>
       </tags>
   </entry>
   <entry>
@@ -1292,6 +1188,110 @@
       </categories>
       <tags>
         <tag>kali</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【安装Office】 Office Tool Plus 入门教程</title>
+    <url>/2022/09/27/%E5%AE%89%E8%A3%85Office/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>安装 Office 是一件非常简单的事情，大家不必过于担心，更不必对自己没有信心。<br>本教程适用于需要全新安装 Office 的用户，若您需要修改 Office 请参阅 [<a href="https://movejian.github.io/2022/09/27/%E6%8A%80%E8%83%BD%E6%89%A9%E5%B1%95Office">技能扩展] Office Tool Plus 高级教程</a><br>任何人都可使用 Office Tool Plus 轻松地安装 Office，请认真阅读教程以避免因为疏忽出现问题。<br>如无特殊情况，文章中提到的 Windows 10 也适用于 Windows 11.</p>
+<span id="more"></span>
+
+<h3 id="1-开始使用"><a href="#1-开始使用" class="headerlink" title="1. 开始使用"></a>1. 开始使用</h3><p>请下载最新的包含框架的版本（with runtime），以确保你始终可以获得最好的体验。<br>在<a href="http://otp.landian.vip/">官网下载 Office Tool Plus</a> 后，将其解压至正常位置（例如桌面），双击 Office Tool Plus 以运行。<br>为了获得最佳体验，若 Office Tool Plus 提示有更新，请更新后继续操作。### 2. 注意事项</p>
+<h4 id="安装开始前，请知晓以下事情："><a href="#安装开始前，请知晓以下事情：" class="headerlink" title="安装开始前，请知晓以下事情："></a>安装开始前，请知晓以下事情：</h4><ol>
+<li>使用 Office Tool Plus 安装的 Office 是官方原版，非破解、非精简。</li>
+<li>教程没提到的产品就不要随便安装，别问，问就是不推荐。</li>
+<li>教程没提到的设置就不要随便乱动，别问，不懂就不要动。</li>
+<li>建议勾选下载后再部署，能避免因为网络不佳而卡住不动。</li>
+<li>安装 Office 出现问题时，请根据提供的错误信息排查问题；更详细的错误信息可以在 【工具箱】-&gt;【收集 Office 安装日志】获得。</li>
+</ol>
+<p>Office 安装程序出现问题跟我们没有太大关系哈。举个例子，你叫了个外卖，但是送到后你觉得太难吃，这能怪骑手吗？这不能。做人要讲理，不能随便污蔑别人。</p>
+<p>如果你有任何疑问，可前往 [<a href="https://movejian.github.io/2022/09/27/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94Office">疑难解答] Office Tool Plus 入门教程</a> 查看相关问题解答。</p>
+<h4 id="安装开始前，请做好以下事情："><a href="#安装开始前，请做好以下事情：" class="headerlink" title="安装开始前，请做好以下事情："></a>安装开始前，请做好以下事情：</h4><ol>
+<li>卸载 WPS，两者共存容易出问题（没有问题当我没说）。</li>
+<li>卸载旧版本 Office，按照标准流程操作，请勿直接强制移除。</li>
+<li>清除旧版本激活信息，在 [激活] -&gt; [许可证管理] -&gt; [子菜单] -&gt; [清除激活状态]。</li>
+<li>清除 Office 设置，在 [工具箱] -&gt; [重置 Office 为默认设置]。</li>
+</ol>
+<p>附图为清除激活信息：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270128402.png" alt="清除 Office 激活信息"></p>
+<p>附图为重置 Office 的设置：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270128335.png" alt="重置 Office 为默认设置"></p>
+<h3 id="3-部署-Office"><a href="#3-部署-Office" class="headerlink" title="3. 部署 Office"></a>3. 部署 Office</h3><p>不知道自己有没有正版 Office？个人用户 <a href="https://account.microsoft.com/services/">&gt;&gt;点击这里检查&lt;&lt;</a>，企业用户 <a href="https://portal.office.com/account/?ref=MeControl#subscriptions">&gt;&gt;点击这里检查&lt;&lt;</a>。</p>
+<p>需要使用正版 Office？<a href="https://otp.landian.vip/zh-cn/#store">点击这里查看详细信息</a>。</p>
+<p>以下提到的安装方法或者产品都是合适的（差不多），不会有任何问题，请放心使用。</p>
+<hr>
+<p>自动安装：</p>
+<h5 id="一键安装"><a href="#一键安装" class="headerlink" title="一键安装"></a>一键安装</h5><p>如果你什么都不懂，或者，你只是想要个能用的 Office，那么使用一键安装代码是最合适的：</p>
+<p>确保自己使用的是最新版的 Office Tool Plus，按下 Ctrl + Shift + P 打开命令框，输入以下命令：</p>
+<p>旧版本打开命令框的快捷方式为 Ctrl + P，最新版已修改。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270130407.png" alt="命令框"></p>
+<p>安装 Microsoft 365 企业应用版（Word, PowerPoint, Excel）：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy /addProduct O365ProPlusRetail_zh-cn_Access,Bing,Groove,Lync,OneDrive,OneNote,Outlook,Publisher,Teams /channel Current /downloadFirst</span><br></pre></td></tr></table></figure>
+
+<p>安装 Microsoft 365 企业应用版（Word, PowerPoint, Excel）+ Visio 2016：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy /addProduct O365ProPlusRetail_zh-cn_Access,Bing,Groove,Lync,OneDrive,OneNote,Outlook,Publisher,Teams /addProduct VisioProRetail_zh-cn_Groove,OneDrive /channel Current /downloadFirst</span><br></pre></td></tr></table></figure>
+
+<p>输入命令后请按回车（Enter）以执行命令，然后耐心等待安装完成。</p>
+<p>安装完成后，请务必使用 [<a href="https://movejian.github.io/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B">激活 Office] Office Tool Plus 入门教程</a> 中的一键激活代码进行激活</p>
+<hr>
+<p>手动安装：</p>
+<p>转到 Office Tool Plus 的部署页面，按照以下提示操作。</p>
+<h4 id="必须做的事情"><a href="#必须做的事情" class="headerlink" title="必须做的事情"></a>必须做的事情</h4><ol>
+<li>添加产品：看下面的选项，选一个合适自己的来学习。</li>
+<li>添加语言：点一下「添加语言」就行，软件会自动匹配合适的语言。不要把“仅部署校对工具”打勾，除非你知道这是什么。</li>
+</ol>
+<h5 id="我有正版-Office"><a href="#我有正版-Office" class="headerlink" title="我有正版 Office"></a>我有正版 Office</h5><p>如果你有 Office 正版，比如你自己购买了 Microsoft 365 家庭版，安装的时候选择这个即可。</p>
+<p>当然现在也有不少人去网上白嫖什么 365 订阅，基本都是安装 Microsoft 365 企业应用版（O365ProPlusRetail）。</p>
+<p>如果学校&#x2F;企业提供了 2019&#x2F;2021 批量许可授权，安装这个也可。</p>
+<p>无论如何，你必须要安装对应的产品，否则你将无法通过账户&#x2F;密钥激活你的 Office。</p>
+<p>如果你有 Office 的正版授权，但是没有 Visio，又想装？</p>
+<p>Office, Visio 和 Project 三个产品的授权是可以分开处理的，所以你不必担心搞 Visio 会影响 Office.</p>
+<h5 id="有什么好选择吗？"><a href="#有什么好选择吗？" class="headerlink" title="有什么好选择吗？"></a>有什么好选择吗？</h5><p>当然有啦~</p>
+<p>Office 选择：Microsoft 365 企业应用版 (O365ProPlusRetail)</p>
+<p>Visio 选择：Visio 专业版 2016 (VisioProRetail)</p>
+<p>Project 选择：Project 专业版 2016 (ProjectProRetail)</p>
+<p>当然，Visio 和 Project 是需要才选，不需要或者看不懂就不需要管啦。</p>
+<h5 id="我要安装年份版-Office（例如-Office-2021）"><a href="#我要安装年份版-Office（例如-Office-2021）" class="headerlink" title="我要安装年份版 Office（例如 Office 2021）"></a>我要安装年份版 Office（例如 Office 2021）</h5><p>有一说一，年份版没有你想的那么好的哦，如果不是强迫症建议看上面那条。</p>
+<p>针对非正版用户，你只可以安装批量许可产品以便使用 KMS 激活。</p>
+<p>安装批量版时，需要使用对应的 Office 2019&#x2F;2021 企业长期版通道，否则会无法安装。</p>
+<p>Office 2021：</p>
+<p>Office LTSC 专业增强版 2021 - 批量许可证 (ProPlus2021Volume)</p>
+<p>Visio LTSC 专业版 2021 - 批量许可证 (VisioPro2021Volume)</p>
+<p>Project 专业版 2021 - 批量许可证 (ProjectPro2021Volume)</p>
+<p>Office 2019：</p>
+<p>Office 专业增强版 2019 - 批量许可证 (ProPlus2019Volume)</p>
+<p>Visio 专业版 2019 - 批量许可证 (VisioPro2019Volume)</p>
+<p>Project 专业版 2019 - 批量许可证 (ProjectPro2019Volume)</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">PS：不要问我为什么 2021 叫 LTSC，名字是微软起的有问题问微软去。</span><br></pre></td></tr></table></figure>
+
+<h5 id="我是-Windows-7-x2F-8-x2F-8-1-用户"><a href="#我是-Windows-7-x2F-8-x2F-8-1-用户" class="headerlink" title="我是 Windows 7&#x2F;8&#x2F;8.1 用户"></a>我是 Windows 7&#x2F;8&#x2F;8.1 用户</h5><p>由于系统原因，我们推荐按照第二条选项进行处理，这样确保可以进行正常安装。</p>
+<p>不要问我 Office 2019&#x2F;2021 能不能装，问就是说不能，别人说可以的话你问别人去。</p>
+<h5 id="（额外补充内容）什么系统能装什么样的-Office？"><a href="#（额外补充内容）什么系统能装什么样的-Office？" class="headerlink" title="（额外补充内容）什么系统能装什么样的 Office？"></a>（额外补充内容）什么系统能装什么样的 Office？</h5><p>目前 Office Tool Plus 中有 Office 2016、2019、2021、365 可供安装。</p>
+<p>Windows 10 和 11 无限制，可以安装任何版本的 Office。</p>
+<p>Windows 8 和 8.1 只可以安装部分产品，如果将部署模块从「Office 部署工具」更改到「Office Tool Plus」也可以安装任意产品。</p>
+<p>Windows 7 只可以安装 Office 2016 或 365，并且只能够使用「当前通道」。即使你更改部署模块，Office 2019&#x2F;2021 也不一定能安装成功。</p>
+<p>如果你的安装包是从别的地方下载的，那，那就别来问我，我也不知道你下载的是什么。</p>
+<h4 id="可以做的事情"><a href="#可以做的事情" class="headerlink" title="可以做的事情"></a>可以做的事情</h4><ol>
+<li>应用程序：选自己能看懂的就行，一般就是 Word, PowerPoint, Excel.</li>
+<li>通道：“当前通道”就行，Office 2019&#x2F;2021 批量许可证请选 Office 2019&#x2F;2021 企业长期版。</li>
+<li>体系结构：32 位兼容性好；64 位兼容性稍差且体积大，但处理大数据能力稍强。</li>
+<li>部署模式：那肯定要选安装啊，要不然怎么安装。</li>
+<li>安装模块：如没有特殊要求，请勿选择 Office Tool Plus.</li>
+<li>下载后再部署：如果网不行，最好把这个选上，免得安装卡进度卡半天。</li>
+</ol>
+<p>产品和语言弄好后即可开始部署 Office，其余设置不需要更改。</p>
+<p>部署时请耐心等待，不要强制结束安装程序或重启计算机。</p>
+<h3 id="4-视频教程"><a href="#4-视频教程" class="headerlink" title="4. 视频教程"></a>4. 视频教程</h3><p>视频教程更新不及时，建议看本文即可。</p>
+<p>bilibili：<a href="https://www.bilibili.com/video/BV1eU4y1V7NU">https://www.bilibili.com/video/BV1eU4y1V7NU</a></p>
+<p>YouTube：<a href="https://www.youtube.com/watch?v=p90V9_D-8Go">https://www.youtube.com/watch?v=p90V9_D-8Go</a></p>
+<h3 id="5-离线安装包"><a href="#5-离线安装包" class="headerlink" title="5. 离线安装包"></a>5. 离线安装包</h3><p>如果因为网络问题下载缓慢或者无法下载 Office，你可以下载 ISO 文件使用。</p>
+<p><a href="https://otp.landian.vip/zh-cn/download.html">下载站点</a>（云图小镇、OneDrive）中包含有 Office ISO.</p>
+<p>Office ISO 文件不需要解压，双击打开即可挂载使用（Win 7 除外）。</p>
+<h3 id="6-激活-Office"><a href="#6-激活-Office" class="headerlink" title="6. 激活 Office"></a>6. 激活 Office</h3><p>如果你是正版用户，一般情况下是不需要借助 Office Tool Plus 激活 Office 的，在 Office 应用程序中登录自己的微软账号，或者输入你的正版密钥即可激活 Office。</p>
+<p><a href="https://movejian.github.io/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B">【点击此处】前往另一个教程查看如何激活 Office</a></p>
+]]></content>
+      <tags>
+        <tag>Office</tag>
       </tags>
   </entry>
   <entry>
@@ -1713,6 +1713,125 @@
       </tags>
   </entry>
   <entry>
+    <title>程序员的青春饭</title>
+    <url>/2022/10/24/%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E9%9D%92%E6%98%A5%E9%A5%AD/</url>
+    <content><![CDATA[<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210242036293.png" alt="img"></p>
+<blockquote>
+<p>　　&gt; 　　在程序员节这一天，我们与多位从业者进行了探讨。他们中很多人存在焦虑，尤其到了中年，面对职场与家庭的重重压力，他们的生活真的有不堪吗？</p>
+</blockquote>
+<span id="more"></span>
+<p>　　今天，1024程序员节如期而至。这一天，很多企业给自己的程序员准备了格子衫、特别演出以及丰富的下午茶……并且鼓励他们在这一天早早回家，拒绝加班。</p>
+<p>　　然而，个别节日的礼遇，改变不了长期高强度工作带给程序员们的心理压力和焦虑。在与《财瞭》沟通中，多位已在职场滚爬多年的程序员仍吐槽道，“工作强度太大了，感觉身体快要吃不消。”而在谈及35岁后的职场规划时，个别自觉升职无望的程序员更是担忧道，“想到那时候上有老下有下，职场上对大龄程序员也不太友好，真不知道如何自处。”</p>
+<p>　　35岁程序员的生活真的有那么不堪吗？在与多位年龄超过35岁的资深程序员交流后，我们得到了不一样的答案。</p>
+<p>　　<strong>程序员不是青春饭，不该存在年龄偏见</strong></p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210242037850.png" alt="img"></p>
+<p>在国内，由于工程师红利的存在，在有着相同的竞争优势下，企业自然希望优先选择那些刚毕业的学生。于是年龄大且相对缺乏竞争力的人，就不容易被友好地对待。本质上，这还是一个竞争的问题，并没有太多很好的手段从根本上去解决这些问题。</p>
+<p>“我们只能通过自己的改变去迎接这种现状，每个人都要面对这个问题，竞争是与生俱来的，我们只能提升自己。”廖浩表示。在一个高速竞争的环境下，对于软件行业的从业者而言，持续不断地提升自己不是可选项，而是必选项。“35岁的焦虑并不可怕，可怕的是因为焦虑而忘记了前进。”</p>
+<p>　　<strong>结语：关注程序员发展，不可涸泽而渔</strong></p>
+<p>　　当前，虽然最高人民法院、人力资源和社会保障部已向社会公开发布的《劳动人事争议典型案例》中明确指出，“996”严重违反法律关于延长工作时间上限的规定，相关公司规章制度应认定为无效。然而在众多互联网企业中，加班加点赶进度，昼夜不舍忙业务的现象仍层出不穷。尤其在程序开发领域，程序开发人员加班也成为了常态。</p>
+<p>　　在袁进辉看来，企业如果过于追求把程序员现有的能力发挥出来，但是忘记了为其提供相应的成长机会，程序员的发展也将会逐渐停滞不前，最终浮于表面同时被业务拖累。1024程序员节，企业在给予程序员们一时的优待与礼遇之时，也更应该考虑如何关注程序员们的长期可持续发展，而不是一味索求“涸泽而渔”。</p>
+]]></content>
+      <tags>
+        <tag>随笔</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>继上一期解决github上的图片无法显示的问题</title>
+    <url>/2022/08/21/%E7%BB%A7%E4%B8%8A%E4%B8%80%E6%9C%9F%E8%A7%A3%E5%86%B3github%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>​      <a href="https://movejian.github.io/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/">继上篇github图床问题</a>无法正常显示，但在<strong>github</strong>上看到正常上传，连接也并非错误，百度了一下说什么<strong>DNS</strong>被污染了。解决方法是修改<strong>hosts</strong>文件或者修改<strong>DNS</strong>。</p>
+<p>​      首先，打开<a href="https://ping.eu/nslookup">域名解析</a>网站：<a href="https://ping.eu/nslookup">https://ping.eu/nslookup</a><br>然后输入raw.githubusercontent.com如下图：</p>
+<p><img src="https://movejian.github.io/images/20220821/5.png"></p>
+<span id="more"></span>
+<p>​      我们得到图床所用域名解析到的IP(上图红框中的地址)。</p>
+<ul>
+<li>最后打开本机的<strong>host</strong>文件，其路径如下：<br><code>C:\Windows\System32\drivers\etc\hosts</code>, 然后添加如下内容(上图红框中的地址)：</li>
+</ul>
+<p><img src="https://movejian.github.io/images/20220821/6.png"></p>
+<ul>
+<li>打开<strong>CMD</strong>输入命令<code>ipconfig /flushdns</code>刷新<strong>DNS</strong>缓存,再次输入<code>ipconfig/displaydns</code></li>
+</ul>
+<p>​    如果你的<strong>hosts</strong>的文件不见了,可以通过文件设置显示系统隐藏文件来找到，依然找不到，可能是被误删了，网上有很多是通过新建文本文档解决。也可以通过下面这个命令来生成<strong>hosts</strong>文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for /f %P in (&#x27;dir %windir%\WinSxS\hosts /b /s&#x27;) do copy %P %windir%\System32\drivers\etc &amp; echo %P &amp; Notepad %P</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>注意</strong>一定要使用管理员身份输入此命令。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>图床</tag>
+        <tag>问题解决</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>自动备份Hexo博客源文件</title>
+    <url>/2022/08/21/%E8%87%AA%E5%8A%A8%E5%A4%87%E4%BB%BDHexo%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/</url>
+    <content><![CDATA[<h3 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h3><p>自从接触了Hexo+NexT之后，发现离不开了，以后有能力的时候一定重新架构一下，使得更加个性化，最大程度的满足我们对于软件的需求，大家都知道，如果写东西在本地的话，最怕的应该就是更换电脑，还要重新搭建博客了，所以备份对于我们来说特别重要！备份博客就是本篇博客文章的主旨了，一定要攻下这座城堡。</p>
+<p>我曾经看过Git备份Hexo博客源文件的方式，这种方式虽然能够备份Hexo博客的源文件，但是对于我这种懒人，每次更新博文都需要输入两三行重复的Git命令真是一件麻烦的事情。况且指不定哪天就搞忘push到github上了。你说是不是，所以这篇文章出现了……</p>
+<span id="more"></span>
+<h3 id="二、原理"><a href="#二、原理" class="headerlink" title="二、原理"></a>二、原理</h3><p>通过监听Hexo的事件来完成自动执行Git命令进行自动备份，查阅Hexo文档，找到了Hexo的主要事件，见下表：</p>
+<table>
+<thead>
+<tr>
+<th>事件名</th>
+<th>事件发生时间</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>deployBefore</td>
+<td>在部署完成前发布</td>
+</tr>
+<tr>
+<td>deployAfter</td>
+<td>在部署成功后发布</td>
+</tr>
+<tr>
+<td>exit</td>
+<td>在 Hexo 结束前发布</td>
+</tr>
+<tr>
+<td>generateBefore</td>
+<td>在静态文件生成前发布</td>
+</tr>
+<tr>
+<td>generateAfter</td>
+<td>在静态文件生成后发布</td>
+</tr>
+<tr>
+<td>new</td>
+<td>在文章文件建立后发布</td>
+</tr>
+</tbody></table>
+<p>于是我们就可以通过监听Hexo的deployAfter事件，待上传完成之后自动运行Git备份命令，从而达到自动备份的目的。</p>
+<h3 id="三、实现"><a href="#三、实现" class="headerlink" title="三、实现"></a>三、实现</h3><h5 id="1-将Hexo目录加入Git仓库"><a href="#1-将Hexo目录加入Git仓库" class="headerlink" title="1.将Hexo目录加入Git仓库"></a>1.将Hexo目录加入Git仓库</h5><p>本脚本需要提前将Hexo加入Git仓库并与Github或者Gitee远程仓库绑定之后，才能正常工作。如果你不知道该怎样进行操作，可以参考我的另一篇博文：</p>
+<ul>
+<li>Git命令手动备份Hexo博客源文件</li>
+</ul>
+<h5 id="2-安装shelljs模块"><a href="#2-安装shelljs模块" class="headerlink" title="2.安装shelljs模块"></a>2.安装shelljs模块</h5><p>要实现这个自动备份功能，需要依赖NodeJs的一个shelljs模块,该模块重新包装了child_process,调用系统命令更加的方便。（其实就是因为我懒( ╯▽╰)）该模块需要安装后使用。</p>
+<p>在命令中键入以下命令，完成shelljs模块的安装：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install --save shelljs</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-编写自动备份脚本"><a href="#3-编写自动备份脚本" class="headerlink" title="3.编写自动备份脚本"></a>3.编写自动备份脚本</h5><p>shelljs模块安装完成后，在Hexo根目录的scripts文件夹下新建一个js文件，文件名随意取(我的文件名为:auto_backup.js)。如果没有scripts目录，请新建一个。</p>
+<p>然后在脚本中，写入以下内容：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">require(<span class="string">&#x27;shelljs/global&#x27;</span>);</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    hexo.on(<span class="string">&#x27;deployAfter&#x27;</span>, function() &#123;//当deploy完成后执行备份</span><br><span class="line">        run();</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">&#125; catch (e) &#123;</span><br><span class="line">    console.log(<span class="string">&quot;产生了一个错误啊&lt;(￣3￣)&gt; !，错误详情为：&quot;</span> + e.toString());</span><br><span class="line">&#125;</span><br><span class="line">function run() &#123;</span><br><span class="line">    <span class="keyword">if</span> (!which(<span class="string">&#x27;git&#x27;</span>)) &#123;</span><br><span class="line">        echo(<span class="string">&#x27;Sorry, this script requires git&#x27;</span>);</span><br><span class="line">        exit(<span class="number">1</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        echo(<span class="string">&quot;======================Auto Backup Begin===========================&quot;</span>);</span><br><span class="line">        cd(<span class="string">&#x27;E:/work/myblog&#x27;</span>);    //此处修改为Hexo根目录路径</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">exec</span>(<span class="string">&#x27;git add --all&#x27;</span>).code !== <span class="number">0</span>) &#123;</span><br><span class="line">            echo(<span class="string">&#x27;Error: Git add failed&#x27;</span>);</span><br><span class="line">            exit(<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">exec</span>(<span class="string">&#x27;git commit -am &quot;blog auto backup script\&#x27;s commit&quot;&#x27;</span>).code !== <span class="number">0</span>) &#123;</span><br><span class="line">            echo(<span class="string">&#x27;Error: Git commit failed&#x27;</span>);</span><br><span class="line">            exit(<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">exec</span>(<span class="string">&#x27;git push origin master&#x27;</span>).code !== <span class="number">0</span>) &#123;</span><br><span class="line">            echo(<span class="string">&#x27;Error: Git push failed&#x27;</span>);</span><br><span class="line">            exit(<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        echo(<span class="string">&quot;==================Auto Backup Complete============================&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>其中，需要修改第16行的<code>E:/work/myblog</code>路径为Hexo的根目录路径。（脚本中的路径为博主的Hexo路径）</li>
+<li>如果你的Git远程仓库名称不为<code>origin</code>的话，还需要修改第25行执行的push命令，修改成自己的远程仓库名和相应的分支名。</li>
+</ul>
+<h5 id="4-测试结果"><a href="#4-测试结果" class="headerlink" title="4.测试结果"></a>4.测试结果</h5><p>保存脚本并退出，然后执行hexo d命令，在常规结果执行出来后，将会得到类似以下结果:</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>技术</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>【疑难解答】 Office Tool Plus 入门教程</title>
     <url>/2022/09/27/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94Office/</url>
     <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>如果你的系统本身就有诸多毛病，建议直接重装原版系统，这是最有效最快的解决办法。</p>
@@ -1841,125 +1960,6 @@
 ]]></content>
       <tags>
         <tag>Office</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>程序员的青春饭</title>
-    <url>/2022/10/24/%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E9%9D%92%E6%98%A5%E9%A5%AD/</url>
-    <content><![CDATA[<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210242036293.png" alt="img"></p>
-<blockquote>
-<p>　　&gt; 　　在程序员节这一天，我们与多位从业者进行了探讨。他们中很多人存在焦虑，尤其到了中年，面对职场与家庭的重重压力，他们的生活真的有不堪吗？</p>
-</blockquote>
-<span id="more"></span>
-<p>　　今天，1024程序员节如期而至。这一天，很多企业给自己的程序员准备了格子衫、特别演出以及丰富的下午茶……并且鼓励他们在这一天早早回家，拒绝加班。</p>
-<p>　　然而，个别节日的礼遇，改变不了长期高强度工作带给程序员们的心理压力和焦虑。在与《财瞭》沟通中，多位已在职场滚爬多年的程序员仍吐槽道，“工作强度太大了，感觉身体快要吃不消。”而在谈及35岁后的职场规划时，个别自觉升职无望的程序员更是担忧道，“想到那时候上有老下有下，职场上对大龄程序员也不太友好，真不知道如何自处。”</p>
-<p>　　35岁程序员的生活真的有那么不堪吗？在与多位年龄超过35岁的资深程序员交流后，我们得到了不一样的答案。</p>
-<p>　　<strong>程序员不是青春饭，不该存在年龄偏见</strong></p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210242037850.png" alt="img"></p>
-<p>在国内，由于工程师红利的存在，在有着相同的竞争优势下，企业自然希望优先选择那些刚毕业的学生。于是年龄大且相对缺乏竞争力的人，就不容易被友好地对待。本质上，这还是一个竞争的问题，并没有太多很好的手段从根本上去解决这些问题。</p>
-<p>“我们只能通过自己的改变去迎接这种现状，每个人都要面对这个问题，竞争是与生俱来的，我们只能提升自己。”廖浩表示。在一个高速竞争的环境下，对于软件行业的从业者而言，持续不断地提升自己不是可选项，而是必选项。“35岁的焦虑并不可怕，可怕的是因为焦虑而忘记了前进。”</p>
-<p>　　<strong>结语：关注程序员发展，不可涸泽而渔</strong></p>
-<p>　　当前，虽然最高人民法院、人力资源和社会保障部已向社会公开发布的《劳动人事争议典型案例》中明确指出，“996”严重违反法律关于延长工作时间上限的规定，相关公司规章制度应认定为无效。然而在众多互联网企业中，加班加点赶进度，昼夜不舍忙业务的现象仍层出不穷。尤其在程序开发领域，程序开发人员加班也成为了常态。</p>
-<p>　　在袁进辉看来，企业如果过于追求把程序员现有的能力发挥出来，但是忘记了为其提供相应的成长机会，程序员的发展也将会逐渐停滞不前，最终浮于表面同时被业务拖累。1024程序员节，企业在给予程序员们一时的优待与礼遇之时，也更应该考虑如何关注程序员们的长期可持续发展，而不是一味索求“涸泽而渔”。</p>
-]]></content>
-      <tags>
-        <tag>随笔</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>继上一期解决github上的图片无法显示的问题</title>
-    <url>/2022/08/21/%E7%BB%A7%E4%B8%8A%E4%B8%80%E6%9C%9F%E8%A7%A3%E5%86%B3github%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>​      <a href="https://movejian.github.io/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/">继上篇github图床问题</a>无法正常显示，但在<strong>github</strong>上看到正常上传，连接也并非错误，百度了一下说什么<strong>DNS</strong>被污染了。解决方法是修改<strong>hosts</strong>文件或者修改<strong>DNS</strong>。</p>
-<p>​      首先，打开<a href="https://ping.eu/nslookup">域名解析</a>网站：<a href="https://ping.eu/nslookup">https://ping.eu/nslookup</a><br>然后输入raw.githubusercontent.com如下图：</p>
-<p><img src="https://movejian.github.io/images/20220821/5.png"></p>
-<span id="more"></span>
-<p>​      我们得到图床所用域名解析到的IP(上图红框中的地址)。</p>
-<ul>
-<li>最后打开本机的<strong>host</strong>文件，其路径如下：<br><code>C:\Windows\System32\drivers\etc\hosts</code>, 然后添加如下内容(上图红框中的地址)：</li>
-</ul>
-<p><img src="https://movejian.github.io/images/20220821/6.png"></p>
-<ul>
-<li>打开<strong>CMD</strong>输入命令<code>ipconfig /flushdns</code>刷新<strong>DNS</strong>缓存,再次输入<code>ipconfig/displaydns</code></li>
-</ul>
-<p>​    如果你的<strong>hosts</strong>的文件不见了,可以通过文件设置显示系统隐藏文件来找到，依然找不到，可能是被误删了，网上有很多是通过新建文本文档解决。也可以通过下面这个命令来生成<strong>hosts</strong>文件。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for /f %P in (&#x27;dir %windir%\WinSxS\hosts /b /s&#x27;) do copy %P %windir%\System32\drivers\etc &amp; echo %P &amp; Notepad %P</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><strong>注意</strong>一定要使用管理员身份输入此命令。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>图床</tag>
-        <tag>问题解决</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>自动备份Hexo博客源文件</title>
-    <url>/2022/08/21/%E8%87%AA%E5%8A%A8%E5%A4%87%E4%BB%BDHexo%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/</url>
-    <content><![CDATA[<h3 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h3><p>自从接触了Hexo+NexT之后，发现离不开了，以后有能力的时候一定重新架构一下，使得更加个性化，最大程度的满足我们对于软件的需求，大家都知道，如果写东西在本地的话，最怕的应该就是更换电脑，还要重新搭建博客了，所以备份对于我们来说特别重要！备份博客就是本篇博客文章的主旨了，一定要攻下这座城堡。</p>
-<p>我曾经看过Git备份Hexo博客源文件的方式，这种方式虽然能够备份Hexo博客的源文件，但是对于我这种懒人，每次更新博文都需要输入两三行重复的Git命令真是一件麻烦的事情。况且指不定哪天就搞忘push到github上了。你说是不是，所以这篇文章出现了……</p>
-<span id="more"></span>
-<h3 id="二、原理"><a href="#二、原理" class="headerlink" title="二、原理"></a>二、原理</h3><p>通过监听Hexo的事件来完成自动执行Git命令进行自动备份，查阅Hexo文档，找到了Hexo的主要事件，见下表：</p>
-<table>
-<thead>
-<tr>
-<th>事件名</th>
-<th>事件发生时间</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>deployBefore</td>
-<td>在部署完成前发布</td>
-</tr>
-<tr>
-<td>deployAfter</td>
-<td>在部署成功后发布</td>
-</tr>
-<tr>
-<td>exit</td>
-<td>在 Hexo 结束前发布</td>
-</tr>
-<tr>
-<td>generateBefore</td>
-<td>在静态文件生成前发布</td>
-</tr>
-<tr>
-<td>generateAfter</td>
-<td>在静态文件生成后发布</td>
-</tr>
-<tr>
-<td>new</td>
-<td>在文章文件建立后发布</td>
-</tr>
-</tbody></table>
-<p>于是我们就可以通过监听Hexo的deployAfter事件，待上传完成之后自动运行Git备份命令，从而达到自动备份的目的。</p>
-<h3 id="三、实现"><a href="#三、实现" class="headerlink" title="三、实现"></a>三、实现</h3><h5 id="1-将Hexo目录加入Git仓库"><a href="#1-将Hexo目录加入Git仓库" class="headerlink" title="1.将Hexo目录加入Git仓库"></a>1.将Hexo目录加入Git仓库</h5><p>本脚本需要提前将Hexo加入Git仓库并与Github或者Gitee远程仓库绑定之后，才能正常工作。如果你不知道该怎样进行操作，可以参考我的另一篇博文：</p>
-<ul>
-<li>Git命令手动备份Hexo博客源文件</li>
-</ul>
-<h5 id="2-安装shelljs模块"><a href="#2-安装shelljs模块" class="headerlink" title="2.安装shelljs模块"></a>2.安装shelljs模块</h5><p>要实现这个自动备份功能，需要依赖NodeJs的一个shelljs模块,该模块重新包装了child_process,调用系统命令更加的方便。（其实就是因为我懒( ╯▽╰)）该模块需要安装后使用。</p>
-<p>在命令中键入以下命令，完成shelljs模块的安装：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install --save shelljs</span><br></pre></td></tr></table></figure>
-
-<h5 id="3-编写自动备份脚本"><a href="#3-编写自动备份脚本" class="headerlink" title="3.编写自动备份脚本"></a>3.编写自动备份脚本</h5><p>shelljs模块安装完成后，在Hexo根目录的scripts文件夹下新建一个js文件，文件名随意取(我的文件名为:auto_backup.js)。如果没有scripts目录，请新建一个。</p>
-<p>然后在脚本中，写入以下内容：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">require(<span class="string">&#x27;shelljs/global&#x27;</span>);</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    hexo.on(<span class="string">&#x27;deployAfter&#x27;</span>, function() &#123;//当deploy完成后执行备份</span><br><span class="line">        run();</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">&#125; catch (e) &#123;</span><br><span class="line">    console.log(<span class="string">&quot;产生了一个错误啊&lt;(￣3￣)&gt; !，错误详情为：&quot;</span> + e.toString());</span><br><span class="line">&#125;</span><br><span class="line">function run() &#123;</span><br><span class="line">    <span class="keyword">if</span> (!which(<span class="string">&#x27;git&#x27;</span>)) &#123;</span><br><span class="line">        echo(<span class="string">&#x27;Sorry, this script requires git&#x27;</span>);</span><br><span class="line">        exit(<span class="number">1</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        echo(<span class="string">&quot;======================Auto Backup Begin===========================&quot;</span>);</span><br><span class="line">        cd(<span class="string">&#x27;E:/work/myblog&#x27;</span>);    //此处修改为Hexo根目录路径</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">exec</span>(<span class="string">&#x27;git add --all&#x27;</span>).code !== <span class="number">0</span>) &#123;</span><br><span class="line">            echo(<span class="string">&#x27;Error: Git add failed&#x27;</span>);</span><br><span class="line">            exit(<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">exec</span>(<span class="string">&#x27;git commit -am &quot;blog auto backup script\&#x27;s commit&quot;&#x27;</span>).code !== <span class="number">0</span>) &#123;</span><br><span class="line">            echo(<span class="string">&#x27;Error: Git commit failed&#x27;</span>);</span><br><span class="line">            exit(<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">exec</span>(<span class="string">&#x27;git push origin master&#x27;</span>).code !== <span class="number">0</span>) &#123;</span><br><span class="line">            echo(<span class="string">&#x27;Error: Git push failed&#x27;</span>);</span><br><span class="line">            exit(<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        echo(<span class="string">&quot;==================Auto Backup Complete============================&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>其中，需要修改第16行的<code>E:/work/myblog</code>路径为Hexo的根目录路径。（脚本中的路径为博主的Hexo路径）</li>
-<li>如果你的Git远程仓库名称不为<code>origin</code>的话，还需要修改第25行执行的push命令，修改成自己的远程仓库名和相应的分支名。</li>
-</ul>
-<h5 id="4-测试结果"><a href="#4-测试结果" class="headerlink" title="4.测试结果"></a>4.测试结果</h5><p>保存脚本并退出，然后执行hexo d命令，在常规结果执行出来后，将会得到类似以下结果:</p>
-]]></content>
-      <categories>
-        <category>学习</category>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>技术</tag>
       </tags>
   </entry>
 </search>
