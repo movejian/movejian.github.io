@@ -892,38 +892,6 @@
       </tags>
   </entry>
   <entry>
-    <title>修改hosts文件(win系统)</title>
-    <url>/2022/10/07/%E4%BF%AE%E6%94%B9hosts%E6%96%87%E4%BB%B6/</url>
-    <content><![CDATA[<h3 id="hosts作用介绍"><a href="#hosts作用介绍" class="headerlink" title="hosts作用介绍"></a>hosts作用介绍</h3><p>hosts是一个没有扩展名的系统文件，可以用记事本等工具打开，<strong>其作用就是将一些常用的网址域名与其对应的IP地址建立一个关联“数据库”</strong>，当用户在浏览器中输入一个需要登录的网址时，系统会首先自动从Hosts文件中寻找对应的IP地址，一旦找到，系统会立即打开对应网页，如果没有找到，则系统会再将网址提交DNS域名解析服务器进行IP地址的解析。</p>
-<p>需要注意的是，Hosts文件配置的映射是静态的，如果网络上的计算机更改了请及时更新IP地址，否则将不能访问。</p>
-<span id="more"></span>
-<h3 id="修改hosts"><a href="#修改hosts" class="headerlink" title="修改hosts"></a>修改hosts</h3><ol>
-<li>hosts文件路径：<code>C:\Windows\system32\drivers\etc</code></li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210072028616.png" alt="在这里插入图片描述"></p>
-<ol start="2">
-<li>找到hosts文件所在位置后，不要直接去修改该文件，会出现权限不足，无法修改的问题。具体方法是，<strong>在hosts文件上点击鼠标右键，在弹出的选项中，点击打开”属性”</strong></li>
-<li><strong>打开hosts文件属性后，切换到“安全”选项卡，先点击选中需要更改权限的用户或应用程序包，然后点击下方的“编辑”在弹出的编辑权限操作界面，，勾选上下方的“修改”和“写入”权限，完成后，点击右下角的“应用”就可以了，直接给完全控制权限也没问题。</strong></li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210072028119.png" alt="在这里插入图片描述"></p>
-<ol start="4">
-<li><p>应用后弹出一个“Windows安全”提示框，这里我们无需理会，直接点击“是”即可</p>
-</li>
-<li><p>然后用记事本打开即可修改</p>
-</li>
-<li><p>按照<code>ip地址+空格+网址域名</code>修改</p>
-<p>如：<code>112.91.133.72 download.visualstudio.microsoft.com</code></p>
-</li>
-<li><p>如果修改hosts后不生效的话，可能是因为DNS缓存，然后我们清空DNS缓存<br>具体方法：命令行(win + R 输入cmd 按enter)输入<code>ipconfig /flushdns</code>，最好是在获取管理员权限下执行命令。</p>
-</li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210072027410.png" alt="在这里插入图片描述"></p>
-]]></content>
-      <tags>
-        <tag>hosts</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>使用HEXO-GIT-BACKUP插件备份博客源文件</title>
     <url>/2022/08/21/%E4%BD%BF%E7%94%A8HEXO-GIT-BACKUP%E6%8F%92%E4%BB%B6%E5%A4%87%E4%BB%BD%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/</url>
     <content><![CDATA[<p>在搭建好hexo博客之后也要给自己的博客进行备份，文章丢失可是很麻烦的一件事情。我的博客的数据都是直接保存在cloudstudio，用的时候总是会感觉有点问题，生怕自己哪天不小心把工作空间给删除了，那就蛮麻烦了。所以我采用了 <a href="https://github.com/coneycode/hexo-git-backup">hexo-git-backup</a> 这个工具进行备份。</p>
@@ -971,6 +939,38 @@
       </categories>
       <tags>
         <tag>插件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>修改hosts文件(win系统)</title>
+    <url>/2022/10/07/%E4%BF%AE%E6%94%B9hosts%E6%96%87%E4%BB%B6/</url>
+    <content><![CDATA[<h3 id="hosts作用介绍"><a href="#hosts作用介绍" class="headerlink" title="hosts作用介绍"></a>hosts作用介绍</h3><p>hosts是一个没有扩展名的系统文件，可以用记事本等工具打开，<strong>其作用就是将一些常用的网址域名与其对应的IP地址建立一个关联“数据库”</strong>，当用户在浏览器中输入一个需要登录的网址时，系统会首先自动从Hosts文件中寻找对应的IP地址，一旦找到，系统会立即打开对应网页，如果没有找到，则系统会再将网址提交DNS域名解析服务器进行IP地址的解析。</p>
+<p>需要注意的是，Hosts文件配置的映射是静态的，如果网络上的计算机更改了请及时更新IP地址，否则将不能访问。</p>
+<span id="more"></span>
+<h3 id="修改hosts"><a href="#修改hosts" class="headerlink" title="修改hosts"></a>修改hosts</h3><ol>
+<li>hosts文件路径：<code>C:\Windows\system32\drivers\etc</code></li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210072028616.png" alt="在这里插入图片描述"></p>
+<ol start="2">
+<li>找到hosts文件所在位置后，不要直接去修改该文件，会出现权限不足，无法修改的问题。具体方法是，<strong>在hosts文件上点击鼠标右键，在弹出的选项中，点击打开”属性”</strong></li>
+<li><strong>打开hosts文件属性后，切换到“安全”选项卡，先点击选中需要更改权限的用户或应用程序包，然后点击下方的“编辑”在弹出的编辑权限操作界面，，勾选上下方的“修改”和“写入”权限，完成后，点击右下角的“应用”就可以了，直接给完全控制权限也没问题。</strong></li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210072028119.png" alt="在这里插入图片描述"></p>
+<ol start="4">
+<li><p>应用后弹出一个“Windows安全”提示框，这里我们无需理会，直接点击“是”即可</p>
+</li>
+<li><p>然后用记事本打开即可修改</p>
+</li>
+<li><p>按照<code>ip地址+空格+网址域名</code>修改</p>
+<p>如：<code>112.91.133.72 download.visualstudio.microsoft.com</code></p>
+</li>
+<li><p>如果修改hosts后不生效的话，可能是因为DNS缓存，然后我们清空DNS缓存<br>具体方法：命令行(win + R 输入cmd 按enter)输入<code>ipconfig /flushdns</code>，最好是在获取管理员权限下执行命令。</p>
+</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210072027410.png" alt="在这里插入图片描述"></p>
+]]></content>
+      <tags>
+        <tag>hosts</tag>
       </tags>
   </entry>
   <entry>
