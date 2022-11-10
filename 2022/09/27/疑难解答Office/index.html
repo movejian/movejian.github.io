@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>【疑难解答】 Office Tool Plus 入门教程 |  如风网络</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+<script>
+var _hmt = _hmt || [];
+(function() {
+	var hm = document.createElement("script");
+	hm.src = "https://hm.baidu.com/hm.js?https://hm.baidu.com/hm.js?c6903c67cf84290660ab35c737e4ef8d";
+	var s = document.getElementsByTagName("script")[0]; 
+	s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    <link rel="alternate" href="/atom.xml" title="如风网络" type="application/atom+xml">
+</head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-疑难解答Office"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  【疑难解答】 Office Tool Plus 入门教程
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2022/09/27/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94Office/" class="article-date">
+  <time datetime="2022-09-26T17:28:32.000Z" itemprop="datePublished">2022-09-27 01:28:32</time>
+</a>   
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">3.1k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">11 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>如果你的系统本身就有诸多毛病，建议直接重装原版系统，这是最有效最快的解决办法。</p>
+<p>下面的问题以及解决办法仅供参考，不一定有效，可能因系统环境等原因有些许不同。</p>
+<p>如无特殊情况，文章中提到的 Windows 10 也适用于 Windows 11.</p>
+<span id="more"></span>
+
+<h3 id="关于-Office-Tool-Plus-的问题"><a href="#关于-Office-Tool-Plus-的问题" class="headerlink" title="关于 Office Tool Plus 的问题"></a>关于 Office Tool Plus 的问题</h3><h5 id="安装了-NET-Runtime-框架，却依然无法打开-Office-Tool-Plus"><a href="#安装了-NET-Runtime-框架，却依然无法打开-Office-Tool-Plus" class="headerlink" title="安装了 .NET Runtime 框架，却依然无法打开 Office Tool Plus"></a>安装了 .NET Runtime 框架，却依然无法打开 Office Tool Plus</h5><p>这个要分为三种情况：</p>
+<ol>
+<li>双击打开，没有任何提示，只是鼠标转了一下圈圈。</li>
+<li>双击打开，报错，显示已停止运行。</li>
+<li>双击打开，提示需要 install .NET runtime</li>
+</ol>
+<p>以上三种情况，首先，1 和 2 是比较难搞的，这大多数是系统问题，并且出在 Win 7 上比较多。</p>
+<p>针对这个问题，首先去 Windows Update 把更新打满，Win 7 用户可以<a target="_blank" rel="noopener" href="https://download.coolhub.top/Extensions/Win7_UpdatePack/">从这里下载更新包</a> (UpdatePack7R2) 使用。</p>
+<p>第三种情况又分为两种情况：</p>
+<p>第一：你可能框架装错了，最稳妥就是下载 Office Tool Plus with Runtime (自带框架) 的版本，这样基本能解决问题。</p>
+<p>第二：如果你确定你框架没装错，但还是打不开，首先你要确保你装的框架是 32 位的，即使在 64 位的系统上也是如此。并且框架不可以使用第三方管理器进行安装，否则可能会出现问题。</p>
+<p>第三：注册表的系统变量一定不能更改过，有没有问题的话，对一对下面的注册表截图就知道了：</p>
+<p><code>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion</code></p>
+<p>64 位 Windows 系统：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270110384.png" alt="img"></p>
+<p>32 位 Windows 系统：</p>
+<p>[暂无截图]</p>
+<p>如果对完发现，真的有问题，那么请首先卸载框架，然后把注册表改回去，再重新安装框架，这时候就没事了。</p>
+<h5 id="UCEERR-RENDERTHREADFAILURE-0x88980406"><a href="#UCEERR-RENDERTHREADFAILURE-0x88980406" class="headerlink" title="UCEERR_RENDERTHREADFAILURE (0x88980406)"></a><code>UCEERR_RENDERTHREADFAILURE (0x88980406)</code></h5><p>看下面那一条，解决办法是一样的。</p>
+<h5 id="打开程序，窗口完全透明，但实际上可以点击可以操作"><a href="#打开程序，窗口完全透明，但实际上可以点击可以操作" class="headerlink" title="打开程序，窗口完全透明，但实际上可以点击可以操作"></a>打开程序，窗口完全透明，但实际上可以点击可以操作</h5><p><strong>最好的办法是更新显卡驱动程序从根源上解决问题</strong>，不过在这里也还是有临时方案可以使用的。</p>
+<p>使用 CMD 或 PowerShell 启动程序，并附带上以下参数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;Office Tool Plus&quot; /enablehwacc false</span><br></pre></td></tr></table></figure>
+
+<p>以上命令会关闭 Office Tool Plus 的硬件加速，这可能会有一些性能上的小问题。</p>
+<h5 id="Insufficient-memory-to-continue-the-execution-of-the-program"><a href="#Insufficient-memory-to-continue-the-execution-of-the-program" class="headerlink" title="Insufficient memory to continue the execution of the program."></a><code>Insufficient memory to continue the execution of the program.</code></h5><p>最新版 Office Tool Plus 已解决此问题，请从<a target="_blank" rel="noopener" href="https://otp.landian.vip/">官网</a>下载最新版本使用。</p>
+<p>如果问题依旧，请在断网状态下打开 Office Tool Plus，打开确认正常后再恢复网络链接。</p>
+<h3 id="关于安装的疑问"><a href="#关于安装的疑问" class="headerlink" title="关于安装的疑问"></a>关于安装的疑问</h3><h5 id="Office-Tool-Plus-安装的-Office-是正版吗？"><a href="#Office-Tool-Plus-安装的-Office-是正版吗？" class="headerlink" title="Office Tool Plus 安装的 Office 是正版吗？"></a>Office Tool Plus 安装的 Office 是正版吗？</h5><p>Office Tool Plus 下载&#x2F;安装的 Office 均为微软官方原版，非破解、非精简、非绿色版。</p>
+<p>至于你的 Office 是否正版，看你怎么激活，并不是用 Office Tool Plus 就一定是盗版，反之成立。</p>
+<p>即使你购买了正版 Office，你依然可以使用 Office Tool Plus 安装 Office。</p>
+<h5 id="Office-体系结构该如何选择？"><a href="#Office-体系结构该如何选择？" class="headerlink" title="Office 体系结构该如何选择？"></a>Office 体系结构该如何选择？</h5><p>一般情况下，默认 32 位的就可以了。</p>
+<p>如果你在日常使用中不会打开 1GB+ 的 PPT 或者几万行的 Excel 表，那没必要安装 64 位的 Office。</p>
+<p>主要是 32 位兼容性比较好（例如可以完美使用 Office Tool Plus 的文档转换功能）。</p>
+<p>具体可以<a target="_blank" rel="noopener" href="https://support.microsoft.com/zh-cn/office/%E9%80%89%E6%8B%A9-64-%E4%BD%8D%E6%88%96-32-%E4%BD%8D%E7%89%88%E6%9C%AC%E7%9A%84-office-2dee7807-8f95-4d0c-b5fe-6c6f49b8d261">查看微软官网文档</a>中的解释。</p>
+<h5 id="Office-产品该如何选择？"><a href="#Office-产品该如何选择？" class="headerlink" title="Office 产品该如何选择？"></a>Office 产品该如何选择？</h5><p>对于正版用户来说，为了能正常激活 Office，要安装跟买的一样的，比如买的 Office 2019 家庭和学生版，那就安装这个版本。</p>
+<p>Microsoft 365 用户还需要特别注意自己账号授权和产品一定要对上，否则 Office 会自动更新为全家桶。</p>
+<p>对于非正版用户来说，请按照 [<a target="_blank" rel="noopener" href="https://movejian.github.io/2022/09/27/%E5%AE%89%E8%A3%85Office">安装 Office] Office Tool Plus 入门教程</a> 操作。</p>
+<p>如果你有 Office 正版，但没有 Visio 或 Project 的正版，也可以按照安装教程中的说明操作。</p>
+<p>激活的时候，Office、Visio 和 Project 是分开处理的，并不会相互影响（特殊情况除外）。</p>
+<h5 id="Office-是否可以安装在其他盘？"><a href="#Office-是否可以安装在其他盘？" class="headerlink" title="Office 是否可以安装在其他盘？"></a>Office 是否可以安装在其他盘？</h5><p>由于微软限制，Office 只能安装在系统盘上，并且不可以使用其它软件强制迁移，否则会导致出错甚至难以修复。</p>
+<p>网上介绍的通过修改注册表来修改软件安装路径并不推荐大家使用。</p>
+<p>因为这个，我们在群里见过翻车的例子太多了。</p>
+<p>与其这样折腾还不如买个新硬盘扩容实在。</p>
+<p>别说什么有钱没钱的，自己的电脑就该买好一点，不是自己的电脑就将就用。</p>
+<h5 id="Office-Tool-Plus-下载的安装包在哪里？"><a href="#Office-Tool-Plus-下载的安装包在哪里？" class="headerlink" title="Office Tool Plus 下载的安装包在哪里？"></a>Office Tool Plus 下载的安装包在哪里？</h5><p>只有使用下载后再部署，Office Tool Plus 才会预先下载安装包并保存在电脑上。</p>
+<p>一般情况下，Office Tool Plus 会将 Office 安装包下载到 Office Tool Plus 的同目录中。</p>
+<p>也就是说，<code>Office Tool\Office\Data</code>下保存的就是 Office 的安装包。</p>
+<p>如果你更改了源路径属性，那么下载路径就是你更改后的路径。</p>
+<p>如果要共享安装包给别人用，请务必复制 Office 整个文件夹，而不是复制里面的子文件夹，这会导致无法识别。</p>
+<p>当然最佳方式是创建 ISO 文件共享给对方用。</p>
+<h3 id="关于安装的问题"><a href="#关于安装的问题" class="headerlink" title="关于安装的问题"></a>关于安装的问题</h3><h5 id="Value-cannot-be-null-Parameter-‘xxxx’"><a href="#Value-cannot-be-null-Parameter-‘xxxx’" class="headerlink" title="Value cannot be null. (Parameter ‘xxxx’)"></a>Value cannot be null. (Parameter ‘xxxx’)</h5><p>如果你是在使用 Office Tool Plus 作为安装模块（不是 Office 部署工具）时出现的这个问题，</p>
+<p>那就在工具箱内「修复系统变量」，修复完成后重启系统然后再尝试安装。</p>
+<h5 id="Office-安装长时间无反应-x2F-安装失败如何解决？"><a href="#Office-安装长时间无反应-x2F-安装失败如何解决？" class="headerlink" title="Office 安装长时间无反应&#x2F;安装失败如何解决？"></a>Office 安装长时间无反应&#x2F;安装失败如何解决？</h5><p>由于 Office 安装失败的原因实在……太复杂了，所以在此处我不一一列举。</p>
+<p>有一些问题是翻译一下文本就知道的错误，请通过修改配置来解决。</p>
+<p>一些需要深入研究并解决的问题可以进行如下操作：</p>
+<ol>
+<li>打开 Office Tool Plus</li>
+<li>转到工具箱</li>
+<li>使用收集 Office 安装程序日志功能收集日志并保存</li>
+</ol>
+<p>日志里面可能包含很多文件，需要针对性的查看与分析问题。</p>
+<p>ODT 或 C2R 日志可以通过搜索 Error 寻找错误信息，如果你技术过硬，可尝试自己解决问题。</p>
+<p>如果你不会解决问题，请发送日志给我，或者加群讨论解决（记得请我吃鸡腿 :sad: :good: ）。</p>
+<h3 id="关于激活的疑问"><a href="#关于激活的疑问" class="headerlink" title="关于激活的疑问"></a>关于激活的疑问</h3><h5 id="为什么有时候安装的和激活的产品不一样？"><a href="#为什么有时候安装的和激活的产品不一样？" class="headerlink" title="为什么有时候安装的和激活的产品不一样？"></a>为什么有时候安装的和激活的产品不一样？</h5><p>你需要知道两件事：</p>
+<ul>
+<li>产品是产品，许可证是许可证，两者虽然都有一样的名字，但不是同一个东西。</li>
+<li>理论上来说产品一般和许可证对应，但实际情况中可以不对应。</li>
+</ul>
+<p>为什么教程写的 Microsoft 365 配 Mondo 2016 Volume？</p>
+<p>因为这是最好的搭配，能让你体验 Office 所有的功能。</p>
+<h5 id="我想让激活的产品和安装的一样，如何操作？"><a href="#我想让激活的产品和安装的一样，如何操作？" class="headerlink" title="我想让激活的产品和安装的一样，如何操作？"></a>我想让激活的产品和安装的一样，如何操作？</h5><p>如果你是正版用户，出现这个问题的时候，应该前往 Office Tool Plus 的激活页面，在证书管理中，打开按钮的子菜单，选择清除激活信息，然后打开你的 Office 应用程序，按照提示修复并重新激活 Office。</p>
+<p>如果你是你是按照 [<a target="_blank" rel="noopener" href="https://movejian.github.io/2022/09/27/%E5%AE%89%E8%A3%85Office">安装 Office] Office Tool Plus 入门教程</a> 操作的，那我觉得你完全没必要继续折腾。</p>
+<h5 id="如何激活-Microsoft-365？"><a href="#如何激活-Microsoft-365？" class="headerlink" title="如何激活 Microsoft 365？"></a>如何激活 Microsoft 365？</h5><p><a target="_blank" rel="noopener" href="https://otp.landian.vip/zh-cn/#store">点击此处</a>解决问题。</p>
+<h5 id="Mondo-许可证是什么？"><a href="#Mondo-许可证是什么？" class="headerlink" title="Mondo 许可证是什么？"></a>Mondo 许可证是什么？</h5><p>2016 许可证可以用 2016 的功能，2019 能用 2019 的功能。</p>
+<p>比如 2019 的 PPT 平滑切换，2016 就没有。</p>
+<p>举个简单的例子：</p>
+<p>如果 2016 是普通身份，2019 是 VIP，那么 Mondo 就是 SVIP。</p>
+<p>Mondo 许可证可以让你体验并使用 Office 的所有功能。</p>
+<p>别看 Mondo 名字带一个 2016 就以为它逊，它强得很。</p>
+<p>不过从大局看，当然还是 Microsoft 365 正版许可最强啦，什么都有。</p>
+<h3 id="关于激活的问题"><a href="#关于激活的问题" class="headerlink" title="关于激活的问题"></a>关于激活的问题</h3><h5 id="激活时显示「产品激活成功」，打开-Office-时显示需要激活"><a href="#激活时显示「产品激活成功」，打开-Office-时显示需要激活" class="headerlink" title="激活时显示「产品激活成功」，打开 Office 时显示需要激活"></a>激活时显示「产品激活成功」，打开 Office 时显示需要激活</h5><p>具体表现为：在 Office Tool Plus 内激活的时候是显示的激活成功，但是打开 Office 却显示需要激活，并且显示的是 Microsoft 365，不是自己所安装的 Office 许可证。</p>
+<p>解决办法：在工具箱内「恢复 Office 设置为默认设置」，激活那边不需要操作，你只要确保已经激活成功就行了。</p>
+<h5 id="激活完成后显示「你的许可证有问题」"><a href="#激活完成后显示「你的许可证有问题」" class="headerlink" title="激活完成后显示「你的许可证有问题」"></a>激活完成后显示「你的许可证有问题」</h5><p>在工具箱内「修复 Office 许可证问题」即可。</p>
+<p>KMS 主机地址可以从激活教程获得，也可以通过查询激活信息找到你正在使用的 KMS 主机地址。</p>
+<h5 id="文件名、目录名或卷标语法不正确-0x8007007B-服务器运行失败-0x80080005-DNS-名称不存在-0x8007232B"><a href="#文件名、目录名或卷标语法不正确-0x8007007B-服务器运行失败-0x80080005-DNS-名称不存在-0x8007232B" class="headerlink" title="文件名、目录名或卷标语法不正确 (0x8007007B) | 服务器运行失败 (0x80080005) | DNS 名称不存在 (0x8007232B)"></a>文件名、目录名或卷标语法不正确 (0x8007007B) | 服务器运行失败 (0x80080005) | DNS 名称不存在 (0x8007232B)</h5><p>在工具箱内「重置 Software Protection 服务」，然后再次设置 KMS 主机，重试激活。</p>
+<h5 id="数据无效-0x8007000D"><a href="#数据无效-0x8007000D" class="headerlink" title="数据无效 (0x8007000D)"></a>数据无效 (0x8007000D)</h5><p>在工具箱内「重置 Software Protection 服务」，然后再次设置 KMS 主机，重试激活。</p>
+<p>如果上述操作不能解决你的问题，那就：</p>
+<p>尝试更换一个 KMS 主机，然后再次尝试激活。同时也要注意自己的系统时间是否正确。</p>
+<h5 id="软件授权服务报告无法激活该产品。无法联系任何密钥管理服务-0xC004F074"><a href="#软件授权服务报告无法激活该产品。无法联系任何密钥管理服务-0xC004F074" class="headerlink" title="软件授权服务报告无法激活该产品。无法联系任何密钥管理服务 (0xC004F074)"></a>软件授权服务报告无法激活该产品。无法联系任何密钥管理服务 (0xC004F074)</h5><p>卸载电脑上所有的 KMS 软件（如果有），例如：HEU 或者 KMS-VL-ALL.</p>
+<p>随后在工具箱内「重置 Software Protection 服务」。</p>
+<p>重新激活 Office 时，请填入 KMS 端口：1688</p>
+<h5 id="许可证使用失败-0xC004E015-令牌存储中的令牌包含无效的哈希-0x8004E108"><a href="#许可证使用失败-0xC004E015-令牌存储中的令牌包含无效的哈希-0x8004E108" class="headerlink" title="许可证使用失败 (0xC004E015) | 令牌存储中的令牌包含无效的哈希 (0x8004E108)"></a>许可证使用失败 (0xC004E015) | 令牌存储中的令牌包含无效的哈希 (0x8004E108)</h5><p>自动处理：在工具箱内「重建激活令牌」，然后重新开始激活。</p>
+<p>手动处理：请参阅帮助文档的<a target="_blank" rel="noopener" href="https://help.coolhub.top/zh-cn/activate/faq.html">疑难解答</a>。</p>
+<h5 id="没有在此计算机上发现-Office-批量许可证"><a href="#没有在此计算机上发现-Office-批量许可证" class="headerlink" title="没有在此计算机上发现 Office 批量许可证"></a>没有在此计算机上发现 Office 批量许可证</h5><p>字面意思。</p>
+<p>安装批量许可证即可，可参考：[<a target="_blank" rel="noopener" href="https://movejian.github.io/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B">激活 Office] Office Tool Plus 入门教程</a></p>
+<h5 id="软件授权服务报告许可证未安装-0xC004F015-amp-0xC004F017"><a href="#软件授权服务报告许可证未安装-0xC004F015-amp-0xC004F017" class="headerlink" title="软件授权服务报告许可证未安装 (0xC004F015 &amp; 0xC004F017)"></a>软件授权服务报告许可证未安装 (0xC004F015 &amp; 0xC004F017)</h5><p>不要被微软的表面意思所迷惑了。</p>
+<p>这句话表示许可证已安装，但尚未安装有效的密钥，所以无法使用。</p>
+<p>如果 Office 还没激活，换个许可证或者换个密钥（建议去看<a target="_blank" rel="noopener" href="https://movejian.github.io/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B">激活教程</a>）；</p>
+<p>如果 Office 已经激活，不需要理会这条消息。</p>
+<h5 id="软件授权服务报告找不到产品-SKU-0xC004F069"><a href="#软件授权服务报告找不到产品-SKU-0xC004F069" class="headerlink" title="软件授权服务报告找不到产品 SKU (0xC004F069)"></a>软件授权服务报告找不到产品 SKU (0xC004F069)</h5><p>你正在尝试安装的密钥找不到对应的许可证。</p>
+<p>安装与密钥对应的许可证，然后重新尝试安装密钥。</p>
+<h5 id="该目录包含仅名称大小写有区别的条目-0x000001A8"><a href="#该目录包含仅名称大小写有区别的条目-0x000001A8" class="headerlink" title="该目录包含仅名称大小写有区别的条目 (0x000001A8)"></a>该目录包含仅名称大小写有区别的条目 (0x000001A8)</h5><p>在工具箱内「修复 WMI 组件」。</p>
+<p><strong>注意</strong>：该功能仅在 8.2.9.0 以上版本的 Office Tool Plus 中才有。</p>
+<h5 id="An-error-occurred-while-making-the-connection"><a href="#An-error-occurred-while-making-the-connection" class="headerlink" title="An error occurred while making the connection."></a>An error occurred while making the connection.</h5><p>在“<font size="5">服务</font>”中将 <code>Windows Management Instrumentation</code>服务启用，然后再次尝试操作。</p>
+<p>啊启动了也没办法？打扰了，我也不知道该咋办。</p>
+<h3 id="关于-Office-的问题"><a href="#关于-Office-的问题" class="headerlink" title="关于 Office 的问题"></a>关于 Office 的问题</h3><h5 id="打开后显示正在更新-Office，过会儿显示错误"><a href="#打开后显示正在更新-Office，过会儿显示错误" class="headerlink" title="打开后显示正在更新 Office，过会儿显示错误"></a>打开后显示正在更新 Office，过会儿显示错误</h5><p>老毛病了，老毛病了。具体原因我不知道，但我知道一个临时解决办法。</p>
+<p>打开任务管理器，找到 <code>Microsoft Office Click-to-Run</code> 进程，直接结束运行。</p>
+<p>其他的例如 Excel，Word 等等之类的应用程序也要结束运行。</p>
+<p>然后再尝试打开 Office，应该就没啥问题了。</p>
+<h5 id="我们注意到你更新了你的许可证。请重新启动……"><a href="#我们注意到你更新了你的许可证。请重新启动……" class="headerlink" title="我们注意到你更新了你的许可证。请重新启动……"></a>我们注意到你更新了你的许可证。请重新启动……</h5><p>这个问题发生在 Project 上比较多。反正重启了还是提示 </p>
+<p>解决办法：在工具箱内「恢复 Office 设置为默认设置」。</p>
+<h5 id="很抱歉，此功能看似已中断"><a href="#很抱歉，此功能看似已中断" class="headerlink" title="很抱歉，此功能看似已中断"></a>很抱歉，此功能看似已中断</h5><p>一般情况下，卸载 WPS 即可解决此问题。</p>
+<p>卸载之后可以使用一下 Office 的快速修复以免问题没有完全解决。</p>
+<p>不想卸？卸了也没用？那我也没有办法。</p>
+<h3 id="附录：尚无解决办法的问题"><a href="#附录：尚无解决办法的问题" class="headerlink" title="附录：尚无解决办法的问题"></a>附录：尚无解决办法的问题</h3><ul>
+<li>没有注册类，代码：0x80040154</li>
+<li>软件授权服务报告产品密钥不可用，代码：0xC004F014</li>
+<li>系统找不到指定的文件，代码：0x80070002</li>
+</ul>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          打赏
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2022/09/27/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94Office/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Office/" rel="tag">Office</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2022/09/27/%E6%8A%80%E8%83%BD%E6%89%A9%E5%B1%95Office/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            【 Office技能扩展】 Office Tool Plus 高级教程
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">【激活 Office】 Office Tool Plus 入门教程</div>
+      </a>
+    
+  </nav>
+
+   
+<!-- valine评论 -->
+<div id="vcomments-box">
+  <div id="vcomments"></div>
+</div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="https://cdn.staticfile.org/valine/1.4.16/Valine.min.js"></script>
+<script>
+  new Valine({
+    el: "#vcomments",
+    app_id: "jU6HBwJv66zqFUakJm0aCmJW-gzGzoHsz",
+    app_key: "GYf75ArO1sO3wMNcUN0nuAnh",
+    path: window.location.pathname,
+    avatar: "monsterid",
+    placeholder: "给我的文章加点评论吧~",
+    recordIP: true,
+  });
+  const infoEle = document.querySelector("#vcomments .info");
+  if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+    infoEle.childNodes.forEach(function (item) {
+      item.parentNode.removeChild(item);
+    });
+  }
+</script>
+<style>
+  #vcomments-box {
+    padding: 5px 30px;
+  }
+
+  @media screen and (max-width: 800px) {
+    #vcomments-box {
+      padding: 5px 0px;
+    }
+  }
+
+  #vcomments-box #vcomments {
+    background-color: #fff;
+  }
+
+  .v .vlist .vcard .vh {
+    padding-right: 20px;
+  }
+
+  .v .vlist .vcard {
+    padding-left: 10px;
+  }
+</style>
+
+ 
+   
+    
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2022
+        <i class="ri-heart-fill heart_icon"></i> Move Jian
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/movejian.png" alt="如风网络"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/photos">相册</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/About">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>
