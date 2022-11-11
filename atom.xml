@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-10-24T12:42:30.575Z</updated>
+  <updated>2022-11-11T15:47:51.982Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Motrix是一款开源免费且界面非常清爽简约的全能型下载软件</title>
+    <link href="http://example.com/2022/11/11/Motrix%E6%98%AF%E4%B8%80%E6%AC%BE%E5%BC%80%E6%BA%90%E5%85%8D%E8%B4%B9%E4%B8%94%E7%95%8C%E9%9D%A2%E9%9D%9E%E5%B8%B8%E6%B8%85%E7%88%BD%E7%AE%80%E7%BA%A6%E7%9A%84%E5%85%A8%E8%83%BD%E5%9E%8B%E4%B8%8B%E8%BD%BD%E8%BD%AF%E4%BB%B6/"/>
+    <id>http://example.com/2022/11/11/Motrix%E6%98%AF%E4%B8%80%E6%AC%BE%E5%BC%80%E6%BA%90%E5%85%8D%E8%B4%B9%E4%B8%94%E7%95%8C%E9%9D%A2%E9%9D%9E%E5%B8%B8%E6%B8%85%E7%88%BD%E7%AE%80%E7%BA%A6%E7%9A%84%E5%85%A8%E8%83%BD%E5%9E%8B%E4%B8%8B%E8%BD%BD%E8%BD%AF%E4%BB%B6/</id>
+    <published>2022-11-11T15:32:20.000Z</published>
+    <updated>2022-11-11T15:47:51.982Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;a href=&quot;https://motrix.app/&quot;&gt;下载&lt;/a&gt;软件有很多选择，网上就介绍过IDM、Folx、Photon、FDM、迅雷等等，一数一大堆。不过正所谓各花入个眼，还是有很多人想寻找不一样的下载工具。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://motrix.app/&quot;&gt;Motrix&lt;/a&gt;是一款开源免费且界面非常清爽简约的全能型下载软件，它跨平台支持 Windows、Mac、Linux三大系统，可以支持下载 HTTP、FTP、BT、磁力链接以及下载百度网盘等资源。如果你用腻了其他工具，不妨试试 Motrix 吧…&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="下载" scheme="http://example.com/tags/%E4%B8%8B%E8%BD%BD/"/>
+    
+    <category term="工具" scheme="http://example.com/tags/%E5%B7%A5%E5%85%B7/"/>
+    
+  </entry>
   
   <entry>
     <title>程序员的青春饭</title>
@@ -406,25 +426,6 @@
     
     
     <category term="区块链" scheme="http://example.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>将Windows打印机变成网络打印机</title>
-    <link href="http://example.com/2022/09/11/%E5%B0%86Windows%E6%89%93%E5%8D%B0%E6%9C%BA%E5%8F%98%E6%88%90%E7%BD%91%E7%BB%9C%E6%89%93%E5%8D%B0%E6%9C%BA/"/>
-    <id>http://example.com/2022/09/11/%E5%B0%86Windows%E6%89%93%E5%8D%B0%E6%9C%BA%E5%8F%98%E6%88%90%E7%BD%91%E7%BB%9C%E6%89%93%E5%8D%B0%E6%9C%BA/</id>
-    <published>2022-09-11T13:50:04.000Z</published>
-    <updated>2022-09-11T13:57:56.821Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;大家都知道Windows的打印共享一直属于玄学，2000&amp;#x2F;XP&amp;#x2F;2003（NT 5.x）及以前的时代基本还算正常，经过简单的设置总能搞定，自从Vista开始的NT 6.x，尤其到了win10&amp;#x2F;win11时代，Windows的打印共享基本上就变成了玄学，姑且不说很难搞定，就算搞定了，一个补丁也可能把它搞残废。另外，Windows的共享服务一直存在各种安全漏洞，曾经一度被勒索病毒利用，尤其是win7（不能打补丁那种），为了安全，我一般都禁用server服务。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="技术" scheme="http://example.com/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-    
-    <category term="技术" scheme="http://example.com/tags/%E6%8A%80%E6%9C%AF/"/>
     
   </entry>
   
