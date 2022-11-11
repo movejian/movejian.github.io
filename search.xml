@@ -1,39 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Centos7安装时引导错误以及解决方案</title>
-    <url>/2019/11/19/Centos7%E5%AE%89%E8%A3%85%E6%97%B6%E5%BC%95%E5%AF%BC%E9%94%99%E8%AF%AF%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</url>
-    <content><![CDATA[<p>Centos7安装时引导错误以及解决方案<br>使用U盘刻录方式安装CentOS7.6，但是发现安装初始化时候发生错误，本以为是U盘刻录或者是镜像的问题，但是反复刻录多遍仍然出错。后来在CentOS中文社区，发现使用UltraISO刻录安装时就可能出现初始化引导错误1.一般情况下</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">vmlinuz initrd=initrd.img inst.stage2=hd:LABEL=CentOS\x207\x20x86_64 rd.live.check quiet</span><br></pre></td></tr></table></figure>
-<span id="more"></span>
-<p>文字不会出现在屏幕下方。当我们在安装选择界面，也就是选择U盘启动的第一个界面，该界面上有三个选项：<br>1、Install CentOS 7<br>2、Test this media &amp; install CentOS7<br>3、Troubleshooting </p>
-<p>选择第一项<br>此时，按一下Tab键，将会出现在屏幕下方出现这一串文字</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">vmlinuz initrd=initrd.img inst.stage2=hd:LABEL=CentOS\x207\x20x86_64 rd.live.check quiet</span><br></pre></td></tr></table></figure>
-
-<p>然后将这行文字修改为</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">vmlinuz initrd=initrd.img inst.stage2=hd:/dev/sdb4 quiet</span><br></pre></td></tr></table></figure>
-
-<p>其中sdb4指是我的电脑设备上的U盘，sda指第一个挂载盘，sdb指第二个挂载盘，sdc指第三个挂载盘，依此类推。每台电脑上的USB挂载名称不一样，要视情况而定选择挂载盘。通常情况下，我们不知道U盘挂载名称，这时候，可以将文字改为</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">vmlinuz initrd=initrd.img linux dd quiet</span><br></pre></td></tr></table></figure>
-
-<p>回车后，屏幕会出现挂载盘选择的的界面，该界面会显示，挂载盘名称（DEVICE）、类型（TYPE）、标识（LABEL）等信息，通常情况下选择标识为CentOS的就OK，也可以一个一个试。这时候记下挂载盘名称，重启电脑，启动进入U盘，出现系统安装选择界面，按Tab键，修改</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">vmlinuz initrd=initrd.img inst.stage2=hd:LABEL=CentOS\x207\x20x86_64 rd.live.check quiet</span><br></pre></td></tr></table></figure>
-
-<p>修改为</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">vmlinuz initrd=initrd.img inst.stage2=hd:/dev/挂载盘名称 quiet</span><br></pre></td></tr></table></figure>
-<p>此处的“挂载盘名称”是你程序所在U盘的名称。也就是你制作的“启动盘”名称，非“被安装盘符”<br>博主使用的是PE启动盘加载ISO文件<br>并且是使用的魔术师做的启动盘。ISO文件路径为：<code>U:\CEO/USMIMGS</code><br>所以我所书写的为</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">vmlinuz initrd=initrd.img inst.stage2=hd:/dev/sda1:/CEO/USMIMGS/ quiet</span><br></pre></td></tr></table></figure>
-<p>你们使用老毛桃制作的启动盘只需要修改为</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">vmlinuz initrd=initrd.img inst.stage2=hd:/dev/sda1:/iso/ quiet</span><br></pre></td></tr></table></figure>
-
-<p>部分华为服务器不太一样<code>/dev/sda4</code>真诡异</p>
-<p>最后按Enter就能进入CentOS安装界面了。</p>
-]]></content>
-      <tags>
-        <tag>Centos7</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>CDPUserSvc_***停止了工作，无法禁用服务</title>
     <url>/2022/10/08/CDPUserSvc-%E5%81%9C%E6%AD%A2%E4%BA%86%E5%B7%A5%E4%BD%9C%EF%BC%8C%E6%97%A0%E6%B3%95%E7%A6%81%E7%94%A8%E6%9C%8D%E5%8A%A1/</url>
     <content><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>今天跟大家讲解下有关电脑方面的小知识什么是CDPUserSvc?如何进行相关操作 ，相信对电脑感兴趣的小伙伴们对这个话题应该也很关注吧，小编也收集到了有关什么是CDPUserSvc?如何进行相关操作 的相关资料，希望大家看到了会喜欢。</p>
@@ -115,6 +82,109 @@
       </tags>
   </entry>
   <entry>
+    <title>Hexo如何迁移到新电脑</title>
+    <url>/2022/08/21/Hexo%E5%A6%82%E4%BD%95%E8%BF%81%E7%A7%BB%E5%88%B0%E6%96%B0%E7%94%B5%E8%84%91/</url>
+    <content><![CDATA[<h3 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h3><p>这是曾经发生的事情，自己对于数据备份疏忽，导致Hexo的<code>source</code>丢失，只能重新搭建博客。。。。。</p>
+<p>如何备份后续会更新，一切都是泪。。。。。</p>
+<span id="more"></span> 
+<h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p>迁移到新电脑之后，发现以前的Hexo拉到本地是无法正常使用的，这时候查找资料寻找解决办法</p>
+<p>由于旧电脑操作不当已经被格式化了，所有的源代码数据都已经被清除，所以我现在只能重新搭建博客</p>
+<h3 id="需要做的事情"><a href="#需要做的事情" class="headerlink" title="需要做的事情"></a>需要做的事情</h3><ol>
+<li><p>重新搭建博客</p>
+</li>
+<li><p>做好GIT备份</p>
+</li>
+<li><p>定期同步</p>
+</li>
+</ol>
+<h3 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h3><p>（有source等文件的情况下可以恢复）</p>
+<h4 id="1-GIT上设置秘钥"><a href="#1-GIT上设置秘钥" class="headerlink" title="1. GIT上设置秘钥"></a>1. GIT上设置秘钥</h4><p>  安装git这里就不描述了，安装完成之后，我们在终端执行<code>ssh-keygen -t rsa -C &quot;movejian@qq.com&quot;</code></p>
+<p>然后按三次回车，生成秘钥</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line">$ ssh-<span class="attribute">keygen</span> -t rsa -C <span class="string">&quot;xxxx<span class="variable">@qq</span>.com&quot;</span>(你的邮箱地址) Generating public/private rsa key pair. Enter file in which to save the key (/c/Users/xxxxxx/.ssh/id_rsa):</span><br></pre></td></tr></table></figure>
+
+<p>在<code>C:\Users\xxxx.ssh</code>下面，就可以看到秘钥了，<strong>id_rsa</strong>是私钥，千万不能泄露出去，<strong>id_rsa.pub是公钥</strong>，我们需要复制<strong>公钥</strong>里面的内容</p>
+<p>进入<a href="https://github.com/">github</a> ，选择 <code>setting</code></p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/20220821123613.png" alt="github设置"></p>
+<p>选择<code>SSH and GPG keys</code></p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/20220821123713.png" alt="key配置"></p>
+<p>选择<code>New SSH key</code></p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/20220821123810.png" alt="保存你的key到github"></p>
+<p>填写好title, 复制 rsa_public 里面的内容，点击<code>Add</code>，输入密码即可完成秘钥建立</p>
+<h4 id="2-安装node"><a href="#2-安装node" class="headerlink" title="2. 安装node"></a>2. 安装node</h4><p>  在<strong>GIT</strong>设置完成之后，我们下一步是准备好环境进行还原，首先我们需要进入 <a href="https://nodejs.cn/download/">node.js</a>的官网下载对应的安装包，比如下方的中文网站：</p>
+<p> <a href="https://nodejs.cn/download/">node.js</a>官方中文地址：<a href="https://nodejs.cn/download/">https://nodejs.cn/download/</a></p>
+<p>进入网站之后，我们需要下载对应的安装包进行安装，这里建议下LTS的版本。</p>
+<p>安装完node之后，这里不要着急，先检测一下自己是否真的安装好了，使用下面三个命令检测自己是否具备环境。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">node -v</span><br><span class="line"></span><br><span class="line">npm -v</span><br><span class="line"></span><br><span class="line">Git --version</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-安装hexo"><a href="#3-安装hexo" class="headerlink" title="3. 安装hexo"></a>3. 安装hexo</h4><p>新版本的node基本包含了<code>npm</code>这一类的工具，我们也无需手动安装，另外这里也不建议使用<code>cnpm</code>安装，建议直接使用<code>npm</code>安装即可，我们依次敲入下面的命令即可。</p>
+  <figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+<p>如果你是用的<strong>苹果系统（MAC）</strong>在前面加上<code>sudo</code></p>
+  <figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">sudo npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>  如果mac电脑在操作node命令的时候出现类似permission的字样，多半是没有权限，sudoy一下即可</p>
+</blockquote>
+<p>安装好了之后，这里可以使用如下的命令安装Hexo，同上，如果使用<strong>MAC</strong>电脑在前面加上<code>sudo</code></p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">npm install -g hexo</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-从GIT把备份拉到本地"><a href="#4-从GIT把备份拉到本地" class="headerlink" title="4. 从GIT把备份拉到本地"></a>4. 从GIT把备份拉到本地</h4><p>  这一个步骤就是使用git clone把之前的文章构建的备份拉到本地，比如这里个人的命令如下。</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">git</span> clone -b hexo https://xxxx/hexo</span><br></pre></td></tr></table></figure>
+
+<p>这一步完成之后，在本地有的只是一个对于hexo的基础架构，这时候还是不能执行hexo命令的，我们还需要执行 npm install 把node和hexo的依赖安装到当前的目录，生成对应的node_moudules 文件。</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">npm</span> install</span><br></pre></td></tr></table></figure>
+
+<p>安装完成之后，我们就可以快乐的玩耍了。</p>
+<h4 id="5-Hexo基础操作"><a href="#5-Hexo基础操作" class="headerlink" title="5. Hexo基础操作"></a>5. Hexo基础操作</h4><p>好久没有用过了，这里再次回顾一下基础的操作，其实hexo到了最后就只剩下几个操作就可以完成，比如下面的命令，把笔记软件写好的稿子放到hexo生成的文件里面，加一个<code>&lt;!-- more --&gt;</code>标签即可完成一遍笔记的输出，然后部署上去之后自动推送到github和gitee 的分支。</p>
+  <figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">hexo</span> new <span class="string">&#x27;xxx&#x27;</span>//新建一个新的主题</span><br><span class="line">hexo cl</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<p>  个人喜欢使用如下的文章模板：</p>
+  <figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line">title: &#123;&#123; <span class="attribute">title</span> &#125;&#125;</span><br><span class="line">subtitle: <span class="string">&#x27;这个人很懒，不想写副标题&#x27;</span></span><br><span class="line">author: lazytime</span><br><span class="line">url_suffix: random</span><br><span class="line">date: &#123;&#123; <span class="attribute">date</span> &#125;&#125;</span><br><span class="line">tags:</span><br><span class="line">- 无</span><br><span class="line">categories:</span><br><span class="line">- 未分类</span><br><span class="line">keywords: 请输入关键字（英文逗号分隔多个关键字）</span><br><span class="line">description: 请输入描述信息</span><br><span class="line">copyright: <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>  备份还原还是非常快的，中间除了在node的权限上卡了一下，基本上不到半小时既可以在本地快速搭建一个hexo的博客，十分方便。</p>
+<h3 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h3><p>建议每一个人有一个自己的博客，因为你不知道你的云笔记运营商哪一天会出问题，就好比之前的滴滴事件一样，另外注意平时多备份，不要像我一样傻不拉几的把硬盘格式化结果忘了把博客的内容拷出来结果全部要重写。。。。。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>技术</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Centos7安装时引导错误以及解决方案</title>
+    <url>/2019/11/19/Centos7%E5%AE%89%E8%A3%85%E6%97%B6%E5%BC%95%E5%AF%BC%E9%94%99%E8%AF%AF%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</url>
+    <content><![CDATA[<p>Centos7安装时引导错误以及解决方案<br>使用U盘刻录方式安装CentOS7.6，但是发现安装初始化时候发生错误，本以为是U盘刻录或者是镜像的问题，但是反复刻录多遍仍然出错。后来在CentOS中文社区，发现使用UltraISO刻录安装时就可能出现初始化引导错误1.一般情况下</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">vmlinuz initrd=initrd.img inst.stage2=hd:LABEL=CentOS\x207\x20x86_64 rd.live.check quiet</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<p>文字不会出现在屏幕下方。当我们在安装选择界面，也就是选择U盘启动的第一个界面，该界面上有三个选项：<br>1、Install CentOS 7<br>2、Test this media &amp; install CentOS7<br>3、Troubleshooting </p>
+<p>选择第一项<br>此时，按一下Tab键，将会出现在屏幕下方出现这一串文字</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">vmlinuz initrd=initrd.img inst.stage2=hd:LABEL=CentOS\x207\x20x86_64 rd.live.check quiet</span><br></pre></td></tr></table></figure>
+
+<p>然后将这行文字修改为</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">vmlinuz initrd=initrd.img inst.stage2=hd:/dev/sdb4 quiet</span><br></pre></td></tr></table></figure>
+
+<p>其中sdb4指是我的电脑设备上的U盘，sda指第一个挂载盘，sdb指第二个挂载盘，sdc指第三个挂载盘，依此类推。每台电脑上的USB挂载名称不一样，要视情况而定选择挂载盘。通常情况下，我们不知道U盘挂载名称，这时候，可以将文字改为</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">vmlinuz initrd=initrd.img linux dd quiet</span><br></pre></td></tr></table></figure>
+
+<p>回车后，屏幕会出现挂载盘选择的的界面，该界面会显示，挂载盘名称（DEVICE）、类型（TYPE）、标识（LABEL）等信息，通常情况下选择标识为CentOS的就OK，也可以一个一个试。这时候记下挂载盘名称，重启电脑，启动进入U盘，出现系统安装选择界面，按Tab键，修改</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">vmlinuz initrd=initrd.img inst.stage2=hd:LABEL=CentOS\x207\x20x86_64 rd.live.check quiet</span><br></pre></td></tr></table></figure>
+
+<p>修改为</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">vmlinuz initrd=initrd.img inst.stage2=hd:/dev/挂载盘名称 quiet</span><br></pre></td></tr></table></figure>
+<p>此处的“挂载盘名称”是你程序所在U盘的名称。也就是你制作的“启动盘”名称，非“被安装盘符”<br>博主使用的是PE启动盘加载ISO文件<br>并且是使用的魔术师做的启动盘。ISO文件路径为：<code>U:\CEO/USMIMGS</code><br>所以我所书写的为</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">vmlinuz initrd=initrd.img inst.stage2=hd:/dev/sda1:/CEO/USMIMGS/ quiet</span><br></pre></td></tr></table></figure>
+<p>你们使用老毛桃制作的启动盘只需要修改为</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">vmlinuz initrd=initrd.img inst.stage2=hd:/dev/sda1:/iso/ quiet</span><br></pre></td></tr></table></figure>
+
+<p>部分华为服务器不太一样<code>/dev/sda4</code>真诡异</p>
+<p>最后按Enter就能进入CentOS安装界面了。</p>
+]]></content>
+      <tags>
+        <tag>Centos7</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo迁移备份</title>
     <url>/2022/08/21/Hexo%E8%BF%81%E7%A7%BB%E5%A4%87%E4%BB%BD/</url>
     <content><![CDATA[<h3 id="创建Git分支将Hexo博客迁移到其它电脑"><a href="#创建Git分支将Hexo博客迁移到其它电脑" class="headerlink" title="创建Git分支将Hexo博客迁移到其它电脑"></a>创建Git分支将Hexo博客迁移到其它电脑</h3><h3 id="反省"><a href="#反省" class="headerlink" title="反省"></a>反省</h3><p>有时候就会干些蠢事，换电脑忘记吧旧电脑博客的Hexo博客备份到移动硬盘上，一个格式化啥都没了，导致丢失了所有的博客资料。（博客内容要慢慢补） 一定要养成经常备份的好习惯。。。。。。。。</p>
@@ -189,108 +259,6 @@
       </categories>
       <tags>
         <tag>技术</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo如何迁移到新电脑</title>
-    <url>/2022/08/21/Hexo%E5%A6%82%E4%BD%95%E8%BF%81%E7%A7%BB%E5%88%B0%E6%96%B0%E7%94%B5%E8%84%91/</url>
-    <content><![CDATA[<h3 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h3><p>这是曾经发生的事情，自己对于数据备份疏忽，导致Hexo的<code>source</code>丢失，只能重新搭建博客。。。。。</p>
-<p>如何备份后续会更新，一切都是泪。。。。。</p>
-<span id="more"></span> 
-<h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p>迁移到新电脑之后，发现以前的Hexo拉到本地是无法正常使用的，这时候查找资料寻找解决办法</p>
-<p>由于旧电脑操作不当已经被格式化了，所有的源代码数据都已经被清除，所以我现在只能重新搭建博客</p>
-<h3 id="需要做的事情"><a href="#需要做的事情" class="headerlink" title="需要做的事情"></a>需要做的事情</h3><ol>
-<li><p>重新搭建博客</p>
-</li>
-<li><p>做好GIT备份</p>
-</li>
-<li><p>定期同步</p>
-</li>
-</ol>
-<h3 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h3><p>（有source等文件的情况下可以恢复）</p>
-<h4 id="1-GIT上设置秘钥"><a href="#1-GIT上设置秘钥" class="headerlink" title="1. GIT上设置秘钥"></a>1. GIT上设置秘钥</h4><p>  安装git这里就不描述了，安装完成之后，我们在终端执行<code>ssh-keygen -t rsa -C &quot;movejian@qq.com&quot;</code></p>
-<p>然后按三次回车，生成秘钥</p>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line">$ ssh-<span class="attribute">keygen</span> -t rsa -C <span class="string">&quot;xxxx<span class="variable">@qq</span>.com&quot;</span>(你的邮箱地址) Generating public/private rsa key pair. Enter file in which to save the key (/c/Users/xxxxxx/.ssh/id_rsa):</span><br></pre></td></tr></table></figure>
-
-<p>在<code>C:\Users\xxxx.ssh</code>下面，就可以看到秘钥了，<strong>id_rsa</strong>是私钥，千万不能泄露出去，<strong>id_rsa.pub是公钥</strong>，我们需要复制<strong>公钥</strong>里面的内容</p>
-<p>进入<a href="https://github.com/">github</a> ，选择 <code>setting</code></p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/20220821123613.png" alt="github设置"></p>
-<p>选择<code>SSH and GPG keys</code></p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/20220821123713.png" alt="key配置"></p>
-<p>选择<code>New SSH key</code></p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/20220821123810.png" alt="保存你的key到github"></p>
-<p>填写好title, 复制 rsa_public 里面的内容，点击<code>Add</code>，输入密码即可完成秘钥建立</p>
-<h4 id="2-安装node"><a href="#2-安装node" class="headerlink" title="2. 安装node"></a>2. 安装node</h4><p>  在<strong>GIT</strong>设置完成之后，我们下一步是准备好环境进行还原，首先我们需要进入 <a href="https://nodejs.cn/download/">node.js</a>的官网下载对应的安装包，比如下方的中文网站：</p>
-<p> <a href="https://nodejs.cn/download/">node.js</a>官方中文地址：<a href="https://nodejs.cn/download/">https://nodejs.cn/download/</a></p>
-<p>进入网站之后，我们需要下载对应的安装包进行安装，这里建议下LTS的版本。</p>
-<p>安装完node之后，这里不要着急，先检测一下自己是否真的安装好了，使用下面三个命令检测自己是否具备环境。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">node -v</span><br><span class="line"></span><br><span class="line">npm -v</span><br><span class="line"></span><br><span class="line">Git --version</span><br></pre></td></tr></table></figure>
-
-<h4 id="3-安装hexo"><a href="#3-安装hexo" class="headerlink" title="3. 安装hexo"></a>3. 安装hexo</h4><p>新版本的node基本包含了<code>npm</code>这一类的工具，我们也无需手动安装，另外这里也不建议使用<code>cnpm</code>安装，建议直接使用<code>npm</code>安装即可，我们依次敲入下面的命令即可。</p>
-  <figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
-<p>如果你是用的<strong>苹果系统（MAC）</strong>在前面加上<code>sudo</code></p>
-  <figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">sudo npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>  如果mac电脑在操作node命令的时候出现类似permission的字样，多半是没有权限，sudoy一下即可</p>
-</blockquote>
-<p>安装好了之后，这里可以使用如下的命令安装Hexo，同上，如果使用<strong>MAC</strong>电脑在前面加上<code>sudo</code></p>
-<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">npm install -g hexo</span><br></pre></td></tr></table></figure>
-
-<h4 id="4-从GIT把备份拉到本地"><a href="#4-从GIT把备份拉到本地" class="headerlink" title="4. 从GIT把备份拉到本地"></a>4. 从GIT把备份拉到本地</h4><p>  这一个步骤就是使用git clone把之前的文章构建的备份拉到本地，比如这里个人的命令如下。</p>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">git</span> clone -b hexo https://xxxx/hexo</span><br></pre></td></tr></table></figure>
-
-<p>这一步完成之后，在本地有的只是一个对于hexo的基础架构，这时候还是不能执行hexo命令的，我们还需要执行 npm install 把node和hexo的依赖安装到当前的目录，生成对应的node_moudules 文件。</p>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">npm</span> install</span><br></pre></td></tr></table></figure>
-
-<p>安装完成之后，我们就可以快乐的玩耍了。</p>
-<h4 id="5-Hexo基础操作"><a href="#5-Hexo基础操作" class="headerlink" title="5. Hexo基础操作"></a>5. Hexo基础操作</h4><p>好久没有用过了，这里再次回顾一下基础的操作，其实hexo到了最后就只剩下几个操作就可以完成，比如下面的命令，把笔记软件写好的稿子放到hexo生成的文件里面，加一个<code>&lt;!-- more --&gt;</code>标签即可完成一遍笔记的输出，然后部署上去之后自动推送到github和gitee 的分支。</p>
-  <figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">hexo</span> new <span class="string">&#x27;xxx&#x27;</span>//新建一个新的主题</span><br><span class="line">hexo cl</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-
-<p>  个人喜欢使用如下的文章模板：</p>
-  <figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line">title: &#123;&#123; <span class="attribute">title</span> &#125;&#125;</span><br><span class="line">subtitle: <span class="string">&#x27;这个人很懒，不想写副标题&#x27;</span></span><br><span class="line">author: lazytime</span><br><span class="line">url_suffix: random</span><br><span class="line">date: &#123;&#123; <span class="attribute">date</span> &#125;&#125;</span><br><span class="line">tags:</span><br><span class="line">- 无</span><br><span class="line">categories:</span><br><span class="line">- 未分类</span><br><span class="line">keywords: 请输入关键字（英文逗号分隔多个关键字）</span><br><span class="line">description: 请输入描述信息</span><br><span class="line">copyright: <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>  备份还原还是非常快的，中间除了在node的权限上卡了一下，基本上不到半小时既可以在本地快速搭建一个hexo的博客，十分方便。</p>
-<h3 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h3><p>建议每一个人有一个自己的博客，因为你不知道你的云笔记运营商哪一天会出问题，就好比之前的滴滴事件一样，另外注意平时多备份，不要像我一样傻不拉几的把硬盘格式化结果忘了把博客的内容拷出来结果全部要重写。。。。。</p>
-]]></content>
-      <categories>
-        <category>学习</category>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>技术</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Kali的DDoS攻击方法</title>
-    <url>/2022/09/21/Kali%E7%9A%84DDoS%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95/</url>
-    <content><![CDATA[<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212049992.jpeg"></p>
-<p><strong>本文章使用的是Kali Linux的2021-4-installer-amd64版本</strong> <strong>Kali Linux的安装过程本文章不做过多说明，请自行百度</strong> <strong>本帖子如果涉及侵权请联系我</strong>  </p>
-<span id="more"></span>
-
-<p>1**.**首先，打开一个终端然后<code>su root</code>进入<code>root</code></p>
-<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212050035.png" alt="img">  </p>
-<p>2.下载ddos文件包  </p>
-<p>自行百度下载</p>
-<p>3.cd到ddos包下</p>
-<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212050053.png" alt="img"> </p>
-<p> 4.用python执行<code>ddos.py</code>，输入命令：<code>python ddos.py</code></p>
-<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056870.png" alt="img">  </p>
-<p>5.再打开一个终端输入命令:<code> ping www.siediyer.cn</code>  即可获得攻击对象的IP地址。（获取IP后<code>Ctrl+C</code>可以结束<code>ping</code>）   <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212055245.png" alt="img">  </p>
-<p>6.然后回到刚刚的终端，输入<code>ping</code>到的IP地址：</p>
-<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056852.png" alt="img"></p>
-<p>  7.Attack Port即攻击端口，一般服务器默认为80（更多内容请百度）  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056029.png" alt="img"> </p>
-<p> 8.Attack Speed即攻击速度，数值越大越快，最大不能超过1000  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056295.png" alt="img">  </p>
-<p>9.按下回车，如果出现以下界面，即代表已经开始向该IP发起DDos攻击，也就成功了。  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056196.png" alt="img">   </p>
-<p>安全无边疆，努力习知识  </p>
-<p>本文章只供学习交流学习不可用于其他非法用途！！！</p>
-<p> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056473.png" alt="9"></p>
-]]></content>
-      <categories>
-        <category>学习</category>
-      </categories>
-      <tags>
-        <tag>Kali</tag>
       </tags>
   </entry>
   <entry>
@@ -377,6 +345,38 @@
       </categories>
       <tags>
         <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Kali的DDoS攻击方法</title>
+    <url>/2022/09/21/Kali%E7%9A%84DDoS%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212049992.jpeg"></p>
+<p><strong>本文章使用的是Kali Linux的2021-4-installer-amd64版本</strong> <strong>Kali Linux的安装过程本文章不做过多说明，请自行百度</strong> <strong>本帖子如果涉及侵权请联系我</strong>  </p>
+<span id="more"></span>
+
+<p>1**.**首先，打开一个终端然后<code>su root</code>进入<code>root</code></p>
+<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212050035.png" alt="img">  </p>
+<p>2.下载ddos文件包  </p>
+<p>自行百度下载</p>
+<p>3.cd到ddos包下</p>
+<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212050053.png" alt="img"> </p>
+<p> 4.用python执行<code>ddos.py</code>，输入命令：<code>python ddos.py</code></p>
+<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056870.png" alt="img">  </p>
+<p>5.再打开一个终端输入命令:<code> ping www.siediyer.cn</code>  即可获得攻击对象的IP地址。（获取IP后<code>Ctrl+C</code>可以结束<code>ping</code>）   <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212055245.png" alt="img">  </p>
+<p>6.然后回到刚刚的终端，输入<code>ping</code>到的IP地址：</p>
+<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056852.png" alt="img"></p>
+<p>  7.Attack Port即攻击端口，一般服务器默认为80（更多内容请百度）  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056029.png" alt="img"> </p>
+<p> 8.Attack Speed即攻击速度，数值越大越快，最大不能超过1000  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056295.png" alt="img">  </p>
+<p>9.按下回车，如果出现以下界面，即代表已经开始向该IP发起DDos攻击，也就成功了。  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056196.png" alt="img">   </p>
+<p>安全无边疆，努力习知识  </p>
+<p>本文章只供学习交流学习不可用于其他非法用途！！！</p>
+<p> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056473.png" alt="9"></p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>Kali</tag>
       </tags>
   </entry>
   <entry>
@@ -632,6 +632,40 @@
       </tags>
   </entry>
   <entry>
+    <title>Office用C2R工具在线安装激活</title>
+    <url>/2022/09/27/Office%E7%94%A8C2R%E5%B7%A5%E5%85%B7%E5%9C%A8%E7%BA%BF%E5%AE%89%E8%A3%85%E6%BF%80%E6%B4%BB/</url>
+    <content><![CDATA[<p>C2R工具下载地址：<a href="https://wwt.lanzouw.com/b03pbhjri#52pj">https://wwt.lanzouw.com/b03pbhjri#52pj</a></p>
+<p>以下来自吾爱破解论坛：<br>Win11 22H2 最新版本官网镜像下载地址（来自微软官网免费链接，不同镜像的区别就是包含的版本不同）：<br>百度网盘：<a href="https://pan.baidu.com/s/1zZUVDc0wMdzoBehTfEPobQ?pwd=sy71">https://pan.baidu.com/s/1zZUVDc0wMdzoBehTfEPobQ?pwd=sy71</a><br>提取码:sy71<br>123云盘：<a href="https://www.123pan.com/s/HfxDVv-xZQ7d">https://www.123pan.com/s/HfxDVv-xZQ7d</a> 提取码：BGio<br>TechBench：<a href="https://techbench.betaworld.cn/get.php?id=2360">https://techbench.betaworld.cn/get.php?id=2360</a><br>微软官网：<a href="https://www.microsoft.com/zh-cn/software-download/windows11/">https://www.microsoft.com/zh-cn/software-download/windows11/</a></p>
+<span id="more"></span>
+
+<p>文件信息：<br>文件名：Win11_22H2_Chinese(Simplified)_x64.iso<br>MD5: 506B5563FDA4402E3DCB846927612414<br>SHA1: EDA6B80B5E52567D22C862884D7C987C316AF844<br>CRC32: 6D69527A</p>
+<p>IOS镜像包含版本：家庭版，家庭单语言版，专业版，教育版，专业教育版，专业工作站版（6）</p>
+<p>MVS&#x2F;MSDN镜像下载（来自微软官方MVS&#x2F;MSDN付费订阅，磁力链接推荐用迅雷下载）：<br>简体中文 - 消费者版（这个版本其实就是微软官网的版本，和上面那个版本一样）：<br>zh-cn_windows_11_consumer_editions_version_22h2_x64_dvd_59cfe6ee.iso (5.14 GB)<br>SHA-256: 5D4733AD43EE51B7686B766D1DD691342A8421035E7C9FA0C936B7BABEE0BE4B<br>包含版本：家庭版、家庭单语言版、教育版、专业版、专业教育版、专业工作站版（6）<br>123云盘分流：<a href="https://www.123pan.com/s/HfxDVv-nZQ7d">https://www.123pan.com/s/HfxDVv-nZQ7d</a> 提取码:yVi4<br>百度网盘分流：<a href="https://pan.baidu.com/s/1MQswudl58d-R_UPqQ7lqXg?pwd=u7he">https://pan.baidu.com/s/1MQswudl58d-R_UPqQ7lqXg?pwd=u7he</a> 提取码:u7he<br>天翼云盘分流：<a href="https://cloud.189.cn/web/share?code=vAfIFfi2q2ym">https://cloud.189.cn/web/share?code=vAfIFfi2q2ym</a> 访问码：0bqa</p>
+<p>简体中文 - 商业版（这个是官网没有，要在微软MSDN花钱订阅的版本，和VLSC的商业版是一个版本）：<br>zh-cn_windows_11_business_editions_version_22h2_x64_dvd_914b57a5.iso (5.05 GB)<br>SHA-256: D74D24A00F83E77A189BE6BCB2E23FAD5BABC29F576E810C43282CE683F8B048<br>包含版本：教育版、企业版、专业版、专业教育版、专业工作站版（5）<br>123云盘分流：<a href="https://www.123pan.com/s/HfxDVv-2ZQ7d">https://www.123pan.com/s/HfxDVv-2ZQ7d</a> 提取码:TE1P<br>百度网盘分流：<a href="https://pan.baidu.com/s/1XbN47aPaDdc8VUlc7OXI7w?pwd=m4eg">https://pan.baidu.com/s/1XbN47aPaDdc8VUlc7OXI7w?pwd=m4eg</a> 提取码:m4eg<br>天翼云盘分流：<a href="https://cloud.189.cn/web/share?code=B7FjieMRnEje">https://cloud.189.cn/web/share?code=B7FjieMRnEje</a> 访问码：dkg4</p>
+<p>简体中文 - 家庭中文版（中国特供版本，大部分笔记本出厂自带的就是这个版本，不推荐下载）：<br>Win11_22H2_China_GGK_Chinese(Simplified)_x64.iso (4.88 GB)<br>SHA-256: 3DC5C5F88A7F076EE349BB20DAB4B2C3857BA7A8AE089AA532E9C2634ED8BFD7<br>包含版本：家庭中文版（1）<br>123云盘分流：<a href="https://www.123pan.com/s/HfxDVv-UZQ7d">https://www.123pan.com/s/HfxDVv-UZQ7d</a> 提取码:sS6e<br>百度网盘分流：<a href="https://pan.baidu.com/s/1kNeaeKEMbMfuxGyW3sluUA?pwd=k3du">https://pan.baidu.com/s/1kNeaeKEMbMfuxGyW3sluUA?pwd=k3du</a> 提取码:k3du<br>天翼云盘分流：<a href="https://cloud.189.cn/web/share?code=MJBzyameymqm">https://cloud.189.cn/web/share?code=MJBzyameymqm</a> 访问码：28hg</p>
+<p>繁體中文 - 消費者版（官網也可以下載到）：<br>SHA256：0DA9E7C321CEB12536420F21A716C3240235ED0AF48D71F065EC76AE77A58EDB<br>包含版本：家庭版、家庭單語言版、教育版、專業版、專業教育版、專業工作站版（6）<br>123雲盤分流：<a href="https://www.123pan.com/s/HfxDVv-SZQ7d">https://www.123pan.com/s/HfxDVv-SZQ7d</a> 提取碼:sVTE<br>百度網盤分流：<a href="https://pan.baidu.com/s/13tJmkqBIsi-t1S2-B5EABQ?pwd=wuyu">https://pan.baidu.com/s/13tJmkqBIsi-t1S2-B5EABQ?pwd=wuyu</a> 提取碼:wuyu<br>天翼雲盤分流：<a href="https://cloud.189.cn/web/share?code=IzYrMbMfUJBn">https://cloud.189.cn/web/share?code=IzYrMbMfUJBn</a> 訪問碼：bkk8</p>
+<p>繁體中文 - 商業版（這個版本和VLSC的繁體中文商業版其實是壹個版本，同樣是付費訂閱來的）：<br>SHA-256: 4C691D1C01CCB40275BAF979DB1A9CEC98F7DA8A8DFA59B4D2366EEC76084758<br>包含版本：教育版、企業版、專業版、專業教育版、專業工作站版（5）<br>123雲盤分流：<a href="https://www.123pan.com/s/HfxDVv-lZQ7d">https://www.123pan.com/s/HfxDVv-lZQ7d</a> 提取碼:wkWD<br>百度網盤分流：<a href="https://pan.baidu.com/s/1avGQLrDxjtXdCiuCL-OuGw?pwd=1v4f">https://pan.baidu.com/s/1avGQLrDxjtXdCiuCL-OuGw?pwd=1v4f</a> 提取碼:1v4f<br>天翼雲盤分流：<a href="https://cloud.189.cn/web/share?code=J3ABRz3q6Fvu">https://cloud.189.cn/web/share?code=J3ABRz3q6Fvu</a> 訪問碼：9m6t</p>
+<p>English - Consumer（英文消费者版本，同样可以在官网下载到）：<br>en-us_windows_11_consumer_editions_version_22h2_x64_dvd_e630fafd.iso (5.11 GB)<br>SHA-256: 5C69E6F486BC4BDAE91557DE161008458EAA40D40468C34DBBD9078952108D0A<br>Include Version：Home, Home N, Home Single Language, Education, Education N, Pro, Pro N, Pro Education, Pro Education N, Pro for Workstations, Pro N for Workstations（11）<br>123 Cloud Disk（123云盘）：<a href="https://www.123pan.com/s/HfxDVv-DZQ7d">https://www.123pan.com/s/HfxDVv-DZQ7d</a> Code:7P4U<br>Baidu Netdisk（百度网盘）：<a href="https://pan.baidu.com/s/1o2yeRWHecMsYsO2I2-3Udg?pwd=jrmn">https://pan.baidu.com/s/1o2yeRWHecMsYsO2I2-3Udg?pwd=jrmn</a> Code:jrmn<br>E Cloud（天翼云盘）：<a href="https://cloud.189.cn/web/share?code=jA7NriZFFram">https://cloud.189.cn/web/share?code=jA7NriZFFram</a> Code：td7r</p>
+<p>English - Business（英文商业版本，官网没有的版本）：<br>en-us_windows_11_business_editions_version_22h2_x64_dvd_17a08ce3.iso (5 GB)<br>SHA-256: 6E3A101C6E97D8E68F576DDBCED9BE34CBA949F750DA3C83F7D4791401068C9F<br>Include Version：Education, Education N, Enterprise, Enterprise N, Pro, Pro N, Pro Education, Pro Education N, Pro for Workstations, Pro N for Workstations（10）<br>123 Cloud Disk（123云盘）：<a href="https://www.123pan.com/s/HfxDVv-rZQ7d">https://www.123pan.com/s/HfxDVv-rZQ7d</a> Code:5yCR<br>Baidu Netdisk（百度网盘）：<a href="https://pan.baidu.com/s/1M6HtQJGjkKs7MMw1cIXF2A?pwd=7b4s">https://pan.baidu.com/s/1M6HtQJGjkKs7MMw1cIXF2A?pwd=7b4s</a> Code:7b4s<br>E Cloud（天翼云盘）：<a href="https://cloud.189.cn/web/share?code=NZzmEr7Rfemy">https://cloud.189.cn/web/share?code=NZzmEr7Rfemy</a> Code：y383</p>
+<p>PS：消费者版和商业版的区别就是包含的版本不同，我是比较喜欢商业版，因为商业版包含企业版，这个是功能最全的</p>
+<p>VLSC企业订阅版本（也是微软官方付费订阅的，这个版本与MVS&#x2F;MSDN版本的区别由于微软偷懒不想做两个版本所以没有了，但是这个版本有ARM64，MVS&#x2F;MSDN版目前还没有）：<br>简体中文 - 商业版：<br>123云盘：<a href="https://www.123pan.com/s/HfxDVv-fZQ7d">https://www.123pan.com/s/HfxDVv-fZQ7d</a> 提取码:YZix<br>百度网盘：<a href="https://pan.baidu.com/s/1OEu7MmSDbCa7_NyEbbER8w?pwd=rk65">https://pan.baidu.com/s/1OEu7MmSDbCa7_NyEbbER8w?pwd=rk65</a> 提取码:rk65<br>天翼云盘：<a href="https://cloud.189.cn/t/FJ3mUjf6fQZ3">https://cloud.189.cn/t/FJ3mUjf6fQZ3</a> 访问码:qz88<br>SHA256:D74D24A00F83E77A189BE6BCB2E23FAD5BABC29F576E810C43282CE683F8B048<br>包含版本：教育版、企业版、专业版、专业教育版、专业工作站版（5）</p>
+<p>简体中文 - ARM64版本：<br>123云盘：<a href="https://www.123pan.com/s/HfxDVv-pZQ7d">https://www.123pan.com/s/HfxDVv-pZQ7d</a> 提取码:b91o<br>百度网盘：<a href="https://pan.baidu.com/s/1on1LBzsAaYIeDBQEMQYK0Q?pwd=26tb">https://pan.baidu.com/s/1on1LBzsAaYIeDBQEMQYK0Q?pwd=26tb</a> 提取码:26tb<br>天翼云盘：<a href="https://cloud.189.cn/t/RjAVFjQviqia">https://cloud.189.cn/t/RjAVFjQviqia</a> 访问码:2vfk<br>SHA256:6C308F4139F9938E369BC987CBCC983EC293506AB29C736ABDD8284CEBBC5BF7<br>这个是给MAC和Win平板用的版本</p>
+<p>繁體中文 - 商業版：<br>123雲盤：<a href="https://www.123pan.com/s/HfxDVv-YZQ7d">https://www.123pan.com/s/HfxDVv-YZQ7d</a> 提取碼:PJCH<br>百度網盤：<a href="https://pan.baidu.com/s/1sKhZ-GQtj1ifcJH60EJPEQ?pwd=yhx5">https://pan.baidu.com/s/1sKhZ-GQtj1ifcJH60EJPEQ?pwd=yhx5</a> 提取碼:yhx5<br>天翼雲盤：<a href="https://cloud.189.cn/t/6ZNbmeEJrm6r">https://cloud.189.cn/t/6ZNbmeEJrm6r</a> 訪問碼：cfu7<br>SHA256:4C691D1C01CCB40275BAF979DB1A9CEC98F7DA8A8DFA59B4D2366EEC76084758<br>包含版本：教育版、企業版、專業版、專業教育版、專業工作站版（5）</p>
+<p>繁體中文 - ARM64版：<br>123雲盤：<a href="https://www.123pan.com/s/HfxDVv-GZQ7d">https://www.123pan.com/s/HfxDVv-GZQ7d</a> 提取碼:5Jfi<br>百度網盤：<a href="https://pan.baidu.com/s/1cJOyT1PrrNY_yYlJnr-1sw?pwd=pxwr">https://pan.baidu.com/s/1cJOyT1PrrNY_yYlJnr-1sw?pwd=pxwr</a> 提取碼:pxwr<br>天翼雲盤：<a href="https://cloud.189.cn/t/vI7vqurUjQze">https://cloud.189.cn/t/vI7vqurUjQze</a> 訪問碼:2e8c<br>SHA256:EB721E2F2B08DEDE965E18369926E9F3FD868728EB7A38A0B3909A524D791F88<br>這個是給MAC和Win平闆用的版本</p>
+<p>English - Business：<br>123 Cloud Disk：<a href="https://www.123pan.com/s/HfxDVv-PZQ7d">https://www.123pan.com/s/HfxDVv-PZQ7d</a> Code:oAY5<br>Baidu Netdisk：<a href="https://pan.baidu.com/s/1LN96MZgYf_kMj8TUAx1tyg?pwd=rcmh">https://pan.baidu.com/s/1LN96MZgYf_kMj8TUAx1tyg?pwd=rcmh</a> Code:rcmh<br>E Cloud：<a href="https://cloud.189.cn/t/Iveaeeniqqmm">https://cloud.189.cn/t/Iveaeeniqqmm</a> Code:on3h<br>SHA256:6E3A101C6E97D8E68F576DDBCED9BE34CBA949F750DA3C83F7D4791401068C9F<br>Include Version：Education, Education N, Enterprise, Enterprise N, Pro, Pro N, Pro Education, Pro Education N, Pro for Workstations, Pro N for Workstations（10）</p>
+<p>English - ARM64：<br>123 Cloud Disk：<a href="https://www.123pan.com/s/HfxDVv-XZQ7d">https://www.123pan.com/s/HfxDVv-XZQ7d</a> Code:vCmO<br>Baidu Netdisk：<a href="https://pan.baidu.com/s/1kI9vkK4b1_oeQSA_Uvr5OA?pwd=6ay5">https://pan.baidu.com/s/1kI9vkK4b1_oeQSA_Uvr5OA?pwd=6ay5</a> Code:6ay5<br>E Cloud：<a href="https://cloud.189.cn/t/IZ7N32Jv2URf">https://cloud.189.cn/t/IZ7N32Jv2URf</a> Code:azb8<br>SHA256:180C0E977B960D55DDA73F5D8E0F3094B2E27BD82C459B880CE5F51C3C49216A<br>This is a version for MAC and Win tablets</p>
+<p>Win下载地址：<a href="http://www.songyongzhi.com/">http://www.songyongzhi.com</a></p>
+<p>offcie用office tool puls（很简单的，用上这个就不需要找其他乱七八糟的了)<br><a href="https://otp.landian.vip/zh-cn/">https://otp.landian.vip/zh-cn/</a></p>
+]]></content>
+      <categories>
+        <category>转载</category>
+      </categories>
+      <tags>
+        <tag>Win</tag>
+        <tag>Office</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Linux通过密钥对免密登录</title>
     <url>/2022/09/21/Linux%E9%80%9A%E8%BF%87%E5%AF%86%E9%92%A5%E5%AF%B9%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/</url>
     <content><![CDATA[<p>首先，说明一下我们要做的是，跳板机服务器的<code>usera</code>用户免密码登录B服务器的<code>userb</code>用户。<br>我们先使用<code>usera</code>登录跳板服务器</p>
@@ -668,40 +702,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Office用C2R工具在线安装激活</title>
-    <url>/2022/09/27/Office%E7%94%A8C2R%E5%B7%A5%E5%85%B7%E5%9C%A8%E7%BA%BF%E5%AE%89%E8%A3%85%E6%BF%80%E6%B4%BB/</url>
-    <content><![CDATA[<p>C2R工具下载地址：<a href="https://wwt.lanzouw.com/b03pbhjri#52pj">https://wwt.lanzouw.com/b03pbhjri#52pj</a></p>
-<p>以下来自吾爱破解论坛：<br>Win11 22H2 最新版本官网镜像下载地址（来自微软官网免费链接，不同镜像的区别就是包含的版本不同）：<br>百度网盘：<a href="https://pan.baidu.com/s/1zZUVDc0wMdzoBehTfEPobQ?pwd=sy71">https://pan.baidu.com/s/1zZUVDc0wMdzoBehTfEPobQ?pwd=sy71</a><br>提取码:sy71<br>123云盘：<a href="https://www.123pan.com/s/HfxDVv-xZQ7d">https://www.123pan.com/s/HfxDVv-xZQ7d</a> 提取码：BGio<br>TechBench：<a href="https://techbench.betaworld.cn/get.php?id=2360">https://techbench.betaworld.cn/get.php?id=2360</a><br>微软官网：<a href="https://www.microsoft.com/zh-cn/software-download/windows11/">https://www.microsoft.com/zh-cn/software-download/windows11/</a></p>
-<span id="more"></span>
-
-<p>文件信息：<br>文件名：Win11_22H2_Chinese(Simplified)_x64.iso<br>MD5: 506B5563FDA4402E3DCB846927612414<br>SHA1: EDA6B80B5E52567D22C862884D7C987C316AF844<br>CRC32: 6D69527A</p>
-<p>IOS镜像包含版本：家庭版，家庭单语言版，专业版，教育版，专业教育版，专业工作站版（6）</p>
-<p>MVS&#x2F;MSDN镜像下载（来自微软官方MVS&#x2F;MSDN付费订阅，磁力链接推荐用迅雷下载）：<br>简体中文 - 消费者版（这个版本其实就是微软官网的版本，和上面那个版本一样）：<br>zh-cn_windows_11_consumer_editions_version_22h2_x64_dvd_59cfe6ee.iso (5.14 GB)<br>SHA-256: 5D4733AD43EE51B7686B766D1DD691342A8421035E7C9FA0C936B7BABEE0BE4B<br>包含版本：家庭版、家庭单语言版、教育版、专业版、专业教育版、专业工作站版（6）<br>123云盘分流：<a href="https://www.123pan.com/s/HfxDVv-nZQ7d">https://www.123pan.com/s/HfxDVv-nZQ7d</a> 提取码:yVi4<br>百度网盘分流：<a href="https://pan.baidu.com/s/1MQswudl58d-R_UPqQ7lqXg?pwd=u7he">https://pan.baidu.com/s/1MQswudl58d-R_UPqQ7lqXg?pwd=u7he</a> 提取码:u7he<br>天翼云盘分流：<a href="https://cloud.189.cn/web/share?code=vAfIFfi2q2ym">https://cloud.189.cn/web/share?code=vAfIFfi2q2ym</a> 访问码：0bqa</p>
-<p>简体中文 - 商业版（这个是官网没有，要在微软MSDN花钱订阅的版本，和VLSC的商业版是一个版本）：<br>zh-cn_windows_11_business_editions_version_22h2_x64_dvd_914b57a5.iso (5.05 GB)<br>SHA-256: D74D24A00F83E77A189BE6BCB2E23FAD5BABC29F576E810C43282CE683F8B048<br>包含版本：教育版、企业版、专业版、专业教育版、专业工作站版（5）<br>123云盘分流：<a href="https://www.123pan.com/s/HfxDVv-2ZQ7d">https://www.123pan.com/s/HfxDVv-2ZQ7d</a> 提取码:TE1P<br>百度网盘分流：<a href="https://pan.baidu.com/s/1XbN47aPaDdc8VUlc7OXI7w?pwd=m4eg">https://pan.baidu.com/s/1XbN47aPaDdc8VUlc7OXI7w?pwd=m4eg</a> 提取码:m4eg<br>天翼云盘分流：<a href="https://cloud.189.cn/web/share?code=B7FjieMRnEje">https://cloud.189.cn/web/share?code=B7FjieMRnEje</a> 访问码：dkg4</p>
-<p>简体中文 - 家庭中文版（中国特供版本，大部分笔记本出厂自带的就是这个版本，不推荐下载）：<br>Win11_22H2_China_GGK_Chinese(Simplified)_x64.iso (4.88 GB)<br>SHA-256: 3DC5C5F88A7F076EE349BB20DAB4B2C3857BA7A8AE089AA532E9C2634ED8BFD7<br>包含版本：家庭中文版（1）<br>123云盘分流：<a href="https://www.123pan.com/s/HfxDVv-UZQ7d">https://www.123pan.com/s/HfxDVv-UZQ7d</a> 提取码:sS6e<br>百度网盘分流：<a href="https://pan.baidu.com/s/1kNeaeKEMbMfuxGyW3sluUA?pwd=k3du">https://pan.baidu.com/s/1kNeaeKEMbMfuxGyW3sluUA?pwd=k3du</a> 提取码:k3du<br>天翼云盘分流：<a href="https://cloud.189.cn/web/share?code=MJBzyameymqm">https://cloud.189.cn/web/share?code=MJBzyameymqm</a> 访问码：28hg</p>
-<p>繁體中文 - 消費者版（官網也可以下載到）：<br>SHA256：0DA9E7C321CEB12536420F21A716C3240235ED0AF48D71F065EC76AE77A58EDB<br>包含版本：家庭版、家庭單語言版、教育版、專業版、專業教育版、專業工作站版（6）<br>123雲盤分流：<a href="https://www.123pan.com/s/HfxDVv-SZQ7d">https://www.123pan.com/s/HfxDVv-SZQ7d</a> 提取碼:sVTE<br>百度網盤分流：<a href="https://pan.baidu.com/s/13tJmkqBIsi-t1S2-B5EABQ?pwd=wuyu">https://pan.baidu.com/s/13tJmkqBIsi-t1S2-B5EABQ?pwd=wuyu</a> 提取碼:wuyu<br>天翼雲盤分流：<a href="https://cloud.189.cn/web/share?code=IzYrMbMfUJBn">https://cloud.189.cn/web/share?code=IzYrMbMfUJBn</a> 訪問碼：bkk8</p>
-<p>繁體中文 - 商業版（這個版本和VLSC的繁體中文商業版其實是壹個版本，同樣是付費訂閱來的）：<br>SHA-256: 4C691D1C01CCB40275BAF979DB1A9CEC98F7DA8A8DFA59B4D2366EEC76084758<br>包含版本：教育版、企業版、專業版、專業教育版、專業工作站版（5）<br>123雲盤分流：<a href="https://www.123pan.com/s/HfxDVv-lZQ7d">https://www.123pan.com/s/HfxDVv-lZQ7d</a> 提取碼:wkWD<br>百度網盤分流：<a href="https://pan.baidu.com/s/1avGQLrDxjtXdCiuCL-OuGw?pwd=1v4f">https://pan.baidu.com/s/1avGQLrDxjtXdCiuCL-OuGw?pwd=1v4f</a> 提取碼:1v4f<br>天翼雲盤分流：<a href="https://cloud.189.cn/web/share?code=J3ABRz3q6Fvu">https://cloud.189.cn/web/share?code=J3ABRz3q6Fvu</a> 訪問碼：9m6t</p>
-<p>English - Consumer（英文消费者版本，同样可以在官网下载到）：<br>en-us_windows_11_consumer_editions_version_22h2_x64_dvd_e630fafd.iso (5.11 GB)<br>SHA-256: 5C69E6F486BC4BDAE91557DE161008458EAA40D40468C34DBBD9078952108D0A<br>Include Version：Home, Home N, Home Single Language, Education, Education N, Pro, Pro N, Pro Education, Pro Education N, Pro for Workstations, Pro N for Workstations（11）<br>123 Cloud Disk（123云盘）：<a href="https://www.123pan.com/s/HfxDVv-DZQ7d">https://www.123pan.com/s/HfxDVv-DZQ7d</a> Code:7P4U<br>Baidu Netdisk（百度网盘）：<a href="https://pan.baidu.com/s/1o2yeRWHecMsYsO2I2-3Udg?pwd=jrmn">https://pan.baidu.com/s/1o2yeRWHecMsYsO2I2-3Udg?pwd=jrmn</a> Code:jrmn<br>E Cloud（天翼云盘）：<a href="https://cloud.189.cn/web/share?code=jA7NriZFFram">https://cloud.189.cn/web/share?code=jA7NriZFFram</a> Code：td7r</p>
-<p>English - Business（英文商业版本，官网没有的版本）：<br>en-us_windows_11_business_editions_version_22h2_x64_dvd_17a08ce3.iso (5 GB)<br>SHA-256: 6E3A101C6E97D8E68F576DDBCED9BE34CBA949F750DA3C83F7D4791401068C9F<br>Include Version：Education, Education N, Enterprise, Enterprise N, Pro, Pro N, Pro Education, Pro Education N, Pro for Workstations, Pro N for Workstations（10）<br>123 Cloud Disk（123云盘）：<a href="https://www.123pan.com/s/HfxDVv-rZQ7d">https://www.123pan.com/s/HfxDVv-rZQ7d</a> Code:5yCR<br>Baidu Netdisk（百度网盘）：<a href="https://pan.baidu.com/s/1M6HtQJGjkKs7MMw1cIXF2A?pwd=7b4s">https://pan.baidu.com/s/1M6HtQJGjkKs7MMw1cIXF2A?pwd=7b4s</a> Code:7b4s<br>E Cloud（天翼云盘）：<a href="https://cloud.189.cn/web/share?code=NZzmEr7Rfemy">https://cloud.189.cn/web/share?code=NZzmEr7Rfemy</a> Code：y383</p>
-<p>PS：消费者版和商业版的区别就是包含的版本不同，我是比较喜欢商业版，因为商业版包含企业版，这个是功能最全的</p>
-<p>VLSC企业订阅版本（也是微软官方付费订阅的，这个版本与MVS&#x2F;MSDN版本的区别由于微软偷懒不想做两个版本所以没有了，但是这个版本有ARM64，MVS&#x2F;MSDN版目前还没有）：<br>简体中文 - 商业版：<br>123云盘：<a href="https://www.123pan.com/s/HfxDVv-fZQ7d">https://www.123pan.com/s/HfxDVv-fZQ7d</a> 提取码:YZix<br>百度网盘：<a href="https://pan.baidu.com/s/1OEu7MmSDbCa7_NyEbbER8w?pwd=rk65">https://pan.baidu.com/s/1OEu7MmSDbCa7_NyEbbER8w?pwd=rk65</a> 提取码:rk65<br>天翼云盘：<a href="https://cloud.189.cn/t/FJ3mUjf6fQZ3">https://cloud.189.cn/t/FJ3mUjf6fQZ3</a> 访问码:qz88<br>SHA256:D74D24A00F83E77A189BE6BCB2E23FAD5BABC29F576E810C43282CE683F8B048<br>包含版本：教育版、企业版、专业版、专业教育版、专业工作站版（5）</p>
-<p>简体中文 - ARM64版本：<br>123云盘：<a href="https://www.123pan.com/s/HfxDVv-pZQ7d">https://www.123pan.com/s/HfxDVv-pZQ7d</a> 提取码:b91o<br>百度网盘：<a href="https://pan.baidu.com/s/1on1LBzsAaYIeDBQEMQYK0Q?pwd=26tb">https://pan.baidu.com/s/1on1LBzsAaYIeDBQEMQYK0Q?pwd=26tb</a> 提取码:26tb<br>天翼云盘：<a href="https://cloud.189.cn/t/RjAVFjQviqia">https://cloud.189.cn/t/RjAVFjQviqia</a> 访问码:2vfk<br>SHA256:6C308F4139F9938E369BC987CBCC983EC293506AB29C736ABDD8284CEBBC5BF7<br>这个是给MAC和Win平板用的版本</p>
-<p>繁體中文 - 商業版：<br>123雲盤：<a href="https://www.123pan.com/s/HfxDVv-YZQ7d">https://www.123pan.com/s/HfxDVv-YZQ7d</a> 提取碼:PJCH<br>百度網盤：<a href="https://pan.baidu.com/s/1sKhZ-GQtj1ifcJH60EJPEQ?pwd=yhx5">https://pan.baidu.com/s/1sKhZ-GQtj1ifcJH60EJPEQ?pwd=yhx5</a> 提取碼:yhx5<br>天翼雲盤：<a href="https://cloud.189.cn/t/6ZNbmeEJrm6r">https://cloud.189.cn/t/6ZNbmeEJrm6r</a> 訪問碼：cfu7<br>SHA256:4C691D1C01CCB40275BAF979DB1A9CEC98F7DA8A8DFA59B4D2366EEC76084758<br>包含版本：教育版、企業版、專業版、專業教育版、專業工作站版（5）</p>
-<p>繁體中文 - ARM64版：<br>123雲盤：<a href="https://www.123pan.com/s/HfxDVv-GZQ7d">https://www.123pan.com/s/HfxDVv-GZQ7d</a> 提取碼:5Jfi<br>百度網盤：<a href="https://pan.baidu.com/s/1cJOyT1PrrNY_yYlJnr-1sw?pwd=pxwr">https://pan.baidu.com/s/1cJOyT1PrrNY_yYlJnr-1sw?pwd=pxwr</a> 提取碼:pxwr<br>天翼雲盤：<a href="https://cloud.189.cn/t/vI7vqurUjQze">https://cloud.189.cn/t/vI7vqurUjQze</a> 訪問碼:2e8c<br>SHA256:EB721E2F2B08DEDE965E18369926E9F3FD868728EB7A38A0B3909A524D791F88<br>這個是給MAC和Win平闆用的版本</p>
-<p>English - Business：<br>123 Cloud Disk：<a href="https://www.123pan.com/s/HfxDVv-PZQ7d">https://www.123pan.com/s/HfxDVv-PZQ7d</a> Code:oAY5<br>Baidu Netdisk：<a href="https://pan.baidu.com/s/1LN96MZgYf_kMj8TUAx1tyg?pwd=rcmh">https://pan.baidu.com/s/1LN96MZgYf_kMj8TUAx1tyg?pwd=rcmh</a> Code:rcmh<br>E Cloud：<a href="https://cloud.189.cn/t/Iveaeeniqqmm">https://cloud.189.cn/t/Iveaeeniqqmm</a> Code:on3h<br>SHA256:6E3A101C6E97D8E68F576DDBCED9BE34CBA949F750DA3C83F7D4791401068C9F<br>Include Version：Education, Education N, Enterprise, Enterprise N, Pro, Pro N, Pro Education, Pro Education N, Pro for Workstations, Pro N for Workstations（10）</p>
-<p>English - ARM64：<br>123 Cloud Disk：<a href="https://www.123pan.com/s/HfxDVv-XZQ7d">https://www.123pan.com/s/HfxDVv-XZQ7d</a> Code:vCmO<br>Baidu Netdisk：<a href="https://pan.baidu.com/s/1kI9vkK4b1_oeQSA_Uvr5OA?pwd=6ay5">https://pan.baidu.com/s/1kI9vkK4b1_oeQSA_Uvr5OA?pwd=6ay5</a> Code:6ay5<br>E Cloud：<a href="https://cloud.189.cn/t/IZ7N32Jv2URf">https://cloud.189.cn/t/IZ7N32Jv2URf</a> Code:azb8<br>SHA256:180C0E977B960D55DDA73F5D8E0F3094B2E27BD82C459B880CE5F51C3C49216A<br>This is a version for MAC and Win tablets</p>
-<p>Win下载地址：<a href="http://www.songyongzhi.com/">http://www.songyongzhi.com</a></p>
-<p>offcie用office tool puls（很简单的，用上这个就不需要找其他乱七八糟的了)<br><a href="https://otp.landian.vip/zh-cn/">https://otp.landian.vip/zh-cn/</a></p>
-]]></content>
-      <categories>
-        <category>转载</category>
-      </categories>
-      <tags>
-        <tag>Win</tag>
-        <tag>Office</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>gpt与mbr分区两者区别</title>
     <url>/2022/10/06/gpt%E4%B8%8Embr%E5%88%86%E5%8C%BA%E4%B8%A4%E8%80%85%E5%8C%BA%E5%88%AB/</url>
     <content><![CDATA[<blockquote>
@@ -726,24 +726,6 @@
       <tags>
         <tag>技术</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2017/08/10/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
   </entry>
   <entry>
     <title>hexo域名解析的两种方法</title>
@@ -771,6 +753,24 @@
       <tags>
         <tag>域名</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2017/08/10/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
   </entry>
   <entry>
     <title>npm安装卸载命令</title>
@@ -846,76 +846,6 @@
       </tags>
   </entry>
   <entry>
-    <title>传奇内挂垃圾物品过滤</title>
-    <url>/2022/09/03/%E4%BC%A0%E5%A5%87%E5%86%85%E6%8C%82%E5%9E%83%E5%9C%BE%E7%89%A9%E5%93%81%E8%BF%87%E6%BB%A4/</url>
-    <content><![CDATA[<p> 传奇内挂过滤垃圾。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209031601159.png" alt="image-20220903160139387"></p>
-<p>先打开传奇目录 <code>D:\传奇私服\Config </code>   修改DAT档案文件，把下面内容复制粘贴进去保存即可：</p>
-<span id="more"></span>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">金创药(小量),药品类,0,0,0,0</span><br><span class="line">魔法药(小量),药品类,0,0,0,0</span><br><span class="line">肉,其它类,0,0,0,0</span><br><span class="line">布衣(男),服装类,0,0,0,0</span><br><span class="line">布衣(女),服装类,0,0,0,0</span><br><span class="line">木剑,武器类,0,0,0,0</span><br><span class="line">铁剑,武器类,0,0,0,0</span><br><span class="line">青铜剑,武器类,0,0,0,0</span><br><span class="line">轻型盔甲(男),服装类,0,0,0,0</span><br><span class="line">轻型盔甲(女),服装类,0,0,0,0</span><br><span class="line">凝霜,武器类,0,0,0,0</span><br><span class="line">短剑,武器类,0,0,0,0</span><br><span class="line">青铜斧,武器类,0,0,0,0</span><br><span class="line">重盔甲(女),服装类,0,0,0,0</span><br><span class="line">魔法长袍(女),服装类,0,0,0,0</span><br><span class="line">灵魂战衣(女),服装类,0,0,0,0</span><br><span class="line">重盔甲(男),服装类,0,0,0,0</span><br><span class="line">魔法长袍(男),服装类,0,0,0,0</span><br><span class="line">灵魂战衣(男),服装类,0,0,0,0</span><br><span class="line">海魂,武器类,0,0,0,0</span><br><span class="line">修罗,武器类,0,0,0,0</span><br><span class="line">破魂,武器类,0,0,0,0</span><br><span class="line">斩马刀,武器类,0,0,0,0</span><br><span class="line">青铜头盔,首饰类,0,0,0,0</span><br><span class="line">金项链,首饰类,0,0,0,0</span><br><span class="line">铁手镯,首饰类,0,0,0,0</span><br><span class="line">灰色药粉(中量),药品类,0,0,0,0</span><br><span class="line">黄色药粉(中量),药品类,0,0,0,0</span><br><span class="line">八荒,武器类,0,0,0,0</span><br><span class="line">玻璃戒指,首饰类,0,0,0,0</span><br><span class="line">牛角戒指,首饰类,0,0,0,0</span><br><span class="line">蓝色水晶戒指,首饰类,0,0,0,0</span><br><span class="line">黑檀项链,首饰类,0,0,0,0</span><br><span class="line">黄色水晶项链,首饰类,0,0,0,0</span><br><span class="line">黑色水晶项链,首饰类,0,0,0,0</span><br><span class="line">半月,武器类,0,0,0,0</span><br><span class="line">皮制手套,首饰类,0,0,0,0</span><br><span class="line">钢手镯,首饰类,0,0,0,0</span><br><span class="line">生铁戒指,首饰类,0,0,0,0</span><br><span class="line">金戒指,首饰类,0,0,0,0</span><br><span class="line">灯笼项链,首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链,首饰类,1,1,1,0</span><br><span class="line">魅力戒指,首饰类,0,0,0,0</span><br><span class="line">道德戒指,首饰类,0,0,0,0</span><br><span class="line">白金项链,首饰类,0,0,0,0</span><br><span class="line">降妖除魔戒指,首饰类,0,0,0,0</span><br><span class="line">偃月,武器类,0,0,0,0</span><br><span class="line">降魔,武器类,0,0,0,0</span><br><span class="line">小手镯,首饰类,0,0,0,0</span><br><span class="line">银手镯,首饰类,0,0,0,0</span><br><span class="line">大手镯,首饰类,0,0,0,0</span><br><span class="line">金创药(中量),药品类,0,0,0,0</span><br><span class="line">魔法药(中量),药品类,0,0,0,0</span><br><span class="line">黑色水晶戒指,首饰类,0,0,0,0</span><br><span class="line">魔鬼项链,首饰类,0,0,0,0</span><br><span class="line">珊瑚戒指,首饰类,0,0,0,0</span><br><span class="line">蓝翡翠项链,首饰类,0,0,0,0</span><br><span class="line">蛇眼戒指,首饰类,0,0,0,0</span><br><span class="line">琥珀项链,首饰类,0,0,0,0</span><br><span class="line">放大镜,首饰类,0,0,0,0</span><br><span class="line">珍珠戒指,首饰类,0,0,0,0</span><br><span class="line">竹笛,首饰类,0,0,0,0</span><br><span class="line">骷髅戒指,首饰类,0,0,0,0</span><br><span class="line">死神手套,首饰类,0,0,0,0</span><br><span class="line">骷髅头盔,首饰类,0,0,0,0</span><br><span class="line">魔法手镯,首饰类,0,0,0,0</span><br><span class="line">金手镯,首饰类,0,0,0,0</span><br><span class="line">道士头盔,首饰类,0,0,0,0</span><br><span class="line">凤凰明珠,首饰类,0,0,0,0</span><br><span class="line">道士手镯,首饰类,0,0,0,0</span><br><span class="line">黑檀手镯,首饰类,0,0,0,0</span><br><span class="line">铁矿,其它类,0,0,0,0</span><br><span class="line">黑铁矿,其它类,0,0,0,0</span><br><span class="line">困魔咒,其它类,0,0,0,0</span><br><span class="line">召唤骷髅,其它类,0,0,0,0</span><br><span class="line">地狱雷光,其它类,0,0,0,0</span><br><span class="line">半月弯刀,其它类,0,0,0,0</span><br><span class="line">太阳水,药品类,0,1,0,0</span><br><span class="line">强效金创药,药品类,0,1,0,0</span><br><span class="line">强效魔法药,药品类,0,1,0,0</span><br><span class="line">野蛮冲撞,其它类,0,0,0,0</span><br><span class="line">群体治疗术,其它类,0,0,0,0</span><br><span class="line">圣言术,其它类,0,0,0,0</span><br><span class="line">强效太阳水,药品类,0,1,0,0</span><br><span class="line">魔力手镯,首饰类,0,0,0,0</span><br><span class="line">攻击力药水,其它类,0,0,0,0</span><br><span class="line">道术力药水,其它类,0,0,0,0</span><br><span class="line">疾风药水,其它类,0,0,0,0</span><br><span class="line">体力强化水,其它类,0,0,0,0</span><br><span class="line">魔力强化水,其它类,0,0,0,0</span><br><span class="line">战神盔甲(男),服装类,0,0,0,0</span><br><span class="line">战神盔甲(女),服装类,0,0,0,0</span><br><span class="line">幽灵战衣(男),服装类,0,0,0,0</span><br><span class="line">幽灵战衣(女),服装类,0,0,0,0</span><br><span class="line">恶魔长袍(男),服装类,0,0,0,0</span><br><span class="line">恶魔长袍(女),服装类,0,0,0,0</span><br><span class="line">中型盔甲(男),服装类,0,0,0,0</span><br><span class="line">灯笼项链②,首饰类,1,1,1,0</span><br><span class="line">灯笼项链[残],首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链[残],首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链②,首饰类,1,1,1,0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>游戏</category>
-        <category>传奇</category>
-      </categories>
-      <tags>
-        <tag>传奇</tag>
-        <tag>外挂</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用HEXO-GIT-BACKUP插件备份博客源文件</title>
-    <url>/2022/08/21/%E4%BD%BF%E7%94%A8HEXO-GIT-BACKUP%E6%8F%92%E4%BB%B6%E5%A4%87%E4%BB%BD%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/</url>
-    <content><![CDATA[<p>在搭建好hexo博客之后也要给自己的博客进行备份，文章丢失可是很麻烦的一件事情。我的博客的数据都是直接保存在cloudstudio，用的时候总是会感觉有点问题，生怕自己哪天不小心把工作空间给删除了，那就蛮麻烦了。所以我采用了 <a href="https://github.com/coneycode/hexo-git-backup">hexo-git-backup</a> 这个工具进行备份。</p>
-<h2 id="查看HEXO版本"><a href="#查看HEXO版本" class="headerlink" title="查看HEXO版本"></a>查看HEXO版本</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo version</span><br></pre></td></tr></table></figure>
-<span id="more"></span>
-<p>第一行的hexo：xxx既为版本</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211933353.png" alt="查看hexo版本"></p>
-<p>如图，我的版本是6.2.0</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>如果你的版本是2.x.x使用这条命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-git-backup@0.0.91 --save</span><br></pre></td></tr></table></figure>
-
-<p>如果你的版本是3.x.x则使用这条命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-git-backup --save</span><br></pre></td></tr></table></figure>
-
-<p>这里我使用的是第二条命令，因为我的hexo版本为6.2.0</p>
-<h2 id="建立分支"><a href="#建立分支" class="headerlink" title="建立分支"></a>建立分支</h2><p>来到你的github仓库目录或者是coding的仓库目录，选择新建分支，因为我是双线部署，所以两个都要创建分支，我创建的分支名都为backup</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211919299.png" alt="查看所有分支和管理"></p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211921232.png" alt="新建分支"></p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211924488.png" alt="给分支取个名称"></p>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>打开博客配置文件_config.yml</p>
-<p>在最下方添加</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># hexo-git-backup 插件，用来备份的</span><br><span class="line">backup:</span><br><span class="line">    type: git</span><br><span class="line">    repository:</span><br><span class="line">       github: git@github.com:xxx/xxx.git,branchName</span><br><span class="line">       coding: git@github.com:xxx/xxx.git,branchName</span><br><span class="line">12345</span><br></pre></td></tr></table></figure>
-
-<p>branchName为分支名（我的分支名称是blogbak），要和前面的仓库地址用英文逗号隔开。</p>
-<p>“coding: “是gitlag的库。</p>
-<p>这里就差不多配置完成了</p>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo backup </span><br></pre></td></tr></table></figure>
-
-<p>or</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo b</span><br></pre></td></tr></table></figure>
-
-<h2 id="配置项"><a href="#配置项" class="headerlink" title="配置项"></a>配置项</h2><p>如果你只是想备份主题目录，只需要添加theme属性</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">backup:</span><br><span class="line">    type: git</span><br><span class="line">    theme: coney,landscape,xxx</span><br><span class="line">    repository:</span><br><span class="line">       github: git@github.com:xxx/xxx.git,branchName</span><br><span class="line">       gitcafe: git@github.com:xxx/xxx.git,branchName</span><br></pre></td></tr></table></figure>
-
-<p>如果你想自定义提交的message信息，那么只需要添加message属性</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">backup:</span><br><span class="line">    type: git</span><br><span class="line">    message: update xxx</span><br><span class="line">    repository:</span><br><span class="line">       github: git@github.com:xxx/xxx.git,branchName</span><br><span class="line">       gitcafe: git@github.com:xxx/xxx.git,branchName</span><br></pre></td></tr></table></figure>
-
-<p>插件地址</p>
-<p><a href="https://github.com/coneycode/hexo-git-backup">hexo-git-backup</a></p>
-<h2 id="反省"><a href="#反省" class="headerlink" title="反省"></a>反省</h2><p>记得一定要做好备份，千万不要轻易重装系统，欲哭无泪！</p>
-]]></content>
-      <categories>
-        <category>技术</category>
-        <category>插件</category>
-      </categories>
-      <tags>
-        <tag>插件</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>win10系统电脑图标不见了</title>
     <url>/2022/10/08/win10%E7%B3%BB%E7%BB%9F%E7%94%B5%E8%84%91%E5%9B%BE%E6%A0%87%E4%B8%8D%E8%A7%81%E4%BA%86/</url>
     <content><![CDATA[<p>我的电脑图标没了怎么办？，恢复只需4步。刚安装了win10.刚打开的时候发现桌面上没有我的电脑图标，很多人都很不舒服，所以win我的电脑图标没了怎么办？现在小编教你怎么找回<code>我的电脑</code>图标。</p>
@@ -939,6 +869,26 @@
 ]]></content>
       <tags>
         <tag>Win</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>传奇内挂垃圾物品过滤</title>
+    <url>/2022/09/03/%E4%BC%A0%E5%A5%87%E5%86%85%E6%8C%82%E5%9E%83%E5%9C%BE%E7%89%A9%E5%93%81%E8%BF%87%E6%BB%A4/</url>
+    <content><![CDATA[<p> 传奇内挂过滤垃圾。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209031601159.png" alt="image-20220903160139387"></p>
+<p>先打开传奇目录 <code>D:\传奇私服\Config </code>   修改DAT档案文件，把下面内容复制粘贴进去保存即可：</p>
+<span id="more"></span>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">金创药(小量),药品类,0,0,0,0</span><br><span class="line">魔法药(小量),药品类,0,0,0,0</span><br><span class="line">肉,其它类,0,0,0,0</span><br><span class="line">布衣(男),服装类,0,0,0,0</span><br><span class="line">布衣(女),服装类,0,0,0,0</span><br><span class="line">木剑,武器类,0,0,0,0</span><br><span class="line">铁剑,武器类,0,0,0,0</span><br><span class="line">青铜剑,武器类,0,0,0,0</span><br><span class="line">轻型盔甲(男),服装类,0,0,0,0</span><br><span class="line">轻型盔甲(女),服装类,0,0,0,0</span><br><span class="line">凝霜,武器类,0,0,0,0</span><br><span class="line">短剑,武器类,0,0,0,0</span><br><span class="line">青铜斧,武器类,0,0,0,0</span><br><span class="line">重盔甲(女),服装类,0,0,0,0</span><br><span class="line">魔法长袍(女),服装类,0,0,0,0</span><br><span class="line">灵魂战衣(女),服装类,0,0,0,0</span><br><span class="line">重盔甲(男),服装类,0,0,0,0</span><br><span class="line">魔法长袍(男),服装类,0,0,0,0</span><br><span class="line">灵魂战衣(男),服装类,0,0,0,0</span><br><span class="line">海魂,武器类,0,0,0,0</span><br><span class="line">修罗,武器类,0,0,0,0</span><br><span class="line">破魂,武器类,0,0,0,0</span><br><span class="line">斩马刀,武器类,0,0,0,0</span><br><span class="line">青铜头盔,首饰类,0,0,0,0</span><br><span class="line">金项链,首饰类,0,0,0,0</span><br><span class="line">铁手镯,首饰类,0,0,0,0</span><br><span class="line">灰色药粉(中量),药品类,0,0,0,0</span><br><span class="line">黄色药粉(中量),药品类,0,0,0,0</span><br><span class="line">八荒,武器类,0,0,0,0</span><br><span class="line">玻璃戒指,首饰类,0,0,0,0</span><br><span class="line">牛角戒指,首饰类,0,0,0,0</span><br><span class="line">蓝色水晶戒指,首饰类,0,0,0,0</span><br><span class="line">黑檀项链,首饰类,0,0,0,0</span><br><span class="line">黄色水晶项链,首饰类,0,0,0,0</span><br><span class="line">黑色水晶项链,首饰类,0,0,0,0</span><br><span class="line">半月,武器类,0,0,0,0</span><br><span class="line">皮制手套,首饰类,0,0,0,0</span><br><span class="line">钢手镯,首饰类,0,0,0,0</span><br><span class="line">生铁戒指,首饰类,0,0,0,0</span><br><span class="line">金戒指,首饰类,0,0,0,0</span><br><span class="line">灯笼项链,首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链,首饰类,1,1,1,0</span><br><span class="line">魅力戒指,首饰类,0,0,0,0</span><br><span class="line">道德戒指,首饰类,0,0,0,0</span><br><span class="line">白金项链,首饰类,0,0,0,0</span><br><span class="line">降妖除魔戒指,首饰类,0,0,0,0</span><br><span class="line">偃月,武器类,0,0,0,0</span><br><span class="line">降魔,武器类,0,0,0,0</span><br><span class="line">小手镯,首饰类,0,0,0,0</span><br><span class="line">银手镯,首饰类,0,0,0,0</span><br><span class="line">大手镯,首饰类,0,0,0,0</span><br><span class="line">金创药(中量),药品类,0,0,0,0</span><br><span class="line">魔法药(中量),药品类,0,0,0,0</span><br><span class="line">黑色水晶戒指,首饰类,0,0,0,0</span><br><span class="line">魔鬼项链,首饰类,0,0,0,0</span><br><span class="line">珊瑚戒指,首饰类,0,0,0,0</span><br><span class="line">蓝翡翠项链,首饰类,0,0,0,0</span><br><span class="line">蛇眼戒指,首饰类,0,0,0,0</span><br><span class="line">琥珀项链,首饰类,0,0,0,0</span><br><span class="line">放大镜,首饰类,0,0,0,0</span><br><span class="line">珍珠戒指,首饰类,0,0,0,0</span><br><span class="line">竹笛,首饰类,0,0,0,0</span><br><span class="line">骷髅戒指,首饰类,0,0,0,0</span><br><span class="line">死神手套,首饰类,0,0,0,0</span><br><span class="line">骷髅头盔,首饰类,0,0,0,0</span><br><span class="line">魔法手镯,首饰类,0,0,0,0</span><br><span class="line">金手镯,首饰类,0,0,0,0</span><br><span class="line">道士头盔,首饰类,0,0,0,0</span><br><span class="line">凤凰明珠,首饰类,0,0,0,0</span><br><span class="line">道士手镯,首饰类,0,0,0,0</span><br><span class="line">黑檀手镯,首饰类,0,0,0,0</span><br><span class="line">铁矿,其它类,0,0,0,0</span><br><span class="line">黑铁矿,其它类,0,0,0,0</span><br><span class="line">困魔咒,其它类,0,0,0,0</span><br><span class="line">召唤骷髅,其它类,0,0,0,0</span><br><span class="line">地狱雷光,其它类,0,0,0,0</span><br><span class="line">半月弯刀,其它类,0,0,0,0</span><br><span class="line">太阳水,药品类,0,1,0,0</span><br><span class="line">强效金创药,药品类,0,1,0,0</span><br><span class="line">强效魔法药,药品类,0,1,0,0</span><br><span class="line">野蛮冲撞,其它类,0,0,0,0</span><br><span class="line">群体治疗术,其它类,0,0,0,0</span><br><span class="line">圣言术,其它类,0,0,0,0</span><br><span class="line">强效太阳水,药品类,0,1,0,0</span><br><span class="line">魔力手镯,首饰类,0,0,0,0</span><br><span class="line">攻击力药水,其它类,0,0,0,0</span><br><span class="line">道术力药水,其它类,0,0,0,0</span><br><span class="line">疾风药水,其它类,0,0,0,0</span><br><span class="line">体力强化水,其它类,0,0,0,0</span><br><span class="line">魔力强化水,其它类,0,0,0,0</span><br><span class="line">战神盔甲(男),服装类,0,0,0,0</span><br><span class="line">战神盔甲(女),服装类,0,0,0,0</span><br><span class="line">幽灵战衣(男),服装类,0,0,0,0</span><br><span class="line">幽灵战衣(女),服装类,0,0,0,0</span><br><span class="line">恶魔长袍(男),服装类,0,0,0,0</span><br><span class="line">恶魔长袍(女),服装类,0,0,0,0</span><br><span class="line">中型盔甲(男),服装类,0,0,0,0</span><br><span class="line">灯笼项链②,首饰类,1,1,1,0</span><br><span class="line">灯笼项链[残],首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链[残],首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链②,首饰类,1,1,1,0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>游戏</category>
+        <category>传奇</category>
+      </categories>
+      <tags>
+        <tag>传奇</tag>
+        <tag>外挂</tag>
       </tags>
   </entry>
   <entry>
@@ -1025,107 +975,53 @@
       </tags>
   </entry>
   <entry>
-    <title>【安装Office】 Office Tool Plus 入门教程</title>
-    <url>/2022/09/27/%E5%AE%89%E8%A3%85Office/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>安装 Office 是一件非常简单的事情，大家不必过于担心，更不必对自己没有信心。<br>本教程适用于需要全新安装 Office 的用户，若您需要修改 Office 请参阅 [<a href="https://movejian.github.io/2022/09/27/%E6%8A%80%E8%83%BD%E6%89%A9%E5%B1%95Office">技能扩展] Office Tool Plus 高级教程</a><br>任何人都可使用 Office Tool Plus 轻松地安装 Office，请认真阅读教程以避免因为疏忽出现问题。<br>如无特殊情况，文章中提到的 Windows 10 也适用于 Windows 11.</p>
+    <title>使用HEXO-GIT-BACKUP插件备份博客源文件</title>
+    <url>/2022/08/21/%E4%BD%BF%E7%94%A8HEXO-GIT-BACKUP%E6%8F%92%E4%BB%B6%E5%A4%87%E4%BB%BD%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/</url>
+    <content><![CDATA[<p>在搭建好hexo博客之后也要给自己的博客进行备份，文章丢失可是很麻烦的一件事情。我的博客的数据都是直接保存在cloudstudio，用的时候总是会感觉有点问题，生怕自己哪天不小心把工作空间给删除了，那就蛮麻烦了。所以我采用了 <a href="https://github.com/coneycode/hexo-git-backup">hexo-git-backup</a> 这个工具进行备份。</p>
+<h2 id="查看HEXO版本"><a href="#查看HEXO版本" class="headerlink" title="查看HEXO版本"></a>查看HEXO版本</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo version</span><br></pre></td></tr></table></figure>
 <span id="more"></span>
+<p>第一行的hexo：xxx既为版本</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211933353.png" alt="查看hexo版本"></p>
+<p>如图，我的版本是6.2.0</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>如果你的版本是2.x.x使用这条命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-git-backup@0.0.91 --save</span><br></pre></td></tr></table></figure>
 
-<h3 id="1-开始使用"><a href="#1-开始使用" class="headerlink" title="1. 开始使用"></a>1. 开始使用</h3><p>请下载最新的包含框架的版本（with runtime），以确保你始终可以获得最好的体验。<br>在<a href="http://otp.landian.vip/">官网下载 Office Tool Plus</a> 后，将其解压至正常位置（例如桌面），双击 Office Tool Plus 以运行。<br>为了获得最佳体验，若 Office Tool Plus 提示有更新，请更新后继续操作。### 2. 注意事项</p>
-<h4 id="安装开始前，请知晓以下事情："><a href="#安装开始前，请知晓以下事情：" class="headerlink" title="安装开始前，请知晓以下事情："></a>安装开始前，请知晓以下事情：</h4><ol>
-<li>使用 Office Tool Plus 安装的 Office 是官方原版，非破解、非精简。</li>
-<li>教程没提到的产品就不要随便安装，别问，问就是不推荐。</li>
-<li>教程没提到的设置就不要随便乱动，别问，不懂就不要动。</li>
-<li>建议勾选下载后再部署，能避免因为网络不佳而卡住不动。</li>
-<li>安装 Office 出现问题时，请根据提供的错误信息排查问题；更详细的错误信息可以在 【工具箱】-&gt;【收集 Office 安装日志】获得。</li>
-</ol>
-<p>Office 安装程序出现问题跟我们没有太大关系哈。举个例子，你叫了个外卖，但是送到后你觉得太难吃，这能怪骑手吗？这不能。做人要讲理，不能随便污蔑别人。</p>
-<p>如果你有任何疑问，可前往 [<a href="https://movejian.github.io/2022/09/27/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94Office">疑难解答] Office Tool Plus 入门教程</a> 查看相关问题解答。</p>
-<h4 id="安装开始前，请做好以下事情："><a href="#安装开始前，请做好以下事情：" class="headerlink" title="安装开始前，请做好以下事情："></a>安装开始前，请做好以下事情：</h4><ol>
-<li>卸载 WPS，两者共存容易出问题（没有问题当我没说）。</li>
-<li>卸载旧版本 Office，按照标准流程操作，请勿直接强制移除。</li>
-<li>清除旧版本激活信息，在 [激活] -&gt; [许可证管理] -&gt; [子菜单] -&gt; [清除激活状态]。</li>
-<li>清除 Office 设置，在 [工具箱] -&gt; [重置 Office 为默认设置]。</li>
-</ol>
-<p>附图为清除激活信息：</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270128402.png" alt="清除 Office 激活信息"></p>
-<p>附图为重置 Office 的设置：</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270128335.png" alt="重置 Office 为默认设置"></p>
-<h3 id="3-部署-Office"><a href="#3-部署-Office" class="headerlink" title="3. 部署 Office"></a>3. 部署 Office</h3><p>不知道自己有没有正版 Office？个人用户 <a href="https://account.microsoft.com/services/">&gt;&gt;点击这里检查&lt;&lt;</a>，企业用户 <a href="https://portal.office.com/account/?ref=MeControl#subscriptions">&gt;&gt;点击这里检查&lt;&lt;</a>。</p>
-<p>需要使用正版 Office？<a href="https://otp.landian.vip/zh-cn/#store">点击这里查看详细信息</a>。</p>
-<p>以下提到的安装方法或者产品都是合适的（差不多），不会有任何问题，请放心使用。</p>
-<hr>
-<p>自动安装：</p>
-<h5 id="一键安装"><a href="#一键安装" class="headerlink" title="一键安装"></a>一键安装</h5><p>如果你什么都不懂，或者，你只是想要个能用的 Office，那么使用一键安装代码是最合适的：</p>
-<p>确保自己使用的是最新版的 Office Tool Plus，按下 Ctrl + Shift + P 打开命令框，输入以下命令：</p>
-<p>旧版本打开命令框的快捷方式为 Ctrl + P，最新版已修改。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270130407.png" alt="命令框"></p>
-<p>安装 Microsoft 365 企业应用版（Word, PowerPoint, Excel）：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy /addProduct O365ProPlusRetail_zh-cn_Access,Bing,Groove,Lync,OneDrive,OneNote,Outlook,Publisher,Teams /channel Current /downloadFirst</span><br></pre></td></tr></table></figure>
+<p>如果你的版本是3.x.x则使用这条命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-git-backup --save</span><br></pre></td></tr></table></figure>
 
-<p>安装 Microsoft 365 企业应用版（Word, PowerPoint, Excel）+ Visio 2016：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy /addProduct O365ProPlusRetail_zh-cn_Access,Bing,Groove,Lync,OneDrive,OneNote,Outlook,Publisher,Teams /addProduct VisioProRetail_zh-cn_Groove,OneDrive /channel Current /downloadFirst</span><br></pre></td></tr></table></figure>
+<p>这里我使用的是第二条命令，因为我的hexo版本为6.2.0</p>
+<h2 id="建立分支"><a href="#建立分支" class="headerlink" title="建立分支"></a>建立分支</h2><p>来到你的github仓库目录或者是coding的仓库目录，选择新建分支，因为我是双线部署，所以两个都要创建分支，我创建的分支名都为backup</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211919299.png" alt="查看所有分支和管理"></p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211921232.png" alt="新建分支"></p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211924488.png" alt="给分支取个名称"></p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>打开博客配置文件_config.yml</p>
+<p>在最下方添加</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># hexo-git-backup 插件，用来备份的</span><br><span class="line">backup:</span><br><span class="line">    type: git</span><br><span class="line">    repository:</span><br><span class="line">       github: git@github.com:xxx/xxx.git,branchName</span><br><span class="line">       coding: git@github.com:xxx/xxx.git,branchName</span><br><span class="line">12345</span><br></pre></td></tr></table></figure>
 
-<p>输入命令后请按回车（Enter）以执行命令，然后耐心等待安装完成。</p>
-<p>安装完成后，请务必使用 [<a href="https://movejian.github.io/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B">激活 Office] Office Tool Plus 入门教程</a> 中的一键激活代码进行激活</p>
-<hr>
-<p>手动安装：</p>
-<p>转到 Office Tool Plus 的部署页面，按照以下提示操作。</p>
-<h4 id="必须做的事情"><a href="#必须做的事情" class="headerlink" title="必须做的事情"></a>必须做的事情</h4><ol>
-<li>添加产品：看下面的选项，选一个合适自己的来学习。</li>
-<li>添加语言：点一下「添加语言」就行，软件会自动匹配合适的语言。不要把“仅部署校对工具”打勾，除非你知道这是什么。</li>
-</ol>
-<h5 id="我有正版-Office"><a href="#我有正版-Office" class="headerlink" title="我有正版 Office"></a>我有正版 Office</h5><p>如果你有 Office 正版，比如你自己购买了 Microsoft 365 家庭版，安装的时候选择这个即可。</p>
-<p>当然现在也有不少人去网上白嫖什么 365 订阅，基本都是安装 Microsoft 365 企业应用版（O365ProPlusRetail）。</p>
-<p>如果学校&#x2F;企业提供了 2019&#x2F;2021 批量许可授权，安装这个也可。</p>
-<p>无论如何，你必须要安装对应的产品，否则你将无法通过账户&#x2F;密钥激活你的 Office。</p>
-<p>如果你有 Office 的正版授权，但是没有 Visio，又想装？</p>
-<p>Office, Visio 和 Project 三个产品的授权是可以分开处理的，所以你不必担心搞 Visio 会影响 Office.</p>
-<h5 id="有什么好选择吗？"><a href="#有什么好选择吗？" class="headerlink" title="有什么好选择吗？"></a>有什么好选择吗？</h5><p>当然有啦~</p>
-<p>Office 选择：Microsoft 365 企业应用版 (O365ProPlusRetail)</p>
-<p>Visio 选择：Visio 专业版 2016 (VisioProRetail)</p>
-<p>Project 选择：Project 专业版 2016 (ProjectProRetail)</p>
-<p>当然，Visio 和 Project 是需要才选，不需要或者看不懂就不需要管啦。</p>
-<h5 id="我要安装年份版-Office（例如-Office-2021）"><a href="#我要安装年份版-Office（例如-Office-2021）" class="headerlink" title="我要安装年份版 Office（例如 Office 2021）"></a>我要安装年份版 Office（例如 Office 2021）</h5><p>有一说一，年份版没有你想的那么好的哦，如果不是强迫症建议看上面那条。</p>
-<p>针对非正版用户，你只可以安装批量许可产品以便使用 KMS 激活。</p>
-<p>安装批量版时，需要使用对应的 Office 2019&#x2F;2021 企业长期版通道，否则会无法安装。</p>
-<p>Office 2021：</p>
-<p>Office LTSC 专业增强版 2021 - 批量许可证 (ProPlus2021Volume)</p>
-<p>Visio LTSC 专业版 2021 - 批量许可证 (VisioPro2021Volume)</p>
-<p>Project 专业版 2021 - 批量许可证 (ProjectPro2021Volume)</p>
-<p>Office 2019：</p>
-<p>Office 专业增强版 2019 - 批量许可证 (ProPlus2019Volume)</p>
-<p>Visio 专业版 2019 - 批量许可证 (VisioPro2019Volume)</p>
-<p>Project 专业版 2019 - 批量许可证 (ProjectPro2019Volume)</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">PS：不要问我为什么 2021 叫 LTSC，名字是微软起的有问题问微软去。</span><br></pre></td></tr></table></figure>
+<p>branchName为分支名（我的分支名称是blogbak），要和前面的仓库地址用英文逗号隔开。</p>
+<p>“coding: “是gitlag的库。</p>
+<p>这里就差不多配置完成了</p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo backup </span><br></pre></td></tr></table></figure>
 
-<h5 id="我是-Windows-7-x2F-8-x2F-8-1-用户"><a href="#我是-Windows-7-x2F-8-x2F-8-1-用户" class="headerlink" title="我是 Windows 7&#x2F;8&#x2F;8.1 用户"></a>我是 Windows 7&#x2F;8&#x2F;8.1 用户</h5><p>由于系统原因，我们推荐按照第二条选项进行处理，这样确保可以进行正常安装。</p>
-<p>不要问我 Office 2019&#x2F;2021 能不能装，问就是说不能，别人说可以的话你问别人去。</p>
-<h5 id="（额外补充内容）什么系统能装什么样的-Office？"><a href="#（额外补充内容）什么系统能装什么样的-Office？" class="headerlink" title="（额外补充内容）什么系统能装什么样的 Office？"></a>（额外补充内容）什么系统能装什么样的 Office？</h5><p>目前 Office Tool Plus 中有 Office 2016、2019、2021、365 可供安装。</p>
-<p>Windows 10 和 11 无限制，可以安装任何版本的 Office。</p>
-<p>Windows 8 和 8.1 只可以安装部分产品，如果将部署模块从「Office 部署工具」更改到「Office Tool Plus」也可以安装任意产品。</p>
-<p>Windows 7 只可以安装 Office 2016 或 365，并且只能够使用「当前通道」。即使你更改部署模块，Office 2019&#x2F;2021 也不一定能安装成功。</p>
-<p>如果你的安装包是从别的地方下载的，那，那就别来问我，我也不知道你下载的是什么。</p>
-<h4 id="可以做的事情"><a href="#可以做的事情" class="headerlink" title="可以做的事情"></a>可以做的事情</h4><ol>
-<li>应用程序：选自己能看懂的就行，一般就是 Word, PowerPoint, Excel.</li>
-<li>通道：“当前通道”就行，Office 2019&#x2F;2021 批量许可证请选 Office 2019&#x2F;2021 企业长期版。</li>
-<li>体系结构：32 位兼容性好；64 位兼容性稍差且体积大，但处理大数据能力稍强。</li>
-<li>部署模式：那肯定要选安装啊，要不然怎么安装。</li>
-<li>安装模块：如没有特殊要求，请勿选择 Office Tool Plus.</li>
-<li>下载后再部署：如果网不行，最好把这个选上，免得安装卡进度卡半天。</li>
-</ol>
-<p>产品和语言弄好后即可开始部署 Office，其余设置不需要更改。</p>
-<p>部署时请耐心等待，不要强制结束安装程序或重启计算机。</p>
-<h3 id="4-视频教程"><a href="#4-视频教程" class="headerlink" title="4. 视频教程"></a>4. 视频教程</h3><p>视频教程更新不及时，建议看本文即可。</p>
-<p>bilibili：<a href="https://www.bilibili.com/video/BV1eU4y1V7NU">https://www.bilibili.com/video/BV1eU4y1V7NU</a></p>
-<p>YouTube：<a href="https://www.youtube.com/watch?v=p90V9_D-8Go">https://www.youtube.com/watch?v=p90V9_D-8Go</a></p>
-<h3 id="5-离线安装包"><a href="#5-离线安装包" class="headerlink" title="5. 离线安装包"></a>5. 离线安装包</h3><p>如果因为网络问题下载缓慢或者无法下载 Office，你可以下载 ISO 文件使用。</p>
-<p><a href="https://otp.landian.vip/zh-cn/download.html">下载站点</a>（云图小镇、OneDrive）中包含有 Office ISO.</p>
-<p>Office ISO 文件不需要解压，双击打开即可挂载使用（Win 7 除外）。</p>
-<h3 id="6-激活-Office"><a href="#6-激活-Office" class="headerlink" title="6. 激活 Office"></a>6. 激活 Office</h3><p>如果你是正版用户，一般情况下是不需要借助 Office Tool Plus 激活 Office 的，在 Office 应用程序中登录自己的微软账号，或者输入你的正版密钥即可激活 Office。</p>
-<p><a href="https://movejian.github.io/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B">【点击此处】前往另一个教程查看如何激活 Office</a></p>
+<p>or</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo b</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置项"><a href="#配置项" class="headerlink" title="配置项"></a>配置项</h2><p>如果你只是想备份主题目录，只需要添加theme属性</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">backup:</span><br><span class="line">    type: git</span><br><span class="line">    theme: coney,landscape,xxx</span><br><span class="line">    repository:</span><br><span class="line">       github: git@github.com:xxx/xxx.git,branchName</span><br><span class="line">       gitcafe: git@github.com:xxx/xxx.git,branchName</span><br></pre></td></tr></table></figure>
+
+<p>如果你想自定义提交的message信息，那么只需要添加message属性</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">backup:</span><br><span class="line">    type: git</span><br><span class="line">    message: update xxx</span><br><span class="line">    repository:</span><br><span class="line">       github: git@github.com:xxx/xxx.git,branchName</span><br><span class="line">       gitcafe: git@github.com:xxx/xxx.git,branchName</span><br></pre></td></tr></table></figure>
+
+<p>插件地址</p>
+<p><a href="https://github.com/coneycode/hexo-git-backup">hexo-git-backup</a></p>
+<h2 id="反省"><a href="#反省" class="headerlink" title="反省"></a>反省</h2><p>记得一定要做好备份，千万不要轻易重装系统，欲哭无泪！</p>
 ]]></content>
+      <categories>
+        <category>技术</category>
+        <category>插件</category>
+      </categories>
       <tags>
-        <tag>Office</tag>
+        <tag>插件</tag>
       </tags>
   </entry>
   <entry>
@@ -1236,6 +1132,110 @@
       </tags>
   </entry>
   <entry>
+    <title>【安装Office】 Office Tool Plus 入门教程</title>
+    <url>/2022/09/27/%E5%AE%89%E8%A3%85Office/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>安装 Office 是一件非常简单的事情，大家不必过于担心，更不必对自己没有信心。<br>本教程适用于需要全新安装 Office 的用户，若您需要修改 Office 请参阅 [<a href="https://movejian.github.io/2022/09/27/%E6%8A%80%E8%83%BD%E6%89%A9%E5%B1%95Office">技能扩展] Office Tool Plus 高级教程</a><br>任何人都可使用 Office Tool Plus 轻松地安装 Office，请认真阅读教程以避免因为疏忽出现问题。<br>如无特殊情况，文章中提到的 Windows 10 也适用于 Windows 11.</p>
+<span id="more"></span>
+
+<h3 id="1-开始使用"><a href="#1-开始使用" class="headerlink" title="1. 开始使用"></a>1. 开始使用</h3><p>请下载最新的包含框架的版本（with runtime），以确保你始终可以获得最好的体验。<br>在<a href="http://otp.landian.vip/">官网下载 Office Tool Plus</a> 后，将其解压至正常位置（例如桌面），双击 Office Tool Plus 以运行。<br>为了获得最佳体验，若 Office Tool Plus 提示有更新，请更新后继续操作。### 2. 注意事项</p>
+<h4 id="安装开始前，请知晓以下事情："><a href="#安装开始前，请知晓以下事情：" class="headerlink" title="安装开始前，请知晓以下事情："></a>安装开始前，请知晓以下事情：</h4><ol>
+<li>使用 Office Tool Plus 安装的 Office 是官方原版，非破解、非精简。</li>
+<li>教程没提到的产品就不要随便安装，别问，问就是不推荐。</li>
+<li>教程没提到的设置就不要随便乱动，别问，不懂就不要动。</li>
+<li>建议勾选下载后再部署，能避免因为网络不佳而卡住不动。</li>
+<li>安装 Office 出现问题时，请根据提供的错误信息排查问题；更详细的错误信息可以在 【工具箱】-&gt;【收集 Office 安装日志】获得。</li>
+</ol>
+<p>Office 安装程序出现问题跟我们没有太大关系哈。举个例子，你叫了个外卖，但是送到后你觉得太难吃，这能怪骑手吗？这不能。做人要讲理，不能随便污蔑别人。</p>
+<p>如果你有任何疑问，可前往 [<a href="https://movejian.github.io/2022/09/27/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94Office">疑难解答] Office Tool Plus 入门教程</a> 查看相关问题解答。</p>
+<h4 id="安装开始前，请做好以下事情："><a href="#安装开始前，请做好以下事情：" class="headerlink" title="安装开始前，请做好以下事情："></a>安装开始前，请做好以下事情：</h4><ol>
+<li>卸载 WPS，两者共存容易出问题（没有问题当我没说）。</li>
+<li>卸载旧版本 Office，按照标准流程操作，请勿直接强制移除。</li>
+<li>清除旧版本激活信息，在 [激活] -&gt; [许可证管理] -&gt; [子菜单] -&gt; [清除激活状态]。</li>
+<li>清除 Office 设置，在 [工具箱] -&gt; [重置 Office 为默认设置]。</li>
+</ol>
+<p>附图为清除激活信息：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270128402.png" alt="清除 Office 激活信息"></p>
+<p>附图为重置 Office 的设置：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270128335.png" alt="重置 Office 为默认设置"></p>
+<h3 id="3-部署-Office"><a href="#3-部署-Office" class="headerlink" title="3. 部署 Office"></a>3. 部署 Office</h3><p>不知道自己有没有正版 Office？个人用户 <a href="https://account.microsoft.com/services/">&gt;&gt;点击这里检查&lt;&lt;</a>，企业用户 <a href="https://portal.office.com/account/?ref=MeControl#subscriptions">&gt;&gt;点击这里检查&lt;&lt;</a>。</p>
+<p>需要使用正版 Office？<a href="https://otp.landian.vip/zh-cn/#store">点击这里查看详细信息</a>。</p>
+<p>以下提到的安装方法或者产品都是合适的（差不多），不会有任何问题，请放心使用。</p>
+<hr>
+<p>自动安装：</p>
+<h5 id="一键安装"><a href="#一键安装" class="headerlink" title="一键安装"></a>一键安装</h5><p>如果你什么都不懂，或者，你只是想要个能用的 Office，那么使用一键安装代码是最合适的：</p>
+<p>确保自己使用的是最新版的 Office Tool Plus，按下 Ctrl + Shift + P 打开命令框，输入以下命令：</p>
+<p>旧版本打开命令框的快捷方式为 Ctrl + P，最新版已修改。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270130407.png" alt="命令框"></p>
+<p>安装 Microsoft 365 企业应用版（Word, PowerPoint, Excel）：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy /addProduct O365ProPlusRetail_zh-cn_Access,Bing,Groove,Lync,OneDrive,OneNote,Outlook,Publisher,Teams /channel Current /downloadFirst</span><br></pre></td></tr></table></figure>
+
+<p>安装 Microsoft 365 企业应用版（Word, PowerPoint, Excel）+ Visio 2016：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy /addProduct O365ProPlusRetail_zh-cn_Access,Bing,Groove,Lync,OneDrive,OneNote,Outlook,Publisher,Teams /addProduct VisioProRetail_zh-cn_Groove,OneDrive /channel Current /downloadFirst</span><br></pre></td></tr></table></figure>
+
+<p>输入命令后请按回车（Enter）以执行命令，然后耐心等待安装完成。</p>
+<p>安装完成后，请务必使用 [<a href="https://movejian.github.io/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B">激活 Office] Office Tool Plus 入门教程</a> 中的一键激活代码进行激活</p>
+<hr>
+<p>手动安装：</p>
+<p>转到 Office Tool Plus 的部署页面，按照以下提示操作。</p>
+<h4 id="必须做的事情"><a href="#必须做的事情" class="headerlink" title="必须做的事情"></a>必须做的事情</h4><ol>
+<li>添加产品：看下面的选项，选一个合适自己的来学习。</li>
+<li>添加语言：点一下「添加语言」就行，软件会自动匹配合适的语言。不要把“仅部署校对工具”打勾，除非你知道这是什么。</li>
+</ol>
+<h5 id="我有正版-Office"><a href="#我有正版-Office" class="headerlink" title="我有正版 Office"></a>我有正版 Office</h5><p>如果你有 Office 正版，比如你自己购买了 Microsoft 365 家庭版，安装的时候选择这个即可。</p>
+<p>当然现在也有不少人去网上白嫖什么 365 订阅，基本都是安装 Microsoft 365 企业应用版（O365ProPlusRetail）。</p>
+<p>如果学校&#x2F;企业提供了 2019&#x2F;2021 批量许可授权，安装这个也可。</p>
+<p>无论如何，你必须要安装对应的产品，否则你将无法通过账户&#x2F;密钥激活你的 Office。</p>
+<p>如果你有 Office 的正版授权，但是没有 Visio，又想装？</p>
+<p>Office, Visio 和 Project 三个产品的授权是可以分开处理的，所以你不必担心搞 Visio 会影响 Office.</p>
+<h5 id="有什么好选择吗？"><a href="#有什么好选择吗？" class="headerlink" title="有什么好选择吗？"></a>有什么好选择吗？</h5><p>当然有啦~</p>
+<p>Office 选择：Microsoft 365 企业应用版 (O365ProPlusRetail)</p>
+<p>Visio 选择：Visio 专业版 2016 (VisioProRetail)</p>
+<p>Project 选择：Project 专业版 2016 (ProjectProRetail)</p>
+<p>当然，Visio 和 Project 是需要才选，不需要或者看不懂就不需要管啦。</p>
+<h5 id="我要安装年份版-Office（例如-Office-2021）"><a href="#我要安装年份版-Office（例如-Office-2021）" class="headerlink" title="我要安装年份版 Office（例如 Office 2021）"></a>我要安装年份版 Office（例如 Office 2021）</h5><p>有一说一，年份版没有你想的那么好的哦，如果不是强迫症建议看上面那条。</p>
+<p>针对非正版用户，你只可以安装批量许可产品以便使用 KMS 激活。</p>
+<p>安装批量版时，需要使用对应的 Office 2019&#x2F;2021 企业长期版通道，否则会无法安装。</p>
+<p>Office 2021：</p>
+<p>Office LTSC 专业增强版 2021 - 批量许可证 (ProPlus2021Volume)</p>
+<p>Visio LTSC 专业版 2021 - 批量许可证 (VisioPro2021Volume)</p>
+<p>Project 专业版 2021 - 批量许可证 (ProjectPro2021Volume)</p>
+<p>Office 2019：</p>
+<p>Office 专业增强版 2019 - 批量许可证 (ProPlus2019Volume)</p>
+<p>Visio 专业版 2019 - 批量许可证 (VisioPro2019Volume)</p>
+<p>Project 专业版 2019 - 批量许可证 (ProjectPro2019Volume)</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">PS：不要问我为什么 2021 叫 LTSC，名字是微软起的有问题问微软去。</span><br></pre></td></tr></table></figure>
+
+<h5 id="我是-Windows-7-x2F-8-x2F-8-1-用户"><a href="#我是-Windows-7-x2F-8-x2F-8-1-用户" class="headerlink" title="我是 Windows 7&#x2F;8&#x2F;8.1 用户"></a>我是 Windows 7&#x2F;8&#x2F;8.1 用户</h5><p>由于系统原因，我们推荐按照第二条选项进行处理，这样确保可以进行正常安装。</p>
+<p>不要问我 Office 2019&#x2F;2021 能不能装，问就是说不能，别人说可以的话你问别人去。</p>
+<h5 id="（额外补充内容）什么系统能装什么样的-Office？"><a href="#（额外补充内容）什么系统能装什么样的-Office？" class="headerlink" title="（额外补充内容）什么系统能装什么样的 Office？"></a>（额外补充内容）什么系统能装什么样的 Office？</h5><p>目前 Office Tool Plus 中有 Office 2016、2019、2021、365 可供安装。</p>
+<p>Windows 10 和 11 无限制，可以安装任何版本的 Office。</p>
+<p>Windows 8 和 8.1 只可以安装部分产品，如果将部署模块从「Office 部署工具」更改到「Office Tool Plus」也可以安装任意产品。</p>
+<p>Windows 7 只可以安装 Office 2016 或 365，并且只能够使用「当前通道」。即使你更改部署模块，Office 2019&#x2F;2021 也不一定能安装成功。</p>
+<p>如果你的安装包是从别的地方下载的，那，那就别来问我，我也不知道你下载的是什么。</p>
+<h4 id="可以做的事情"><a href="#可以做的事情" class="headerlink" title="可以做的事情"></a>可以做的事情</h4><ol>
+<li>应用程序：选自己能看懂的就行，一般就是 Word, PowerPoint, Excel.</li>
+<li>通道：“当前通道”就行，Office 2019&#x2F;2021 批量许可证请选 Office 2019&#x2F;2021 企业长期版。</li>
+<li>体系结构：32 位兼容性好；64 位兼容性稍差且体积大，但处理大数据能力稍强。</li>
+<li>部署模式：那肯定要选安装啊，要不然怎么安装。</li>
+<li>安装模块：如没有特殊要求，请勿选择 Office Tool Plus.</li>
+<li>下载后再部署：如果网不行，最好把这个选上，免得安装卡进度卡半天。</li>
+</ol>
+<p>产品和语言弄好后即可开始部署 Office，其余设置不需要更改。</p>
+<p>部署时请耐心等待，不要强制结束安装程序或重启计算机。</p>
+<h3 id="4-视频教程"><a href="#4-视频教程" class="headerlink" title="4. 视频教程"></a>4. 视频教程</h3><p>视频教程更新不及时，建议看本文即可。</p>
+<p>bilibili：<a href="https://www.bilibili.com/video/BV1eU4y1V7NU">https://www.bilibili.com/video/BV1eU4y1V7NU</a></p>
+<p>YouTube：<a href="https://www.youtube.com/watch?v=p90V9_D-8Go">https://www.youtube.com/watch?v=p90V9_D-8Go</a></p>
+<h3 id="5-离线安装包"><a href="#5-离线安装包" class="headerlink" title="5. 离线安装包"></a>5. 离线安装包</h3><p>如果因为网络问题下载缓慢或者无法下载 Office，你可以下载 ISO 文件使用。</p>
+<p><a href="https://otp.landian.vip/zh-cn/download.html">下载站点</a>（云图小镇、OneDrive）中包含有 Office ISO.</p>
+<p>Office ISO 文件不需要解压，双击打开即可挂载使用（Win 7 除外）。</p>
+<h3 id="6-激活-Office"><a href="#6-激活-Office" class="headerlink" title="6. 激活 Office"></a>6. 激活 Office</h3><p>如果你是正版用户，一般情况下是不需要借助 Office Tool Plus 激活 Office 的，在 Office 应用程序中登录自己的微软账号，或者输入你的正版密钥即可激活 Office。</p>
+<p><a href="https://movejian.github.io/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B">【点击此处】前往另一个教程查看如何激活 Office</a></p>
+]]></content>
+      <tags>
+        <tag>Office</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>实战kali破解wifi密码 全网最详细的保姆级教程</title>
     <url>/2022/09/21/%E5%AE%9E%E6%88%98kali%E7%A0%B4%E8%A7%A3wifi%E5%AF%86%E7%A0%81/</url>
     <content><![CDATA[<h2 id="kali官网"><a href="#kali官网" class="headerlink" title="kali官网"></a>kali官网</h2><hr>
@@ -1292,6 +1292,19 @@
       </categories>
       <tags>
         <tag>kali</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>愿你编码半生，归来仍是少年</title>
+    <url>/2019/10/21/%E6%84%BF%E4%BD%A0%E7%BC%96%E7%A0%81%E5%8D%8A%E7%94%9F%EF%BC%8C%E5%BD%92%E6%9D%A5%E4%BB%8D%E6%98%AF%E5%B0%91%E5%B9%B4/</url>
+    <content><![CDATA[<h4 id="Hello-World-不巧，我也在等你。"><a href="#Hello-World-不巧，我也在等你。" class="headerlink" title="Hello,World.不巧，我也在等你。"></a>Hello,World.不巧，我也在等你。</h4><p>​      有人说自己被社会磨平了棱角，泯灭了心性，受生活所迫，“都说是为生活所迫，生活缺从来没有被抓过；都说被社会磨去棱角，社会之恶至今无法逃脱”，我们都有权利选择自己想成为的人，并不是由社会说了算，我们都曾年少，我们都曾有棱角，社会的熔炉却在不断的炼化我们，到底是磨平了棱角，还是磨成了钢刀，就让时间来见证吧！</p>
+<p>​      常年混迹于各大网络社区，也曾愤青，如今独爱云淡风轻，只愿在滚滚红尘中揽得风花雪月独醉。</p>
+<h4 id="感谢你的到来。"><a href="#感谢你的到来。" class="headerlink" title="感谢你的到来。"></a>感谢你的到来。</h4><span id="more"></span>
+
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/8.jpg" alt="8"></p>
+]]></content>
+      <tags>
+        <tag>随心</tag>
       </tags>
   </entry>
   <entry>
@@ -1389,139 +1402,6 @@
       </tags>
   </entry>
   <entry>
-    <title>愿你编码半生，归来仍是少年</title>
-    <url>/2019/10/21/%E6%84%BF%E4%BD%A0%E7%BC%96%E7%A0%81%E5%8D%8A%E7%94%9F%EF%BC%8C%E5%BD%92%E6%9D%A5%E4%BB%8D%E6%98%AF%E5%B0%91%E5%B9%B4/</url>
-    <content><![CDATA[<h4 id="Hello-World-不巧，我也在等你。"><a href="#Hello-World-不巧，我也在等你。" class="headerlink" title="Hello,World.不巧，我也在等你。"></a>Hello,World.不巧，我也在等你。</h4><p>​      有人说自己被社会磨平了棱角，泯灭了心性，受生活所迫，“都说是为生活所迫，生活缺从来没有被抓过；都说被社会磨去棱角，社会之恶至今无法逃脱”，我们都有权利选择自己想成为的人，并不是由社会说了算，我们都曾年少，我们都曾有棱角，社会的熔炉却在不断的炼化我们，到底是磨平了棱角，还是磨成了钢刀，就让时间来见证吧！</p>
-<p>​      常年混迹于各大网络社区，也曾愤青，如今独爱云淡风轻，只愿在滚滚红尘中揽得风花雪月独醉。</p>
-<h4 id="感谢你的到来。"><a href="#感谢你的到来。" class="headerlink" title="感谢你的到来。"></a>感谢你的到来。</h4><span id="more"></span>
-
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/8.jpg" alt="8"></p>
-]]></content>
-      <tags>
-        <tag>随心</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【 Office技能扩展】 Office Tool Plus 高级教程</title>
-    <url>/2022/09/27/%E6%8A%80%E8%83%BD%E6%89%A9%E5%B1%95Office/</url>
-    <content><![CDATA[<h3 id="遵循"><a href="#遵循" class="headerlink" title="遵循"></a>遵循</h3><p>请按照正确的步骤操作，否则可能出现意外的结果。</p>
-<p>同时为了避免出现一些未知的问题，请务必使用最新版的 Office Tool Plus。</p>
-<p><strong>在这里要清楚两个概念：</strong></p>
-<p>产品指的是 Office 2019，Microsoft 365 等。</p>
-<span id="more"></span>
-<p>而应用程序指的是产品附带的 Excel，PowerPoint，Word 等。</p>
-<h3 id="使用-Office-Tool-Plus-的进阶操作"><a href="#使用-Office-Tool-Plus-的进阶操作" class="headerlink" title="使用 Office Tool Plus 的进阶操作"></a>使用 Office Tool Plus 的进阶操作</h3><h5 id="增删应用程序（例如-Access，PowerPoint）"><a href="#增删应用程序（例如-Access，PowerPoint）" class="headerlink" title="增删应用程序（例如 Access，PowerPoint）"></a>增删应用程序（例如 Access，PowerPoint）</h5><p>在部署页面的应用程序卡片中，将自己想要的应用程序打勾，不想要的取消打勾，</p>
-<p>然后点击开始部署，即可增加&#x2F;卸载指定的应用程序。</p>
-<p>扩展：</p>
-<p>如果您想添加一个 Access，但是发现应用程序里面没有 Access 可以选？</p>
-<p>添加一个产品，选择 Access 即可，可以选择 Access 2019 - 批量版，好激活。</p>
-<h5 id="增删一个或多个产品（语言包同理）"><a href="#增删一个或多个产品（语言包同理）" class="headerlink" title="增删一个或多个产品（语言包同理）"></a>增删一个或多个产品（语言包同理）</h5><p>Office Tool Plus 中可以在已安装 Office 的情况下增加一个或者多个产品，</p>
-<p>添加完成后，直接开始部署即可。</p>
-<p>如果新增的产品需要激活，根据教程选取对应的激活代码，或者单独对其进行手动激活即可。</p>
-<p>在系统自带的程序管理中，我们可以一次性卸载单个产品。</p>
-<p>如果要一次性删除多个产品，在部署页面点击产品&#x2F;语言的卸载，然后开始部署即可。</p>
-<h5 id="在不卸载重装的情况下使用现有安装包更新-Office"><a href="#在不卸载重装的情况下使用现有安装包更新-Office" class="headerlink" title="在不卸载重装的情况下使用现有安装包更新 Office"></a>在不卸载重装的情况下使用现有安装包更新 Office</h5><p>使用此功能前，要确保 Office Tool Plus 中已加载并能识别现有的安装包。</p>
-<p>在部署页面添加跟现有的一摸一样的产品，然后开始部署即可。</p>
-<h5 id="一步到位迁移体系结构"><a href="#一步到位迁移体系结构" class="headerlink" title="一步到位迁移体系结构"></a>一步到位迁移体系结构</h5><p>如果要将 Office 从 32 位迁移到 64 位（反之同理），正常情况下需要人工值守完成卸载+重新安装的操作。</p>
-<p>而 Office 部署工具支持自动化执行此操作，只需在 Office Tool Plus 内做好配置即可。</p>
-<p>打开部署页面，做好以下操作：</p>
-<ol>
-<li>将体系结构换成自己想要的，比如从 32 迁移到 64 位，那么现在就选 64 位的。</li>
-<li>将 高级设置- 升级选项 - 迁移体系结构 打勾</li>
-</ol>
-<p>由于这是个重新安装的操作，因此建议使用下载后安装或指定 Office 安装文件源。</p>
-<h3 id="微软官方技术文档"><a href="#微软官方技术文档" class="headerlink" title="微软官方技术文档"></a>微软官方技术文档</h3><p>微软官方的技术文档中有一部分功能&#x2F;词汇的解释，如有需要可前去查看了解。</p>
-<p><a href="https://support.microsoft.com/zh-cn/office/%E9%80%89%E6%8B%A9-64-%E4%BD%8D%E6%88%96-32-%E4%BD%8D%E7%89%88%E6%9C%AC%E7%9A%84-office-2dee7807-8f95-4d0c-b5fe-6c6f49b8d261">【版本选择】选择 64 位或 32 位版本的 Office</a></p>
-<p><a href="https://docs.microsoft.com/zh-cn/deployoffice/overview-update-channels">【通道区别】Microsoft 365 应用版的更新通道概述</a></p>
-<p><a href="https://docs.microsoft.com/zh-cn/officeupdates/update-history-microsoft365-apps-by-date">【通道更新历史】Microsoft 365 应用版的更新历史记录</a></p>
-<h3 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h3><p>如果本文内容有误或者有任何疑问，欢迎留言一起讨论。</p>
-<p>如果您觉得这篇文章对您有用的话，别忘了点个赞哦！</p>
-<p>坐等屏幕前的大帅哥、小姐姐打赏个鸡腿  :happy:</p>
-]]></content>
-      <tags>
-        <tag>Office</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【激活 Office】 Office Tool Plus 入门教程</title>
-    <url>/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/</url>
-    <content><![CDATA[<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>正版用户一般情况下不需要使用 Office Tool Plus 进行激活，登录账号&#x2F;输入密钥即可激活 Office。</p>
-<p>如果你是从安装教程来到这一步的，那么在这里继续跟着教程来就行。</p>
-<p>需要使用正版 Office？<a href="https://otp.landian.vip/zh-cn/#store">点击这里查看详细信息</a>。</p>
-<p><font style="background: green" size="6">如无特殊情况，文章中提到的 Windows 10 也适用于 Windows 11.</font></p>
-<span id="more"></span>
-
-<blockquote>
-<h4 id="注意⚠"><a href="#注意⚠" class="headerlink" title=" 注意⚠"></a><font style="background: yellow" size="6"> 注意⚠</font></h4><p><a href="https://kms.loli.beer/">kms.loli.beer</a> 已启用客户端限制，每个 IP 每天只允许激活 10 次，超过此限制将会拉黑此 IP 24 小时，连续多次触发限制将会被永久封禁。</p>
-</blockquote>
-<h3 id="1-开始使用"><a href="#1-开始使用" class="headerlink" title="1. 开始使用"></a>1. 开始使用</h3><blockquote>
-<p>请下载最新的包含框架的版本（with runtime），以确保你始终可以获得最好的体验。</p>
-</blockquote>
-<p>在<a href="http://otp.landian.vip/">官网下载 Office Tool Plus</a> 后，将其解压至正常位置（例如桌面），双击 Office Tool Plus 以运行。</p>
-<p><strong>为了确保激活能顺利完成，请务必使用最新版 Office Tool Plus.</strong></p>
-<h3 id="2-注意事项"><a href="#2-注意事项" class="headerlink" title="2. 注意事项"></a>2. 注意事项</h3><p><strong>+</strong> 激活开始前，请知晓以下事情：</p>
-<ol>
-<li>如果你激活出现了问题，请首先检查自己的步骤是否有误，再去检查系统是否有问题。</li>
-<li>激活出现问题时，请不要盲目去重装 Office，这几乎是毫无作用的，只会浪费时间。</li>
-<li>Office 激活完成后，所有功能正常使用，不存在什么不能登录账户这种说法。</li>
-<li>Office 的部分功能需要搭配个人&#x2F;企业账户使用。</li>
-<li>使用此处的 KMS 并不会造成电脑被控制，请放心使用。</li>
-<li>你不能使用 KMS 激活零售 (Retail) 许可证，KMS 只能激活批量 (Volume) 许可证。</li>
-<li>如果你的 Office 版本太旧会导致 Office Tool Plus 无法正常识别，请通过 Office Tool Plus 重新安装 Office.</li>
-<li>激活后，在 KMS 主机以及网络正常的情况下，系统会自动续期，不会 180 天后到期。</li>
-</ol>
-<p><strong>请务必仔细查阅教程，如因个人问题造成误解等，请自行承担所有后果。</strong></p>
-<p>激活出现了问题？请首先前往 [<a href="https://movejian.github.io/2022/09/27/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94Office">疑难解答] Office Tool Plus 入门教程</a> 查看相关信息，找不到再留言或加群交流。</p>
-<h3 id="3-清除激活信息"><a href="#3-清除激活信息" class="headerlink" title="3. 清除激活信息"></a>3. 清除激活信息</h3><p><strong>卸载 Office 是不会清除激活信息的</strong>；为了避免出现问题，请按照以下操作清除激活信息：</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270042413.png" alt="清除 Office 激活信息"></p>
-<p>如果账户授权无法撤销，在工具箱内「恢复 Office 设置为默认设置」。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270200030.png" alt="重置 Office 为默认设置"></p>
-<p>已经在上一个教程中做过了？那你可以跳过这一步了。</p>
-<h3 id="使用-Office-Tool-Plus-自动激活-Office"><a href="#使用-Office-Tool-Plus-自动激活-Office" class="headerlink" title="使用 Office Tool Plus 自动激活 Office"></a>使用 Office Tool Plus 自动激活 Office</h3><p>请确保你的 Office Tool Plus 是最新版本，过于陈旧的版本无法使用这些命令。</p>
-<p>旧版本打开命令框的快捷方式为<code>Ctrl+P</code>，最新版已修改。</p>
-<p>按下快捷键<code> Ctrl+Shift+P</code>，打开命令框，按需复制下面的命令，粘贴后回车（Enter）以执行操作。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270042398.png" alt="命令框"></p>
-<p>如果你安装了 Microsoft 365，或者你只是单纯地在遵循教程的指示，请使用以下代码进行激活：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ospp /insLicID MondoVolume /sethst:kms.coolhub.top /setprt:1688 /act</span><br></pre></td></tr></table></figure>
-
-<p><strong>上述代码可一次性激活 Office, Visio, Project，同时适用 Win 7&#x2F;8，能使用 Office 的所有功能。</strong></p>
-<p>如果你需要激活以下产品，请按照自己的需求选择：</p>
-<h5 id="Office-LTSC-2021-Visio-LTSC-2021-Project-2021"><a href="#Office-LTSC-2021-Visio-LTSC-2021-Project-2021" class="headerlink" title="Office LTSC 2021, Visio LTSC 2021, Project 2021"></a>Office LTSC 2021, Visio LTSC 2021, Project 2021</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ospp /insLicID ProPlus2021Volume /sethst:kms.coolhub.top /setprt:1688 /act</span><br><span class="line">ospp /insLicID VisioPro2021Volume /sethst:kms.coolhub.top /setprt:1688 /act</span><br><span class="line">ospp /insLicID ProjectPro2021Volume /sethst:kms.coolhub.top /setprt:1688 /act</span><br></pre></td></tr></table></figure>
-
-<h5 id="Office-Visio-Project-2019"><a href="#Office-Visio-Project-2019" class="headerlink" title="Office, Visio, Project 2019"></a>Office, Visio, Project 2019</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ospp /insLicID ProPlus2019Volume /sethst:kms.coolhub.top /setprt:1688 /act</span><br><span class="line">ospp /insLicID VisioPro2019Volume /sethst:kms.coolhub.top /setprt:1688 /act</span><br><span class="line">ospp /insLicID ProjectPro2019Volume /sethst:kms.coolhub.top /setprt:1688 /act</span><br></pre></td></tr></table></figure>
-
-<h5 id="Office-Visio-Project-2016"><a href="#Office-Visio-Project-2016" class="headerlink" title="Office, Visio, Project 2016"></a>Office, Visio, Project 2016</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ospp /insLicID ProPlusVolume /sethst:kms.coolhub.top /setprt:1688 /act</span><br><span class="line">ospp /insLicID VisioProXVolume /sethst:kms.coolhub.top /setprt:1688 /act</span><br><span class="line">ospp /insLicID ProjectProXVolume /sethst:kms.coolhub.top /setprt:1688 /act</span><br></pre></td></tr></table></figure>
-
-<h2 id="使用-Office-Tool-Plus-手动激活-Office"><a href="#使用-Office-Tool-Plus-手动激活-Office" class="headerlink" title="使用 Office Tool Plus 手动激活 Office"></a>使用 Office Tool Plus 手动激活 Office</h2><p>请优先使用自动激活，避免你遇到问题又不会解决。</p>
-<p>手动激活步骤：</p>
-<ol>
-<li>**安装 Office 批量许可证 (Volume)**，无论如何，这里你都要选批量许可证。</li>
-<li>设置一个 KMS 主机地址（可以设置端口为 1688）并保存设置。</li>
-<li>点击激活按钮，等待激活完成。</li>
-</ol>
-<h3 id="离线激活-Office"><a href="#离线激活-Office" class="headerlink" title="离线激活 Office"></a>离线激活 Office</h3><p>离线激活有两种办法：</p>
-<h5 id="电话激活，需要有效密钥"><a href="#电话激活，需要有效密钥" class="headerlink" title="电话激活，需要有效密钥"></a>电话激活，需要有效密钥</h5><p>密钥的话当然是要自己找啦，我怎么可能会有呢？</p>
-<p>找到密钥后，安装密钥，如果提示找不到许可证 SKU ID，先安装对应的许可证然后继续。</p>
-<p>然后在下拉菜单中找到「获取安装 ID」，然后拿着你的安装 ID 去获取确认 ID.</p>
-<p>然后再通过「安装确认 ID」激活 Office，这东西成败与否我不管的啊（逃）。</p>
-<h5 id="KMS-工具激活"><a href="#KMS-工具激活" class="headerlink" title="KMS 工具激活"></a>KMS 工具激活</h5><p>KMS 工具容易被封杀，使用需要自己考虑以及承担可能的后果，在此推荐两个激活工具：</p>
-<p>HEU-KMS-Activator，微信关注「<a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzA3Nzg3NjYxOQ==">知彼而知己</a>」查看历史文章获取最新版本以及下载链接。</p>
-<p>KMS-VL-ALL: <a href="https://forums.mydigitallife.net/posts/838808/">My Digital Life</a> 或者其对应的 <a href="https://github.com/abbodi1406/KMS_VL_ALL_AIO">GitHub</a>.</p>
-<h3 id="可用的-KMS-列表"><a href="#可用的-KMS-列表" class="headerlink" title="可用的 KMS 列表"></a>可用的 KMS 列表</h3><p>如果你正在用的 KMS 失效了，更换 KMS 主机并保存设置即可，无需重新安装许可证。</p>
-<p>点击<a href="https://www.coolhub.top/tech-articles/kms_list.html">查看 KMS 主机实时状态</a>列表。</p>
-<h3 id="高校正版化激活"><a href="#高校正版化激活" class="headerlink" title="高校正版化激活"></a>高校正版化激活</h3><p>高校的正版化激活只供学校的师生使用，如果你不是，那你将会没有访问权限。</p>
-<p>有的大学已购买 Office 正版授权，一般情况下，师生也能从学校的软件中心找到使用方法等。</p>
-<p>Office Tool Plus 同样支持使用此类 KMS 进行操作，步骤和手动激活说的一样，换个地址就行了。</p>
-<p>如果师生目前不在校园网内，可能需要使用学校提供的 VPN 连接后才可正常激活。</p>
-<p>下列地址均由网友提供，如有错误或新补充，可在评论区留言。</p>
-<h3 id="高校-KMS-主机地址（已认证会带-√）"><a href="#高校-KMS-主机地址（已认证会带-√）" class="headerlink" title="高校 KMS 主机地址（已认证会带 √）"></a>高校 KMS 主机地址（已认证会带 √）</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">北京大学 (√)：kms.pku.edu.cn</span><br><span class="line">清华大学 (√)：kms.cic.tsinghua.edu.cn</span><br><span class="line">复旦大学：mvls.fudan.edu.cn</span><br><span class="line">同济大学：kms.tongji.edu.cn</span><br><span class="line">苏州大学：kms.suda.edu.cn</span><br><span class="line">中山大学：kms.sysu.edu.cn</span><br><span class="line">华东理工大学 (√)：kms.ecust.edu.cn</span><br><span class="line">华北电力大学：202.204.74.218</span><br><span class="line">华南理工大学 (√)：act.msweb.scut.edu.cn</span><br><span class="line">南安普顿大学：kms.soton.ac.uk</span><br><span class="line">上海交通大学 (√)：kms.sjtu.edu.cn</span><br><span class="line">上海财经大学：kms.shufe.edu.cn</span><br><span class="line">上海师范大学：mskms.shnu.edu.cn</span><br><span class="line">上海海事大学：kms.shmtu.edu.cn</span><br><span class="line">武汉理工大学：kms.whut.edu.cn</span><br><span class="line">河南科技大学（√，需搭配特定软件使用）：kms.haust.edu.cn</span><br><span class="line">南京航空航天大学 (√)：kms.nuaa.edu.cn</span><br><span class="line">上海第二工业大学：kms.sspu.edu.cn</span><br><span class="line">中国科学技术大学：kms.ustc.edu.cn</span><br></pre></td></tr></table></figure>
-<h3 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h3><p>如果本文内容有误或者有任何疑问，欢迎留言一起讨论。<br>如果您觉得这篇文章对您有用的话，别忘了点个赞哦！<br>坐等屏幕前的大帅哥、小姐姐打赏个鸡腿 :happy</p>
-]]></content>
-      <tags>
-        <tag>Office</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>热血传奇幻境迷宫、屠龙殿、圣域地图走法图解</title>
     <url>/2022/08/31/%E7%83%AD%E8%A1%80%E4%BC%A0%E5%A5%87%E5%B9%BB%E5%A2%83%E8%BF%B7%E5%AE%AB%E3%80%81%E5%B1%A0%E9%BE%99%E6%AE%BF%E3%80%81%E5%9C%A3%E5%9F%9F%E5%9C%B0%E5%9B%BE%E8%B5%B0%E6%B3%95%E5%9B%BE%E8%A7%A3/</url>
     <content><![CDATA[<p>小编精心总结了热血传奇幻境从幻境一层—幻境迷宫—幻境十层—屠龙殿—圣域之门地图的全部走法攻略，通过图文解说+参考视频进行了详尽的描述，愿可以帮助到您。</p>
@@ -1564,6 +1444,47 @@
         <tag>传奇</tag>
         <tag>幻境</tag>
         <tag>攻略</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【 Office技能扩展】 Office Tool Plus 高级教程</title>
+    <url>/2022/09/27/%E6%8A%80%E8%83%BD%E6%89%A9%E5%B1%95Office/</url>
+    <content><![CDATA[<h3 id="遵循"><a href="#遵循" class="headerlink" title="遵循"></a>遵循</h3><p>请按照正确的步骤操作，否则可能出现意外的结果。</p>
+<p>同时为了避免出现一些未知的问题，请务必使用最新版的 Office Tool Plus。</p>
+<p><strong>在这里要清楚两个概念：</strong></p>
+<p>产品指的是 Office 2019，Microsoft 365 等。</p>
+<span id="more"></span>
+<p>而应用程序指的是产品附带的 Excel，PowerPoint，Word 等。</p>
+<h3 id="使用-Office-Tool-Plus-的进阶操作"><a href="#使用-Office-Tool-Plus-的进阶操作" class="headerlink" title="使用 Office Tool Plus 的进阶操作"></a>使用 Office Tool Plus 的进阶操作</h3><h5 id="增删应用程序（例如-Access，PowerPoint）"><a href="#增删应用程序（例如-Access，PowerPoint）" class="headerlink" title="增删应用程序（例如 Access，PowerPoint）"></a>增删应用程序（例如 Access，PowerPoint）</h5><p>在部署页面的应用程序卡片中，将自己想要的应用程序打勾，不想要的取消打勾，</p>
+<p>然后点击开始部署，即可增加&#x2F;卸载指定的应用程序。</p>
+<p>扩展：</p>
+<p>如果您想添加一个 Access，但是发现应用程序里面没有 Access 可以选？</p>
+<p>添加一个产品，选择 Access 即可，可以选择 Access 2019 - 批量版，好激活。</p>
+<h5 id="增删一个或多个产品（语言包同理）"><a href="#增删一个或多个产品（语言包同理）" class="headerlink" title="增删一个或多个产品（语言包同理）"></a>增删一个或多个产品（语言包同理）</h5><p>Office Tool Plus 中可以在已安装 Office 的情况下增加一个或者多个产品，</p>
+<p>添加完成后，直接开始部署即可。</p>
+<p>如果新增的产品需要激活，根据教程选取对应的激活代码，或者单独对其进行手动激活即可。</p>
+<p>在系统自带的程序管理中，我们可以一次性卸载单个产品。</p>
+<p>如果要一次性删除多个产品，在部署页面点击产品&#x2F;语言的卸载，然后开始部署即可。</p>
+<h5 id="在不卸载重装的情况下使用现有安装包更新-Office"><a href="#在不卸载重装的情况下使用现有安装包更新-Office" class="headerlink" title="在不卸载重装的情况下使用现有安装包更新 Office"></a>在不卸载重装的情况下使用现有安装包更新 Office</h5><p>使用此功能前，要确保 Office Tool Plus 中已加载并能识别现有的安装包。</p>
+<p>在部署页面添加跟现有的一摸一样的产品，然后开始部署即可。</p>
+<h5 id="一步到位迁移体系结构"><a href="#一步到位迁移体系结构" class="headerlink" title="一步到位迁移体系结构"></a>一步到位迁移体系结构</h5><p>如果要将 Office 从 32 位迁移到 64 位（反之同理），正常情况下需要人工值守完成卸载+重新安装的操作。</p>
+<p>而 Office 部署工具支持自动化执行此操作，只需在 Office Tool Plus 内做好配置即可。</p>
+<p>打开部署页面，做好以下操作：</p>
+<ol>
+<li>将体系结构换成自己想要的，比如从 32 迁移到 64 位，那么现在就选 64 位的。</li>
+<li>将 高级设置- 升级选项 - 迁移体系结构 打勾</li>
+</ol>
+<p>由于这是个重新安装的操作，因此建议使用下载后安装或指定 Office 安装文件源。</p>
+<h3 id="微软官方技术文档"><a href="#微软官方技术文档" class="headerlink" title="微软官方技术文档"></a>微软官方技术文档</h3><p>微软官方的技术文档中有一部分功能&#x2F;词汇的解释，如有需要可前去查看了解。</p>
+<p><a href="https://support.microsoft.com/zh-cn/office/%E9%80%89%E6%8B%A9-64-%E4%BD%8D%E6%88%96-32-%E4%BD%8D%E7%89%88%E6%9C%AC%E7%9A%84-office-2dee7807-8f95-4d0c-b5fe-6c6f49b8d261">【版本选择】选择 64 位或 32 位版本的 Office</a></p>
+<p><a href="https://docs.microsoft.com/zh-cn/deployoffice/overview-update-channels">【通道区别】Microsoft 365 应用版的更新通道概述</a></p>
+<p><a href="https://docs.microsoft.com/zh-cn/officeupdates/update-history-microsoft365-apps-by-date">【通道更新历史】Microsoft 365 应用版的更新历史记录</a></p>
+<h3 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h3><p>如果本文内容有误或者有任何疑问，欢迎留言一起讨论。</p>
+<p>如果您觉得这篇文章对您有用的话，别忘了点个赞哦！</p>
+<p>坐等屏幕前的大帅哥、小姐姐打赏个鸡腿  :happy:</p>
+]]></content>
+      <tags>
+        <tag>Office</tag>
       </tags>
   </entry>
   <entry>
@@ -1679,6 +1600,115 @@
         <tag>传奇</tag>
         <tag>攻略</tag>
         <tag>魔龙</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【激活 Office】 Office Tool Plus 入门教程</title>
+    <url>/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/</url>
+    <content><![CDATA[<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>正版用户一般情况下不需要使用 Office Tool Plus 进行激活，登录账号&#x2F;输入密钥即可激活 Office。</p>
+<p>如果你是从安装教程来到这一步的，那么在这里继续跟着教程来就行。</p>
+<p>需要使用正版 Office？<a href="https://otp.landian.vip/zh-cn/#store">点击这里查看详细信息</a>。</p>
+<p><font style="background: green" size="6">如无特殊情况，文章中提到的 Windows 10 也适用于 Windows 11.</font></p>
+<span id="more"></span>
+
+<blockquote>
+<h4 id="注意⚠"><a href="#注意⚠" class="headerlink" title=" 注意⚠"></a><font style="background: yellow" size="6"> 注意⚠</font></h4><p><a href="https://kms.loli.beer/">kms.loli.beer</a> 已启用客户端限制，每个 IP 每天只允许激活 10 次，超过此限制将会拉黑此 IP 24 小时，连续多次触发限制将会被永久封禁。</p>
+</blockquote>
+<h3 id="1-开始使用"><a href="#1-开始使用" class="headerlink" title="1. 开始使用"></a>1. 开始使用</h3><blockquote>
+<p>请下载最新的包含框架的版本（with runtime），以确保你始终可以获得最好的体验。</p>
+</blockquote>
+<p>在<a href="http://otp.landian.vip/">官网下载 Office Tool Plus</a> 后，将其解压至正常位置（例如桌面），双击 Office Tool Plus 以运行。</p>
+<p><strong>为了确保激活能顺利完成，请务必使用最新版 Office Tool Plus.</strong></p>
+<h3 id="2-注意事项"><a href="#2-注意事项" class="headerlink" title="2. 注意事项"></a>2. 注意事项</h3><p><strong>+</strong> 激活开始前，请知晓以下事情：</p>
+<ol>
+<li>如果你激活出现了问题，请首先检查自己的步骤是否有误，再去检查系统是否有问题。</li>
+<li>激活出现问题时，请不要盲目去重装 Office，这几乎是毫无作用的，只会浪费时间。</li>
+<li>Office 激活完成后，所有功能正常使用，不存在什么不能登录账户这种说法。</li>
+<li>Office 的部分功能需要搭配个人&#x2F;企业账户使用。</li>
+<li>使用此处的 KMS 并不会造成电脑被控制，请放心使用。</li>
+<li>你不能使用 KMS 激活零售 (Retail) 许可证，KMS 只能激活批量 (Volume) 许可证。</li>
+<li>如果你的 Office 版本太旧会导致 Office Tool Plus 无法正常识别，请通过 Office Tool Plus 重新安装 Office.</li>
+<li>激活后，在 KMS 主机以及网络正常的情况下，系统会自动续期，不会 180 天后到期。</li>
+</ol>
+<p><strong>请务必仔细查阅教程，如因个人问题造成误解等，请自行承担所有后果。</strong></p>
+<p>激活出现了问题？请首先前往 [<a href="https://movejian.github.io/2022/09/27/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94Office">疑难解答] Office Tool Plus 入门教程</a> 查看相关信息，找不到再留言或加群交流。</p>
+<h3 id="3-清除激活信息"><a href="#3-清除激活信息" class="headerlink" title="3. 清除激活信息"></a>3. 清除激活信息</h3><p><strong>卸载 Office 是不会清除激活信息的</strong>；为了避免出现问题，请按照以下操作清除激活信息：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270042413.png" alt="清除 Office 激活信息"></p>
+<p>如果账户授权无法撤销，在工具箱内「恢复 Office 设置为默认设置」。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270200030.png" alt="重置 Office 为默认设置"></p>
+<p>已经在上一个教程中做过了？那你可以跳过这一步了。</p>
+<h3 id="使用-Office-Tool-Plus-自动激活-Office"><a href="#使用-Office-Tool-Plus-自动激活-Office" class="headerlink" title="使用 Office Tool Plus 自动激活 Office"></a>使用 Office Tool Plus 自动激活 Office</h3><p>请确保你的 Office Tool Plus 是最新版本，过于陈旧的版本无法使用这些命令。</p>
+<p>旧版本打开命令框的快捷方式为<code>Ctrl+P</code>，最新版已修改。</p>
+<p>按下快捷键<code> Ctrl+Shift+P</code>，打开命令框，按需复制下面的命令，粘贴后回车（Enter）以执行操作。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270042398.png" alt="命令框"></p>
+<p>如果你安装了 Microsoft 365，或者你只是单纯地在遵循教程的指示，请使用以下代码进行激活：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ospp /insLicID MondoVolume /sethst:kms.coolhub.top /setprt:1688 /act</span><br></pre></td></tr></table></figure>
+
+<p><strong>上述代码可一次性激活 Office, Visio, Project，同时适用 Win 7&#x2F;8，能使用 Office 的所有功能。</strong></p>
+<p>如果你需要激活以下产品，请按照自己的需求选择：</p>
+<h5 id="Office-LTSC-2021-Visio-LTSC-2021-Project-2021"><a href="#Office-LTSC-2021-Visio-LTSC-2021-Project-2021" class="headerlink" title="Office LTSC 2021, Visio LTSC 2021, Project 2021"></a>Office LTSC 2021, Visio LTSC 2021, Project 2021</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ospp /insLicID ProPlus2021Volume /sethst:kms.coolhub.top /setprt:1688 /act</span><br><span class="line">ospp /insLicID VisioPro2021Volume /sethst:kms.coolhub.top /setprt:1688 /act</span><br><span class="line">ospp /insLicID ProjectPro2021Volume /sethst:kms.coolhub.top /setprt:1688 /act</span><br></pre></td></tr></table></figure>
+
+<h5 id="Office-Visio-Project-2019"><a href="#Office-Visio-Project-2019" class="headerlink" title="Office, Visio, Project 2019"></a>Office, Visio, Project 2019</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ospp /insLicID ProPlus2019Volume /sethst:kms.coolhub.top /setprt:1688 /act</span><br><span class="line">ospp /insLicID VisioPro2019Volume /sethst:kms.coolhub.top /setprt:1688 /act</span><br><span class="line">ospp /insLicID ProjectPro2019Volume /sethst:kms.coolhub.top /setprt:1688 /act</span><br></pre></td></tr></table></figure>
+
+<h5 id="Office-Visio-Project-2016"><a href="#Office-Visio-Project-2016" class="headerlink" title="Office, Visio, Project 2016"></a>Office, Visio, Project 2016</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ospp /insLicID ProPlusVolume /sethst:kms.coolhub.top /setprt:1688 /act</span><br><span class="line">ospp /insLicID VisioProXVolume /sethst:kms.coolhub.top /setprt:1688 /act</span><br><span class="line">ospp /insLicID ProjectProXVolume /sethst:kms.coolhub.top /setprt:1688 /act</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用-Office-Tool-Plus-手动激活-Office"><a href="#使用-Office-Tool-Plus-手动激活-Office" class="headerlink" title="使用 Office Tool Plus 手动激活 Office"></a>使用 Office Tool Plus 手动激活 Office</h2><p>请优先使用自动激活，避免你遇到问题又不会解决。</p>
+<p>手动激活步骤：</p>
+<ol>
+<li>**安装 Office 批量许可证 (Volume)**，无论如何，这里你都要选批量许可证。</li>
+<li>设置一个 KMS 主机地址（可以设置端口为 1688）并保存设置。</li>
+<li>点击激活按钮，等待激活完成。</li>
+</ol>
+<h3 id="离线激活-Office"><a href="#离线激活-Office" class="headerlink" title="离线激活 Office"></a>离线激活 Office</h3><p>离线激活有两种办法：</p>
+<h5 id="电话激活，需要有效密钥"><a href="#电话激活，需要有效密钥" class="headerlink" title="电话激活，需要有效密钥"></a>电话激活，需要有效密钥</h5><p>密钥的话当然是要自己找啦，我怎么可能会有呢？</p>
+<p>找到密钥后，安装密钥，如果提示找不到许可证 SKU ID，先安装对应的许可证然后继续。</p>
+<p>然后在下拉菜单中找到「获取安装 ID」，然后拿着你的安装 ID 去获取确认 ID.</p>
+<p>然后再通过「安装确认 ID」激活 Office，这东西成败与否我不管的啊（逃）。</p>
+<h5 id="KMS-工具激活"><a href="#KMS-工具激活" class="headerlink" title="KMS 工具激活"></a>KMS 工具激活</h5><p>KMS 工具容易被封杀，使用需要自己考虑以及承担可能的后果，在此推荐两个激活工具：</p>
+<p>HEU-KMS-Activator，微信关注「<a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzA3Nzg3NjYxOQ==">知彼而知己</a>」查看历史文章获取最新版本以及下载链接。</p>
+<p>KMS-VL-ALL: <a href="https://forums.mydigitallife.net/posts/838808/">My Digital Life</a> 或者其对应的 <a href="https://github.com/abbodi1406/KMS_VL_ALL_AIO">GitHub</a>.</p>
+<h3 id="可用的-KMS-列表"><a href="#可用的-KMS-列表" class="headerlink" title="可用的 KMS 列表"></a>可用的 KMS 列表</h3><p>如果你正在用的 KMS 失效了，更换 KMS 主机并保存设置即可，无需重新安装许可证。</p>
+<p>点击<a href="https://www.coolhub.top/tech-articles/kms_list.html">查看 KMS 主机实时状态</a>列表。</p>
+<h3 id="高校正版化激活"><a href="#高校正版化激活" class="headerlink" title="高校正版化激活"></a>高校正版化激活</h3><p>高校的正版化激活只供学校的师生使用，如果你不是，那你将会没有访问权限。</p>
+<p>有的大学已购买 Office 正版授权，一般情况下，师生也能从学校的软件中心找到使用方法等。</p>
+<p>Office Tool Plus 同样支持使用此类 KMS 进行操作，步骤和手动激活说的一样，换个地址就行了。</p>
+<p>如果师生目前不在校园网内，可能需要使用学校提供的 VPN 连接后才可正常激活。</p>
+<p>下列地址均由网友提供，如有错误或新补充，可在评论区留言。</p>
+<h3 id="高校-KMS-主机地址（已认证会带-√）"><a href="#高校-KMS-主机地址（已认证会带-√）" class="headerlink" title="高校 KMS 主机地址（已认证会带 √）"></a>高校 KMS 主机地址（已认证会带 √）</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">北京大学 (√)：kms.pku.edu.cn</span><br><span class="line">清华大学 (√)：kms.cic.tsinghua.edu.cn</span><br><span class="line">复旦大学：mvls.fudan.edu.cn</span><br><span class="line">同济大学：kms.tongji.edu.cn</span><br><span class="line">苏州大学：kms.suda.edu.cn</span><br><span class="line">中山大学：kms.sysu.edu.cn</span><br><span class="line">华东理工大学 (√)：kms.ecust.edu.cn</span><br><span class="line">华北电力大学：202.204.74.218</span><br><span class="line">华南理工大学 (√)：act.msweb.scut.edu.cn</span><br><span class="line">南安普顿大学：kms.soton.ac.uk</span><br><span class="line">上海交通大学 (√)：kms.sjtu.edu.cn</span><br><span class="line">上海财经大学：kms.shufe.edu.cn</span><br><span class="line">上海师范大学：mskms.shnu.edu.cn</span><br><span class="line">上海海事大学：kms.shmtu.edu.cn</span><br><span class="line">武汉理工大学：kms.whut.edu.cn</span><br><span class="line">河南科技大学（√，需搭配特定软件使用）：kms.haust.edu.cn</span><br><span class="line">南京航空航天大学 (√)：kms.nuaa.edu.cn</span><br><span class="line">上海第二工业大学：kms.sspu.edu.cn</span><br><span class="line">中国科学技术大学：kms.ustc.edu.cn</span><br></pre></td></tr></table></figure>
+<h3 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h3><p>如果本文内容有误或者有任何疑问，欢迎留言一起讨论。<br>如果您觉得这篇文章对您有用的话，别忘了点个赞哦！<br>坐等屏幕前的大帅哥、小姐姐打赏个鸡腿 :happy</p>
+]]></content>
+      <tags>
+        <tag>Office</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>继上一期解决github上的图片无法显示的问题</title>
+    <url>/2022/08/21/%E7%BB%A7%E4%B8%8A%E4%B8%80%E6%9C%9F%E8%A7%A3%E5%86%B3github%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>​      <a href="https://movejian.github.io/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/">继上篇github图床问题</a>无法正常显示，但在<strong>github</strong>上看到正常上传，连接也并非错误，百度了一下说什么<strong>DNS</strong>被污染了。解决方法是修改<strong>hosts</strong>文件或者修改<strong>DNS</strong>。</p>
+<p>​      首先，打开<a href="https://ping.eu/nslookup">域名解析</a>网站：<a href="https://ping.eu/nslookup">https://ping.eu/nslookup</a><br>然后输入raw.githubusercontent.com如下图：</p>
+<p><img src="https://movejian.github.io/images/20220821/5.png"></p>
+<span id="more"></span>
+<p>​      我们得到图床所用域名解析到的IP(上图红框中的地址)。</p>
+<ul>
+<li>最后打开本机的<strong>host</strong>文件，其路径如下：<br><code>C:\Windows\System32\drivers\etc\hosts</code>, 然后添加如下内容(上图红框中的地址)：</li>
+</ul>
+<p><img src="https://movejian.github.io/images/20220821/6.png"></p>
+<ul>
+<li>打开<strong>CMD</strong>输入命令<code>ipconfig /flushdns</code>刷新<strong>DNS</strong>缓存,再次输入<code>ipconfig/displaydns</code></li>
+</ul>
+<p>​    如果你的<strong>hosts</strong>的文件不见了,可以通过文件设置显示系统隐藏文件来找到，依然找不到，可能是被误删了，网上有很多是通过新建文本文档解决。也可以通过下面这个命令来生成<strong>hosts</strong>文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for /f %P in (&#x27;dir %windir%\WinSxS\hosts /b /s&#x27;) do copy %P %windir%\System32\drivers\etc &amp; echo %P &amp; Notepad %P</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>注意</strong>一定要使用管理员身份输入此命令。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>图床</tag>
+        <tag>问题解决</tag>
       </tags>
   </entry>
   <entry>
@@ -1813,37 +1843,6 @@
       </tags>
   </entry>
   <entry>
-    <title>祖玛阁全地图走法汇总</title>
-    <url>/2022/10/03/%E7%A5%96%E7%8E%9B%E9%98%81%E5%85%A8%E5%9C%B0%E5%9B%BE%E8%B5%B0%E6%B3%95%E6%B1%87%E6%80%BB/</url>
-    <content><![CDATA[<p>在传奇游戏中祖玛阁是一个迷宫式的地图，玩家需要走出正确的进行路线才能前往下一层，每一个不同的走法都可能抵达不同的地点。熟悉走法的玩家来说这就是一个高效的练级圣地，对于不熟悉的玩家来说纵膈总共108个房间的祖玛阁怎么走?是最困扰玩家的问题之一。</p>
-<span id="more"></span>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210031640196.jpeg" alt="img"></p>
-<p>祖玛阁怎么走</p>
-<p>祖玛阁五层到祖玛阁六层：左、上、上、上、右;</p>
-<p>祖玛阁六层到祖玛阁五层：上、上、上、上、上、下;</p>
-<p>祖玛阁五层到祖玛阁药店：右、左;</p>
-<p>祖玛阁六层到祖玛阁药店：左、左、上、左;</p>
-<p>祖玛阁药店到祖玛阁五层：左、左、左、左、上、上、上、下;</p>
-<p>祖玛阁药店到祖玛阁六层：右、右、左、右、右;</p>
-<p>祖玛阁七层到祖玛阁药店：上、左、左、左、上、左;</p>
-<p>祖玛阁药店到祖玛阁五层：左、左、左、左、上、上、上、下;</p>
-<p>祖玛阁药店到祖玛阁七层：上、下、下、上、下、上、下、上、右;</p>
-<p>祖玛阁五层到祖玛阁七层：左、上、上、上、右;</p>
-<p>祖玛七层到祖玛阁五层：上、上、上、上、上、下</p>
-<p>祖玛阁中任意房间都可以到祖玛阁药店，一直往左走，直到看见有2个卫士的房间后，再向上走，再向左走。如果还是没有看见药店，重复这种走法，最多3次即可抵达祖玛阁药店。</p>
-<p>以上就是本站为玩家带来的祖玛阁走法攻略，希望能对不会走祖玛阁的玩家提供帮助！</p>
-<p>再给玩家们上一张坐标地图</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210031704767.webp"></p>
-]]></content>
-      <categories>
-        <category>游戏</category>
-        <category>传奇</category>
-      </categories>
-      <tags>
-        <tag>传奇</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>程序员的青春饭</title>
     <url>/2022/10/24/%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E9%9D%92%E6%98%A5%E9%A5%AD/</url>
     <content><![CDATA[<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210242036293.png" alt="img"></p>
@@ -1864,36 +1863,6 @@
 ]]></content>
       <tags>
         <tag>随笔</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>继上一期解决github上的图片无法显示的问题</title>
-    <url>/2022/08/21/%E7%BB%A7%E4%B8%8A%E4%B8%80%E6%9C%9F%E8%A7%A3%E5%86%B3github%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>​      <a href="https://movejian.github.io/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/">继上篇github图床问题</a>无法正常显示，但在<strong>github</strong>上看到正常上传，连接也并非错误，百度了一下说什么<strong>DNS</strong>被污染了。解决方法是修改<strong>hosts</strong>文件或者修改<strong>DNS</strong>。</p>
-<p>​      首先，打开<a href="https://ping.eu/nslookup">域名解析</a>网站：<a href="https://ping.eu/nslookup">https://ping.eu/nslookup</a><br>然后输入raw.githubusercontent.com如下图：</p>
-<p><img src="https://movejian.github.io/images/20220821/5.png"></p>
-<span id="more"></span>
-<p>​      我们得到图床所用域名解析到的IP(上图红框中的地址)。</p>
-<ul>
-<li>最后打开本机的<strong>host</strong>文件，其路径如下：<br><code>C:\Windows\System32\drivers\etc\hosts</code>, 然后添加如下内容(上图红框中的地址)：</li>
-</ul>
-<p><img src="https://movejian.github.io/images/20220821/6.png"></p>
-<ul>
-<li>打开<strong>CMD</strong>输入命令<code>ipconfig /flushdns</code>刷新<strong>DNS</strong>缓存,再次输入<code>ipconfig/displaydns</code></li>
-</ul>
-<p>​    如果你的<strong>hosts</strong>的文件不见了,可以通过文件设置显示系统隐藏文件来找到，依然找不到，可能是被误删了，网上有很多是通过新建文本文档解决。也可以通过下面这个命令来生成<strong>hosts</strong>文件。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for /f %P in (&#x27;dir %windir%\WinSxS\hosts /b /s&#x27;) do copy %P %windir%\System32\drivers\etc &amp; echo %P &amp; Notepad %P</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><strong>注意</strong>一定要使用管理员身份输入此命令。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>图床</tag>
-        <tag>问题解决</tag>
       </tags>
   </entry>
   <entry>
@@ -1960,6 +1929,37 @@
       </categories>
       <tags>
         <tag>技术</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>祖玛阁全地图走法汇总</title>
+    <url>/2022/10/03/%E7%A5%96%E7%8E%9B%E9%98%81%E5%85%A8%E5%9C%B0%E5%9B%BE%E8%B5%B0%E6%B3%95%E6%B1%87%E6%80%BB/</url>
+    <content><![CDATA[<p>在传奇游戏中祖玛阁是一个迷宫式的地图，玩家需要走出正确的进行路线才能前往下一层，每一个不同的走法都可能抵达不同的地点。熟悉走法的玩家来说这就是一个高效的练级圣地，对于不熟悉的玩家来说纵膈总共108个房间的祖玛阁怎么走?是最困扰玩家的问题之一。</p>
+<span id="more"></span>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210031640196.jpeg" alt="img"></p>
+<p>祖玛阁怎么走</p>
+<p>祖玛阁五层到祖玛阁六层：左、上、上、上、右;</p>
+<p>祖玛阁六层到祖玛阁五层：上、上、上、上、上、下;</p>
+<p>祖玛阁五层到祖玛阁药店：右、左;</p>
+<p>祖玛阁六层到祖玛阁药店：左、左、上、左;</p>
+<p>祖玛阁药店到祖玛阁五层：左、左、左、左、上、上、上、下;</p>
+<p>祖玛阁药店到祖玛阁六层：右、右、左、右、右;</p>
+<p>祖玛阁七层到祖玛阁药店：上、左、左、左、上、左;</p>
+<p>祖玛阁药店到祖玛阁五层：左、左、左、左、上、上、上、下;</p>
+<p>祖玛阁药店到祖玛阁七层：上、下、下、上、下、上、下、上、右;</p>
+<p>祖玛阁五层到祖玛阁七层：左、上、上、上、右;</p>
+<p>祖玛七层到祖玛阁五层：上、上、上、上、上、下</p>
+<p>祖玛阁中任意房间都可以到祖玛阁药店，一直往左走，直到看见有2个卫士的房间后，再向上走，再向左走。如果还是没有看见药店，重复这种走法，最多3次即可抵达祖玛阁药店。</p>
+<p>以上就是本站为玩家带来的祖玛阁走法攻略，希望能对不会走祖玛阁的玩家提供帮助！</p>
+<p>再给玩家们上一张坐标地图</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210031704767.webp"></p>
+]]></content>
+      <categories>
+        <category>游戏</category>
+        <category>传奇</category>
+      </categories>
+      <tags>
+        <tag>传奇</tag>
       </tags>
   </entry>
 </search>
