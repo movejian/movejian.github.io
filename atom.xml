@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-11-21T12:24:56.886Z</updated>
+  <updated>2022-11-21T15:48:05.088Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://example.com/2022/11/21/%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3%E2%80%94Hashcat%E3%80%90RAR%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3%E3%80%91/"/>
     <id>http://example.com/2022/11/21/%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3%E2%80%94Hashcat%E3%80%90RAR%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3%E3%80%91/</id>
     <published>2022-11-21T12:15:34.000Z</published>
-    <updated>2022-11-21T12:24:56.886Z</updated>
+    <updated>2022-11-21T15:48:05.088Z</updated>
     
     
     <summary type="html">&lt;p&gt;一、Hashcat简介&lt;br&gt;hashcat号称世界上最快的密码破解，世界上第一个唯一的基于GPU、CPU规则引擎，免费多GPU（高达128个GPU），多哈希，多操作系统（Linux和Windows本地二进制文件），多平台（OpenCL和CUDA支持），多算法，资源利用率低，基于字典攻击，支持分布式破解等等，hashcat目前支持各类公开算法高达247类，市面上面公开的密码加密算法基本都支持！&lt;/p&gt;</summary>
