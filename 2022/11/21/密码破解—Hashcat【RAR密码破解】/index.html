@@ -11,7 +11,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>继上一期解决github上的图片无法显示的问题 |  如风网络</title>
+      <title>密码破解—Hashcat【RAR密码破解】 |  如风网络</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/favicon.ico" />
@@ -64,7 +64,7 @@ var _hmt = _hmt || [];
     <main class="content on">
       <section class="outer">
   <article
-  id="post-继上一期解决github上的图片无法显示的问题"
+  id="post-密码破解—Hashcat【RAR密码破解】"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -75,7 +75,7 @@ var _hmt = _hmt || [];
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  继上一期解决github上的图片无法显示的问题
+  密码破解—Hashcat【RAR密码破解】
 </h1>
  
 
@@ -83,19 +83,15 @@ var _hmt = _hmt || [];
     </header>
      
     <div class="article-meta">
-      <a href="/2022/08/21/%E7%BB%A7%E4%B8%8A%E4%B8%80%E6%9C%9F%E8%A7%A3%E5%86%B3github%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/" class="article-date">
-  <time datetime="2022-08-20T19:48:33.000Z" itemprop="datePublished">2022-08-21 03:48:33</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
-  </div>
-  
+      <a href="/2022/11/21/%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3%E2%80%94Hashcat%E3%80%90RAR%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3%E3%80%91/" class="article-date">
+  <time datetime="2022-11-21T12:15:34.000Z" itemprop="datePublished">2022-11-21 20:15:34</time>
+</a>   
 <div class="word_count">
     <span class="post-time">
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">298</span>
+            <span class="post-count">888</span>
         </span>
     </span>
 
@@ -104,7 +100,7 @@ var _hmt = _hmt || [];
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">1 分钟</span>
+            <span class="post-count">3 分钟</span>
         </span>
     </span>
 </div>
@@ -117,25 +113,71 @@ var _hmt = _hmt || [];
   
     <div class="article-entry" itemprop="articleBody">
        
-  <p>​      <a target="_blank" rel="noopener" href="https://movejian.github.io/2022/08/19/vscode%E9%85%8D%E7%BD%AEpicgo%E7%9A%84github%E7%9A%84%E5%9B%BE%E5%BA%8A/">继上篇github图床问题</a>无法正常显示，但在<strong>github</strong>上看到正常上传，连接也并非错误，百度了一下说什么<strong>DNS</strong>被污染了。解决方法是修改<strong>hosts</strong>文件或者修改<strong>DNS</strong>。</p>
-<p>​      首先，打开<a target="_blank" rel="noopener" href="https://ping.eu/nslookup">域名解析</a>网站：<a target="_blank" rel="noopener" href="https://ping.eu/nslookup">https://ping.eu/nslookup</a><br>然后输入raw.githubusercontent.com如下图：</p>
-<p><img src="https://movejian.github.io/images/20220821/5.png"></p>
+  <p>一、Hashcat简介<br>hashcat号称世界上最快的密码破解，世界上第一个唯一的基于GPU、CPU规则引擎，免费多GPU（高达128个GPU），多哈希，多操作系统（Linux和Windows本地二进制文件），多平台（OpenCL和CUDA支持），多算法，资源利用率低，基于字典攻击，支持分布式破解等等，hashcat目前支持各类公开算法高达247类，市面上面公开的密码加密算法基本都支持！</p>
 <span id="more"></span>
-<p>​      我们得到图床所用域名解析到的IP(上图红框中的地址)。</p>
-<ul>
-<li>最后打开本机的<strong>host</strong>文件，其路径如下：<br><code>C:\Windows\System32\drivers\etc\hosts</code>, 然后添加如下内容(上图红框中的地址)：</li>
-</ul>
-<p><img src="https://movejian.github.io/images/20220821/6.png"></p>
-<ul>
-<li><p>打开<strong>CMD</strong>输入命令<code>ipconfig /flushdns</code>刷新<strong>DNS</strong>缓存,再次输入<code>ipconfig/displaydns</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ipconfig /displaydns</span><br><span class="line"></span><br><span class="line">ipconfig /displaydns显示dns缓存</span><br><span class="line"></span><br><span class="line">ipconfig /flushdns 刷新DNS记录</span><br><span class="line"></span><br><span class="line">ipconfig /renew重请从DHCP服务器获得IP</span><br></pre></td></tr></table></figure></li>
-</ul>
-<p>​    如果你的<strong>hosts</strong>的文件不见了,可以通过文件设置显示系统隐藏文件来找到，依然找不到，可能是被误删了，网上有很多是通过新建文本文档解决。也可以通过下面这个命令来生成<strong>hosts</strong>文件。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">for /f %P in (&#x27;dir %windir%\WinSxS\hosts /b /s&#x27;) do copy %P %windir%\System32\drivers\etc &amp; echo %P &amp; Notepad %P</span><br></pre></td></tr></table></figure>
+<p>官网：<a target="_blank" rel="noopener" href="https://hashcat.net/hashcat/">https://hashcat.net/hashcat/</a> </p>
+<p>Wiki：<a target="_blank" rel="noopener" href="https://hashcat.net/wiki/">https://hashcat.net/wiki/</a></p>
+<p>下载地址：<a target="_blank" rel="noopener" href="https://hashcat.net/files/hashcat-6.2.5.7z">https://hashcat.net/files/hashcat-6.2.5.7z</a></p>
+<p>在渗透测试中我们往往会得到很多hash，需要去解密，而一些在线的网站无法解密出来所以我们可以使用hashcat在本地进行密码恢复</p>
+<p>彩虹表：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/bokun-wang/p/3887463.html">https://www.cnblogs.com/bokun-wang/p/3887463.html</a></p>
+<p>​       <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/732d9d960411"> https://www.jianshu.com/p/732d9d960411</a></p>
+<p>二、扫描模式（破解方式） </p>
+<p>![img](D:\Program Files\PicGo\临时储存\1dc893a11c8d4278ab010e132326af8b.png)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">0 | Straight（字典破解）                                 ：基于字典进行破解</span><br><span class="line">1 | Combination（组合破解）                         ：基于多个字典进行破解</span><br><span class="line">3 | Brute-force（掩码暴力破解）                    ：基于掩码设置进行破解</span><br><span class="line">6 | Hybrid Wordlist + Mask（字典 + 掩码破解）</span><br><span class="line">7 | Hybrid Mask + Wordlist（掩码 + 字典破解）</span><br></pre></td></tr></table></figure>
 
-<ul>
-<li><strong>注意</strong>一定要使用管理员身份输入此命令。</li>
-</ul>
+
+
+<p>常见掩码设置</p>
+<p> ![img](D:\Program Files\PicGo\临时储存\b45ed8ae5ecb4e119d988dde23d998ab.png)</p>
+<p>三、常用参数<br>-a：指定要使用的破解模式，其值参考后面对参数。“-a 0” 字典攻击，“-a 1” 组合攻击，“-a 3” 掩码攻击</p>
+<p>-m：指定要破解的hash类型，如果不指定类型，则默认是MD5</p>
+<p>-o：指定破解成功后的hash及所对应的明文密码的存放位置，可以用它把破解成功的hash写到指定的文件中</p>
+<p>–force：忽略破解过程中的警告信息，跑单条hash可能需要加上此选项</p>
+<p>–show：显示已经破解的hash及该hash所对应的明文</p>
+<p>–increment：启用增量破解模式，你可以利用此模式让hashcat在指定的密码长度范围内执行破解过程</p>
+<p>–increment-min：密码最小长度，后面直接等于一个整数即可，配置increment模式一起使用</p>
+<p>–increment-max：密码最大长度，同上–increment-min</p>
+<p>–outfile-format：指定破解结果的输出格式为id，默认是3</p>
+<p>四、破解实例<br>1）数字破解（8位：12345678）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hashcat64.exe -m 0 -a 3 25d55ad283aa400af464c76d713c07ad ?d?d?d?d?d?d?d?d</span><br></pre></td></tr></table></figure>
+
+<p> ![img](D:\Program Files\PicGo\临时储存\611f265e2a964213a359834ecb7a30cf.png)</p>
+<p>2）小写字母破解（6位：abcdef）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hashcat64.exe -m 0 -a 3 e80b5017098950fc58aad83c8c14978 ?|?|?|?|?|?|</span><br></pre></td></tr></table></figure>
+
+<p> ![img](D:\Program Files\PicGo\临时储存\0b7212045994475ea82b39d160cb1104.png)</p>
+<p>3）字母 + 数字破解（8位：1a31fa1c）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hashcat64.exe -a 3 -m 0 --force b54e53e2f21b7260df895bc885ceaa3e --increment --increment-min 1 --increment-max 8 ?h?h?h?h?h?h?h?h</span><br></pre></td></tr></table></figure>
+
+<p>![img](D:\Program Files\PicGo\临时储存\931753d69e8641a0b4d1331cbbce8162.png) </p>
+<p>字典破解</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-a 0：是指字典破解模式</span><br><span class="line">-o：是输出结果到文件中</span><br></pre></td></tr></table></figure>
+
+<p>1、字典破解密码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hashcat64.exe -m 0 -a 0 ./dict/hash.txt ./dict/password.txt -o result.txt</span><br></pre></td></tr></table></figure>
+
+<p> ![img](D:\Program Files\PicGo\临时储存\6fbc8e9c514c40c7aa9b982aa6846adc.png)</p>
+<p>2、破解Windows hash</p>
+<p>![img](D:\Program Files\PicGo\临时储存\ee5739bbcab94499ba0fe0e2180e4a8d.png)</p>
+<p>NT-hash：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hashcat64.exe -a 3 -m 1000 b4814903533072474831d4791b7d4a9c ?|?|?|?d?d?d?s</span><br></pre></td></tr></table></figure>
+
+<p>3、Zip压缩包破解：</p>
+<p>使用zip2john获取密码哈希值</p>
+<p> ![img](D:\Program Files\PicGo\临时储存\5355049300ea4aadbd3a764d5fe47871.png)</p>
+<p>设置hash类型：win-zip扫描模式：掩码模式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hashcat64.exe -m 13600 -a 3 $zip2$*0*3*0*b71633a9a7fc15682a0dad00d17f1a43*2cee*1d*4c55a370878091d08bd637730ae11c1abdcdbcdbe099d14c166826216d*770b0e7ff9bbc5e4149c*$/zip2$ ?d?d?d?d?d?d --show</span><br></pre></td></tr></table></figure>
+
+<p>总结：</p>
+<p>1.john the ripper ：<a target="_blank" rel="noopener" href="https://www.openwall.com/">https://www.openwall.com</a></p>
+<p>命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rar2john.exe 123.rar    (获取hash值)</span><br></pre></td></tr></table></figure>
+
+<p>命令<br>rar2john.exe xxxx.rar    (获取hash值)</p>
+<p>2.hashcat ：<a target="_blank" rel="noopener" href="https://hashcat.net/">https://hashcat.net</a></p>
+<p>命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hashcat.exe -m 13000 -w 4 -a 3 $rar5$16$abb7ce8bab9f25d639093498227aa09c$15$4d38ee3db279154fa08fc6849a80acce$8$ab10d17b2291bf4d -o password.txt </span><br></pre></td></tr></table></figure>
+
  
       <!-- reward -->
       
@@ -206,32 +248,21 @@ var _hmt = _hmt || [];
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2022/08/21/%E7%BB%A7%E4%B8%8A%E4%B8%80%E6%9C%9F%E8%A7%A3%E5%86%B3github%E4%B8%8A%E7%9A%84%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2022/11/21/%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3%E2%80%94Hashcat%E3%80%90RAR%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3%E3%80%91/" alt="微信分享二维码">
     </div>
 </div>
 
 <div id="share-mask"></div>  
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9B%BE%E5%BA%8A/" rel="tag">图床</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/" rel="tag">问题解决</a></li></ul>
-
     </footer>
   </div>
 
    
   <nav class="article-nav">
     
-      <a href="/2022/08/21/Hexo%E5%A6%82%E4%BD%95%E8%BF%81%E7%A7%BB%E5%88%B0%E6%96%B0%E7%94%B5%E8%84%91/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            Hexo如何迁移到新电脑
-          
-        </div>
-      </a>
     
-    
-      <a href="/2022/08/21/%E5%8D%81%E5%B9%B4%E4%B9%8B%E7%BA%A6%EF%BC%8C%E4%B8%80%E4%B8%AA%E4%BA%BA%E7%9A%84%E5%AF%82%E5%AF%9E%EF%BC%8C%E4%B8%80%E7%BE%A4%E4%BA%BA%E7%9A%84%E7%8B%82%E6%AC%A2/" class="article-nav-link">
+      <a href="/2022/11/11/Motrix%E6%98%AF%E4%B8%80%E6%AC%BE%E5%BC%80%E6%BA%90%E5%85%8D%E8%B4%B9%E4%B8%94%E7%95%8C%E9%9D%A2%E9%9D%9E%E5%B8%B8%E6%B8%85%E7%88%BD%E7%AE%80%E7%BA%A6%E7%9A%84%E5%85%A8%E8%83%BD%E5%9E%8B%E4%B8%8B%E8%BD%BD%E8%BD%AF%E4%BB%B6/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">十年之约，一个人的寂寞，一群人的狂欢</div>
+        <div class="article-nav-title">Motrix是一款开源免费且界面非常清爽简约的全能型下载软件</div>
       </a>
     
   </nav>
