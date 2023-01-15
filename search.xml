@@ -90,101 +90,6 @@
       </tags>
   </entry>
   <entry>
-    <title>HOOK微信获取聊天消息</title>
-    <url>/2022/09/21/HOOK%E5%BE%AE%E4%BF%A1%E8%8E%B7%E5%8F%96%E8%81%8A%E5%A4%A9%E6%B6%88%E6%81%AF/</url>
-    <content><![CDATA[<blockquote>
-<div class="wp-block-argon-admonition admonition shadow-sm" style="border-left-color:#660000"><div class="admonition-title" style="background-color:#dd0000"><span>警告</span></div><div class="admonition-body"><font color=red>网络不是法外之地，本篇文章仅供技术交流，相关具体实现过程我将省略！</font></div></div>
-</blockquote>
-<h2 id="获取微信处理消息的函数"><a href="#获取微信处理消息的函数" class="headerlink" title="获取微信处理消息的函数"></a>获取微信处理消息的函数</h2><p>我们可以反复向通过CE搜索消息，获取消息所在的内存地址，然后下硬件写入断点，在栈里找到相关函数，这里你可以自行按上面方法进行搜索。</p>
-<span id="more"></span>
-
-<h2 id="使用MinHook-hook该消息函数"><a href="#使用MinHook-hook该消息函数" class="headerlink" title="使用MinHook hook该消息函数"></a>使用MinHook hook该消息函数</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// Initialize MinHook.</span><br><span class="line">if (MH_Initialize() != MH_OK)</span><br><span class="line">&#123;</span><br><span class="line">return 1;</span><br><span class="line">&#125;</span><br><span class="line">DWORD windllAddress = (DWORD)GetModuleHandle(L&quot;WeChatWin.dll&quot;);</span><br><span class="line">if (windllAddress == 0) &#123;</span><br><span class="line">printf(&quot;Module Address Get Error: 0x%x\n&quot;, windllAddress);</span><br><span class="line">return 0;</span><br><span class="line">&#125;</span><br><span class="line">DWORD ReceiveHookAddress = windllAddress + 0x*****; // 偏移地址请查看下方</span><br><span class="line"> </span><br><span class="line">// Create a hook for MessageBoxW, in disabled state.</span><br><span class="line">if (MH_CreateHook((LPVOID)ReceiveHookAddress, &amp;ReceiveWxMessage,</span><br><span class="line">reinterpret_cast&lt;LPVOID*&gt;(&amp;_receiveMsgFunc)) != MH_OK)</span><br><span class="line">&#123;</span><br><span class="line">printf(&quot;MH_CreateHook Error: 0x%x\n&quot;, ReceiveHookAddress);</span><br><span class="line">return 0;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<h2 id="消息Hook函数"><a href="#消息Hook函数" class="headerlink" title="消息Hook函数"></a>消息Hook函数</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">void ReceiveWxMessage(DWORD r_eax)</span><br><span class="line">&#123;</span><br><span class="line">try</span><br><span class="line">&#123;</span><br><span class="line">// 检查进程是否有权限访问指定的内存块</span><br><span class="line">if (IsBadReadPtr((void*)r_eax, 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgTypeOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgContentOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + WxidOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + GroupMsgSenderOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgSourceOffset), 4)</span><br><span class="line">) &#123;</span><br><span class="line">return;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">// 取出消息内容</span><br><span class="line">LPVOID pContent = *((LPVOID*)(r_eax + MsgContentOffset));</span><br><span class="line"> </span><br><span class="line">// 取出微信ID/群ID</span><br><span class="line">LPVOID pWxid = *((LPVOID*)(r_eax + WxidOffset));</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">if (!wcscmp((wchar_t*)pWxid, L&quot;filehelper&quot;)) &#123;</span><br><span class="line">wprintf(L&quot;Receive Msg\n Wechat ID: %ws \n Content: %ws\n&quot;, (wchar_t*)pWxid, (wchar_t*)pContent);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line">catch (...)</span><br><span class="line">&#123;</span><br><span class="line">OutputDebugStringA(&quot;消息异常&quot;);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<h2 id="Hook效果"><a href="#Hook效果" class="headerlink" title="Hook效果"></a>Hook效果</h2><p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210322614.png"></p>
-<blockquote>
-<p>接收函数具体地址：windllAddress + 0x1086F0;</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>微信</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo如何迁移到新电脑</title>
-    <url>/2022/08/21/Hexo%E5%A6%82%E4%BD%95%E8%BF%81%E7%A7%BB%E5%88%B0%E6%96%B0%E7%94%B5%E8%84%91/</url>
-    <content><![CDATA[<h3 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h3><p>这是曾经发生的事情，自己对于数据备份疏忽，导致Hexo的<code>source</code>丢失，只能重新搭建博客。。。。。</p>
-<p>如何备份后续会更新，一切都是泪。。。。。</p>
-<span id="more"></span> 
-<h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p>迁移到新电脑之后，发现以前的Hexo拉到本地是无法正常使用的，这时候查找资料寻找解决办法</p>
-<p>由于旧电脑操作不当已经被格式化了，所有的源代码数据都已经被清除，所以我现在只能重新搭建博客</p>
-<h3 id="需要做的事情"><a href="#需要做的事情" class="headerlink" title="需要做的事情"></a>需要做的事情</h3><ol>
-<li><p>重新搭建博客</p>
-</li>
-<li><p>做好GIT备份</p>
-</li>
-<li><p>定期同步</p>
-</li>
-</ol>
-<h3 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h3><p>（有source等文件的情况下可以恢复）</p>
-<h4 id="1-GIT上设置秘钥"><a href="#1-GIT上设置秘钥" class="headerlink" title="1. GIT上设置秘钥"></a>1. GIT上设置秘钥</h4><p>  安装git这里就不描述了，安装完成之后，我们在终端执行<code>ssh-keygen -t rsa -C &quot;movejian@qq.com&quot;</code></p>
-<p>然后按三次回车，生成秘钥</p>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line">$ ssh-<span class="attribute">keygen</span> -t rsa -C <span class="string">&quot;xxxx<span class="variable">@qq</span>.com&quot;</span>(你的邮箱地址) Generating public/private rsa key pair. Enter file in which to save the key (/c/Users/xxxxxx/.ssh/id_rsa):</span><br></pre></td></tr></table></figure>
-
-<p>在<code>C:\Users\xxxx.ssh</code>下面，就可以看到秘钥了，<strong>id_rsa</strong>是私钥，千万不能泄露出去，<strong>id_rsa.pub是公钥</strong>，我们需要复制<strong>公钥</strong>里面的内容</p>
-<p>进入<a href="https://github.com/">github</a> ，选择 <code>setting</code></p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/20220821123613.png" alt="github设置"></p>
-<p>选择<code>SSH and GPG keys</code></p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/20220821123713.png" alt="key配置"></p>
-<p>选择<code>New SSH key</code></p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/20220821123810.png" alt="保存你的key到github"></p>
-<p>填写好title, 复制 rsa_public 里面的内容，点击<code>Add</code>，输入密码即可完成秘钥建立</p>
-<h4 id="2-安装node"><a href="#2-安装node" class="headerlink" title="2. 安装node"></a>2. 安装node</h4><p>  在<strong>GIT</strong>设置完成之后，我们下一步是准备好环境进行还原，首先我们需要进入 <a href="https://nodejs.cn/download/">node.js</a>的官网下载对应的安装包，比如下方的中文网站：</p>
-<p> <a href="https://nodejs.cn/download/">node.js</a>官方中文地址：<a href="https://nodejs.cn/download/">https://nodejs.cn/download/</a></p>
-<p>进入网站之后，我们需要下载对应的安装包进行安装，这里建议下LTS的版本。</p>
-<p>安装完node之后，这里不要着急，先检测一下自己是否真的安装好了，使用下面三个命令检测自己是否具备环境。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">node -v</span><br><span class="line"></span><br><span class="line">npm -v</span><br><span class="line"></span><br><span class="line">Git --version</span><br></pre></td></tr></table></figure>
-
-<h4 id="3-安装hexo"><a href="#3-安装hexo" class="headerlink" title="3. 安装hexo"></a>3. 安装hexo</h4><p>新版本的node基本包含了<code>npm</code>这一类的工具，我们也无需手动安装，另外这里也不建议使用<code>cnpm</code>安装，建议直接使用<code>npm</code>安装即可，我们依次敲入下面的命令即可。</p>
-  <figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
-<p>如果你是用的<strong>苹果系统（MAC）</strong>在前面加上<code>sudo</code></p>
-  <figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">sudo npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>  如果mac电脑在操作node命令的时候出现类似permission的字样，多半是没有权限，sudoy一下即可</p>
-</blockquote>
-<p>安装好了之后，这里可以使用如下的命令安装Hexo，同上，如果使用<strong>MAC</strong>电脑在前面加上<code>sudo</code></p>
-<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">npm install -g hexo</span><br></pre></td></tr></table></figure>
-
-<h4 id="4-从GIT把备份拉到本地"><a href="#4-从GIT把备份拉到本地" class="headerlink" title="4. 从GIT把备份拉到本地"></a>4. 从GIT把备份拉到本地</h4><p>  这一个步骤就是使用git clone把之前的文章构建的备份拉到本地，比如这里个人的命令如下。</p>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">git</span> clone -b hexo https://xxxx/hexo</span><br></pre></td></tr></table></figure>
-
-<p>这一步完成之后，在本地有的只是一个对于hexo的基础架构，这时候还是不能执行hexo命令的，我们还需要执行 npm install 把node和hexo的依赖安装到当前的目录，生成对应的node_moudules 文件。</p>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">npm</span> install</span><br></pre></td></tr></table></figure>
-
-<p>安装完成之后，我们就可以快乐的玩耍了。</p>
-<h4 id="5-Hexo基础操作"><a href="#5-Hexo基础操作" class="headerlink" title="5. Hexo基础操作"></a>5. Hexo基础操作</h4><p>好久没有用过了，这里再次回顾一下基础的操作，其实hexo到了最后就只剩下几个操作就可以完成，比如下面的命令，把笔记软件写好的稿子放到hexo生成的文件里面，加一个<code>&lt;!-- more --&gt;</code>标签即可完成一遍笔记的输出，然后部署上去之后自动推送到github和gitee 的分支。</p>
-  <figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">hexo</span> new <span class="string">&#x27;xxx&#x27;</span>//新建一个新的主题</span><br><span class="line">hexo cl</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-
-<p>  个人喜欢使用如下的文章模板：</p>
-  <figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line">title: &#123;&#123; <span class="attribute">title</span> &#125;&#125;</span><br><span class="line">subtitle: <span class="string">&#x27;这个人很懒，不想写副标题&#x27;</span></span><br><span class="line">author: lazytime</span><br><span class="line">url_suffix: random</span><br><span class="line">date: &#123;&#123; <span class="attribute">date</span> &#125;&#125;</span><br><span class="line">tags:</span><br><span class="line">- 无</span><br><span class="line">categories:</span><br><span class="line">- 未分类</span><br><span class="line">keywords: 请输入关键字（英文逗号分隔多个关键字）</span><br><span class="line">description: 请输入描述信息</span><br><span class="line">copyright: <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>  备份还原还是非常快的，中间除了在node的权限上卡了一下，基本上不到半小时既可以在本地快速搭建一个hexo的博客，十分方便。</p>
-<h3 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h3><p>建议每一个人有一个自己的博客，因为你不知道你的云笔记运营商哪一天会出问题，就好比之前的滴滴事件一样，另外注意平时多备份，不要像我一样傻不拉几的把硬盘格式化结果忘了把博客的内容拷出来结果全部要重写。。。。。</p>
-]]></content>
-      <categories>
-        <category>学习</category>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>技术</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hexo迁移备份</title>
     <url>/2022/08/21/Hexo%E8%BF%81%E7%A7%BB%E5%A4%87%E4%BB%BD/</url>
     <content><![CDATA[<h3 id="创建Git分支将Hexo博客迁移到其它电脑"><a href="#创建Git分支将Hexo博客迁移到其它电脑" class="headerlink" title="创建Git分支将Hexo博客迁移到其它电脑"></a>创建Git分支将Hexo博客迁移到其它电脑</h3><h3 id="反省"><a href="#反省" class="headerlink" title="反省"></a>反省</h3><p>有时候就会干些蠢事，换电脑忘记吧旧电脑博客的Hexo博客备份到移动硬盘上，一个格式化啥都没了，导致丢失了所有的博客资料。（博客内容要慢慢补） 一定要养成经常备份的好习惯。。。。。。。。</p>
@@ -380,39 +285,98 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux通过密钥对免密登录</title>
-    <url>/2022/09/21/Linux%E9%80%9A%E8%BF%87%E5%AF%86%E9%92%A5%E5%AF%B9%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/</url>
-    <content><![CDATA[<p>首先，说明一下我们要做的是，跳板机服务器的<code>usera</code>用户免密码登录B服务器的<code>userb</code>用户。<br>我们先使用<code>usera</code>登录跳板服务器</p>
-<blockquote>
-<p>首先生成密钥对如果有则跳过这一步</p>
+    <title>HOOK微信获取聊天消息</title>
+    <url>/2022/09/21/HOOK%E5%BE%AE%E4%BF%A1%E8%8E%B7%E5%8F%96%E8%81%8A%E5%A4%A9%E6%B6%88%E6%81%AF/</url>
+    <content><![CDATA[<blockquote>
+<div class="wp-block-argon-admonition admonition shadow-sm" style="border-left-color:#660000"><div class="admonition-title" style="background-color:#dd0000"><span>警告</span></div><div class="admonition-body"><font color=red>网络不是法外之地，本篇文章仅供技术交流，相关具体实现过程我将省略！</font></div></div>
 </blockquote>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
+<h2 id="获取微信处理消息的函数"><a href="#获取微信处理消息的函数" class="headerlink" title="获取微信处理消息的函数"></a>获取微信处理消息的函数</h2><p>我们可以反复向通过CE搜索消息，获取消息所在的内存地址，然后下硬件写入断点，在栈里找到相关函数，这里你可以自行按上面方法进行搜索。</p>
 <span id="more"></span>
-<p>操作演示</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">[sera@serverA ~]$ ssh-keygen -t rsa  <span class="comment">//使用rsa算法加密</span></span><br><span class="line"><span class="title class_">Generating</span> public/private rsa key pair.</span><br><span class="line"><span class="title class_">Enter</span> file <span class="keyword">in</span> which to save the key (<span class="regexp">/home/u</span>sera/.<span class="property">ssh</span>/id_rsa): <span class="comment">//私钥默认保存路径</span></span><br><span class="line"><span class="title class_">Created</span> directory <span class="string">&#x27;/home/usera/.ssh&#x27;</span>.</span><br><span class="line"><span class="title class_">Enter</span> passphrase (empty <span class="keyword">for</span> no passphrase): <span class="comment">//在这里输入密码如果这里输入密码以后登录需要密钥和密码才能登录这里建议直接回车也就是空</span></span><br><span class="line"><span class="title class_">Enter</span> same passphrase <span class="attr">again</span>:</span><br><span class="line"><span class="title class_">Your</span> identification has been saved <span class="keyword">in</span> /home/usera/.<span class="property">ssh</span>/id_rsa.</span><br><span class="line"><span class="title class_">Your</span> public key has been saved <span class="keyword">in</span> /home/usera/.<span class="property">ssh</span>/id_rsa.<span class="property">pub</span>. <span class="comment">//公钥保存路径</span></span><br><span class="line"><span class="title class_">The</span> key fingerprint <span class="attr">is</span>:</span><br><span class="line"><span class="number">39</span>:<span class="attr">f2</span>:<span class="attr">fc</span>:<span class="number">70</span>:<span class="attr">ef</span>:<span class="attr">e9</span>:<span class="attr">bd</span>:<span class="number">05</span>:<span class="number">40</span>:6<span class="attr">e</span>:<span class="number">64</span>:<span class="attr">b0</span>:<span class="number">99</span>:<span class="number">56</span>:6<span class="attr">e</span>:<span class="number">01</span> usera@serverA</span><br><span class="line"><span class="title class_">The</span> key<span class="string">&#x27;s randomart image is:</span></span><br><span class="line"><span class="string">+--[ RSA 2048]----+</span></span><br><span class="line"><span class="string">| Eo* |</span></span><br><span class="line"><span class="string">| @ . |</span></span><br><span class="line"><span class="string">| = * |</span></span><br><span class="line"><span class="string">| o o . |</span></span><br><span class="line"><span class="string">| . S . |</span></span><br><span class="line"><span class="string">| + . . |</span></span><br><span class="line"><span class="string">| + . .|</span></span><br><span class="line"><span class="string">| + . o . |</span></span><br><span class="line"><span class="string">| .o= o. |</span></span><br><span class="line"><span class="string">+-----------------+</span></span><br></pre></td></tr></table></figure>
 
-<p>以下是截图提示</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210216196.png"></p>
+<h2 id="使用MinHook-hook该消息函数"><a href="#使用MinHook-hook该消息函数" class="headerlink" title="使用MinHook hook该消息函数"></a>使用MinHook hook该消息函数</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// Initialize MinHook.</span><br><span class="line">if (MH_Initialize() != MH_OK)</span><br><span class="line">&#123;</span><br><span class="line">return 1;</span><br><span class="line">&#125;</span><br><span class="line">DWORD windllAddress = (DWORD)GetModuleHandle(L&quot;WeChatWin.dll&quot;);</span><br><span class="line">if (windllAddress == 0) &#123;</span><br><span class="line">printf(&quot;Module Address Get Error: 0x%x\n&quot;, windllAddress);</span><br><span class="line">return 0;</span><br><span class="line">&#125;</span><br><span class="line">DWORD ReceiveHookAddress = windllAddress + 0x*****; // 偏移地址请查看下方</span><br><span class="line"> </span><br><span class="line">// Create a hook for MessageBoxW, in disabled state.</span><br><span class="line">if (MH_CreateHook((LPVOID)ReceiveHookAddress, &amp;ReceiveWxMessage,</span><br><span class="line">reinterpret_cast&lt;LPVOID*&gt;(&amp;_receiveMsgFunc)) != MH_OK)</span><br><span class="line">&#123;</span><br><span class="line">printf(&quot;MH_CreateHook Error: 0x%x\n&quot;, ReceiveHookAddress);</span><br><span class="line">return 0;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h2 id="消息Hook函数"><a href="#消息Hook函数" class="headerlink" title="消息Hook函数"></a>消息Hook函数</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">void ReceiveWxMessage(DWORD r_eax)</span><br><span class="line">&#123;</span><br><span class="line">try</span><br><span class="line">&#123;</span><br><span class="line">// 检查进程是否有权限访问指定的内存块</span><br><span class="line">if (IsBadReadPtr((void*)r_eax, 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgTypeOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgContentOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + WxidOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + GroupMsgSenderOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgSourceOffset), 4)</span><br><span class="line">) &#123;</span><br><span class="line">return;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">// 取出消息内容</span><br><span class="line">LPVOID pContent = *((LPVOID*)(r_eax + MsgContentOffset));</span><br><span class="line"> </span><br><span class="line">// 取出微信ID/群ID</span><br><span class="line">LPVOID pWxid = *((LPVOID*)(r_eax + WxidOffset));</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">if (!wcscmp((wchar_t*)pWxid, L&quot;filehelper&quot;)) &#123;</span><br><span class="line">wprintf(L&quot;Receive Msg\n Wechat ID: %ws \n Content: %ws\n&quot;, (wchar_t*)pWxid, (wchar_t*)pContent);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line">catch (...)</span><br><span class="line">&#123;</span><br><span class="line">OutputDebugStringA(&quot;消息异常&quot;);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h2 id="Hook效果"><a href="#Hook效果" class="headerlink" title="Hook效果"></a>Hook效果</h2><p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210322614.png"></p>
 <blockquote>
-<p>id_rsa是私钥，id_rsa.pub是公钥公钥在服务器私钥在自己手上</p>
+<p>接收函数具体地址：windllAddress + 0x1086F0;</p>
 </blockquote>
-<p>此时会在<code>/home/usera/.ssh</code>目录下生成密钥对我们使用<code>ls</code>查看一下</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">root@<span class="attr">vultr</span>:~#  ls -la .<span class="property">ssh</span></span><br><span class="line">total <span class="number">16</span></span><br><span class="line">drwx------ <span class="number">2</span> root root <span class="number">4096</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> .</span><br><span class="line">drwx------ <span class="number">5</span> root root <span class="number">4096</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">00</span> ..</span><br><span class="line">-rw------- <span class="number">1</span> root root <span class="number">1675</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> id_rsa</span><br><span class="line">-rw-r--r-- <span class="number">1</span> root root  <span class="number">398</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> id_rsa.<span class="property">pub</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>微信</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo如何迁移到新电脑</title>
+    <url>/2022/08/21/Hexo%E5%A6%82%E4%BD%95%E8%BF%81%E7%A7%BB%E5%88%B0%E6%96%B0%E7%94%B5%E8%84%91/</url>
+    <content><![CDATA[<h3 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h3><p>这是曾经发生的事情，自己对于数据备份疏忽，导致Hexo的<code>source</code>丢失，只能重新搭建博客。。。。。</p>
+<p>如何备份后续会更新，一切都是泪。。。。。</p>
+<span id="more"></span> 
+<h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p>迁移到新电脑之后，发现以前的Hexo拉到本地是无法正常使用的，这时候查找资料寻找解决办法</p>
+<p>由于旧电脑操作不当已经被格式化了，所有的源代码数据都已经被清除，所以我现在只能重新搭建博客</p>
+<h3 id="需要做的事情"><a href="#需要做的事情" class="headerlink" title="需要做的事情"></a>需要做的事情</h3><ol>
+<li><p>重新搭建博客</p>
+</li>
+<li><p>做好GIT备份</p>
+</li>
+<li><p>定期同步</p>
+</li>
+</ol>
+<h3 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h3><p>（有source等文件的情况下可以恢复）</p>
+<h4 id="1-GIT上设置秘钥"><a href="#1-GIT上设置秘钥" class="headerlink" title="1. GIT上设置秘钥"></a>1. GIT上设置秘钥</h4><p>  安装git这里就不描述了，安装完成之后，我们在终端执行<code>ssh-keygen -t rsa -C &quot;movejian@qq.com&quot;</code></p>
+<p>然后按三次回车，生成秘钥</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line">$ ssh-<span class="attribute">keygen</span> -t rsa -C <span class="string">&quot;xxxx<span class="variable">@qq</span>.com&quot;</span>(你的邮箱地址) Generating public/private rsa key pair. Enter file in which to save the key (/c/Users/xxxxxx/.ssh/id_rsa):</span><br></pre></td></tr></table></figure>
 
-<p>然后将公钥上传到需要登录的服务器，并以<code>userb</code>用户登录<br>至于上传方式可以用<code>scp</code>以及<code>sz</code>命令这里就介绍了<br>可以参考这篇<a href="https://shagain.club/index.php/archives/111/">文章</a></p>
+<p>在<code>C:\Users\xxxx.ssh</code>下面，就可以看到秘钥了，<strong>id_rsa</strong>是私钥，千万不能泄露出去，<strong>id_rsa.pub是公钥</strong>，我们需要复制<strong>公钥</strong>里面的内容</p>
+<p>进入<a href="https://github.com/">github</a> ，选择 <code>setting</code></p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/20220821123613.png" alt="github设置"></p>
+<p>选择<code>SSH and GPG keys</code></p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/20220821123713.png" alt="key配置"></p>
+<p>选择<code>New SSH key</code></p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/20220821123810.png" alt="保存你的key到github"></p>
+<p>填写好title, 复制 rsa_public 里面的内容，点击<code>Add</code>，输入密码即可完成秘钥建立</p>
+<h4 id="2-安装node"><a href="#2-安装node" class="headerlink" title="2. 安装node"></a>2. 安装node</h4><p>  在<strong>GIT</strong>设置完成之后，我们下一步是准备好环境进行还原，首先我们需要进入 <a href="https://nodejs.cn/download/">node.js</a>的官网下载对应的安装包，比如下方的中文网站：</p>
+<p> <a href="https://nodejs.cn/download/">node.js</a>官方中文地址：<a href="https://nodejs.cn/download/">https://nodejs.cn/download/</a></p>
+<p>进入网站之后，我们需要下载对应的安装包进行安装，这里建议下LTS的版本。</p>
+<p>安装完node之后，这里不要着急，先检测一下自己是否真的安装好了，使用下面三个命令检测自己是否具备环境。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">node -v</span><br><span class="line"></span><br><span class="line">npm -v</span><br><span class="line"></span><br><span class="line">Git --version</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-安装hexo"><a href="#3-安装hexo" class="headerlink" title="3. 安装hexo"></a>3. 安装hexo</h4><p>新版本的node基本包含了<code>npm</code>这一类的工具，我们也无需手动安装，另外这里也不建议使用<code>cnpm</code>安装，建议直接使用<code>npm</code>安装即可，我们依次敲入下面的命令即可。</p>
+  <figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+<p>如果你是用的<strong>苹果系统（MAC）</strong>在前面加上<code>sudo</code></p>
+  <figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">sudo npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+
 <blockquote>
-<p>上传到用户目录下的.ssh文件夹下<code>authorized_keys</code>这个文件是用来存放公钥内容的我们使用<code>cat</code>把公钥追加到<code>authorized_keys</code>这个文件就好了</p>
+<p>  如果mac电脑在操作node命令的时候出现类似permission的字样，多半是没有权限，sudoy一下即可</p>
 </blockquote>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">cat id_rsa.<span class="property">pub</span> &gt;&gt; ~<span class="regexp">/.ssh/</span>authorized_keys    <span class="comment">//cat 公钥路径 &gt;&gt; ~/.ssh/authorized_keys</span></span><br></pre></td></tr></table></figure>
+<p>安装好了之后，这里可以使用如下的命令安装Hexo，同上，如果使用<strong>MAC</strong>电脑在前面加上<code>sudo</code></p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">npm install -g hexo</span><br></pre></td></tr></table></figure>
 
-<p>这样子我们就配置好了<br>另外我们要注意，<code>.ssh</code>目录的权限为<code>700</code>，其下文件<code>authorized_keys</code>和私钥的权限为<code>600</code>。否则会因为权限问题导致无法免密码登录。我们可以看到登陆后会有<code>known_hosts</code>文件生成。</p>
+<h4 id="4-从GIT把备份拉到本地"><a href="#4-从GIT把备份拉到本地" class="headerlink" title="4. 从GIT把备份拉到本地"></a>4. 从GIT把备份拉到本地</h4><p>  这一个步骤就是使用git clone把之前的文章构建的备份拉到本地，比如这里个人的命令如下。</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">git</span> clone -b hexo https://xxxx/hexo</span><br></pre></td></tr></table></figure>
+
+<p>这一步完成之后，在本地有的只是一个对于hexo的基础架构，这时候还是不能执行hexo命令的，我们还需要执行 npm install 把node和hexo的依赖安装到当前的目录，生成对应的node_moudules 文件。</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">npm</span> install</span><br></pre></td></tr></table></figure>
+
+<p>安装完成之后，我们就可以快乐的玩耍了。</p>
+<h4 id="5-Hexo基础操作"><a href="#5-Hexo基础操作" class="headerlink" title="5. Hexo基础操作"></a>5. Hexo基础操作</h4><p>好久没有用过了，这里再次回顾一下基础的操作，其实hexo到了最后就只剩下几个操作就可以完成，比如下面的命令，把笔记软件写好的稿子放到hexo生成的文件里面，加一个<code>&lt;!-- more --&gt;</code>标签即可完成一遍笔记的输出，然后部署上去之后自动推送到github和gitee 的分支。</p>
+  <figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">hexo</span> new <span class="string">&#x27;xxx&#x27;</span>//新建一个新的主题</span><br><span class="line">hexo cl</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<p>  个人喜欢使用如下的文章模板：</p>
+  <figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line">title: &#123;&#123; <span class="attribute">title</span> &#125;&#125;</span><br><span class="line">subtitle: <span class="string">&#x27;这个人很懒，不想写副标题&#x27;</span></span><br><span class="line">author: lazytime</span><br><span class="line">url_suffix: random</span><br><span class="line">date: &#123;&#123; <span class="attribute">date</span> &#125;&#125;</span><br><span class="line">tags:</span><br><span class="line">- 无</span><br><span class="line">categories:</span><br><span class="line">- 未分类</span><br><span class="line">keywords: 请输入关键字（英文逗号分隔多个关键字）</span><br><span class="line">description: 请输入描述信息</span><br><span class="line">copyright: <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>  备份还原还是非常快的，中间除了在node的权限上卡了一下，基本上不到半小时既可以在本地快速搭建一个hexo的博客，十分方便。</p>
+<h3 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h3><p>建议每一个人有一个自己的博客，因为你不知道你的云笔记运营商哪一天会出问题，就好比之前的滴滴事件一样，另外注意平时多备份，不要像我一样傻不拉几的把硬盘格式化结果忘了把博客的内容拷出来结果全部要重写。。。。。</p>
 ]]></content>
       <categories>
         <category>学习</category>
-        <category>Linux</category>
+        <category>Hexo</category>
       </categories>
       <tags>
-        <tag>Linux</tag>
+        <tag>技术</tag>
       </tags>
   </entry>
   <entry>
@@ -467,6 +431,84 @@
       <tags>
         <tag>Linux</tag>
         <tag>无线网卡</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Motrix是一款开源免费且界面非常清爽简约的全能型下载软件</title>
+    <url>/2022/11/11/Motrix%E6%98%AF%E4%B8%80%E6%AC%BE%E5%BC%80%E6%BA%90%E5%85%8D%E8%B4%B9%E4%B8%94%E7%95%8C%E9%9D%A2%E9%9D%9E%E5%B8%B8%E6%B8%85%E7%88%BD%E7%AE%80%E7%BA%A6%E7%9A%84%E5%85%A8%E8%83%BD%E5%9E%8B%E4%B8%8B%E8%BD%BD%E8%BD%AF%E4%BB%B6/</url>
+    <content><![CDATA[<p><a href="https://motrix.app/">下载</a>软件有很多选择，网上就介绍过IDM、Folx、Photon、FDM、迅雷等等，一数一大堆。不过正所谓各花入个眼，还是有很多人想寻找不一样的下载工具。</p>
+<p><a href="https://motrix.app/">Motrix</a>是一款开源免费且界面非常清爽简约的全能型下载软件，它跨平台支持 Windows、Mac、Linux三大系统，可以支持下载 HTTP、FTP、BT、磁力链接以及下载百度网盘等资源。如果你用腻了其他工具，不妨试试 Motrix 吧…</p>
+<span id="more"></span>
+<p>清爽简洁的开源下载软件</p>
+<p>作者说：作为一个兴趣使然的<a href="https://github.com/agalwood/Motrix">开发者</a>，本着自己用得舒(折)服(腾)的想法，利用搬砖之余的时间开发了这个桌面版的下载器工具 ——Motrix，可以支持 HTTP、FTP、BT、磁力链接、百度云网盘下载等等，基本能覆盖所有的资源下载需求。Motrix软件界面非常简约清爽，个人认为设计上比较精美，看起来很现代化，总体是追求上手简单以及用得舒服。</p>
+<p>并且软件跨平台界面很统一，在 Windows、macOS、Linux三大平台上都有着一致的使用体验。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202211112345158.jpg" alt="img"></p>
+<p>与大多数同类工具基本一致，<a href="https://motrix.app/">Motrix</a> 也是采用了<a href="http://aria2.github.io/">Aria2</a>作为核心，所以下载速度、多线程等能力与其他工具几乎一致。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202211112345718.jpg" alt="img"></p>
+<p>软件代码基于 Electron + Vue + VueX + Element 等技术编写而来，对开发感兴趣的同学可以参考学习一下。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202211112345734.jpg" alt="img"></p>
+<p>支持百度网盘下载</p>
+<p><a href="https://motrix.app/">Motrix</a> 比较方便的一点是可支持百度网盘下载，它提供了「百度网盘助手」的<a href="https://chrome.google.com/webstore/detail/motrix-webextension/djlkbfdlljbachafjmfomhaciglnmkgj?hl=zh-CN">Chrome</a>浏览器扩展，可以让你通过 <a href="https://motrix.app/">Motrix</a> 直接高速下载百度网盘的资源。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202211112345038.png" alt="img"></p>
+<p>百度网盘扩展安装方法：</p>
+<p>下载百度网盘插件“BaiduExporter.zip”之后，解压到任意目录如 <code>~/Documents/BaiduExporter </code>备用。</p>
+<p>启动Google Chrome，从菜单进入扩展程序管理页；或者地址栏上输入<code>chrome://extensions/</code>进入</p>
+<p>点击右上角的「开发者模式」开关启用开发者模式</p>
+<p>点击「加载已解压的扩展程序」，弹出目录选择框，选择前面解压出来的 <code>~/Documents/BaiduExporter</code>目录。</p>
+<p>确定之后，Chrome浏览器就会弹出桌面通知告诉您安装成功了。</p>
+<p>打开百度网盘网页版，如果页面弹出“初始化成功！”的提示，并且在您的百度网盘网页版界面上还会出现一个「MO.app」的按钮，就说明浏览器扩展安装成功了。</p>
+<p>支持 RPC 添加下载任务 (兼容所有 Aria2 扩展)</p>
+<p>Motrix 默认开放了 <a href="http://aria2.github.io/">Aria2</a> 的 JSON-RPC 支持，可以兼容所有支持 Aria2 的扩展插件或工具。默认的 RPC 端口为 16800，目前暂不支持修改。如果与其他应用的端口冲突，请避免同时使用，不然可能会无法正常使用 Motrix。</p>
+<p>URL: <a href="http://127.0.0.1:16800/jsonrpc%E5%9C%B0%E5%9D%80">http://127.0.0.1:16800/jsonrpc地址</a>: 127.0.0.1 或者 localhost端口: 16800协议: HTTP</p>
+<p>Motrix 下载工具的特性：</p>
+<p>简洁明了的图形操作界面</p>
+<p>支持 BT 种子和磁力链任务</p>
+<p>支持下载百度云盘资源</p>
+<p>最高支持 10 个任务同时下载</p>
+<p>单任务最高支持 64 线程下载</p>
+<p>支持模拟用户代理UA(伪装其他客户端)</p>
+<p>下载完成后通知</p>
+<p>……</p>
+<p>更多特性开发中</p>
+<p>注：macOS 和 Linux 版本使用的是 64 位的 aria2c，Windows 版使用的 32 位的）</p>
+]]></content>
+      <tags>
+        <tag>下载</tag>
+        <tag>工具</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Office用C2R工具在线安装激活</title>
+    <url>/2022/09/27/Office%E7%94%A8C2R%E5%B7%A5%E5%85%B7%E5%9C%A8%E7%BA%BF%E5%AE%89%E8%A3%85%E6%BF%80%E6%B4%BB/</url>
+    <content><![CDATA[<p>C2R工具下载地址：<a href="https://wwt.lanzouw.com/b03pbhjri#52pj">https://wwt.lanzouw.com/b03pbhjri#52pj</a></p>
+<p>以下来自吾爱破解论坛：<br>Win11 22H2 最新版本官网镜像下载地址（来自微软官网免费链接，不同镜像的区别就是包含的版本不同）：<br>百度网盘：<a href="https://pan.baidu.com/s/1zZUVDc0wMdzoBehTfEPobQ?pwd=sy71">https://pan.baidu.com/s/1zZUVDc0wMdzoBehTfEPobQ?pwd=sy71</a><br>提取码:sy71<br>123云盘：<a href="https://www.123pan.com/s/HfxDVv-xZQ7d">https://www.123pan.com/s/HfxDVv-xZQ7d</a> 提取码：BGio<br>TechBench：<a href="https://techbench.betaworld.cn/get.php?id=2360">https://techbench.betaworld.cn/get.php?id=2360</a><br>微软官网：<a href="https://www.microsoft.com/zh-cn/software-download/windows11/">https://www.microsoft.com/zh-cn/software-download/windows11/</a></p>
+<span id="more"></span>
+
+<p>文件信息：<br>文件名：Win11_22H2_Chinese(Simplified)_x64.iso<br>MD5: 506B5563FDA4402E3DCB846927612414<br>SHA1: EDA6B80B5E52567D22C862884D7C987C316AF844<br>CRC32: 6D69527A</p>
+<p>IOS镜像包含版本：家庭版，家庭单语言版，专业版，教育版，专业教育版，专业工作站版（6）</p>
+<p>MVS&#x2F;MSDN镜像下载（来自微软官方MVS&#x2F;MSDN付费订阅，磁力链接推荐用迅雷下载）：<br>简体中文 - 消费者版（这个版本其实就是微软官网的版本，和上面那个版本一样）：<br>zh-cn_windows_11_consumer_editions_version_22h2_x64_dvd_59cfe6ee.iso (5.14 GB)<br>SHA-256: 5D4733AD43EE51B7686B766D1DD691342A8421035E7C9FA0C936B7BABEE0BE4B<br>包含版本：家庭版、家庭单语言版、教育版、专业版、专业教育版、专业工作站版（6）<br>123云盘分流：<a href="https://www.123pan.com/s/HfxDVv-nZQ7d">https://www.123pan.com/s/HfxDVv-nZQ7d</a> 提取码:yVi4<br>百度网盘分流：<a href="https://pan.baidu.com/s/1MQswudl58d-R_UPqQ7lqXg?pwd=u7he">https://pan.baidu.com/s/1MQswudl58d-R_UPqQ7lqXg?pwd=u7he</a> 提取码:u7he<br>天翼云盘分流：<a href="https://cloud.189.cn/web/share?code=vAfIFfi2q2ym">https://cloud.189.cn/web/share?code=vAfIFfi2q2ym</a> 访问码：0bqa</p>
+<p>简体中文 - 商业版（这个是官网没有，要在微软MSDN花钱订阅的版本，和VLSC的商业版是一个版本）：<br>zh-cn_windows_11_business_editions_version_22h2_x64_dvd_914b57a5.iso (5.05 GB)<br>SHA-256: D74D24A00F83E77A189BE6BCB2E23FAD5BABC29F576E810C43282CE683F8B048<br>包含版本：教育版、企业版、专业版、专业教育版、专业工作站版（5）<br>123云盘分流：<a href="https://www.123pan.com/s/HfxDVv-2ZQ7d">https://www.123pan.com/s/HfxDVv-2ZQ7d</a> 提取码:TE1P<br>百度网盘分流：<a href="https://pan.baidu.com/s/1XbN47aPaDdc8VUlc7OXI7w?pwd=m4eg">https://pan.baidu.com/s/1XbN47aPaDdc8VUlc7OXI7w?pwd=m4eg</a> 提取码:m4eg<br>天翼云盘分流：<a href="https://cloud.189.cn/web/share?code=B7FjieMRnEje">https://cloud.189.cn/web/share?code=B7FjieMRnEje</a> 访问码：dkg4</p>
+<p>简体中文 - 家庭中文版（中国特供版本，大部分笔记本出厂自带的就是这个版本，不推荐下载）：<br>Win11_22H2_China_GGK_Chinese(Simplified)_x64.iso (4.88 GB)<br>SHA-256: 3DC5C5F88A7F076EE349BB20DAB4B2C3857BA7A8AE089AA532E9C2634ED8BFD7<br>包含版本：家庭中文版（1）<br>123云盘分流：<a href="https://www.123pan.com/s/HfxDVv-UZQ7d">https://www.123pan.com/s/HfxDVv-UZQ7d</a> 提取码:sS6e<br>百度网盘分流：<a href="https://pan.baidu.com/s/1kNeaeKEMbMfuxGyW3sluUA?pwd=k3du">https://pan.baidu.com/s/1kNeaeKEMbMfuxGyW3sluUA?pwd=k3du</a> 提取码:k3du<br>天翼云盘分流：<a href="https://cloud.189.cn/web/share?code=MJBzyameymqm">https://cloud.189.cn/web/share?code=MJBzyameymqm</a> 访问码：28hg</p>
+<p>繁體中文 - 消費者版（官網也可以下載到）：<br>SHA256：0DA9E7C321CEB12536420F21A716C3240235ED0AF48D71F065EC76AE77A58EDB<br>包含版本：家庭版、家庭單語言版、教育版、專業版、專業教育版、專業工作站版（6）<br>123雲盤分流：<a href="https://www.123pan.com/s/HfxDVv-SZQ7d">https://www.123pan.com/s/HfxDVv-SZQ7d</a> 提取碼:sVTE<br>百度網盤分流：<a href="https://pan.baidu.com/s/13tJmkqBIsi-t1S2-B5EABQ?pwd=wuyu">https://pan.baidu.com/s/13tJmkqBIsi-t1S2-B5EABQ?pwd=wuyu</a> 提取碼:wuyu<br>天翼雲盤分流：<a href="https://cloud.189.cn/web/share?code=IzYrMbMfUJBn">https://cloud.189.cn/web/share?code=IzYrMbMfUJBn</a> 訪問碼：bkk8</p>
+<p>繁體中文 - 商業版（這個版本和VLSC的繁體中文商業版其實是壹個版本，同樣是付費訂閱來的）：<br>SHA-256: 4C691D1C01CCB40275BAF979DB1A9CEC98F7DA8A8DFA59B4D2366EEC76084758<br>包含版本：教育版、企業版、專業版、專業教育版、專業工作站版（5）<br>123雲盤分流：<a href="https://www.123pan.com/s/HfxDVv-lZQ7d">https://www.123pan.com/s/HfxDVv-lZQ7d</a> 提取碼:wkWD<br>百度網盤分流：<a href="https://pan.baidu.com/s/1avGQLrDxjtXdCiuCL-OuGw?pwd=1v4f">https://pan.baidu.com/s/1avGQLrDxjtXdCiuCL-OuGw?pwd=1v4f</a> 提取碼:1v4f<br>天翼雲盤分流：<a href="https://cloud.189.cn/web/share?code=J3ABRz3q6Fvu">https://cloud.189.cn/web/share?code=J3ABRz3q6Fvu</a> 訪問碼：9m6t</p>
+<p>English - Consumer（英文消费者版本，同样可以在官网下载到）：<br>en-us_windows_11_consumer_editions_version_22h2_x64_dvd_e630fafd.iso (5.11 GB)<br>SHA-256: 5C69E6F486BC4BDAE91557DE161008458EAA40D40468C34DBBD9078952108D0A<br>Include Version：Home, Home N, Home Single Language, Education, Education N, Pro, Pro N, Pro Education, Pro Education N, Pro for Workstations, Pro N for Workstations（11）<br>123 Cloud Disk（123云盘）：<a href="https://www.123pan.com/s/HfxDVv-DZQ7d">https://www.123pan.com/s/HfxDVv-DZQ7d</a> Code:7P4U<br>Baidu Netdisk（百度网盘）：<a href="https://pan.baidu.com/s/1o2yeRWHecMsYsO2I2-3Udg?pwd=jrmn">https://pan.baidu.com/s/1o2yeRWHecMsYsO2I2-3Udg?pwd=jrmn</a> Code:jrmn<br>E Cloud（天翼云盘）：<a href="https://cloud.189.cn/web/share?code=jA7NriZFFram">https://cloud.189.cn/web/share?code=jA7NriZFFram</a> Code：td7r</p>
+<p>English - Business（英文商业版本，官网没有的版本）：<br>en-us_windows_11_business_editions_version_22h2_x64_dvd_17a08ce3.iso (5 GB)<br>SHA-256: 6E3A101C6E97D8E68F576DDBCED9BE34CBA949F750DA3C83F7D4791401068C9F<br>Include Version：Education, Education N, Enterprise, Enterprise N, Pro, Pro N, Pro Education, Pro Education N, Pro for Workstations, Pro N for Workstations（10）<br>123 Cloud Disk（123云盘）：<a href="https://www.123pan.com/s/HfxDVv-rZQ7d">https://www.123pan.com/s/HfxDVv-rZQ7d</a> Code:5yCR<br>Baidu Netdisk（百度网盘）：<a href="https://pan.baidu.com/s/1M6HtQJGjkKs7MMw1cIXF2A?pwd=7b4s">https://pan.baidu.com/s/1M6HtQJGjkKs7MMw1cIXF2A?pwd=7b4s</a> Code:7b4s<br>E Cloud（天翼云盘）：<a href="https://cloud.189.cn/web/share?code=NZzmEr7Rfemy">https://cloud.189.cn/web/share?code=NZzmEr7Rfemy</a> Code：y383</p>
+<p>PS：消费者版和商业版的区别就是包含的版本不同，我是比较喜欢商业版，因为商业版包含企业版，这个是功能最全的</p>
+<p>VLSC企业订阅版本（也是微软官方付费订阅的，这个版本与MVS&#x2F;MSDN版本的区别由于微软偷懒不想做两个版本所以没有了，但是这个版本有ARM64，MVS&#x2F;MSDN版目前还没有）：<br>简体中文 - 商业版：<br>123云盘：<a href="https://www.123pan.com/s/HfxDVv-fZQ7d">https://www.123pan.com/s/HfxDVv-fZQ7d</a> 提取码:YZix<br>百度网盘：<a href="https://pan.baidu.com/s/1OEu7MmSDbCa7_NyEbbER8w?pwd=rk65">https://pan.baidu.com/s/1OEu7MmSDbCa7_NyEbbER8w?pwd=rk65</a> 提取码:rk65<br>天翼云盘：<a href="https://cloud.189.cn/t/FJ3mUjf6fQZ3">https://cloud.189.cn/t/FJ3mUjf6fQZ3</a> 访问码:qz88<br>SHA256:D74D24A00F83E77A189BE6BCB2E23FAD5BABC29F576E810C43282CE683F8B048<br>包含版本：教育版、企业版、专业版、专业教育版、专业工作站版（5）</p>
+<p>简体中文 - ARM64版本：<br>123云盘：<a href="https://www.123pan.com/s/HfxDVv-pZQ7d">https://www.123pan.com/s/HfxDVv-pZQ7d</a> 提取码:b91o<br>百度网盘：<a href="https://pan.baidu.com/s/1on1LBzsAaYIeDBQEMQYK0Q?pwd=26tb">https://pan.baidu.com/s/1on1LBzsAaYIeDBQEMQYK0Q?pwd=26tb</a> 提取码:26tb<br>天翼云盘：<a href="https://cloud.189.cn/t/RjAVFjQviqia">https://cloud.189.cn/t/RjAVFjQviqia</a> 访问码:2vfk<br>SHA256:6C308F4139F9938E369BC987CBCC983EC293506AB29C736ABDD8284CEBBC5BF7<br>这个是给MAC和Win平板用的版本</p>
+<p>繁體中文 - 商業版：<br>123雲盤：<a href="https://www.123pan.com/s/HfxDVv-YZQ7d">https://www.123pan.com/s/HfxDVv-YZQ7d</a> 提取碼:PJCH<br>百度網盤：<a href="https://pan.baidu.com/s/1sKhZ-GQtj1ifcJH60EJPEQ?pwd=yhx5">https://pan.baidu.com/s/1sKhZ-GQtj1ifcJH60EJPEQ?pwd=yhx5</a> 提取碼:yhx5<br>天翼雲盤：<a href="https://cloud.189.cn/t/6ZNbmeEJrm6r">https://cloud.189.cn/t/6ZNbmeEJrm6r</a> 訪問碼：cfu7<br>SHA256:4C691D1C01CCB40275BAF979DB1A9CEC98F7DA8A8DFA59B4D2366EEC76084758<br>包含版本：教育版、企業版、專業版、專業教育版、專業工作站版（5）</p>
+<p>繁體中文 - ARM64版：<br>123雲盤：<a href="https://www.123pan.com/s/HfxDVv-GZQ7d">https://www.123pan.com/s/HfxDVv-GZQ7d</a> 提取碼:5Jfi<br>百度網盤：<a href="https://pan.baidu.com/s/1cJOyT1PrrNY_yYlJnr-1sw?pwd=pxwr">https://pan.baidu.com/s/1cJOyT1PrrNY_yYlJnr-1sw?pwd=pxwr</a> 提取碼:pxwr<br>天翼雲盤：<a href="https://cloud.189.cn/t/vI7vqurUjQze">https://cloud.189.cn/t/vI7vqurUjQze</a> 訪問碼:2e8c<br>SHA256:EB721E2F2B08DEDE965E18369926E9F3FD868728EB7A38A0B3909A524D791F88<br>這個是給MAC和Win平闆用的版本</p>
+<p>English - Business：<br>123 Cloud Disk：<a href="https://www.123pan.com/s/HfxDVv-PZQ7d">https://www.123pan.com/s/HfxDVv-PZQ7d</a> Code:oAY5<br>Baidu Netdisk：<a href="https://pan.baidu.com/s/1LN96MZgYf_kMj8TUAx1tyg?pwd=rcmh">https://pan.baidu.com/s/1LN96MZgYf_kMj8TUAx1tyg?pwd=rcmh</a> Code:rcmh<br>E Cloud：<a href="https://cloud.189.cn/t/Iveaeeniqqmm">https://cloud.189.cn/t/Iveaeeniqqmm</a> Code:on3h<br>SHA256:6E3A101C6E97D8E68F576DDBCED9BE34CBA949F750DA3C83F7D4791401068C9F<br>Include Version：Education, Education N, Enterprise, Enterprise N, Pro, Pro N, Pro Education, Pro Education N, Pro for Workstations, Pro N for Workstations（10）</p>
+<p>English - ARM64：<br>123 Cloud Disk：<a href="https://www.123pan.com/s/HfxDVv-XZQ7d">https://www.123pan.com/s/HfxDVv-XZQ7d</a> Code:vCmO<br>Baidu Netdisk：<a href="https://pan.baidu.com/s/1kI9vkK4b1_oeQSA_Uvr5OA?pwd=6ay5">https://pan.baidu.com/s/1kI9vkK4b1_oeQSA_Uvr5OA?pwd=6ay5</a> Code:6ay5<br>E Cloud：<a href="https://cloud.189.cn/t/IZ7N32Jv2URf">https://cloud.189.cn/t/IZ7N32Jv2URf</a> Code:azb8<br>SHA256:180C0E977B960D55DDA73F5D8E0F3094B2E27BD82C459B880CE5F51C3C49216A<br>This is a version for MAC and Win tablets</p>
+<p>Win下载地址：<a href="http://www.songyongzhi.com/">http://www.songyongzhi.com</a></p>
+<p>offcie用office tool puls（很简单的，用上这个就不需要找其他乱七八糟的了)<br><a href="https://otp.landian.vip/zh-cn/">https://otp.landian.vip/zh-cn/</a></p>
+]]></content>
+      <categories>
+        <category>转载</category>
+      </categories>
+      <tags>
+        <tag>Win</tag>
+        <tag>Office</tag>
       </tags>
   </entry>
   <entry>
@@ -668,84 +710,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Motrix是一款开源免费且界面非常清爽简约的全能型下载软件</title>
-    <url>/2022/11/11/Motrix%E6%98%AF%E4%B8%80%E6%AC%BE%E5%BC%80%E6%BA%90%E5%85%8D%E8%B4%B9%E4%B8%94%E7%95%8C%E9%9D%A2%E9%9D%9E%E5%B8%B8%E6%B8%85%E7%88%BD%E7%AE%80%E7%BA%A6%E7%9A%84%E5%85%A8%E8%83%BD%E5%9E%8B%E4%B8%8B%E8%BD%BD%E8%BD%AF%E4%BB%B6/</url>
-    <content><![CDATA[<p><a href="https://motrix.app/">下载</a>软件有很多选择，网上就介绍过IDM、Folx、Photon、FDM、迅雷等等，一数一大堆。不过正所谓各花入个眼，还是有很多人想寻找不一样的下载工具。</p>
-<p><a href="https://motrix.app/">Motrix</a>是一款开源免费且界面非常清爽简约的全能型下载软件，它跨平台支持 Windows、Mac、Linux三大系统，可以支持下载 HTTP、FTP、BT、磁力链接以及下载百度网盘等资源。如果你用腻了其他工具，不妨试试 Motrix 吧…</p>
-<span id="more"></span>
-<p>清爽简洁的开源下载软件</p>
-<p>作者说：作为一个兴趣使然的<a href="https://github.com/agalwood/Motrix">开发者</a>，本着自己用得舒(折)服(腾)的想法，利用搬砖之余的时间开发了这个桌面版的下载器工具 ——Motrix，可以支持 HTTP、FTP、BT、磁力链接、百度云网盘下载等等，基本能覆盖所有的资源下载需求。Motrix软件界面非常简约清爽，个人认为设计上比较精美，看起来很现代化，总体是追求上手简单以及用得舒服。</p>
-<p>并且软件跨平台界面很统一，在 Windows、macOS、Linux三大平台上都有着一致的使用体验。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202211112345158.jpg" alt="img"></p>
-<p>与大多数同类工具基本一致，<a href="https://motrix.app/">Motrix</a> 也是采用了<a href="http://aria2.github.io/">Aria2</a>作为核心，所以下载速度、多线程等能力与其他工具几乎一致。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202211112345718.jpg" alt="img"></p>
-<p>软件代码基于 Electron + Vue + VueX + Element 等技术编写而来，对开发感兴趣的同学可以参考学习一下。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202211112345734.jpg" alt="img"></p>
-<p>支持百度网盘下载</p>
-<p><a href="https://motrix.app/">Motrix</a> 比较方便的一点是可支持百度网盘下载，它提供了「百度网盘助手」的<a href="https://chrome.google.com/webstore/detail/motrix-webextension/djlkbfdlljbachafjmfomhaciglnmkgj?hl=zh-CN">Chrome</a>浏览器扩展，可以让你通过 <a href="https://motrix.app/">Motrix</a> 直接高速下载百度网盘的资源。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202211112345038.png" alt="img"></p>
-<p>百度网盘扩展安装方法：</p>
-<p>下载百度网盘插件“BaiduExporter.zip”之后，解压到任意目录如 <code>~/Documents/BaiduExporter </code>备用。</p>
-<p>启动Google Chrome，从菜单进入扩展程序管理页；或者地址栏上输入<code>chrome://extensions/</code>进入</p>
-<p>点击右上角的「开发者模式」开关启用开发者模式</p>
-<p>点击「加载已解压的扩展程序」，弹出目录选择框，选择前面解压出来的 <code>~/Documents/BaiduExporter</code>目录。</p>
-<p>确定之后，Chrome浏览器就会弹出桌面通知告诉您安装成功了。</p>
-<p>打开百度网盘网页版，如果页面弹出“初始化成功！”的提示，并且在您的百度网盘网页版界面上还会出现一个「MO.app」的按钮，就说明浏览器扩展安装成功了。</p>
-<p>支持 RPC 添加下载任务 (兼容所有 Aria2 扩展)</p>
-<p>Motrix 默认开放了 <a href="http://aria2.github.io/">Aria2</a> 的 JSON-RPC 支持，可以兼容所有支持 Aria2 的扩展插件或工具。默认的 RPC 端口为 16800，目前暂不支持修改。如果与其他应用的端口冲突，请避免同时使用，不然可能会无法正常使用 Motrix。</p>
-<p>URL: <a href="http://127.0.0.1:16800/jsonrpc%E5%9C%B0%E5%9D%80">http://127.0.0.1:16800/jsonrpc地址</a>: 127.0.0.1 或者 localhost端口: 16800协议: HTTP</p>
-<p>Motrix 下载工具的特性：</p>
-<p>简洁明了的图形操作界面</p>
-<p>支持 BT 种子和磁力链任务</p>
-<p>支持下载百度云盘资源</p>
-<p>最高支持 10 个任务同时下载</p>
-<p>单任务最高支持 64 线程下载</p>
-<p>支持模拟用户代理UA(伪装其他客户端)</p>
-<p>下载完成后通知</p>
-<p>……</p>
-<p>更多特性开发中</p>
-<p>注：macOS 和 Linux 版本使用的是 64 位的 aria2c，Windows 版使用的 32 位的）</p>
-]]></content>
-      <tags>
-        <tag>下载</tag>
-        <tag>工具</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Office用C2R工具在线安装激活</title>
-    <url>/2022/09/27/Office%E7%94%A8C2R%E5%B7%A5%E5%85%B7%E5%9C%A8%E7%BA%BF%E5%AE%89%E8%A3%85%E6%BF%80%E6%B4%BB/</url>
-    <content><![CDATA[<p>C2R工具下载地址：<a href="https://wwt.lanzouw.com/b03pbhjri#52pj">https://wwt.lanzouw.com/b03pbhjri#52pj</a></p>
-<p>以下来自吾爱破解论坛：<br>Win11 22H2 最新版本官网镜像下载地址（来自微软官网免费链接，不同镜像的区别就是包含的版本不同）：<br>百度网盘：<a href="https://pan.baidu.com/s/1zZUVDc0wMdzoBehTfEPobQ?pwd=sy71">https://pan.baidu.com/s/1zZUVDc0wMdzoBehTfEPobQ?pwd=sy71</a><br>提取码:sy71<br>123云盘：<a href="https://www.123pan.com/s/HfxDVv-xZQ7d">https://www.123pan.com/s/HfxDVv-xZQ7d</a> 提取码：BGio<br>TechBench：<a href="https://techbench.betaworld.cn/get.php?id=2360">https://techbench.betaworld.cn/get.php?id=2360</a><br>微软官网：<a href="https://www.microsoft.com/zh-cn/software-download/windows11/">https://www.microsoft.com/zh-cn/software-download/windows11/</a></p>
-<span id="more"></span>
-
-<p>文件信息：<br>文件名：Win11_22H2_Chinese(Simplified)_x64.iso<br>MD5: 506B5563FDA4402E3DCB846927612414<br>SHA1: EDA6B80B5E52567D22C862884D7C987C316AF844<br>CRC32: 6D69527A</p>
-<p>IOS镜像包含版本：家庭版，家庭单语言版，专业版，教育版，专业教育版，专业工作站版（6）</p>
-<p>MVS&#x2F;MSDN镜像下载（来自微软官方MVS&#x2F;MSDN付费订阅，磁力链接推荐用迅雷下载）：<br>简体中文 - 消费者版（这个版本其实就是微软官网的版本，和上面那个版本一样）：<br>zh-cn_windows_11_consumer_editions_version_22h2_x64_dvd_59cfe6ee.iso (5.14 GB)<br>SHA-256: 5D4733AD43EE51B7686B766D1DD691342A8421035E7C9FA0C936B7BABEE0BE4B<br>包含版本：家庭版、家庭单语言版、教育版、专业版、专业教育版、专业工作站版（6）<br>123云盘分流：<a href="https://www.123pan.com/s/HfxDVv-nZQ7d">https://www.123pan.com/s/HfxDVv-nZQ7d</a> 提取码:yVi4<br>百度网盘分流：<a href="https://pan.baidu.com/s/1MQswudl58d-R_UPqQ7lqXg?pwd=u7he">https://pan.baidu.com/s/1MQswudl58d-R_UPqQ7lqXg?pwd=u7he</a> 提取码:u7he<br>天翼云盘分流：<a href="https://cloud.189.cn/web/share?code=vAfIFfi2q2ym">https://cloud.189.cn/web/share?code=vAfIFfi2q2ym</a> 访问码：0bqa</p>
-<p>简体中文 - 商业版（这个是官网没有，要在微软MSDN花钱订阅的版本，和VLSC的商业版是一个版本）：<br>zh-cn_windows_11_business_editions_version_22h2_x64_dvd_914b57a5.iso (5.05 GB)<br>SHA-256: D74D24A00F83E77A189BE6BCB2E23FAD5BABC29F576E810C43282CE683F8B048<br>包含版本：教育版、企业版、专业版、专业教育版、专业工作站版（5）<br>123云盘分流：<a href="https://www.123pan.com/s/HfxDVv-2ZQ7d">https://www.123pan.com/s/HfxDVv-2ZQ7d</a> 提取码:TE1P<br>百度网盘分流：<a href="https://pan.baidu.com/s/1XbN47aPaDdc8VUlc7OXI7w?pwd=m4eg">https://pan.baidu.com/s/1XbN47aPaDdc8VUlc7OXI7w?pwd=m4eg</a> 提取码:m4eg<br>天翼云盘分流：<a href="https://cloud.189.cn/web/share?code=B7FjieMRnEje">https://cloud.189.cn/web/share?code=B7FjieMRnEje</a> 访问码：dkg4</p>
-<p>简体中文 - 家庭中文版（中国特供版本，大部分笔记本出厂自带的就是这个版本，不推荐下载）：<br>Win11_22H2_China_GGK_Chinese(Simplified)_x64.iso (4.88 GB)<br>SHA-256: 3DC5C5F88A7F076EE349BB20DAB4B2C3857BA7A8AE089AA532E9C2634ED8BFD7<br>包含版本：家庭中文版（1）<br>123云盘分流：<a href="https://www.123pan.com/s/HfxDVv-UZQ7d">https://www.123pan.com/s/HfxDVv-UZQ7d</a> 提取码:sS6e<br>百度网盘分流：<a href="https://pan.baidu.com/s/1kNeaeKEMbMfuxGyW3sluUA?pwd=k3du">https://pan.baidu.com/s/1kNeaeKEMbMfuxGyW3sluUA?pwd=k3du</a> 提取码:k3du<br>天翼云盘分流：<a href="https://cloud.189.cn/web/share?code=MJBzyameymqm">https://cloud.189.cn/web/share?code=MJBzyameymqm</a> 访问码：28hg</p>
-<p>繁體中文 - 消費者版（官網也可以下載到）：<br>SHA256：0DA9E7C321CEB12536420F21A716C3240235ED0AF48D71F065EC76AE77A58EDB<br>包含版本：家庭版、家庭單語言版、教育版、專業版、專業教育版、專業工作站版（6）<br>123雲盤分流：<a href="https://www.123pan.com/s/HfxDVv-SZQ7d">https://www.123pan.com/s/HfxDVv-SZQ7d</a> 提取碼:sVTE<br>百度網盤分流：<a href="https://pan.baidu.com/s/13tJmkqBIsi-t1S2-B5EABQ?pwd=wuyu">https://pan.baidu.com/s/13tJmkqBIsi-t1S2-B5EABQ?pwd=wuyu</a> 提取碼:wuyu<br>天翼雲盤分流：<a href="https://cloud.189.cn/web/share?code=IzYrMbMfUJBn">https://cloud.189.cn/web/share?code=IzYrMbMfUJBn</a> 訪問碼：bkk8</p>
-<p>繁體中文 - 商業版（這個版本和VLSC的繁體中文商業版其實是壹個版本，同樣是付費訂閱來的）：<br>SHA-256: 4C691D1C01CCB40275BAF979DB1A9CEC98F7DA8A8DFA59B4D2366EEC76084758<br>包含版本：教育版、企業版、專業版、專業教育版、專業工作站版（5）<br>123雲盤分流：<a href="https://www.123pan.com/s/HfxDVv-lZQ7d">https://www.123pan.com/s/HfxDVv-lZQ7d</a> 提取碼:wkWD<br>百度網盤分流：<a href="https://pan.baidu.com/s/1avGQLrDxjtXdCiuCL-OuGw?pwd=1v4f">https://pan.baidu.com/s/1avGQLrDxjtXdCiuCL-OuGw?pwd=1v4f</a> 提取碼:1v4f<br>天翼雲盤分流：<a href="https://cloud.189.cn/web/share?code=J3ABRz3q6Fvu">https://cloud.189.cn/web/share?code=J3ABRz3q6Fvu</a> 訪問碼：9m6t</p>
-<p>English - Consumer（英文消费者版本，同样可以在官网下载到）：<br>en-us_windows_11_consumer_editions_version_22h2_x64_dvd_e630fafd.iso (5.11 GB)<br>SHA-256: 5C69E6F486BC4BDAE91557DE161008458EAA40D40468C34DBBD9078952108D0A<br>Include Version：Home, Home N, Home Single Language, Education, Education N, Pro, Pro N, Pro Education, Pro Education N, Pro for Workstations, Pro N for Workstations（11）<br>123 Cloud Disk（123云盘）：<a href="https://www.123pan.com/s/HfxDVv-DZQ7d">https://www.123pan.com/s/HfxDVv-DZQ7d</a> Code:7P4U<br>Baidu Netdisk（百度网盘）：<a href="https://pan.baidu.com/s/1o2yeRWHecMsYsO2I2-3Udg?pwd=jrmn">https://pan.baidu.com/s/1o2yeRWHecMsYsO2I2-3Udg?pwd=jrmn</a> Code:jrmn<br>E Cloud（天翼云盘）：<a href="https://cloud.189.cn/web/share?code=jA7NriZFFram">https://cloud.189.cn/web/share?code=jA7NriZFFram</a> Code：td7r</p>
-<p>English - Business（英文商业版本，官网没有的版本）：<br>en-us_windows_11_business_editions_version_22h2_x64_dvd_17a08ce3.iso (5 GB)<br>SHA-256: 6E3A101C6E97D8E68F576DDBCED9BE34CBA949F750DA3C83F7D4791401068C9F<br>Include Version：Education, Education N, Enterprise, Enterprise N, Pro, Pro N, Pro Education, Pro Education N, Pro for Workstations, Pro N for Workstations（10）<br>123 Cloud Disk（123云盘）：<a href="https://www.123pan.com/s/HfxDVv-rZQ7d">https://www.123pan.com/s/HfxDVv-rZQ7d</a> Code:5yCR<br>Baidu Netdisk（百度网盘）：<a href="https://pan.baidu.com/s/1M6HtQJGjkKs7MMw1cIXF2A?pwd=7b4s">https://pan.baidu.com/s/1M6HtQJGjkKs7MMw1cIXF2A?pwd=7b4s</a> Code:7b4s<br>E Cloud（天翼云盘）：<a href="https://cloud.189.cn/web/share?code=NZzmEr7Rfemy">https://cloud.189.cn/web/share?code=NZzmEr7Rfemy</a> Code：y383</p>
-<p>PS：消费者版和商业版的区别就是包含的版本不同，我是比较喜欢商业版，因为商业版包含企业版，这个是功能最全的</p>
-<p>VLSC企业订阅版本（也是微软官方付费订阅的，这个版本与MVS&#x2F;MSDN版本的区别由于微软偷懒不想做两个版本所以没有了，但是这个版本有ARM64，MVS&#x2F;MSDN版目前还没有）：<br>简体中文 - 商业版：<br>123云盘：<a href="https://www.123pan.com/s/HfxDVv-fZQ7d">https://www.123pan.com/s/HfxDVv-fZQ7d</a> 提取码:YZix<br>百度网盘：<a href="https://pan.baidu.com/s/1OEu7MmSDbCa7_NyEbbER8w?pwd=rk65">https://pan.baidu.com/s/1OEu7MmSDbCa7_NyEbbER8w?pwd=rk65</a> 提取码:rk65<br>天翼云盘：<a href="https://cloud.189.cn/t/FJ3mUjf6fQZ3">https://cloud.189.cn/t/FJ3mUjf6fQZ3</a> 访问码:qz88<br>SHA256:D74D24A00F83E77A189BE6BCB2E23FAD5BABC29F576E810C43282CE683F8B048<br>包含版本：教育版、企业版、专业版、专业教育版、专业工作站版（5）</p>
-<p>简体中文 - ARM64版本：<br>123云盘：<a href="https://www.123pan.com/s/HfxDVv-pZQ7d">https://www.123pan.com/s/HfxDVv-pZQ7d</a> 提取码:b91o<br>百度网盘：<a href="https://pan.baidu.com/s/1on1LBzsAaYIeDBQEMQYK0Q?pwd=26tb">https://pan.baidu.com/s/1on1LBzsAaYIeDBQEMQYK0Q?pwd=26tb</a> 提取码:26tb<br>天翼云盘：<a href="https://cloud.189.cn/t/RjAVFjQviqia">https://cloud.189.cn/t/RjAVFjQviqia</a> 访问码:2vfk<br>SHA256:6C308F4139F9938E369BC987CBCC983EC293506AB29C736ABDD8284CEBBC5BF7<br>这个是给MAC和Win平板用的版本</p>
-<p>繁體中文 - 商業版：<br>123雲盤：<a href="https://www.123pan.com/s/HfxDVv-YZQ7d">https://www.123pan.com/s/HfxDVv-YZQ7d</a> 提取碼:PJCH<br>百度網盤：<a href="https://pan.baidu.com/s/1sKhZ-GQtj1ifcJH60EJPEQ?pwd=yhx5">https://pan.baidu.com/s/1sKhZ-GQtj1ifcJH60EJPEQ?pwd=yhx5</a> 提取碼:yhx5<br>天翼雲盤：<a href="https://cloud.189.cn/t/6ZNbmeEJrm6r">https://cloud.189.cn/t/6ZNbmeEJrm6r</a> 訪問碼：cfu7<br>SHA256:4C691D1C01CCB40275BAF979DB1A9CEC98F7DA8A8DFA59B4D2366EEC76084758<br>包含版本：教育版、企業版、專業版、專業教育版、專業工作站版（5）</p>
-<p>繁體中文 - ARM64版：<br>123雲盤：<a href="https://www.123pan.com/s/HfxDVv-GZQ7d">https://www.123pan.com/s/HfxDVv-GZQ7d</a> 提取碼:5Jfi<br>百度網盤：<a href="https://pan.baidu.com/s/1cJOyT1PrrNY_yYlJnr-1sw?pwd=pxwr">https://pan.baidu.com/s/1cJOyT1PrrNY_yYlJnr-1sw?pwd=pxwr</a> 提取碼:pxwr<br>天翼雲盤：<a href="https://cloud.189.cn/t/vI7vqurUjQze">https://cloud.189.cn/t/vI7vqurUjQze</a> 訪問碼:2e8c<br>SHA256:EB721E2F2B08DEDE965E18369926E9F3FD868728EB7A38A0B3909A524D791F88<br>這個是給MAC和Win平闆用的版本</p>
-<p>English - Business：<br>123 Cloud Disk：<a href="https://www.123pan.com/s/HfxDVv-PZQ7d">https://www.123pan.com/s/HfxDVv-PZQ7d</a> Code:oAY5<br>Baidu Netdisk：<a href="https://pan.baidu.com/s/1LN96MZgYf_kMj8TUAx1tyg?pwd=rcmh">https://pan.baidu.com/s/1LN96MZgYf_kMj8TUAx1tyg?pwd=rcmh</a> Code:rcmh<br>E Cloud：<a href="https://cloud.189.cn/t/Iveaeeniqqmm">https://cloud.189.cn/t/Iveaeeniqqmm</a> Code:on3h<br>SHA256:6E3A101C6E97D8E68F576DDBCED9BE34CBA949F750DA3C83F7D4791401068C9F<br>Include Version：Education, Education N, Enterprise, Enterprise N, Pro, Pro N, Pro Education, Pro Education N, Pro for Workstations, Pro N for Workstations（10）</p>
-<p>English - ARM64：<br>123 Cloud Disk：<a href="https://www.123pan.com/s/HfxDVv-XZQ7d">https://www.123pan.com/s/HfxDVv-XZQ7d</a> Code:vCmO<br>Baidu Netdisk：<a href="https://pan.baidu.com/s/1kI9vkK4b1_oeQSA_Uvr5OA?pwd=6ay5">https://pan.baidu.com/s/1kI9vkK4b1_oeQSA_Uvr5OA?pwd=6ay5</a> Code:6ay5<br>E Cloud：<a href="https://cloud.189.cn/t/IZ7N32Jv2URf">https://cloud.189.cn/t/IZ7N32Jv2URf</a> Code:azb8<br>SHA256:180C0E977B960D55DDA73F5D8E0F3094B2E27BD82C459B880CE5F51C3C49216A<br>This is a version for MAC and Win tablets</p>
-<p>Win下载地址：<a href="http://www.songyongzhi.com/">http://www.songyongzhi.com</a></p>
-<p>offcie用office tool puls（很简单的，用上这个就不需要找其他乱七八糟的了)<br><a href="https://otp.landian.vip/zh-cn/">https://otp.landian.vip/zh-cn/</a></p>
-]]></content>
-      <categories>
-        <category>转载</category>
-      </categories>
-      <tags>
-        <tag>Win</tag>
-        <tag>Office</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>gpt与mbr分区两者区别</title>
     <url>/2022/10/06/gpt%E4%B8%8Embr%E5%88%86%E5%8C%BA%E4%B8%A4%E8%80%85%E5%8C%BA%E5%88%AB/</url>
     <content><![CDATA[<blockquote>
@@ -770,6 +734,60 @@
       <tags>
         <tag>技术</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Linux通过密钥对免密登录</title>
+    <url>/2022/09/21/Linux%E9%80%9A%E8%BF%87%E5%AF%86%E9%92%A5%E5%AF%B9%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/</url>
+    <content><![CDATA[<p>首先，说明一下我们要做的是，跳板机服务器的<code>usera</code>用户免密码登录B服务器的<code>userb</code>用户。<br>我们先使用<code>usera</code>登录跳板服务器</p>
+<blockquote>
+<p>首先生成密钥对如果有则跳过这一步</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<p>操作演示</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">[sera@serverA ~]$ ssh-keygen -t rsa  <span class="comment">//使用rsa算法加密</span></span><br><span class="line"><span class="title class_">Generating</span> public/private rsa key pair.</span><br><span class="line"><span class="title class_">Enter</span> file <span class="keyword">in</span> which to save the key (<span class="regexp">/home/u</span>sera/.<span class="property">ssh</span>/id_rsa): <span class="comment">//私钥默认保存路径</span></span><br><span class="line"><span class="title class_">Created</span> directory <span class="string">&#x27;/home/usera/.ssh&#x27;</span>.</span><br><span class="line"><span class="title class_">Enter</span> passphrase (empty <span class="keyword">for</span> no passphrase): <span class="comment">//在这里输入密码如果这里输入密码以后登录需要密钥和密码才能登录这里建议直接回车也就是空</span></span><br><span class="line"><span class="title class_">Enter</span> same passphrase <span class="attr">again</span>:</span><br><span class="line"><span class="title class_">Your</span> identification has been saved <span class="keyword">in</span> /home/usera/.<span class="property">ssh</span>/id_rsa.</span><br><span class="line"><span class="title class_">Your</span> public key has been saved <span class="keyword">in</span> /home/usera/.<span class="property">ssh</span>/id_rsa.<span class="property">pub</span>. <span class="comment">//公钥保存路径</span></span><br><span class="line"><span class="title class_">The</span> key fingerprint <span class="attr">is</span>:</span><br><span class="line"><span class="number">39</span>:<span class="attr">f2</span>:<span class="attr">fc</span>:<span class="number">70</span>:<span class="attr">ef</span>:<span class="attr">e9</span>:<span class="attr">bd</span>:<span class="number">05</span>:<span class="number">40</span>:6<span class="attr">e</span>:<span class="number">64</span>:<span class="attr">b0</span>:<span class="number">99</span>:<span class="number">56</span>:6<span class="attr">e</span>:<span class="number">01</span> usera@serverA</span><br><span class="line"><span class="title class_">The</span> key<span class="string">&#x27;s randomart image is:</span></span><br><span class="line"><span class="string">+--[ RSA 2048]----+</span></span><br><span class="line"><span class="string">| Eo* |</span></span><br><span class="line"><span class="string">| @ . |</span></span><br><span class="line"><span class="string">| = * |</span></span><br><span class="line"><span class="string">| o o . |</span></span><br><span class="line"><span class="string">| . S . |</span></span><br><span class="line"><span class="string">| + . . |</span></span><br><span class="line"><span class="string">| + . .|</span></span><br><span class="line"><span class="string">| + . o . |</span></span><br><span class="line"><span class="string">| .o= o. |</span></span><br><span class="line"><span class="string">+-----------------+</span></span><br></pre></td></tr></table></figure>
+
+<p>以下是截图提示</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210216196.png"></p>
+<blockquote>
+<p>id_rsa是私钥，id_rsa.pub是公钥公钥在服务器私钥在自己手上</p>
+</blockquote>
+<p>此时会在<code>/home/usera/.ssh</code>目录下生成密钥对我们使用<code>ls</code>查看一下</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">root@<span class="attr">vultr</span>:~#  ls -la .<span class="property">ssh</span></span><br><span class="line">total <span class="number">16</span></span><br><span class="line">drwx------ <span class="number">2</span> root root <span class="number">4096</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> .</span><br><span class="line">drwx------ <span class="number">5</span> root root <span class="number">4096</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">00</span> ..</span><br><span class="line">-rw------- <span class="number">1</span> root root <span class="number">1675</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> id_rsa</span><br><span class="line">-rw-r--r-- <span class="number">1</span> root root  <span class="number">398</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> id_rsa.<span class="property">pub</span></span><br></pre></td></tr></table></figure>
+
+<p>然后将公钥上传到需要登录的服务器，并以<code>userb</code>用户登录<br>至于上传方式可以用<code>scp</code>以及<code>sz</code>命令这里就介绍了<br>可以参考这篇<a href="https://shagain.club/index.php/archives/111/">文章</a></p>
+<blockquote>
+<p>上传到用户目录下的.ssh文件夹下<code>authorized_keys</code>这个文件是用来存放公钥内容的我们使用<code>cat</code>把公钥追加到<code>authorized_keys</code>这个文件就好了</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">cat id_rsa.<span class="property">pub</span> &gt;&gt; ~<span class="regexp">/.ssh/</span>authorized_keys    <span class="comment">//cat 公钥路径 &gt;&gt; ~/.ssh/authorized_keys</span></span><br></pre></td></tr></table></figure>
+
+<p>这样子我们就配置好了<br>另外我们要注意，<code>.ssh</code>目录的权限为<code>700</code>，其下文件<code>authorized_keys</code>和私钥的权限为<code>600</code>。否则会因为权限问题导致无法免密码登录。我们可以看到登陆后会有<code>known_hosts</code>文件生成。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2017/08/10/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
   </entry>
   <entry>
     <title>hexo域名解析的两种方法</title>
@@ -799,24 +817,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Hello World</title>
-    <url>/2017/08/10/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
     <title>npm安装卸载命令</title>
     <url>/2022/08/23/npm%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BD%E5%91%BD%E4%BB%A4/</url>
     <content><![CDATA[<h2 id="npm安装模块"><a href="#npm安装模块" class="headerlink" title="npm安装模块"></a>npm安装模块</h2><p>利用 npm 安装xxx模块到当前命令行所在目录；</p>
@@ -842,52 +842,6 @@
 ]]></content>
       <tags>
         <tag>命令</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>win10系统电脑图标不见了</title>
-    <url>/2022/10/08/win10%E7%B3%BB%E7%BB%9F%E7%94%B5%E8%84%91%E5%9B%BE%E6%A0%87%E4%B8%8D%E8%A7%81%E4%BA%86/</url>
-    <content><![CDATA[<p>我的电脑图标没了怎么办？，恢复只需4步。刚安装了win10.刚打开的时候发现桌面上没有我的电脑图标，很多人都很不舒服，所以win我的电脑图标没了怎么办？现在小编教你怎么找回<code>我的电脑</code>图标。</p>
-<h4 id="方法-x2F-步骤"><a href="#方法-x2F-步骤" class="headerlink" title="方法&#x2F;步骤"></a>方法&#x2F;步骤</h4><ol>
-<li>进入win系统完成后，默认没有我的计算机图标。<span id="more"></span>
-右击桌面空白处，选择个性化，如下图所示。</li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210080130964.png" alt="个性化设置"></p>
-<ol start="2">
-<li>点击个性化进入个性化窗口，点击个性化窗口上的主题按钮，如下图所示。</li>
-</ol>
-<p>点击后，在主题界面上可以看到桌面图标设置，如下图所示。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210080137105.png" alt="主题"></p>
-<ol start="3">
-<li>点击后，弹出桌面图标设置对话框，如下图所示。</li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210080135900.png" alt="桌面图标设置"></p>
-<ol start="4">
-<li>在左图标设置对话框中检查计算机，然后确定按钮，如下图所示。</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>Win</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>传奇内挂垃圾物品过滤</title>
-    <url>/2022/09/03/%E4%BC%A0%E5%A5%87%E5%86%85%E6%8C%82%E5%9E%83%E5%9C%BE%E7%89%A9%E5%93%81%E8%BF%87%E6%BB%A4/</url>
-    <content><![CDATA[<p> 传奇内挂过滤垃圾。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209031601159.png" alt="image-20220903160139387"></p>
-<p>先打开传奇目录 <code>D:\传奇私服\Config </code>   修改DAT档案文件，把下面内容复制粘贴进去保存即可：</p>
-<span id="more"></span>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">金创药(小量),药品类,0,0,0,0</span><br><span class="line">魔法药(小量),药品类,0,0,0,0</span><br><span class="line">肉,其它类,0,0,0,0</span><br><span class="line">布衣(男),服装类,0,0,0,0</span><br><span class="line">布衣(女),服装类,0,0,0,0</span><br><span class="line">木剑,武器类,0,0,0,0</span><br><span class="line">铁剑,武器类,0,0,0,0</span><br><span class="line">青铜剑,武器类,0,0,0,0</span><br><span class="line">轻型盔甲(男),服装类,0,0,0,0</span><br><span class="line">轻型盔甲(女),服装类,0,0,0,0</span><br><span class="line">凝霜,武器类,0,0,0,0</span><br><span class="line">短剑,武器类,0,0,0,0</span><br><span class="line">青铜斧,武器类,0,0,0,0</span><br><span class="line">重盔甲(女),服装类,0,0,0,0</span><br><span class="line">魔法长袍(女),服装类,0,0,0,0</span><br><span class="line">灵魂战衣(女),服装类,0,0,0,0</span><br><span class="line">重盔甲(男),服装类,0,0,0,0</span><br><span class="line">魔法长袍(男),服装类,0,0,0,0</span><br><span class="line">灵魂战衣(男),服装类,0,0,0,0</span><br><span class="line">海魂,武器类,0,0,0,0</span><br><span class="line">修罗,武器类,0,0,0,0</span><br><span class="line">破魂,武器类,0,0,0,0</span><br><span class="line">斩马刀,武器类,0,0,0,0</span><br><span class="line">青铜头盔,首饰类,0,0,0,0</span><br><span class="line">金项链,首饰类,0,0,0,0</span><br><span class="line">铁手镯,首饰类,0,0,0,0</span><br><span class="line">灰色药粉(中量),药品类,0,0,0,0</span><br><span class="line">黄色药粉(中量),药品类,0,0,0,0</span><br><span class="line">八荒,武器类,0,0,0,0</span><br><span class="line">玻璃戒指,首饰类,0,0,0,0</span><br><span class="line">牛角戒指,首饰类,0,0,0,0</span><br><span class="line">蓝色水晶戒指,首饰类,0,0,0,0</span><br><span class="line">黑檀项链,首饰类,0,0,0,0</span><br><span class="line">黄色水晶项链,首饰类,0,0,0,0</span><br><span class="line">黑色水晶项链,首饰类,0,0,0,0</span><br><span class="line">半月,武器类,0,0,0,0</span><br><span class="line">皮制手套,首饰类,0,0,0,0</span><br><span class="line">钢手镯,首饰类,0,0,0,0</span><br><span class="line">生铁戒指,首饰类,0,0,0,0</span><br><span class="line">金戒指,首饰类,0,0,0,0</span><br><span class="line">灯笼项链,首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链,首饰类,1,1,1,0</span><br><span class="line">魅力戒指,首饰类,0,0,0,0</span><br><span class="line">道德戒指,首饰类,0,0,0,0</span><br><span class="line">白金项链,首饰类,0,0,0,0</span><br><span class="line">降妖除魔戒指,首饰类,0,0,0,0</span><br><span class="line">偃月,武器类,0,0,0,0</span><br><span class="line">降魔,武器类,0,0,0,0</span><br><span class="line">小手镯,首饰类,0,0,0,0</span><br><span class="line">银手镯,首饰类,0,0,0,0</span><br><span class="line">大手镯,首饰类,0,0,0,0</span><br><span class="line">金创药(中量),药品类,0,0,0,0</span><br><span class="line">魔法药(中量),药品类,0,0,0,0</span><br><span class="line">黑色水晶戒指,首饰类,0,0,0,0</span><br><span class="line">魔鬼项链,首饰类,0,0,0,0</span><br><span class="line">珊瑚戒指,首饰类,0,0,0,0</span><br><span class="line">蓝翡翠项链,首饰类,0,0,0,0</span><br><span class="line">蛇眼戒指,首饰类,0,0,0,0</span><br><span class="line">琥珀项链,首饰类,0,0,0,0</span><br><span class="line">放大镜,首饰类,0,0,0,0</span><br><span class="line">珍珠戒指,首饰类,0,0,0,0</span><br><span class="line">竹笛,首饰类,0,0,0,0</span><br><span class="line">骷髅戒指,首饰类,0,0,0,0</span><br><span class="line">死神手套,首饰类,0,0,0,0</span><br><span class="line">骷髅头盔,首饰类,0,0,0,0</span><br><span class="line">魔法手镯,首饰类,0,0,0,0</span><br><span class="line">金手镯,首饰类,0,0,0,0</span><br><span class="line">道士头盔,首饰类,0,0,0,0</span><br><span class="line">凤凰明珠,首饰类,0,0,0,0</span><br><span class="line">道士手镯,首饰类,0,0,0,0</span><br><span class="line">黑檀手镯,首饰类,0,0,0,0</span><br><span class="line">铁矿,其它类,0,0,0,0</span><br><span class="line">黑铁矿,其它类,0,0,0,0</span><br><span class="line">困魔咒,其它类,0,0,0,0</span><br><span class="line">召唤骷髅,其它类,0,0,0,0</span><br><span class="line">地狱雷光,其它类,0,0,0,0</span><br><span class="line">半月弯刀,其它类,0,0,0,0</span><br><span class="line">太阳水,药品类,0,1,0,0</span><br><span class="line">强效金创药,药品类,0,1,0,0</span><br><span class="line">强效魔法药,药品类,0,1,0,0</span><br><span class="line">野蛮冲撞,其它类,0,0,0,0</span><br><span class="line">群体治疗术,其它类,0,0,0,0</span><br><span class="line">圣言术,其它类,0,0,0,0</span><br><span class="line">强效太阳水,药品类,0,1,0,0</span><br><span class="line">魔力手镯,首饰类,0,0,0,0</span><br><span class="line">攻击力药水,其它类,0,0,0,0</span><br><span class="line">道术力药水,其它类,0,0,0,0</span><br><span class="line">疾风药水,其它类,0,0,0,0</span><br><span class="line">体力强化水,其它类,0,0,0,0</span><br><span class="line">魔力强化水,其它类,0,0,0,0</span><br><span class="line">战神盔甲(男),服装类,0,0,0,0</span><br><span class="line">战神盔甲(女),服装类,0,0,0,0</span><br><span class="line">幽灵战衣(男),服装类,0,0,0,0</span><br><span class="line">幽灵战衣(女),服装类,0,0,0,0</span><br><span class="line">恶魔长袍(男),服装类,0,0,0,0</span><br><span class="line">恶魔长袍(女),服装类,0,0,0,0</span><br><span class="line">中型盔甲(男),服装类,0,0,0,0</span><br><span class="line">灯笼项链②,首饰类,1,1,1,0</span><br><span class="line">灯笼项链[残],首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链[残],首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链②,首饰类,1,1,1,0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>游戏</category>
-        <category>传奇</category>
-      </categories>
-      <tags>
-        <tag>传奇</tag>
-        <tag>外挂</tag>
       </tags>
   </entry>
   <entry>
@@ -983,6 +937,52 @@
       </categories>
       <tags>
         <tag>插件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>win10系统电脑图标不见了</title>
+    <url>/2022/10/08/win10%E7%B3%BB%E7%BB%9F%E7%94%B5%E8%84%91%E5%9B%BE%E6%A0%87%E4%B8%8D%E8%A7%81%E4%BA%86/</url>
+    <content><![CDATA[<p>我的电脑图标没了怎么办？，恢复只需4步。刚安装了win10.刚打开的时候发现桌面上没有我的电脑图标，很多人都很不舒服，所以win我的电脑图标没了怎么办？现在小编教你怎么找回<code>我的电脑</code>图标。</p>
+<h4 id="方法-x2F-步骤"><a href="#方法-x2F-步骤" class="headerlink" title="方法&#x2F;步骤"></a>方法&#x2F;步骤</h4><ol>
+<li>进入win系统完成后，默认没有我的计算机图标。<span id="more"></span>
+右击桌面空白处，选择个性化，如下图所示。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210080130964.png" alt="个性化设置"></p>
+<ol start="2">
+<li>点击个性化进入个性化窗口，点击个性化窗口上的主题按钮，如下图所示。</li>
+</ol>
+<p>点击后，在主题界面上可以看到桌面图标设置，如下图所示。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210080137105.png" alt="主题"></p>
+<ol start="3">
+<li>点击后，弹出桌面图标设置对话框，如下图所示。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210080135900.png" alt="桌面图标设置"></p>
+<ol start="4">
+<li>在左图标设置对话框中检查计算机，然后确定按钮，如下图所示。</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>Win</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>传奇内挂垃圾物品过滤</title>
+    <url>/2022/09/03/%E4%BC%A0%E5%A5%87%E5%86%85%E6%8C%82%E5%9E%83%E5%9C%BE%E7%89%A9%E5%93%81%E8%BF%87%E6%BB%A4/</url>
+    <content><![CDATA[<p> 传奇内挂过滤垃圾。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209031601159.png" alt="image-20220903160139387"></p>
+<p>先打开传奇目录 <code>D:\传奇私服\Config </code>   修改DAT档案文件，把下面内容复制粘贴进去保存即可：</p>
+<span id="more"></span>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">金创药(小量),药品类,0,0,0,0</span><br><span class="line">魔法药(小量),药品类,0,0,0,0</span><br><span class="line">肉,其它类,0,0,0,0</span><br><span class="line">布衣(男),服装类,0,0,0,0</span><br><span class="line">布衣(女),服装类,0,0,0,0</span><br><span class="line">木剑,武器类,0,0,0,0</span><br><span class="line">铁剑,武器类,0,0,0,0</span><br><span class="line">青铜剑,武器类,0,0,0,0</span><br><span class="line">轻型盔甲(男),服装类,0,0,0,0</span><br><span class="line">轻型盔甲(女),服装类,0,0,0,0</span><br><span class="line">凝霜,武器类,0,0,0,0</span><br><span class="line">短剑,武器类,0,0,0,0</span><br><span class="line">青铜斧,武器类,0,0,0,0</span><br><span class="line">重盔甲(女),服装类,0,0,0,0</span><br><span class="line">魔法长袍(女),服装类,0,0,0,0</span><br><span class="line">灵魂战衣(女),服装类,0,0,0,0</span><br><span class="line">重盔甲(男),服装类,0,0,0,0</span><br><span class="line">魔法长袍(男),服装类,0,0,0,0</span><br><span class="line">灵魂战衣(男),服装类,0,0,0,0</span><br><span class="line">海魂,武器类,0,0,0,0</span><br><span class="line">修罗,武器类,0,0,0,0</span><br><span class="line">破魂,武器类,0,0,0,0</span><br><span class="line">斩马刀,武器类,0,0,0,0</span><br><span class="line">青铜头盔,首饰类,0,0,0,0</span><br><span class="line">金项链,首饰类,0,0,0,0</span><br><span class="line">铁手镯,首饰类,0,0,0,0</span><br><span class="line">灰色药粉(中量),药品类,0,0,0,0</span><br><span class="line">黄色药粉(中量),药品类,0,0,0,0</span><br><span class="line">八荒,武器类,0,0,0,0</span><br><span class="line">玻璃戒指,首饰类,0,0,0,0</span><br><span class="line">牛角戒指,首饰类,0,0,0,0</span><br><span class="line">蓝色水晶戒指,首饰类,0,0,0,0</span><br><span class="line">黑檀项链,首饰类,0,0,0,0</span><br><span class="line">黄色水晶项链,首饰类,0,0,0,0</span><br><span class="line">黑色水晶项链,首饰类,0,0,0,0</span><br><span class="line">半月,武器类,0,0,0,0</span><br><span class="line">皮制手套,首饰类,0,0,0,0</span><br><span class="line">钢手镯,首饰类,0,0,0,0</span><br><span class="line">生铁戒指,首饰类,0,0,0,0</span><br><span class="line">金戒指,首饰类,0,0,0,0</span><br><span class="line">灯笼项链,首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链,首饰类,1,1,1,0</span><br><span class="line">魅力戒指,首饰类,0,0,0,0</span><br><span class="line">道德戒指,首饰类,0,0,0,0</span><br><span class="line">白金项链,首饰类,0,0,0,0</span><br><span class="line">降妖除魔戒指,首饰类,0,0,0,0</span><br><span class="line">偃月,武器类,0,0,0,0</span><br><span class="line">降魔,武器类,0,0,0,0</span><br><span class="line">小手镯,首饰类,0,0,0,0</span><br><span class="line">银手镯,首饰类,0,0,0,0</span><br><span class="line">大手镯,首饰类,0,0,0,0</span><br><span class="line">金创药(中量),药品类,0,0,0,0</span><br><span class="line">魔法药(中量),药品类,0,0,0,0</span><br><span class="line">黑色水晶戒指,首饰类,0,0,0,0</span><br><span class="line">魔鬼项链,首饰类,0,0,0,0</span><br><span class="line">珊瑚戒指,首饰类,0,0,0,0</span><br><span class="line">蓝翡翠项链,首饰类,0,0,0,0</span><br><span class="line">蛇眼戒指,首饰类,0,0,0,0</span><br><span class="line">琥珀项链,首饰类,0,0,0,0</span><br><span class="line">放大镜,首饰类,0,0,0,0</span><br><span class="line">珍珠戒指,首饰类,0,0,0,0</span><br><span class="line">竹笛,首饰类,0,0,0,0</span><br><span class="line">骷髅戒指,首饰类,0,0,0,0</span><br><span class="line">死神手套,首饰类,0,0,0,0</span><br><span class="line">骷髅头盔,首饰类,0,0,0,0</span><br><span class="line">魔法手镯,首饰类,0,0,0,0</span><br><span class="line">金手镯,首饰类,0,0,0,0</span><br><span class="line">道士头盔,首饰类,0,0,0,0</span><br><span class="line">凤凰明珠,首饰类,0,0,0,0</span><br><span class="line">道士手镯,首饰类,0,0,0,0</span><br><span class="line">黑檀手镯,首饰类,0,0,0,0</span><br><span class="line">铁矿,其它类,0,0,0,0</span><br><span class="line">黑铁矿,其它类,0,0,0,0</span><br><span class="line">困魔咒,其它类,0,0,0,0</span><br><span class="line">召唤骷髅,其它类,0,0,0,0</span><br><span class="line">地狱雷光,其它类,0,0,0,0</span><br><span class="line">半月弯刀,其它类,0,0,0,0</span><br><span class="line">太阳水,药品类,0,1,0,0</span><br><span class="line">强效金创药,药品类,0,1,0,0</span><br><span class="line">强效魔法药,药品类,0,1,0,0</span><br><span class="line">野蛮冲撞,其它类,0,0,0,0</span><br><span class="line">群体治疗术,其它类,0,0,0,0</span><br><span class="line">圣言术,其它类,0,0,0,0</span><br><span class="line">强效太阳水,药品类,0,1,0,0</span><br><span class="line">魔力手镯,首饰类,0,0,0,0</span><br><span class="line">攻击力药水,其它类,0,0,0,0</span><br><span class="line">道术力药水,其它类,0,0,0,0</span><br><span class="line">疾风药水,其它类,0,0,0,0</span><br><span class="line">体力强化水,其它类,0,0,0,0</span><br><span class="line">魔力强化水,其它类,0,0,0,0</span><br><span class="line">战神盔甲(男),服装类,0,0,0,0</span><br><span class="line">战神盔甲(女),服装类,0,0,0,0</span><br><span class="line">幽灵战衣(男),服装类,0,0,0,0</span><br><span class="line">幽灵战衣(女),服装类,0,0,0,0</span><br><span class="line">恶魔长袍(男),服装类,0,0,0,0</span><br><span class="line">恶魔长袍(女),服装类,0,0,0,0</span><br><span class="line">中型盔甲(男),服装类,0,0,0,0</span><br><span class="line">灯笼项链②,首饰类,1,1,1,0</span><br><span class="line">灯笼项链[残],首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链[残],首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链②,首饰类,1,1,1,0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>游戏</category>
+        <category>传奇</category>
+      </categories>
+      <tags>
+        <tag>传奇</tag>
+        <tag>外挂</tag>
       </tags>
   </entry>
   <entry>
@@ -1176,65 +1176,6 @@
       </tags>
   </entry>
   <entry>
-    <title>实战kali破解wifi密码 全网最详细的保姆级教程</title>
-    <url>/2022/09/21/%E5%AE%9E%E6%88%98kali%E7%A0%B4%E8%A7%A3wifi%E5%AF%86%E7%A0%81/</url>
-    <content><![CDATA[<h2 id="kali官网"><a href="#kali官网" class="headerlink" title="kali官网"></a>kali官网</h2><hr>
-<p>kali是什么？<br> ——kali就是一个专门用于渗透行业的Linux发行版本，里面的工具非常丰富，本文就是建立在kali系统的支持之上的</p>
-<p><a href="https://www.kali.org/get-kali/#kali-virtual-machines">https://www.kali.org/get-kali/#kali-virtual-machines</a></p>
-<p>下载了vm文件后可以直接用VMware打开，开机后<br> <strong>用户名：kali<br> 密码：kali</strong></p>
-<span id="more"></span>
-
-<h2 id="正式开始"><a href="#正式开始" class="headerlink" title="正式开始"></a>正式开始</h2><h3 id="查看已安装网卡"><a href="#查看已安装网卡" class="headerlink" title="查看已安装网卡"></a>查看已安装网卡</h3><p>以下的操作都需要提升权限，默认的root密码都是kali</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">#提升权限</span><br><span class="line">sudo su</span><br><span class="line">#查看网卡</span><br><span class="line">airmon-ng</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210428371.png"><br> 如果没有，请注意是否开启了网卡在虚拟机的连接，如下图<br><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210430334.png"></p>
-<p>打开一个终端窗口</p>
-<h3 id="开启网卡监控"><a href="#开启网卡监控" class="headerlink" title="开启网卡监控"></a>开启网卡监控</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">#开启网卡监控</span><br><span class="line">airmon-ng start wlan0</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210431501.png"><br> 可以使用命令看看网卡的名字是否改变</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ifconfig</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210431574.png"><br> 可以看到最后的那个名字已经改变</p>
-<h3 id="扫描wifi"><a href="#扫描wifi" class="headerlink" title="扫描wifi"></a>扫描wifi</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">airodump-ng wlan0mon</span><br></pre></td></tr></table></figure>
-
-<p>我们选择这个名叫adcd的wifi进行破解<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210431426.png"></p>
-<h3 id="等待抓取握手包"><a href="#等待抓取握手包" class="headerlink" title="等待抓取握手包"></a>等待抓取握手包</h3><p>上述方法后，按<code>ctrl+c</code>，退出扫描</p>
-<p>输入命令</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">airodump-ng -w freedom -c <span class="number">11</span> --bssid 9C:2E:A1:<span class="number">20</span>:<span class="number">65</span>:BC wlan0mon -ignore-nefative-oneaa</span><br></pre></td></tr></table></figure>
-
-<p>-c：指定信道<br> -w：指定抓去握手包的存放位置或者名字，freedom是一会抓去的握手包的名字<br> –bssid：指定路由器的MAC</p>
-<p>需要更改两个参数，信道和地址，这两个参数分别是扫描wifi时确定要破解的wifi参数</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210431403.png">]</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432076.png"><br> 回车后，如下界面<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432332.png"><br> 从这个界面可以看出，选定的wifi一共有一个人连接，没有人连接的wifi是无法破解的</p>
-<h3 id="爆破-抓取握手包"><a href="#爆破-抓取握手包" class="headerlink" title="爆破 抓取握手包"></a>爆破 抓取握手包</h3><p>这个步骤，说白了，就是将一个用户踢下线，让他重新连接WIFI，这样我们就能监听并且截取到握手包</p>
-<p>重启一个终端窗口，一样的，申请管理员权限，密码默认：kali</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">sudo su</span><br></pre></td></tr></table></figure>
-
-<p>执行如下命令，同样的，需要输入上一步的两个参数，一个客户机的MAC，和路由器的MAC</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">aireplay-ng -<span class="number">0</span> <span class="number">2</span> -a 9C:2E:A1:<span class="number">20</span>:<span class="number">65</span>:BC -c A4:<span class="number">50</span>:<span class="number">46</span>:D8:<span class="number">74</span>:<span class="number">29</span> wlan0mon</span><br></pre></td></tr></table></figure>
-
-<p>-a：指定路由器的MAC<br> -c：指定客户机的MAC</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432483.png"><br> 执行成功后如上图，表明该客户机以及被成功的踢下线，我们要做的就是等待客户机重新连接，他只要重新连接了，我们就能抓到握手包，进行跑字典破解</p>
-<h3 id="抓取成功"><a href="#抓取成功" class="headerlink" title="抓取成功"></a>抓取成功</h3><p>当第四步的终端窗口出现如下<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432057.png"><br> 表明成功抓取到握手包，进行下一个步骤<br> <strong>注意！！这里抓到包一定要按<code>ctrl+c</code>退出抓包，不然抓到的握手包用不了哦</strong></p>
-<h3 id="开始破解"><a href="#开始破解" class="headerlink" title="开始破解"></a>开始破解</h3><p>包在<code>**/home/kali/**</code>文件夹下，找到名叫<code>freedom-01.ivs</code>文件，这个就是抓到的包</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432141.png"><br> 然后就是字典，我个人建议将字典一同放在该目录下<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432350.png"><br> 然后再次重起一个终端窗口，输入如下命令</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ircrack-ng -w pass.txt freedom-*.ivs</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432497.png"><br> 回车开始解密<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432365.png"><br> <strong>能否成功看字典的是否强大，也看脸</strong></p>
-<p>成功界面<br><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210433429.png"><br> 失败界面<br><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210433725.png"></p>
-<h2 id="温馨提示"><a href="#温馨提示" class="headerlink" title="温馨提示"></a>温馨提示</h2><hr>
-<p><strong>kali学的好，牢饭少不了<br> 本教程仅用于学习，请大家谨慎使用</strong></p>
-<p>需要的还是度盘自提吧：<br>链接：<a href="https://pan.baidu.com/s/1hehIiGnrArFiXVkIjEudcw">https://pan.baidu.com/s/1hehIiGnrArFiXVkIjEudcw</a><br>提取码：lbxk</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210436725.png"></p>
-]]></content>
-      <categories>
-        <category>学习</category>
-      </categories>
-      <tags>
-        <tag>kali</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>【安装Office】 Office Tool Plus 入门教程</title>
     <url>/2022/09/27/%E5%AE%89%E8%A3%85Office/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>安装 Office 是一件非常简单的事情，大家不必过于担心，更不必对自己没有信心。<br>本教程适用于需要全新安装 Office 的用户，若您需要修改 Office 请参阅 [<a href="https://movejian.github.io/2022/09/27/%E6%8A%80%E8%83%BD%E6%89%A9%E5%B1%95Office">技能扩展] Office Tool Plus 高级教程</a><br>任何人都可使用 Office Tool Plus 轻松地安装 Office，请认真阅读教程以避免因为疏忽出现问题。<br>如无特殊情况，文章中提到的 Windows 10 也适用于 Windows 11.</p>
@@ -1339,6 +1280,90 @@
       </tags>
   </entry>
   <entry>
+    <title>实战kali破解wifi密码 全网最详细的保姆级教程</title>
+    <url>/2022/09/21/%E5%AE%9E%E6%88%98kali%E7%A0%B4%E8%A7%A3wifi%E5%AF%86%E7%A0%81/</url>
+    <content><![CDATA[<h2 id="kali官网"><a href="#kali官网" class="headerlink" title="kali官网"></a>kali官网</h2><hr>
+<p>kali是什么？<br> ——kali就是一个专门用于渗透行业的Linux发行版本，里面的工具非常丰富，本文就是建立在kali系统的支持之上的</p>
+<p><a href="https://www.kali.org/get-kali/#kali-virtual-machines">https://www.kali.org/get-kali/#kali-virtual-machines</a></p>
+<p>下载了vm文件后可以直接用VMware打开，开机后<br> <strong>用户名：kali<br> 密码：kali</strong></p>
+<span id="more"></span>
+
+<h2 id="正式开始"><a href="#正式开始" class="headerlink" title="正式开始"></a>正式开始</h2><h3 id="查看已安装网卡"><a href="#查看已安装网卡" class="headerlink" title="查看已安装网卡"></a>查看已安装网卡</h3><p>以下的操作都需要提升权限，默认的root密码都是kali</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">#提升权限</span><br><span class="line">sudo su</span><br><span class="line">#查看网卡</span><br><span class="line">airmon-ng</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210428371.png"><br> 如果没有，请注意是否开启了网卡在虚拟机的连接，如下图<br><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210430334.png"></p>
+<p>打开一个终端窗口</p>
+<h3 id="开启网卡监控"><a href="#开启网卡监控" class="headerlink" title="开启网卡监控"></a>开启网卡监控</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">#开启网卡监控</span><br><span class="line">airmon-ng start wlan0</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210431501.png"><br> 可以使用命令看看网卡的名字是否改变</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ifconfig</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210431574.png"><br> 可以看到最后的那个名字已经改变</p>
+<h3 id="扫描wifi"><a href="#扫描wifi" class="headerlink" title="扫描wifi"></a>扫描wifi</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">airodump-ng wlan0mon</span><br></pre></td></tr></table></figure>
+
+<p>我们选择这个名叫adcd的wifi进行破解<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210431426.png"></p>
+<h3 id="等待抓取握手包"><a href="#等待抓取握手包" class="headerlink" title="等待抓取握手包"></a>等待抓取握手包</h3><p>上述方法后，按<code>ctrl+c</code>，退出扫描</p>
+<p>输入命令</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">airodump-ng -w freedom -c <span class="number">11</span> --bssid 9C:2E:A1:<span class="number">20</span>:<span class="number">65</span>:BC wlan0mon -ignore-nefative-oneaa</span><br></pre></td></tr></table></figure>
+
+<p>-c：指定信道<br> -w：指定抓去握手包的存放位置或者名字，freedom是一会抓去的握手包的名字<br> –bssid：指定路由器的MAC</p>
+<p>需要更改两个参数，信道和地址，这两个参数分别是扫描wifi时确定要破解的wifi参数</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210431403.png">]</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432076.png"><br> 回车后，如下界面<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432332.png"><br> 从这个界面可以看出，选定的wifi一共有一个人连接，没有人连接的wifi是无法破解的</p>
+<h3 id="爆破-抓取握手包"><a href="#爆破-抓取握手包" class="headerlink" title="爆破 抓取握手包"></a>爆破 抓取握手包</h3><p>这个步骤，说白了，就是将一个用户踢下线，让他重新连接WIFI，这样我们就能监听并且截取到握手包</p>
+<p>重启一个终端窗口，一样的，申请管理员权限，密码默认：kali</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">sudo su</span><br></pre></td></tr></table></figure>
+
+<p>执行如下命令，同样的，需要输入上一步的两个参数，一个客户机的MAC，和路由器的MAC</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">aireplay-ng -<span class="number">0</span> <span class="number">2</span> -a 9C:2E:A1:<span class="number">20</span>:<span class="number">65</span>:BC -c A4:<span class="number">50</span>:<span class="number">46</span>:D8:<span class="number">74</span>:<span class="number">29</span> wlan0mon</span><br></pre></td></tr></table></figure>
+
+<p>-a：指定路由器的MAC<br> -c：指定客户机的MAC</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432483.png"><br> 执行成功后如上图，表明该客户机以及被成功的踢下线，我们要做的就是等待客户机重新连接，他只要重新连接了，我们就能抓到握手包，进行跑字典破解</p>
+<h3 id="抓取成功"><a href="#抓取成功" class="headerlink" title="抓取成功"></a>抓取成功</h3><p>当第四步的终端窗口出现如下<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432057.png"><br> 表明成功抓取到握手包，进行下一个步骤<br> <strong>注意！！这里抓到包一定要按<code>ctrl+c</code>退出抓包，不然抓到的握手包用不了哦</strong></p>
+<h3 id="开始破解"><a href="#开始破解" class="headerlink" title="开始破解"></a>开始破解</h3><p>包在<code>**/home/kali/**</code>文件夹下，找到名叫<code>freedom-01.ivs</code>文件，这个就是抓到的包</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432141.png"><br> 然后就是字典，我个人建议将字典一同放在该目录下<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432350.png"><br> 然后再次重起一个终端窗口，输入如下命令</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ircrack-ng -w pass.txt freedom-*.ivs</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432497.png"><br> 回车开始解密<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432365.png"><br> <strong>能否成功看字典的是否强大，也看脸</strong></p>
+<p>成功界面<br><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210433429.png"><br> 失败界面<br><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210433725.png"></p>
+<h2 id="温馨提示"><a href="#温馨提示" class="headerlink" title="温馨提示"></a>温馨提示</h2><hr>
+<p><strong>kali学的好，牢饭少不了<br> 本教程仅用于学习，请大家谨慎使用</strong></p>
+<p>需要的还是度盘自提吧：<br>链接：<a href="https://pan.baidu.com/s/1hehIiGnrArFiXVkIjEudcw">https://pan.baidu.com/s/1hehIiGnrArFiXVkIjEudcw</a><br>提取码：lbxk</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210436725.png"></p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>kali</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>将Windows打印机变成网络打印机</title>
+    <url>/2022/09/11/%E5%B0%86Windows%E6%89%93%E5%8D%B0%E6%9C%BA%E5%8F%98%E6%88%90%E7%BD%91%E7%BB%9C%E6%89%93%E5%8D%B0%E6%9C%BA/</url>
+    <content><![CDATA[<p>大家都知道Windows的打印共享一直属于玄学，2000&#x2F;XP&#x2F;2003（NT 5.x）及以前的时代基本还算正常，经过简单的设置总能搞定，自从Vista开始的NT 6.x，尤其到了win10&#x2F;win11时代，Windows的打印共享基本上就变成了玄学，姑且不说很难搞定，就算搞定了，一个补丁也可能把它搞残废。另外，Windows的共享服务一直存在各种安全漏洞，曾经一度被勒索病毒利用，尤其是win7（不能打补丁那种），为了安全，我一般都禁用server服务。</p>
+<span id="more"></span>
+<p>但自带网络接口的打印机从来没有这么复杂，指定IP（端口基本上就是基于raw的9100），安装驱动即可搞定，完全跳过了复杂的samba协议，直接使用TCP&#x2F;IP。如同在Windows下通过http或者ftp共享文件，完全不需要考虑Windows那复杂的共享机制。</p>
+<p>但并不是所有的打印机都带网络接口，虽然现在可以买一个便宜的可以刷固件的路由器（比如坛子里15块收的优酷路由宝刷Padavan或者OpenWRT）当打印服务器使用，但毕竟硬件都不是现成的，而且，投入再小也得投入不是。</p>
+<p>那能不能将Windows直接变成类似的打印服务器呢？答案是：Raw Print Server。这是一个开源的命令行程序，官方网站：<a href="https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/">https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/</a> 。注意，下载1.0版本， 不要下载那个beta版。<a href="https://www.253874.net/attachment?id=72646">RawPrintServer100.zip</a> 也附上了1.0版本的可执行程序及程序源码。</p>
+<p>Github项目链接：<a href="https://github.com/miso-lims/rawprintserver">https://github.com/miso-lims/rawprintserver</a> (这程序从2006年就停止开发了）。</p>
+<p><strong>基本操作流程：</strong></p>
+<p>1、在作为打印服务器的Windows上安装好打印机，以HP LaserJet P1008为例，装好打印机时，最好给打印机改一个简短的名字，例如叫：HP1008。</p>
+<p>2、将rawprintserver.exe复制到Windows的system32目录。</p>
+<p>3、管理员cmd模式下执行：rawprintserver.exe install “HP1008”。注意，这里的打印机名称一定要跟你Windows控制面板中显示的打印机名称一样。该程序会安装一个rawprintserver服务，如果你在上一步操作中没有将该文件复制到system32目录，那就需要修改下对应服务注册表项中的ImagePath项，将该程序的全路径写入，否则服务启动不了。</p>
+<p>4、在打印客户端按添加网络打印机的流程（自动搜索肯定是搜不到的，所以需要手工操作），指定IP地址，默认raw:9100，然后手工指定打印机驱动安装即可。</p>
+<p>5、搞定！</p>
+<p>6、软件运行的日志强行锁死在c:\PrintServer.log，如果出现什么错误，可以查看该日志。</p>
+<p>我试过在win10下安装rawprintserver，win7_x86和win11都可以正常连接并使用。<br><em>相关地址</em><br><a href="https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/"><em>https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/</em></a></p>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>技术</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>密码破解—Hashcat【RAR密码破解】</title>
     <url>/2022/11/21/%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3%E2%80%94Hashcat%E3%80%90RAR%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3%E3%80%91/</url>
     <content><![CDATA[<p>一、Hashcat简介<br>hashcat号称世界上最快的密码破解，世界上第一个唯一的基于GPU、CPU规则引擎，免费多GPU（高达128个GPU），多哈希，多操作系统（Linux和Windows本地二进制文件），多平台（OpenCL和CUDA支持），多算法，资源利用率低，基于字典攻击，支持分布式破解等等，hashcat目前支持各类公开算法高达247类，市面上面公开的密码加密算法基本都支持！</p>
@@ -1409,44 +1434,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>将Windows打印机变成网络打印机</title>
-    <url>/2022/09/11/%E5%B0%86Windows%E6%89%93%E5%8D%B0%E6%9C%BA%E5%8F%98%E6%88%90%E7%BD%91%E7%BB%9C%E6%89%93%E5%8D%B0%E6%9C%BA/</url>
-    <content><![CDATA[<p>大家都知道Windows的打印共享一直属于玄学，2000&#x2F;XP&#x2F;2003（NT 5.x）及以前的时代基本还算正常，经过简单的设置总能搞定，自从Vista开始的NT 6.x，尤其到了win10&#x2F;win11时代，Windows的打印共享基本上就变成了玄学，姑且不说很难搞定，就算搞定了，一个补丁也可能把它搞残废。另外，Windows的共享服务一直存在各种安全漏洞，曾经一度被勒索病毒利用，尤其是win7（不能打补丁那种），为了安全，我一般都禁用server服务。</p>
-<span id="more"></span>
-<p>但自带网络接口的打印机从来没有这么复杂，指定IP（端口基本上就是基于raw的9100），安装驱动即可搞定，完全跳过了复杂的samba协议，直接使用TCP&#x2F;IP。如同在Windows下通过http或者ftp共享文件，完全不需要考虑Windows那复杂的共享机制。</p>
-<p>但并不是所有的打印机都带网络接口，虽然现在可以买一个便宜的可以刷固件的路由器（比如坛子里15块收的优酷路由宝刷Padavan或者OpenWRT）当打印服务器使用，但毕竟硬件都不是现成的，而且，投入再小也得投入不是。</p>
-<p>那能不能将Windows直接变成类似的打印服务器呢？答案是：Raw Print Server。这是一个开源的命令行程序，官方网站：<a href="https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/">https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/</a> 。注意，下载1.0版本， 不要下载那个beta版。<a href="https://www.253874.net/attachment?id=72646">RawPrintServer100.zip</a> 也附上了1.0版本的可执行程序及程序源码。</p>
-<p>Github项目链接：<a href="https://github.com/miso-lims/rawprintserver">https://github.com/miso-lims/rawprintserver</a> (这程序从2006年就停止开发了）。</p>
-<p><strong>基本操作流程：</strong></p>
-<p>1、在作为打印服务器的Windows上安装好打印机，以HP LaserJet P1008为例，装好打印机时，最好给打印机改一个简短的名字，例如叫：HP1008。</p>
-<p>2、将rawprintserver.exe复制到Windows的system32目录。</p>
-<p>3、管理员cmd模式下执行：rawprintserver.exe install “HP1008”。注意，这里的打印机名称一定要跟你Windows控制面板中显示的打印机名称一样。该程序会安装一个rawprintserver服务，如果你在上一步操作中没有将该文件复制到system32目录，那就需要修改下对应服务注册表项中的ImagePath项，将该程序的全路径写入，否则服务启动不了。</p>
-<p>4、在打印客户端按添加网络打印机的流程（自动搜索肯定是搜不到的，所以需要手工操作），指定IP地址，默认raw:9100，然后手工指定打印机驱动安装即可。</p>
-<p>5、搞定！</p>
-<p>6、软件运行的日志强行锁死在c:\PrintServer.log，如果出现什么错误，可以查看该日志。</p>
-<p>我试过在win10下安装rawprintserver，win7_x86和win11都可以正常连接并使用。<br><em>相关地址</em><br><a href="https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/"><em>https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/</em></a></p>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>技术</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>愿你编码半生，归来仍是少年</title>
-    <url>/2019/10/21/%E6%84%BF%E4%BD%A0%E7%BC%96%E7%A0%81%E5%8D%8A%E7%94%9F%EF%BC%8C%E5%BD%92%E6%9D%A5%E4%BB%8D%E6%98%AF%E5%B0%91%E5%B9%B4/</url>
-    <content><![CDATA[<h4 id="Hello-World-不巧，我也在等你。"><a href="#Hello-World-不巧，我也在等你。" class="headerlink" title="Hello,World.不巧，我也在等你。"></a>Hello,World.不巧，我也在等你。</h4><p>​      有人说自己被社会磨平了棱角，泯灭了心性，受生活所迫，“都说是为生活所迫，生活缺从来没有被抓过；都说被社会磨去棱角，社会之恶至今无法逃脱”，我们都有权利选择自己想成为的人，并不是由社会说了算，我们都曾年少，我们都曾有棱角，社会的熔炉却在不断的炼化我们，到底是磨平了棱角，还是磨成了钢刀，就让时间来见证吧！</p>
-<p>​      常年混迹于各大网络社区，也曾愤青，如今独爱云淡风轻，只愿在滚滚红尘中揽得风花雪月独醉。</p>
-<h4 id="感谢你的到来。"><a href="#感谢你的到来。" class="headerlink" title="感谢你的到来。"></a>感谢你的到来。</h4><span id="more"></span>
-
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/8.jpg" alt="8"></p>
-]]></content>
-      <tags>
-        <tag>随心</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>将Windows的文档目录迁移到其他盘下</title>
     <url>/2022/10/08/%E5%B0%86Windows%E7%9A%84%E6%96%87%E6%A1%A3%E7%9B%AE%E5%BD%95%E8%BF%81%E7%A7%BB%E5%88%B0%E5%85%B6%E4%BB%96%E7%9B%98%E4%B8%8B/</url>
     <content><![CDATA[<p>问题描述<br>C盘（系统盘）爆红，检查了一下<code>C:\Users\</code>我的用户名 快<code>100G</code>，除了正常的 <code>下载（Downloads）</code>、<code>文档（Documents）</code>、<code>图片（Pictures）</code>等等几个目录外，还有一个隐藏目录 <code>AppData</code> ，将近70G的一个目录。<code>C:\Users\用户名\AppData</code>里面一般有三个文件夹，分别是 <code>Local </code>，<code>LocalLow</code> ，<code>Roaming</code>，简单地来说，都是用来存放软件的配置文件和临时文件的，里面有很多以软件名称或软件公司命名的文件夹，还有用户帐户的配置文件。随着系统使用时间的增加和安装软件的增多，<code>AppData</code> 占用的空间会越来越大。</p>
@@ -1513,6 +1500,19 @@
       </categories>
       <tags>
         <tag>Win</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>愿你编码半生，归来仍是少年</title>
+    <url>/2019/10/21/%E6%84%BF%E4%BD%A0%E7%BC%96%E7%A0%81%E5%8D%8A%E7%94%9F%EF%BC%8C%E5%BD%92%E6%9D%A5%E4%BB%8D%E6%98%AF%E5%B0%91%E5%B9%B4/</url>
+    <content><![CDATA[<h4 id="Hello-World-不巧，我也在等你。"><a href="#Hello-World-不巧，我也在等你。" class="headerlink" title="Hello,World.不巧，我也在等你。"></a>Hello,World.不巧，我也在等你。</h4><p>​      有人说自己被社会磨平了棱角，泯灭了心性，受生活所迫，“都说是为生活所迫，生活缺从来没有被抓过；都说被社会磨去棱角，社会之恶至今无法逃脱”，我们都有权利选择自己想成为的人，并不是由社会说了算，我们都曾年少，我们都曾有棱角，社会的熔炉却在不断的炼化我们，到底是磨平了棱角，还是磨成了钢刀，就让时间来见证吧！</p>
+<p>​      常年混迹于各大网络社区，也曾愤青，如今独爱云淡风轻，只愿在滚滚红尘中揽得风花雪月独醉。</p>
+<h4 id="感谢你的到来。"><a href="#感谢你的到来。" class="headerlink" title="感谢你的到来。"></a>感谢你的到来。</h4><span id="more"></span>
+
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/8.jpg" alt="8"></p>
+]]></content>
+      <tags>
+        <tag>随心</tag>
       </tags>
   </entry>
   <entry>
@@ -1927,6 +1927,29 @@
       </tags>
   </entry>
   <entry>
+    <title>程序员的青春饭</title>
+    <url>/2022/10/24/%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E9%9D%92%E6%98%A5%E9%A5%AD/</url>
+    <content><![CDATA[<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210242036293.png" alt="img"></p>
+<blockquote>
+<p>　　&gt; 　　在程序员节这一天，我们与多位从业者进行了探讨。他们中很多人存在焦虑，尤其到了中年，面对职场与家庭的重重压力，他们的生活真的有不堪吗？</p>
+</blockquote>
+<span id="more"></span>
+<p>　　今天，1024程序员节如期而至。这一天，很多企业给自己的程序员准备了格子衫、特别演出以及丰富的下午茶……并且鼓励他们在这一天早早回家，拒绝加班。</p>
+<p>　　然而，个别节日的礼遇，改变不了长期高强度工作带给程序员们的心理压力和焦虑。在与《财瞭》沟通中，多位已在职场滚爬多年的程序员仍吐槽道，“工作强度太大了，感觉身体快要吃不消。”而在谈及35岁后的职场规划时，个别自觉升职无望的程序员更是担忧道，“想到那时候上有老下有下，职场上对大龄程序员也不太友好，真不知道如何自处。”</p>
+<p>　　35岁程序员的生活真的有那么不堪吗？在与多位年龄超过35岁的资深程序员交流后，我们得到了不一样的答案。</p>
+<p>　　<strong>程序员不是青春饭，不该存在年龄偏见</strong></p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210242037850.png" alt="img"></p>
+<p>在国内，由于工程师红利的存在，在有着相同的竞争优势下，企业自然希望优先选择那些刚毕业的学生。于是年龄大且相对缺乏竞争力的人，就不容易被友好地对待。本质上，这还是一个竞争的问题，并没有太多很好的手段从根本上去解决这些问题。</p>
+<p>“我们只能通过自己的改变去迎接这种现状，每个人都要面对这个问题，竞争是与生俱来的，我们只能提升自己。”廖浩表示。在一个高速竞争的环境下，对于软件行业的从业者而言，持续不断地提升自己不是可选项，而是必选项。“35岁的焦虑并不可怕，可怕的是因为焦虑而忘记了前进。”</p>
+<p>　　<strong>结语：关注程序员发展，不可涸泽而渔</strong></p>
+<p>　　当前，虽然最高人民法院、人力资源和社会保障部已向社会公开发布的《劳动人事争议典型案例》中明确指出，“996”严重违反法律关于延长工作时间上限的规定，相关公司规章制度应认定为无效。然而在众多互联网企业中，加班加点赶进度，昼夜不舍忙业务的现象仍层出不穷。尤其在程序开发领域，程序开发人员加班也成为了常态。</p>
+<p>　　在袁进辉看来，企业如果过于追求把程序员现有的能力发挥出来，但是忘记了为其提供相应的成长机会，程序员的发展也将会逐渐停滞不前，最终浮于表面同时被业务拖累。1024程序员节，企业在给予程序员们一时的优待与礼遇之时，也更应该考虑如何关注程序员们的长期可持续发展，而不是一味索求“涸泽而渔”。</p>
+]]></content>
+      <tags>
+        <tag>随笔</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>祖玛阁全地图走法汇总</title>
     <url>/2022/10/03/%E7%A5%96%E7%8E%9B%E9%98%81%E5%85%A8%E5%9C%B0%E5%9B%BE%E8%B5%B0%E6%B3%95%E6%B1%87%E6%80%BB/</url>
     <content><![CDATA[<p>在传奇游戏中祖玛阁是一个迷宫式的地图，玩家需要走出正确的进行路线才能前往下一层，每一个不同的走法都可能抵达不同的地点。熟悉走法的玩家来说这就是一个高效的练级圣地，对于不熟悉的玩家来说纵膈总共108个房间的祖玛阁怎么走?是最困扰玩家的问题之一。</p>
@@ -1955,29 +1978,6 @@
       </categories>
       <tags>
         <tag>传奇</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>程序员的青春饭</title>
-    <url>/2022/10/24/%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E9%9D%92%E6%98%A5%E9%A5%AD/</url>
-    <content><![CDATA[<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210242036293.png" alt="img"></p>
-<blockquote>
-<p>　　&gt; 　　在程序员节这一天，我们与多位从业者进行了探讨。他们中很多人存在焦虑，尤其到了中年，面对职场与家庭的重重压力，他们的生活真的有不堪吗？</p>
-</blockquote>
-<span id="more"></span>
-<p>　　今天，1024程序员节如期而至。这一天，很多企业给自己的程序员准备了格子衫、特别演出以及丰富的下午茶……并且鼓励他们在这一天早早回家，拒绝加班。</p>
-<p>　　然而，个别节日的礼遇，改变不了长期高强度工作带给程序员们的心理压力和焦虑。在与《财瞭》沟通中，多位已在职场滚爬多年的程序员仍吐槽道，“工作强度太大了，感觉身体快要吃不消。”而在谈及35岁后的职场规划时，个别自觉升职无望的程序员更是担忧道，“想到那时候上有老下有下，职场上对大龄程序员也不太友好，真不知道如何自处。”</p>
-<p>　　35岁程序员的生活真的有那么不堪吗？在与多位年龄超过35岁的资深程序员交流后，我们得到了不一样的答案。</p>
-<p>　　<strong>程序员不是青春饭，不该存在年龄偏见</strong></p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210242037850.png" alt="img"></p>
-<p>在国内，由于工程师红利的存在，在有着相同的竞争优势下，企业自然希望优先选择那些刚毕业的学生。于是年龄大且相对缺乏竞争力的人，就不容易被友好地对待。本质上，这还是一个竞争的问题，并没有太多很好的手段从根本上去解决这些问题。</p>
-<p>“我们只能通过自己的改变去迎接这种现状，每个人都要面对这个问题，竞争是与生俱来的，我们只能提升自己。”廖浩表示。在一个高速竞争的环境下，对于软件行业的从业者而言，持续不断地提升自己不是可选项，而是必选项。“35岁的焦虑并不可怕，可怕的是因为焦虑而忘记了前进。”</p>
-<p>　　<strong>结语：关注程序员发展，不可涸泽而渔</strong></p>
-<p>　　当前，虽然最高人民法院、人力资源和社会保障部已向社会公开发布的《劳动人事争议典型案例》中明确指出，“996”严重违反法律关于延长工作时间上限的规定，相关公司规章制度应认定为无效。然而在众多互联网企业中，加班加点赶进度，昼夜不舍忙业务的现象仍层出不穷。尤其在程序开发领域，程序开发人员加班也成为了常态。</p>
-<p>　　在袁进辉看来，企业如果过于追求把程序员现有的能力发挥出来，但是忘记了为其提供相应的成长机会，程序员的发展也将会逐渐停滞不前，最终浮于表面同时被业务拖累。1024程序员节，企业在给予程序员们一时的优待与礼遇之时，也更应该考虑如何关注程序员们的长期可持续发展，而不是一味索求“涸泽而渔”。</p>
-]]></content>
-      <tags>
-        <tag>随笔</tag>
       </tags>
   </entry>
   <entry>
