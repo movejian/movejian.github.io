@@ -1,6 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Centos7安装时引导错误以及解决方案</title>
+    <url>/2019/11/19/Centos7%E5%AE%89%E8%A3%85%E6%97%B6%E5%BC%95%E5%AF%BC%E9%94%99%E8%AF%AF%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</url>
+    <content><![CDATA[<p>Centos7安装时引导错误以及解决方案<br>使用U盘刻录方式安装CentOS7.6，但是发现安装初始化时候发生错误，本以为是U盘刻录或者是镜像的问题，但是反复刻录多遍仍然出错。后来在CentOS中文社区，发现使用UltraISO刻录安装时就可能出现初始化引导错误1.一般情况下</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">vmlinuz initrd=initrd.img inst.stage2=hd:LABEL=CentOS\x207\x20x86_64 rd.live.check quiet</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<p>文字不会出现在屏幕下方。当我们在安装选择界面，也就是选择U盘启动的第一个界面，该界面上有三个选项：<br>1、Install CentOS 7<br>2、Test this media &amp; install CentOS7<br>3、Troubleshooting </p>
+<p>选择第一项<br>此时，按一下Tab键，将会出现在屏幕下方出现这一串文字</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">vmlinuz initrd=initrd.img inst.stage2=hd:LABEL=CentOS\x207\x20x86_64 rd.live.check quiet</span><br></pre></td></tr></table></figure>
+
+<p>然后将这行文字修改为</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">vmlinuz initrd=initrd.img inst.stage2=hd:/dev/sdb4 quiet</span><br></pre></td></tr></table></figure>
+
+<p>其中sdb4指是我的电脑设备上的U盘，sda指第一个挂载盘，sdb指第二个挂载盘，sdc指第三个挂载盘，依此类推。每台电脑上的USB挂载名称不一样，要视情况而定选择挂载盘。通常情况下，我们不知道U盘挂载名称，这时候，可以将文字改为</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">vmlinuz initrd=initrd.img linux dd quiet</span><br></pre></td></tr></table></figure>
+
+<p>回车后，屏幕会出现挂载盘选择的的界面，该界面会显示，挂载盘名称（DEVICE）、类型（TYPE）、标识（LABEL）等信息，通常情况下选择标识为CentOS的就OK，也可以一个一个试。这时候记下挂载盘名称，重启电脑，启动进入U盘，出现系统安装选择界面，按Tab键，修改</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">vmlinuz initrd=initrd.img inst.stage2=hd:LABEL=CentOS\x207\x20x86_64 rd.live.check quiet</span><br></pre></td></tr></table></figure>
+
+<p>修改为</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">vmlinuz initrd=initrd.img inst.stage2=hd:/dev/挂载盘名称 quiet</span><br></pre></td></tr></table></figure>
+<p>此处的“挂载盘名称”是你程序所在U盘的名称。也就是你制作的“启动盘”名称，非“被安装盘符”<br>博主使用的是PE启动盘加载ISO文件<br>并且是使用的魔术师做的启动盘。ISO文件路径为：<code>U:\CEO/USMIMGS</code><br>所以我所书写的为</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">vmlinuz initrd=initrd.img inst.stage2=hd:/dev/sda1:/CEO/USMIMGS/ quiet</span><br></pre></td></tr></table></figure>
+<p>你们使用老毛桃制作的启动盘只需要修改为</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">vmlinuz initrd=initrd.img inst.stage2=hd:/dev/sda1:/iso/ quiet</span><br></pre></td></tr></table></figure>
+
+<p>部分华为服务器不太一样<code>/dev/sda4</code>真诡异</p>
+<p>最后按Enter就能进入CentOS安装界面了。</p>
+]]></content>
+      <tags>
+        <tag>Centos7</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>CDPUserSvc_***停止了工作，无法禁用服务</title>
     <url>/2022/10/08/CDPUserSvc-%E5%81%9C%E6%AD%A2%E4%BA%86%E5%B7%A5%E4%BD%9C%EF%BC%8C%E6%97%A0%E6%B3%95%E7%A6%81%E7%94%A8%E6%9C%8D%E5%8A%A1/</url>
     <content><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>今天跟大家讲解下有关电脑方面的小知识什么是CDPUserSvc?如何进行相关操作 ，相信对电脑感兴趣的小伙伴们对这个话题应该也很关注吧，小编也收集到了有关什么是CDPUserSvc?如何进行相关操作 的相关资料，希望大家看到了会喜欢。</p>
@@ -79,39 +112,6 @@
       </categories>
       <tags>
         <tag>微信</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Centos7安装时引导错误以及解决方案</title>
-    <url>/2019/11/19/Centos7%E5%AE%89%E8%A3%85%E6%97%B6%E5%BC%95%E5%AF%BC%E9%94%99%E8%AF%AF%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</url>
-    <content><![CDATA[<p>Centos7安装时引导错误以及解决方案<br>使用U盘刻录方式安装CentOS7.6，但是发现安装初始化时候发生错误，本以为是U盘刻录或者是镜像的问题，但是反复刻录多遍仍然出错。后来在CentOS中文社区，发现使用UltraISO刻录安装时就可能出现初始化引导错误1.一般情况下</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">vmlinuz initrd=initrd.img inst.stage2=hd:LABEL=CentOS\x207\x20x86_64 rd.live.check quiet</span><br></pre></td></tr></table></figure>
-<span id="more"></span>
-<p>文字不会出现在屏幕下方。当我们在安装选择界面，也就是选择U盘启动的第一个界面，该界面上有三个选项：<br>1、Install CentOS 7<br>2、Test this media &amp; install CentOS7<br>3、Troubleshooting </p>
-<p>选择第一项<br>此时，按一下Tab键，将会出现在屏幕下方出现这一串文字</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">vmlinuz initrd=initrd.img inst.stage2=hd:LABEL=CentOS\x207\x20x86_64 rd.live.check quiet</span><br></pre></td></tr></table></figure>
-
-<p>然后将这行文字修改为</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">vmlinuz initrd=initrd.img inst.stage2=hd:/dev/sdb4 quiet</span><br></pre></td></tr></table></figure>
-
-<p>其中sdb4指是我的电脑设备上的U盘，sda指第一个挂载盘，sdb指第二个挂载盘，sdc指第三个挂载盘，依此类推。每台电脑上的USB挂载名称不一样，要视情况而定选择挂载盘。通常情况下，我们不知道U盘挂载名称，这时候，可以将文字改为</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">vmlinuz initrd=initrd.img linux dd quiet</span><br></pre></td></tr></table></figure>
-
-<p>回车后，屏幕会出现挂载盘选择的的界面，该界面会显示，挂载盘名称（DEVICE）、类型（TYPE）、标识（LABEL）等信息，通常情况下选择标识为CentOS的就OK，也可以一个一个试。这时候记下挂载盘名称，重启电脑，启动进入U盘，出现系统安装选择界面，按Tab键，修改</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">vmlinuz initrd=initrd.img inst.stage2=hd:LABEL=CentOS\x207\x20x86_64 rd.live.check quiet</span><br></pre></td></tr></table></figure>
-
-<p>修改为</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">vmlinuz initrd=initrd.img inst.stage2=hd:/dev/挂载盘名称 quiet</span><br></pre></td></tr></table></figure>
-<p>此处的“挂载盘名称”是你程序所在U盘的名称。也就是你制作的“启动盘”名称，非“被安装盘符”<br>博主使用的是PE启动盘加载ISO文件<br>并且是使用的魔术师做的启动盘。ISO文件路径为：<code>U:\CEO/USMIMGS</code><br>所以我所书写的为</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">vmlinuz initrd=initrd.img inst.stage2=hd:/dev/sda1:/CEO/USMIMGS/ quiet</span><br></pre></td></tr></table></figure>
-<p>你们使用老毛桃制作的启动盘只需要修改为</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">vmlinuz initrd=initrd.img inst.stage2=hd:/dev/sda1:/iso/ quiet</span><br></pre></td></tr></table></figure>
-
-<p>部分华为服务器不太一样<code>/dev/sda4</code>真诡异</p>
-<p>最后按Enter就能进入CentOS安装界面了。</p>
-]]></content>
-      <tags>
-        <tag>Centos7</tag>
       </tags>
   </entry>
   <entry>
@@ -291,6 +291,92 @@
       </categories>
       <tags>
         <tag>Kali</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux中的挂载命令mount</title>
+    <url>/2022/09/21/Linux%E4%B8%AD%E7%9A%84%E6%8C%82%E8%BD%BD%E5%91%BD%E4%BB%A4mount/</url>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在 Linux GUI 中，我们通常理所当然地认为，当我们插入 USB 闪存驱动器、硬盘驱动器甚至 DVD 磁盘时，它们就可以使用了。但是在后台有一个过程，设备被安装（准备好使用）并分配了一个安装点。当使用服务器或远程连接时，并不能确定某个设备是否会自动可用，那么我们如何挂载自己的设备呢？下面我们一起来看一下！</p>
+<span id="more"></span>
+<h3 id="mount是什么？"><a href="#mount是什么？" class="headerlink" title="mount是什么？"></a>mount是什么？</h3><p>Linux文件系统中的所有文件都以<code>/ </code>为根的大树的形式排列。这些文件可以根据您的分区表分布在各种设备上，最初你的父目录安装（即附加）到这棵树的<code>/</code> ，其他的可以手动挂载使用<code>GUI</code>界面（如果可用）或使用挂载命令。</p>
+<p><code>mount</code>命令用于将设备上找到的文件系统挂载到以 <code>/</code> 为根的大树结构（Linux文件系统）上。相反，另一个命令<code>umount</code>可用于从树中分离这些设备。</p>
+<h3 id="mount的初级用法"><a href="#mount的初级用法" class="headerlink" title="mount的初级用法"></a>mount的初级用法</h3><p><code>mount</code>命令挂载存储设备或文件系统，使其可访问并将其附加到现有目录结构。</p>
+<h4 id="语法："><a href="#语法：" class="headerlink" title="语法："></a>语法：</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mount -t 类型设备目录</span><br></pre></td></tr></table></figure>
+
+<p>这告诉内核将设备上找到的文件系统（类型为type）附加到目录<code>dir</code>。<code>dir</code>之前的内容（如果有）、<code>owner</code>和<code>mode</code>变得不可见，只要这个文件系统保持挂载，路径名dir指的是设备上文件系统的根目录。如果没有提到目标目录，默认情况下，它将设备挂载在 <code>/etc/fstab</code> 文件中。</p>
+<h4 id="其他形式："><a href="#其他形式：" class="headerlink" title="其他形式："></a>其他形式：</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mount [-l|-h|-V]</span><br><span class="line">mount -a [-fFnrsvw] [-t fstype] [-O optlist]</span><br><span class="line">mount [-fnrsvw] [-o options] device|dir</span><br><span class="line">mount [-fnrsvw] [-t fstype] [-o options] device dir</span><br></pre></td></tr></table></figure>
+
+<p>这些命令告诉内核将在设备上找到的文件系统附加到<code>dir</code>。</p>
+<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><p>要将硬盘驱动器的第二个分区挂载到现有目录<code>/media/PHOTOS</code>（挂载点）：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mount /dev/hda2 /media/PHOTOS</span><br></pre></td></tr></table></figure>
+
+<p> 显示所有已安装的分区：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mount</span><br><span class="line">proc on /proc type proc (rw) </span><br><span class="line">sysfs on /sys type sysfs (rw) </span><br><span class="line">devpts on /dev/pts type devpts (rw,gid=5,mode=620) </span><br><span class="line">/dev/sda1 on /boot type ext3 (rw ) </span><br><span class="line">/tmp on /var/tmp type none (rw,noexec,nosuid,bind) </span><br><span class="line">10.4.0.4:/srv/export/setup_server on /nfs/setup_server type nfs (ro,addr=10.4.0.4)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>如果需要卸载刚才的分区：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ umount /dev/hda2</span><br></pre></td></tr></table></figure>
+
+<p>参照挂载点卸载：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ umount /media/PHOTOS</span><br></pre></td></tr></table></figure>
+
+<p>使用特定选项重新挂载分区：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mount -o remount,rw /dev/hda2</span><br></pre></td></tr></table></figure>
+
+<h3 id="umount的初级用法"><a href="#umount的初级用法" class="headerlink" title="umount的初级用法"></a>umount的初级用法</h3><p><code>umount</code>命令从文件层次结构中分离指定的文件系统。一个文件系统是通过给出它被安装的目录来指定的。提供文件系统所在的特殊设备也可以工作，但这是一种过时的方法，主要是因为如果该设备安装在多个目录上，它会失败。</p>
+<p>但是需要注意，文件系统在繁忙时无法卸载 。例如，当它上面有打开的文件时，或者当某个进程在那里有它的工作目录时，或者当它上面的交换文件正在使用时，<code>umount</code>将无法成功。</p>
+<p>有些无法使用<code>umount</code>的进程甚至可能是<code>umount</code>本身——例如，<code>umount</code>打开公共C库，而后者又可能打开了语言环境文件，如果它们在相关设备上，则会阻止它被卸载。即使出现这种冲突，“惰性”卸载（参见下面卸载选项部分中的-l ）也会尝试卸载。</p>
+<h3 id="高级用法"><a href="#高级用法" class="headerlink" title="高级用法"></a>高级用法</h3><ul>
+<li>显示有关已安装文件系统的信息：</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210149077.png"></p>
+<ul>
+<li>挂载文件系统：</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210150279.png"></p>
+<ul>
+<li><p>显示版本信息：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210151979.png"></p>
+</li>
+<li><p>卸载文件系统：</p>
+</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210151025.png"></p>
+<h3 id="绑定挂载"><a href="#绑定挂载" class="headerlink" title="绑定挂载"></a>绑定挂载</h3><p>绑定挂载允许将文件系统层次结构或文件挂载到不同的挂载点。与符号链接不同，文件系统本身不存在绑定挂载。在下面的例子中，路径&#x2F;olddir将被挂载在<code>/newdir</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mount --bind /olddir /newdir</span><br></pre></td></tr></table></figure>
+
+<h3 id="如何在-Linux-上挂载和卸载驱动器"><a href="#如何在-Linux-上挂载和卸载驱动器" class="headerlink" title="如何在 Linux 上挂载和卸载驱动器"></a>如何在 Linux 上挂载和卸载驱动器</h3><p>可以使用终端安装 SSD、USB 闪存驱动器、HDD 和 ISO 映像。在终端仿真器中使用命令行界面 (CLI) 可以让我们更好地控制何时安装驱动器以及它们在文件系统中的安装位置。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210123639.png"></p>
+<ol>
+<li>使用<code>lsblk</code>命令识别 USB 驱动器。在结果中，您可能会看到许多标记为“循环”的条目。但是，您正在寻找被列为<code>sda</code>或<code>sdb</code>的结果，以识别连接到您的系统的物理磁盘。比较所连接驱动器的列出容量通常可以帮助您发现目标驱动器的名称。在我们的例子中，我们可以将 USB 驱动器识别为 <code>sdb1</code>。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210123811.png"></p>
+<ol start="2">
+<li>创建一个目录来挂载 USB 驱动器。当外部驱动器自动挂载时，它通常挂载在媒体目录中。但是使用 CLI，我们可以创建并指定一个目录，我们将在其中挂载我们的 <code>pendrive</code>。请注意，我们需要使用<code>sudo</code>来调用<code>root</code>权限，以便在媒体目录中创建一个目录。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo mkdir /media/pendrive</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>使用<code>mount</code>命令将 U 盘挂载到<code>/media/pendrive</code>目录。<code>mount</code>命令具有以下语法；</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo mount /dev/sdb1 /media/pendrive</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li><p>通过重新运行<code>lsblk</code>检查驱动器是否已安装。</p>
+<blockquote>
+<p>请注意， <code>lsblk</code>输出中的最后一列列出了列出设备的挂载点，如果列出了挂载点，则确认该设备已挂载。</p>
+</blockquote>
+</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210124550.png"></p>
+<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>使用<code>mount</code>命令我们可以更好地控制在 Linux 中挂载和卸载磁盘，并掌握一些技巧，在连接的驱动器无法自动正确挂载时可能会有所帮助。</p>
+<p>在探索以前使用的系统的旧备份映像或想要查看 Linux 发行版映像内容以进行探索或学习时，能够使用循环设备挂载磁盘映像非常有用。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -492,82 +578,32 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux中的挂载命令mount</title>
-    <url>/2022/09/21/Linux%E4%B8%AD%E7%9A%84%E6%8C%82%E8%BD%BD%E5%91%BD%E4%BB%A4mount/</url>
-    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在 Linux GUI 中，我们通常理所当然地认为，当我们插入 USB 闪存驱动器、硬盘驱动器甚至 DVD 磁盘时，它们就可以使用了。但是在后台有一个过程，设备被安装（准备好使用）并分配了一个安装点。当使用服务器或远程连接时，并不能确定某个设备是否会自动可用，那么我们如何挂载自己的设备呢？下面我们一起来看一下！</p>
-<span id="more"></span>
-<h3 id="mount是什么？"><a href="#mount是什么？" class="headerlink" title="mount是什么？"></a>mount是什么？</h3><p>Linux文件系统中的所有文件都以<code>/ </code>为根的大树的形式排列。这些文件可以根据您的分区表分布在各种设备上，最初你的父目录安装（即附加）到这棵树的<code>/</code> ，其他的可以手动挂载使用<code>GUI</code>界面（如果可用）或使用挂载命令。</p>
-<p><code>mount</code>命令用于将设备上找到的文件系统挂载到以 <code>/</code> 为根的大树结构（Linux文件系统）上。相反，另一个命令<code>umount</code>可用于从树中分离这些设备。</p>
-<h3 id="mount的初级用法"><a href="#mount的初级用法" class="headerlink" title="mount的初级用法"></a>mount的初级用法</h3><p><code>mount</code>命令挂载存储设备或文件系统，使其可访问并将其附加到现有目录结构。</p>
-<h4 id="语法："><a href="#语法：" class="headerlink" title="语法："></a>语法：</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mount -t 类型设备目录</span><br></pre></td></tr></table></figure>
-
-<p>这告诉内核将设备上找到的文件系统（类型为type）附加到目录<code>dir</code>。<code>dir</code>之前的内容（如果有）、<code>owner</code>和<code>mode</code>变得不可见，只要这个文件系统保持挂载，路径名dir指的是设备上文件系统的根目录。如果没有提到目标目录，默认情况下，它将设备挂载在 <code>/etc/fstab</code> 文件中。</p>
-<h4 id="其他形式："><a href="#其他形式：" class="headerlink" title="其他形式："></a>其他形式：</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mount [-l|-h|-V]</span><br><span class="line">mount -a [-fFnrsvw] [-t fstype] [-O optlist]</span><br><span class="line">mount [-fnrsvw] [-o options] device|dir</span><br><span class="line">mount [-fnrsvw] [-t fstype] [-o options] device dir</span><br></pre></td></tr></table></figure>
-
-<p>这些命令告诉内核将在设备上找到的文件系统附加到<code>dir</code>。</p>
-<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><p>要将硬盘驱动器的第二个分区挂载到现有目录<code>/media/PHOTOS</code>（挂载点）：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mount /dev/hda2 /media/PHOTOS</span><br></pre></td></tr></table></figure>
-
-<p> 显示所有已安装的分区：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mount</span><br><span class="line">proc on /proc type proc (rw) </span><br><span class="line">sysfs on /sys type sysfs (rw) </span><br><span class="line">devpts on /dev/pts type devpts (rw,gid=5,mode=620) </span><br><span class="line">/dev/sda1 on /boot type ext3 (rw ) </span><br><span class="line">/tmp on /var/tmp type none (rw,noexec,nosuid,bind) </span><br><span class="line">10.4.0.4:/srv/export/setup_server on /nfs/setup_server type nfs (ro,addr=10.4.0.4)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>如果需要卸载刚才的分区：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ umount /dev/hda2</span><br></pre></td></tr></table></figure>
-
-<p>参照挂载点卸载：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ umount /media/PHOTOS</span><br></pre></td></tr></table></figure>
-
-<p>使用特定选项重新挂载分区：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mount -o remount,rw /dev/hda2</span><br></pre></td></tr></table></figure>
-
-<h3 id="umount的初级用法"><a href="#umount的初级用法" class="headerlink" title="umount的初级用法"></a>umount的初级用法</h3><p><code>umount</code>命令从文件层次结构中分离指定的文件系统。一个文件系统是通过给出它被安装的目录来指定的。提供文件系统所在的特殊设备也可以工作，但这是一种过时的方法，主要是因为如果该设备安装在多个目录上，它会失败。</p>
-<p>但是需要注意，文件系统在繁忙时无法卸载 。例如，当它上面有打开的文件时，或者当某个进程在那里有它的工作目录时，或者当它上面的交换文件正在使用时，<code>umount</code>将无法成功。</p>
-<p>有些无法使用<code>umount</code>的进程甚至可能是<code>umount</code>本身——例如，<code>umount</code>打开公共C库，而后者又可能打开了语言环境文件，如果它们在相关设备上，则会阻止它被卸载。即使出现这种冲突，“惰性”卸载（参见下面卸载选项部分中的-l ）也会尝试卸载。</p>
-<h3 id="高级用法"><a href="#高级用法" class="headerlink" title="高级用法"></a>高级用法</h3><ul>
-<li>显示有关已安装文件系统的信息：</li>
-</ul>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210149077.png"></p>
-<ul>
-<li>挂载文件系统：</li>
-</ul>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210150279.png"></p>
-<ul>
-<li><p>显示版本信息：</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210151979.png"></p>
-</li>
-<li><p>卸载文件系统：</p>
-</li>
-</ul>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210151025.png"></p>
-<h3 id="绑定挂载"><a href="#绑定挂载" class="headerlink" title="绑定挂载"></a>绑定挂载</h3><p>绑定挂载允许将文件系统层次结构或文件挂载到不同的挂载点。与符号链接不同，文件系统本身不存在绑定挂载。在下面的例子中，路径&#x2F;olddir将被挂载在<code>/newdir</code></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ mount --bind /olddir /newdir</span><br></pre></td></tr></table></figure>
-
-<h3 id="如何在-Linux-上挂载和卸载驱动器"><a href="#如何在-Linux-上挂载和卸载驱动器" class="headerlink" title="如何在 Linux 上挂载和卸载驱动器"></a>如何在 Linux 上挂载和卸载驱动器</h3><p>可以使用终端安装 SSD、USB 闪存驱动器、HDD 和 ISO 映像。在终端仿真器中使用命令行界面 (CLI) 可以让我们更好地控制何时安装驱动器以及它们在文件系统中的安装位置。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210123639.png"></p>
-<ol>
-<li>使用<code>lsblk</code>命令识别 USB 驱动器。在结果中，您可能会看到许多标记为“循环”的条目。但是，您正在寻找被列为<code>sda</code>或<code>sdb</code>的结果，以识别连接到您的系统的物理磁盘。比较所连接驱动器的列出容量通常可以帮助您发现目标驱动器的名称。在我们的例子中，我们可以将 USB 驱动器识别为 <code>sdb1</code>。</li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210123811.png"></p>
-<ol start="2">
-<li>创建一个目录来挂载 USB 驱动器。当外部驱动器自动挂载时，它通常挂载在媒体目录中。但是使用 CLI，我们可以创建并指定一个目录，我们将在其中挂载我们的 <code>pendrive</code>。请注意，我们需要使用<code>sudo</code>来调用<code>root</code>权限，以便在媒体目录中创建一个目录。</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo mkdir /media/pendrive</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>使用<code>mount</code>命令将 U 盘挂载到<code>/media/pendrive</code>目录。<code>mount</code>命令具有以下语法；</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo mount /dev/sdb1 /media/pendrive</span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li><p>通过重新运行<code>lsblk</code>检查驱动器是否已安装。</p>
+    <title>Linux通过密钥对免密登录</title>
+    <url>/2022/09/21/Linux%E9%80%9A%E8%BF%87%E5%AF%86%E9%92%A5%E5%AF%B9%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/</url>
+    <content><![CDATA[<p>首先，说明一下我们要做的是，跳板机服务器的<code>usera</code>用户免密码登录B服务器的<code>userb</code>用户。<br>我们先使用<code>usera</code>登录跳板服务器</p>
 <blockquote>
-<p>请注意， <code>lsblk</code>输出中的最后一列列出了列出设备的挂载点，如果列出了挂载点，则确认该设备已挂载。</p>
+<p>首先生成密钥对如果有则跳过这一步</p>
 </blockquote>
-</li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210124550.png"></p>
-<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>使用<code>mount</code>命令我们可以更好地控制在 Linux 中挂载和卸载磁盘，并掌握一些技巧，在连接的驱动器无法自动正确挂载时可能会有所帮助。</p>
-<p>在探索以前使用的系统的旧备份映像或想要查看 Linux 发行版映像内容以进行探索或学习时，能够使用循环设备挂载磁盘映像非常有用。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<p>操作演示</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">[sera@serverA ~]$ ssh-keygen -t rsa  <span class="comment">//使用rsa算法加密</span></span><br><span class="line"><span class="title class_">Generating</span> public/private rsa key pair.</span><br><span class="line"><span class="title class_">Enter</span> file <span class="keyword">in</span> which to save the key (<span class="regexp">/home/u</span>sera/.<span class="property">ssh</span>/id_rsa): <span class="comment">//私钥默认保存路径</span></span><br><span class="line"><span class="title class_">Created</span> directory <span class="string">&#x27;/home/usera/.ssh&#x27;</span>.</span><br><span class="line"><span class="title class_">Enter</span> passphrase (empty <span class="keyword">for</span> no passphrase): <span class="comment">//在这里输入密码如果这里输入密码以后登录需要密钥和密码才能登录这里建议直接回车也就是空</span></span><br><span class="line"><span class="title class_">Enter</span> same passphrase <span class="attr">again</span>:</span><br><span class="line"><span class="title class_">Your</span> identification has been saved <span class="keyword">in</span> /home/usera/.<span class="property">ssh</span>/id_rsa.</span><br><span class="line"><span class="title class_">Your</span> public key has been saved <span class="keyword">in</span> /home/usera/.<span class="property">ssh</span>/id_rsa.<span class="property">pub</span>. <span class="comment">//公钥保存路径</span></span><br><span class="line"><span class="title class_">The</span> key fingerprint <span class="attr">is</span>:</span><br><span class="line"><span class="number">39</span>:<span class="attr">f2</span>:<span class="attr">fc</span>:<span class="number">70</span>:<span class="attr">ef</span>:<span class="attr">e9</span>:<span class="attr">bd</span>:<span class="number">05</span>:<span class="number">40</span>:6<span class="attr">e</span>:<span class="number">64</span>:<span class="attr">b0</span>:<span class="number">99</span>:<span class="number">56</span>:6<span class="attr">e</span>:<span class="number">01</span> usera@serverA</span><br><span class="line"><span class="title class_">The</span> key<span class="string">&#x27;s randomart image is:</span></span><br><span class="line"><span class="string">+--[ RSA 2048]----+</span></span><br><span class="line"><span class="string">| Eo* |</span></span><br><span class="line"><span class="string">| @ . |</span></span><br><span class="line"><span class="string">| = * |</span></span><br><span class="line"><span class="string">| o o . |</span></span><br><span class="line"><span class="string">| . S . |</span></span><br><span class="line"><span class="string">| + . . |</span></span><br><span class="line"><span class="string">| + . .|</span></span><br><span class="line"><span class="string">| + . o . |</span></span><br><span class="line"><span class="string">| .o= o. |</span></span><br><span class="line"><span class="string">+-----------------+</span></span><br></pre></td></tr></table></figure>
+
+<p>以下是截图提示</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210216196.png"></p>
+<blockquote>
+<p>id_rsa是私钥，id_rsa.pub是公钥公钥在服务器私钥在自己手上</p>
+</blockquote>
+<p>此时会在<code>/home/usera/.ssh</code>目录下生成密钥对我们使用<code>ls</code>查看一下</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">root@<span class="attr">vultr</span>:~#  ls -la .<span class="property">ssh</span></span><br><span class="line">total <span class="number">16</span></span><br><span class="line">drwx------ <span class="number">2</span> root root <span class="number">4096</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> .</span><br><span class="line">drwx------ <span class="number">5</span> root root <span class="number">4096</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">00</span> ..</span><br><span class="line">-rw------- <span class="number">1</span> root root <span class="number">1675</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> id_rsa</span><br><span class="line">-rw-r--r-- <span class="number">1</span> root root  <span class="number">398</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> id_rsa.<span class="property">pub</span></span><br></pre></td></tr></table></figure>
+
+<p>然后将公钥上传到需要登录的服务器，并以<code>userb</code>用户登录<br>至于上传方式可以用<code>scp</code>以及<code>sz</code>命令这里就介绍了<br>可以参考这篇<a href="https://shagain.club/index.php/archives/111/">文章</a></p>
+<blockquote>
+<p>上传到用户目录下的.ssh文件夹下<code>authorized_keys</code>这个文件是用来存放公钥内容的我们使用<code>cat</code>把公钥追加到<code>authorized_keys</code>这个文件就好了</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">cat id_rsa.<span class="property">pub</span> &gt;&gt; ~<span class="regexp">/.ssh/</span>authorized_keys    <span class="comment">//cat 公钥路径 &gt;&gt; ~/.ssh/authorized_keys</span></span><br></pre></td></tr></table></figure>
+
+<p>这样子我们就配置好了<br>另外我们要注意，<code>.ssh</code>目录的权限为<code>700</code>，其下文件<code>authorized_keys</code>和私钥的权限为<code>600</code>。否则会因为权限问题导致无法免密码登录。我们可以看到登陆后会有<code>known_hosts</code>文件生成。</p>
 ]]></content>
       <categories>
         <category>学习</category>
@@ -632,42 +668,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux通过密钥对免密登录</title>
-    <url>/2022/09/21/Linux%E9%80%9A%E8%BF%87%E5%AF%86%E9%92%A5%E5%AF%B9%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/</url>
-    <content><![CDATA[<p>首先，说明一下我们要做的是，跳板机服务器的<code>usera</code>用户免密码登录B服务器的<code>userb</code>用户。<br>我们先使用<code>usera</code>登录跳板服务器</p>
-<blockquote>
-<p>首先生成密钥对如果有则跳过这一步</p>
-</blockquote>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
-<span id="more"></span>
-<p>操作演示</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">[sera@serverA ~]$ ssh-keygen -t rsa  <span class="comment">//使用rsa算法加密</span></span><br><span class="line"><span class="title class_">Generating</span> public/private rsa key pair.</span><br><span class="line"><span class="title class_">Enter</span> file <span class="keyword">in</span> which to save the key (<span class="regexp">/home/u</span>sera/.<span class="property">ssh</span>/id_rsa): <span class="comment">//私钥默认保存路径</span></span><br><span class="line"><span class="title class_">Created</span> directory <span class="string">&#x27;/home/usera/.ssh&#x27;</span>.</span><br><span class="line"><span class="title class_">Enter</span> passphrase (empty <span class="keyword">for</span> no passphrase): <span class="comment">//在这里输入密码如果这里输入密码以后登录需要密钥和密码才能登录这里建议直接回车也就是空</span></span><br><span class="line"><span class="title class_">Enter</span> same passphrase <span class="attr">again</span>:</span><br><span class="line"><span class="title class_">Your</span> identification has been saved <span class="keyword">in</span> /home/usera/.<span class="property">ssh</span>/id_rsa.</span><br><span class="line"><span class="title class_">Your</span> public key has been saved <span class="keyword">in</span> /home/usera/.<span class="property">ssh</span>/id_rsa.<span class="property">pub</span>. <span class="comment">//公钥保存路径</span></span><br><span class="line"><span class="title class_">The</span> key fingerprint <span class="attr">is</span>:</span><br><span class="line"><span class="number">39</span>:<span class="attr">f2</span>:<span class="attr">fc</span>:<span class="number">70</span>:<span class="attr">ef</span>:<span class="attr">e9</span>:<span class="attr">bd</span>:<span class="number">05</span>:<span class="number">40</span>:6<span class="attr">e</span>:<span class="number">64</span>:<span class="attr">b0</span>:<span class="number">99</span>:<span class="number">56</span>:6<span class="attr">e</span>:<span class="number">01</span> usera@serverA</span><br><span class="line"><span class="title class_">The</span> key<span class="string">&#x27;s randomart image is:</span></span><br><span class="line"><span class="string">+--[ RSA 2048]----+</span></span><br><span class="line"><span class="string">| Eo* |</span></span><br><span class="line"><span class="string">| @ . |</span></span><br><span class="line"><span class="string">| = * |</span></span><br><span class="line"><span class="string">| o o . |</span></span><br><span class="line"><span class="string">| . S . |</span></span><br><span class="line"><span class="string">| + . . |</span></span><br><span class="line"><span class="string">| + . .|</span></span><br><span class="line"><span class="string">| + . o . |</span></span><br><span class="line"><span class="string">| .o= o. |</span></span><br><span class="line"><span class="string">+-----------------+</span></span><br></pre></td></tr></table></figure>
-
-<p>以下是截图提示</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210216196.png"></p>
-<blockquote>
-<p>id_rsa是私钥，id_rsa.pub是公钥公钥在服务器私钥在自己手上</p>
-</blockquote>
-<p>此时会在<code>/home/usera/.ssh</code>目录下生成密钥对我们使用<code>ls</code>查看一下</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">root@<span class="attr">vultr</span>:~#  ls -la .<span class="property">ssh</span></span><br><span class="line">total <span class="number">16</span></span><br><span class="line">drwx------ <span class="number">2</span> root root <span class="number">4096</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> .</span><br><span class="line">drwx------ <span class="number">5</span> root root <span class="number">4096</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">00</span> ..</span><br><span class="line">-rw------- <span class="number">1</span> root root <span class="number">1675</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> id_rsa</span><br><span class="line">-rw-r--r-- <span class="number">1</span> root root  <span class="number">398</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> id_rsa.<span class="property">pub</span></span><br></pre></td></tr></table></figure>
-
-<p>然后将公钥上传到需要登录的服务器，并以<code>userb</code>用户登录<br>至于上传方式可以用<code>scp</code>以及<code>sz</code>命令这里就介绍了<br>可以参考这篇<a href="https://shagain.club/index.php/archives/111/">文章</a></p>
-<blockquote>
-<p>上传到用户目录下的.ssh文件夹下<code>authorized_keys</code>这个文件是用来存放公钥内容的我们使用<code>cat</code>把公钥追加到<code>authorized_keys</code>这个文件就好了</p>
-</blockquote>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">cat id_rsa.<span class="property">pub</span> &gt;&gt; ~<span class="regexp">/.ssh/</span>authorized_keys    <span class="comment">//cat 公钥路径 &gt;&gt; ~/.ssh/authorized_keys</span></span><br></pre></td></tr></table></figure>
-
-<p>这样子我们就配置好了<br>另外我们要注意，<code>.ssh</code>目录的权限为<code>700</code>，其下文件<code>authorized_keys</code>和私钥的权限为<code>600</code>。否则会因为权限问题导致无法免密码登录。我们可以看到登陆后会有<code>known_hosts</code>文件生成。</p>
-]]></content>
-      <categories>
-        <category>学习</category>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Motrix是一款开源免费且界面非常清爽简约的全能型下载软件</title>
     <url>/2022/11/11/Motrix%E6%98%AF%E4%B8%80%E6%AC%BE%E5%BC%80%E6%BA%90%E5%85%8D%E8%B4%B9%E4%B8%94%E7%95%8C%E9%9D%A2%E9%9D%9E%E5%B8%B8%E6%B8%85%E7%88%BD%E7%AE%80%E7%BA%A6%E7%9A%84%E5%85%A8%E8%83%BD%E5%9E%8B%E4%B8%8B%E8%BD%BD%E8%BD%AF%E4%BB%B6/</url>
     <content><![CDATA[<p><a href="https://motrix.app/">下载</a>软件有很多选择，网上就介绍过IDM、Folx、Photon、FDM、迅雷等等，一数一大堆。不过正所谓各花入个眼，还是有很多人想寻找不一样的下载工具。</p>
@@ -712,6 +712,32 @@
       </tags>
   </entry>
   <entry>
+    <title>gpt与mbr分区两者区别</title>
+    <url>/2022/10/06/gpt%E4%B8%8Embr%E5%88%86%E5%8C%BA%E4%B8%A4%E8%80%85%E5%8C%BA%E5%88%AB/</url>
+    <content><![CDATA[<blockquote>
+<p>1、mbr最多支持2T，而gpt理论上是无限制的；2、mbr最多支持四个主分区，gpt没有限制；3、win7只能用mbr分区，从Win8开始微软建议你使用gpt；4、gpt是由uefi启动的，兼容性和稳定性不如bios+mbr。</p>
+</blockquote>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210070127792.jpg"></p>
+<span id="more"></span>
+<p><strong>MBR分区</strong></p>
+<p>MBR的意思是“主引导记录”，是IBM公司早年间提出的。它是存在于磁盘驱动器开始部分的一个特殊的启动扇区。这个扇区包含了已安装的操作系统系统信息，并用一小段代码来启动系统。如果你安装了Windows，其启动信息就放在这一段代码中——如果MBR的信息损坏或误删就不能正常启动Windows，这时候你就需要找一个引导修复软件工具来修复它就可以了。Linux系统中MBR通常会是GRUB加载器。MBR。当一台电脑启动时，它会先启动主板自带的BIOS系统，bios加载MBR，MBR再启动Windows，这就是mbr的启动过程。</p>
+<p><strong>GPT分区</strong></p>
+<p>GPT的意思是GUID Partition Table，即“全局唯一标识磁盘分区表”。他是另外一种更加先进新颖的磁盘组织方式，一种使用<code>UEFI</code>启动的磁盘组织方式。最开始是为了更好的兼容性，后来因为其更大的支持内存（mbr分区最多支持2T的磁盘），更多的兼容而被广泛使用，特别是苹果的MAC系统全部使用gpt分区。gtp不在有分区的概念，所有CDEF盘都在一段信息中存储。可以简单的理解为更先进但是使用不够广泛的技术。</p>
+<p><strong>两者区别</strong></p>
+<p>内存支持：mbr最多支持2T，而gpt理论上是无限制的。</p>
+<p>分区：mbr最多支持四个主分区，gpt没有限制。如果你想跑多系统，mbr最多4个而gpt没有限制。</p>
+<p>系统：win7只能用mbr分区，从Win8开始微软建议你使用gpt。</p>
+<p>其它：gpt是由<code>uefi</code>启动的，而<code>uefi</code>是后来才提出的概念，兼容性和稳定性不如bios+mbr。</p>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>Win</category>
+      </categories>
+      <tags>
+        <tag>技术</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Office用C2R工具在线安装激活</title>
     <url>/2022/09/27/Office%E7%94%A8C2R%E5%B7%A5%E5%85%B7%E5%9C%A8%E7%BA%BF%E5%AE%89%E8%A3%85%E6%BF%80%E6%B4%BB/</url>
     <content><![CDATA[<p>C2R工具下载地址：<a href="https://wwt.lanzouw.com/b03pbhjri#52pj">https://wwt.lanzouw.com/b03pbhjri#52pj</a></p>
@@ -744,50 +770,6 @@
         <tag>Win</tag>
         <tag>Office</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>gpt与mbr分区两者区别</title>
-    <url>/2022/10/06/gpt%E4%B8%8Embr%E5%88%86%E5%8C%BA%E4%B8%A4%E8%80%85%E5%8C%BA%E5%88%AB/</url>
-    <content><![CDATA[<blockquote>
-<p>1、mbr最多支持2T，而gpt理论上是无限制的；2、mbr最多支持四个主分区，gpt没有限制；3、win7只能用mbr分区，从Win8开始微软建议你使用gpt；4、gpt是由uefi启动的，兼容性和稳定性不如bios+mbr。</p>
-</blockquote>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210070127792.jpg"></p>
-<span id="more"></span>
-<p><strong>MBR分区</strong></p>
-<p>MBR的意思是“主引导记录”，是IBM公司早年间提出的。它是存在于磁盘驱动器开始部分的一个特殊的启动扇区。这个扇区包含了已安装的操作系统系统信息，并用一小段代码来启动系统。如果你安装了Windows，其启动信息就放在这一段代码中——如果MBR的信息损坏或误删就不能正常启动Windows，这时候你就需要找一个引导修复软件工具来修复它就可以了。Linux系统中MBR通常会是GRUB加载器。MBR。当一台电脑启动时，它会先启动主板自带的BIOS系统，bios加载MBR，MBR再启动Windows，这就是mbr的启动过程。</p>
-<p><strong>GPT分区</strong></p>
-<p>GPT的意思是GUID Partition Table，即“全局唯一标识磁盘分区表”。他是另外一种更加先进新颖的磁盘组织方式，一种使用<code>UEFI</code>启动的磁盘组织方式。最开始是为了更好的兼容性，后来因为其更大的支持内存（mbr分区最多支持2T的磁盘），更多的兼容而被广泛使用，特别是苹果的MAC系统全部使用gpt分区。gtp不在有分区的概念，所有CDEF盘都在一段信息中存储。可以简单的理解为更先进但是使用不够广泛的技术。</p>
-<p><strong>两者区别</strong></p>
-<p>内存支持：mbr最多支持2T，而gpt理论上是无限制的。</p>
-<p>分区：mbr最多支持四个主分区，gpt没有限制。如果你想跑多系统，mbr最多4个而gpt没有限制。</p>
-<p>系统：win7只能用mbr分区，从Win8开始微软建议你使用gpt。</p>
-<p>其它：gpt是由<code>uefi</code>启动的，而<code>uefi</code>是后来才提出的概念，兼容性和稳定性不如bios+mbr。</p>
-]]></content>
-      <categories>
-        <category>技术</category>
-        <category>Win</category>
-      </categories>
-      <tags>
-        <tag>技术</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2017/08/10/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
   </entry>
   <entry>
     <title>hexo域名解析的两种方法</title>
@@ -845,30 +827,22 @@
       </tags>
   </entry>
   <entry>
-    <title>win10系统电脑图标不见了</title>
-    <url>/2022/10/08/win10%E7%B3%BB%E7%BB%9F%E7%94%B5%E8%84%91%E5%9B%BE%E6%A0%87%E4%B8%8D%E8%A7%81%E4%BA%86/</url>
-    <content><![CDATA[<p>我的电脑图标没了怎么办？，恢复只需4步。刚安装了win10.刚打开的时候发现桌面上没有我的电脑图标，很多人都很不舒服，所以win我的电脑图标没了怎么办？现在小编教你怎么找回<code>我的电脑</code>图标。</p>
-<h4 id="方法-x2F-步骤"><a href="#方法-x2F-步骤" class="headerlink" title="方法&#x2F;步骤"></a>方法&#x2F;步骤</h4><ol>
-<li>进入win系统完成后，默认没有我的计算机图标。<span id="more"></span>
-右击桌面空白处，选择个性化，如下图所示。</li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210080130964.png" alt="个性化设置"></p>
-<ol start="2">
-<li>点击个性化进入个性化窗口，点击个性化窗口上的主题按钮，如下图所示。</li>
-</ol>
-<p>点击后，在主题界面上可以看到桌面图标设置，如下图所示。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210080137105.png" alt="主题"></p>
-<ol start="3">
-<li>点击后，弹出桌面图标设置对话框，如下图所示。</li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210080135900.png" alt="桌面图标设置"></p>
-<ol start="4">
-<li>在左图标设置对话框中检查计算机，然后确定按钮，如下图所示。</li>
-</ol>
+    <title>Hello World</title>
+    <url>/2017/08/10/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
-      <tags>
-        <tag>Win</tag>
-      </tags>
   </entry>
   <entry>
     <title>vscode配置picgo的github的图床</title>
@@ -913,6 +887,32 @@
       </categories>
       <tags>
         <tag>技术</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>win10系统电脑图标不见了</title>
+    <url>/2022/10/08/win10%E7%B3%BB%E7%BB%9F%E7%94%B5%E8%84%91%E5%9B%BE%E6%A0%87%E4%B8%8D%E8%A7%81%E4%BA%86/</url>
+    <content><![CDATA[<p>我的电脑图标没了怎么办？，恢复只需4步。刚安装了win10.刚打开的时候发现桌面上没有我的电脑图标，很多人都很不舒服，所以win我的电脑图标没了怎么办？现在小编教你怎么找回<code>我的电脑</code>图标。</p>
+<h4 id="方法-x2F-步骤"><a href="#方法-x2F-步骤" class="headerlink" title="方法&#x2F;步骤"></a>方法&#x2F;步骤</h4><ol>
+<li>进入win系统完成后，默认没有我的计算机图标。<span id="more"></span>
+右击桌面空白处，选择个性化，如下图所示。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210080130964.png" alt="个性化设置"></p>
+<ol start="2">
+<li>点击个性化进入个性化窗口，点击个性化窗口上的主题按钮，如下图所示。</li>
+</ol>
+<p>点击后，在主题界面上可以看到桌面图标设置，如下图所示。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210080137105.png" alt="主题"></p>
+<ol start="3">
+<li>点击后，弹出桌面图标设置对话框，如下图所示。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210080135900.png" alt="桌面图标设置"></p>
+<ol start="4">
+<li>在左图标设置对话框中检查计算机，然后确定按钮，如下图所示。</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>Win</tag>
       </tags>
   </entry>
   <entry>
@@ -986,38 +986,6 @@
       </tags>
   </entry>
   <entry>
-    <title>修改hosts文件(win系统)</title>
-    <url>/2022/10/07/%E4%BF%AE%E6%94%B9hosts%E6%96%87%E4%BB%B6/</url>
-    <content><![CDATA[<h3 id="hosts作用介绍"><a href="#hosts作用介绍" class="headerlink" title="hosts作用介绍"></a>hosts作用介绍</h3><p>hosts是一个没有扩展名的系统文件，可以用记事本等工具打开，<strong>其作用就是将一些常用的网址域名与其对应的IP地址建立一个关联“数据库”</strong>，当用户在浏览器中输入一个需要登录的网址时，系统会首先自动从Hosts文件中寻找对应的IP地址，一旦找到，系统会立即打开对应网页，如果没有找到，则系统会再将网址提交DNS域名解析服务器进行IP地址的解析。</p>
-<p>需要注意的是，Hosts文件配置的映射是静态的，如果网络上的计算机更改了请及时更新IP地址，否则将不能访问。</p>
-<span id="more"></span>
-<h3 id="修改hosts"><a href="#修改hosts" class="headerlink" title="修改hosts"></a>修改hosts</h3><ol>
-<li>hosts文件路径：<code>C:\Windows\system32\drivers\etc</code></li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210072028616.png" alt="在这里插入图片描述"></p>
-<ol start="2">
-<li>找到hosts文件所在位置后，不要直接去修改该文件，会出现权限不足，无法修改的问题。具体方法是，<strong>在hosts文件上点击鼠标右键，在弹出的选项中，点击打开”属性”</strong></li>
-<li><strong>打开hosts文件属性后，切换到“安全”选项卡，先点击选中需要更改权限的用户或应用程序包，然后点击下方的“编辑”在弹出的编辑权限操作界面，，勾选上下方的“修改”和“写入”权限，完成后，点击右下角的“应用”就可以了，直接给完全控制权限也没问题。</strong></li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210072028119.png" alt="在这里插入图片描述"></p>
-<ol start="4">
-<li><p>应用后弹出一个“Windows安全”提示框，这里我们无需理会，直接点击“是”即可</p>
-</li>
-<li><p>然后用记事本打开即可修改</p>
-</li>
-<li><p>按照<code>ip地址+空格+网址域名</code>修改</p>
-<p>如：<code>112.91.133.72 download.visualstudio.microsoft.com</code></p>
-</li>
-<li><p>如果修改hosts后不生效的话，可能是因为DNS缓存，然后我们清空DNS缓存<br>具体方法：命令行(win + R 输入cmd 按enter)输入<code>ipconfig /flushdns</code>，最好是在获取管理员权限下执行命令。</p>
-</li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210072027410.png" alt="在这里插入图片描述"></p>
-]]></content>
-      <tags>
-        <tag>hosts</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>删除爱奇艺热播视频图标(牛氓)</title>
     <url>/2022/10/03/%E5%88%A0%E9%99%A4%E7%88%B1%E5%A5%87%E8%89%BA%E7%83%AD%E6%92%AD%E8%A7%86%E9%A2%91%E5%9B%BE%E6%A0%87/</url>
     <content><![CDATA[<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210030104950.png" alt="image-20221003010451506"></p>
@@ -1066,6 +1034,38 @@
       </categories>
       <tags>
         <tag>随笔</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>修改hosts文件(win系统)</title>
+    <url>/2022/10/07/%E4%BF%AE%E6%94%B9hosts%E6%96%87%E4%BB%B6/</url>
+    <content><![CDATA[<h3 id="hosts作用介绍"><a href="#hosts作用介绍" class="headerlink" title="hosts作用介绍"></a>hosts作用介绍</h3><p>hosts是一个没有扩展名的系统文件，可以用记事本等工具打开，<strong>其作用就是将一些常用的网址域名与其对应的IP地址建立一个关联“数据库”</strong>，当用户在浏览器中输入一个需要登录的网址时，系统会首先自动从Hosts文件中寻找对应的IP地址，一旦找到，系统会立即打开对应网页，如果没有找到，则系统会再将网址提交DNS域名解析服务器进行IP地址的解析。</p>
+<p>需要注意的是，Hosts文件配置的映射是静态的，如果网络上的计算机更改了请及时更新IP地址，否则将不能访问。</p>
+<span id="more"></span>
+<h3 id="修改hosts"><a href="#修改hosts" class="headerlink" title="修改hosts"></a>修改hosts</h3><ol>
+<li>hosts文件路径：<code>C:\Windows\system32\drivers\etc</code></li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210072028616.png" alt="在这里插入图片描述"></p>
+<ol start="2">
+<li>找到hosts文件所在位置后，不要直接去修改该文件，会出现权限不足，无法修改的问题。具体方法是，<strong>在hosts文件上点击鼠标右键，在弹出的选项中，点击打开”属性”</strong></li>
+<li><strong>打开hosts文件属性后，切换到“安全”选项卡，先点击选中需要更改权限的用户或应用程序包，然后点击下方的“编辑”在弹出的编辑权限操作界面，，勾选上下方的“修改”和“写入”权限，完成后，点击右下角的“应用”就可以了，直接给完全控制权限也没问题。</strong></li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210072028119.png" alt="在这里插入图片描述"></p>
+<ol start="4">
+<li><p>应用后弹出一个“Windows安全”提示框，这里我们无需理会，直接点击“是”即可</p>
+</li>
+<li><p>然后用记事本打开即可修改</p>
+</li>
+<li><p>按照<code>ip地址+空格+网址域名</code>修改</p>
+<p>如：<code>112.91.133.72 download.visualstudio.microsoft.com</code></p>
+</li>
+<li><p>如果修改hosts后不生效的话，可能是因为DNS缓存，然后我们清空DNS缓存<br>具体方法：命令行(win + R 输入cmd 按enter)输入<code>ipconfig /flushdns</code>，最好是在获取管理员权限下执行命令。</p>
+</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210072027410.png" alt="在这里插入图片描述"></p>
+]]></content>
+      <tags>
+        <tag>hosts</tag>
       </tags>
   </entry>
   <entry>
@@ -1339,6 +1339,31 @@
       </tags>
   </entry>
   <entry>
+    <title>将Windows打印机变成网络打印机</title>
+    <url>/2022/09/11/%E5%B0%86Windows%E6%89%93%E5%8D%B0%E6%9C%BA%E5%8F%98%E6%88%90%E7%BD%91%E7%BB%9C%E6%89%93%E5%8D%B0%E6%9C%BA/</url>
+    <content><![CDATA[<p>大家都知道Windows的打印共享一直属于玄学，2000&#x2F;XP&#x2F;2003（NT 5.x）及以前的时代基本还算正常，经过简单的设置总能搞定，自从Vista开始的NT 6.x，尤其到了win10&#x2F;win11时代，Windows的打印共享基本上就变成了玄学，姑且不说很难搞定，就算搞定了，一个补丁也可能把它搞残废。另外，Windows的共享服务一直存在各种安全漏洞，曾经一度被勒索病毒利用，尤其是win7（不能打补丁那种），为了安全，我一般都禁用server服务。</p>
+<span id="more"></span>
+<p>但自带网络接口的打印机从来没有这么复杂，指定IP（端口基本上就是基于raw的9100），安装驱动即可搞定，完全跳过了复杂的samba协议，直接使用TCP&#x2F;IP。如同在Windows下通过http或者ftp共享文件，完全不需要考虑Windows那复杂的共享机制。</p>
+<p>但并不是所有的打印机都带网络接口，虽然现在可以买一个便宜的可以刷固件的路由器（比如坛子里15块收的优酷路由宝刷Padavan或者OpenWRT）当打印服务器使用，但毕竟硬件都不是现成的，而且，投入再小也得投入不是。</p>
+<p>那能不能将Windows直接变成类似的打印服务器呢？答案是：Raw Print Server。这是一个开源的命令行程序，官方网站：<a href="https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/">https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/</a> 。注意，下载1.0版本， 不要下载那个beta版。<a href="https://www.253874.net/attachment?id=72646">RawPrintServer100.zip</a> 也附上了1.0版本的可执行程序及程序源码。</p>
+<p>Github项目链接：<a href="https://github.com/miso-lims/rawprintserver">https://github.com/miso-lims/rawprintserver</a> (这程序从2006年就停止开发了）。</p>
+<p><strong>基本操作流程：</strong></p>
+<p>1、在作为打印服务器的Windows上安装好打印机，以HP LaserJet P1008为例，装好打印机时，最好给打印机改一个简短的名字，例如叫：HP1008。</p>
+<p>2、将rawprintserver.exe复制到Windows的system32目录。</p>
+<p>3、管理员cmd模式下执行：rawprintserver.exe install “HP1008”。注意，这里的打印机名称一定要跟你Windows控制面板中显示的打印机名称一样。该程序会安装一个rawprintserver服务，如果你在上一步操作中没有将该文件复制到system32目录，那就需要修改下对应服务注册表项中的ImagePath项，将该程序的全路径写入，否则服务启动不了。</p>
+<p>4、在打印客户端按添加网络打印机的流程（自动搜索肯定是搜不到的，所以需要手工操作），指定IP地址，默认raw:9100，然后手工指定打印机驱动安装即可。</p>
+<p>5、搞定！</p>
+<p>6、软件运行的日志强行锁死在c:\PrintServer.log，如果出现什么错误，可以查看该日志。</p>
+<p>我试过在win10下安装rawprintserver，win7_x86和win11都可以正常连接并使用。<br><em>相关地址</em><br><a href="https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/"><em>https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/</em></a></p>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>技术</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>密码破解—Hashcat【RAR密码破解】</title>
     <url>/2022/11/21/%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3%E2%80%94Hashcat%E3%80%90RAR%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3%E3%80%91/</url>
     <content><![CDATA[<p>一、Hashcat简介<br>hashcat号称世界上最快的密码破解，世界上第一个唯一的基于GPU、CPU规则引擎，免费多GPU（高达128个GPU），多哈希，多操作系统（Linux和Windows本地二进制文件），多平台（OpenCL和CUDA支持），多算法，资源利用率低，基于字典攻击，支持分布式破解等等，hashcat目前支持各类公开算法高达247类，市面上面公开的密码加密算法基本都支持！</p>
@@ -1407,31 +1432,6 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hashcat.exe -m 13000 -w 4 -a 3 $rar5$16$abb7ce8bab9f25d639093498227aa09c$15$4d38ee3db279154fa08fc6849a80acce$8$ab10d17b2291bf4d -o password.txt </span><br></pre></td></tr></table></figure>
 
 ]]></content>
-  </entry>
-  <entry>
-    <title>将Windows打印机变成网络打印机</title>
-    <url>/2022/09/11/%E5%B0%86Windows%E6%89%93%E5%8D%B0%E6%9C%BA%E5%8F%98%E6%88%90%E7%BD%91%E7%BB%9C%E6%89%93%E5%8D%B0%E6%9C%BA/</url>
-    <content><![CDATA[<p>大家都知道Windows的打印共享一直属于玄学，2000&#x2F;XP&#x2F;2003（NT 5.x）及以前的时代基本还算正常，经过简单的设置总能搞定，自从Vista开始的NT 6.x，尤其到了win10&#x2F;win11时代，Windows的打印共享基本上就变成了玄学，姑且不说很难搞定，就算搞定了，一个补丁也可能把它搞残废。另外，Windows的共享服务一直存在各种安全漏洞，曾经一度被勒索病毒利用，尤其是win7（不能打补丁那种），为了安全，我一般都禁用server服务。</p>
-<span id="more"></span>
-<p>但自带网络接口的打印机从来没有这么复杂，指定IP（端口基本上就是基于raw的9100），安装驱动即可搞定，完全跳过了复杂的samba协议，直接使用TCP&#x2F;IP。如同在Windows下通过http或者ftp共享文件，完全不需要考虑Windows那复杂的共享机制。</p>
-<p>但并不是所有的打印机都带网络接口，虽然现在可以买一个便宜的可以刷固件的路由器（比如坛子里15块收的优酷路由宝刷Padavan或者OpenWRT）当打印服务器使用，但毕竟硬件都不是现成的，而且，投入再小也得投入不是。</p>
-<p>那能不能将Windows直接变成类似的打印服务器呢？答案是：Raw Print Server。这是一个开源的命令行程序，官方网站：<a href="https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/">https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/</a> 。注意，下载1.0版本， 不要下载那个beta版。<a href="https://www.253874.net/attachment?id=72646">RawPrintServer100.zip</a> 也附上了1.0版本的可执行程序及程序源码。</p>
-<p>Github项目链接：<a href="https://github.com/miso-lims/rawprintserver">https://github.com/miso-lims/rawprintserver</a> (这程序从2006年就停止开发了）。</p>
-<p><strong>基本操作流程：</strong></p>
-<p>1、在作为打印服务器的Windows上安装好打印机，以HP LaserJet P1008为例，装好打印机时，最好给打印机改一个简短的名字，例如叫：HP1008。</p>
-<p>2、将rawprintserver.exe复制到Windows的system32目录。</p>
-<p>3、管理员cmd模式下执行：rawprintserver.exe install “HP1008”。注意，这里的打印机名称一定要跟你Windows控制面板中显示的打印机名称一样。该程序会安装一个rawprintserver服务，如果你在上一步操作中没有将该文件复制到system32目录，那就需要修改下对应服务注册表项中的ImagePath项，将该程序的全路径写入，否则服务启动不了。</p>
-<p>4、在打印客户端按添加网络打印机的流程（自动搜索肯定是搜不到的，所以需要手工操作），指定IP地址，默认raw:9100，然后手工指定打印机驱动安装即可。</p>
-<p>5、搞定！</p>
-<p>6、软件运行的日志强行锁死在c:\PrintServer.log，如果出现什么错误，可以查看该日志。</p>
-<p>我试过在win10下安装rawprintserver，win7_x86和win11都可以正常连接并使用。<br><em>相关地址</em><br><a href="https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/"><em>https://sourceforge.net/projects/rawprintserver/files/RawPrintServer/</em></a></p>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>技术</tag>
-      </tags>
   </entry>
   <entry>
     <title>将Windows的文档目录迁移到其他盘下</title>
@@ -1516,47 +1516,6 @@
       </tags>
   </entry>
   <entry>
-    <title>【 Office技能扩展】 Office Tool Plus 高级教程</title>
-    <url>/2022/09/27/%E6%8A%80%E8%83%BD%E6%89%A9%E5%B1%95Office/</url>
-    <content><![CDATA[<h3 id="遵循"><a href="#遵循" class="headerlink" title="遵循"></a>遵循</h3><p>请按照正确的步骤操作，否则可能出现意外的结果。</p>
-<p>同时为了避免出现一些未知的问题，请务必使用最新版的 Office Tool Plus。</p>
-<p><strong>在这里要清楚两个概念：</strong></p>
-<p>产品指的是 Office 2019，Microsoft 365 等。</p>
-<span id="more"></span>
-<p>而应用程序指的是产品附带的 Excel，PowerPoint，Word 等。</p>
-<h3 id="使用-Office-Tool-Plus-的进阶操作"><a href="#使用-Office-Tool-Plus-的进阶操作" class="headerlink" title="使用 Office Tool Plus 的进阶操作"></a>使用 Office Tool Plus 的进阶操作</h3><h5 id="增删应用程序（例如-Access，PowerPoint）"><a href="#增删应用程序（例如-Access，PowerPoint）" class="headerlink" title="增删应用程序（例如 Access，PowerPoint）"></a>增删应用程序（例如 Access，PowerPoint）</h5><p>在部署页面的应用程序卡片中，将自己想要的应用程序打勾，不想要的取消打勾，</p>
-<p>然后点击开始部署，即可增加&#x2F;卸载指定的应用程序。</p>
-<p>扩展：</p>
-<p>如果您想添加一个 Access，但是发现应用程序里面没有 Access 可以选？</p>
-<p>添加一个产品，选择 Access 即可，可以选择 Access 2019 - 批量版，好激活。</p>
-<h5 id="增删一个或多个产品（语言包同理）"><a href="#增删一个或多个产品（语言包同理）" class="headerlink" title="增删一个或多个产品（语言包同理）"></a>增删一个或多个产品（语言包同理）</h5><p>Office Tool Plus 中可以在已安装 Office 的情况下增加一个或者多个产品，</p>
-<p>添加完成后，直接开始部署即可。</p>
-<p>如果新增的产品需要激活，根据教程选取对应的激活代码，或者单独对其进行手动激活即可。</p>
-<p>在系统自带的程序管理中，我们可以一次性卸载单个产品。</p>
-<p>如果要一次性删除多个产品，在部署页面点击产品&#x2F;语言的卸载，然后开始部署即可。</p>
-<h5 id="在不卸载重装的情况下使用现有安装包更新-Office"><a href="#在不卸载重装的情况下使用现有安装包更新-Office" class="headerlink" title="在不卸载重装的情况下使用现有安装包更新 Office"></a>在不卸载重装的情况下使用现有安装包更新 Office</h5><p>使用此功能前，要确保 Office Tool Plus 中已加载并能识别现有的安装包。</p>
-<p>在部署页面添加跟现有的一摸一样的产品，然后开始部署即可。</p>
-<h5 id="一步到位迁移体系结构"><a href="#一步到位迁移体系结构" class="headerlink" title="一步到位迁移体系结构"></a>一步到位迁移体系结构</h5><p>如果要将 Office 从 32 位迁移到 64 位（反之同理），正常情况下需要人工值守完成卸载+重新安装的操作。</p>
-<p>而 Office 部署工具支持自动化执行此操作，只需在 Office Tool Plus 内做好配置即可。</p>
-<p>打开部署页面，做好以下操作：</p>
-<ol>
-<li>将体系结构换成自己想要的，比如从 32 迁移到 64 位，那么现在就选 64 位的。</li>
-<li>将 高级设置- 升级选项 - 迁移体系结构 打勾</li>
-</ol>
-<p>由于这是个重新安装的操作，因此建议使用下载后安装或指定 Office 安装文件源。</p>
-<h3 id="微软官方技术文档"><a href="#微软官方技术文档" class="headerlink" title="微软官方技术文档"></a>微软官方技术文档</h3><p>微软官方的技术文档中有一部分功能&#x2F;词汇的解释，如有需要可前去查看了解。</p>
-<p><a href="https://support.microsoft.com/zh-cn/office/%E9%80%89%E6%8B%A9-64-%E4%BD%8D%E6%88%96-32-%E4%BD%8D%E7%89%88%E6%9C%AC%E7%9A%84-office-2dee7807-8f95-4d0c-b5fe-6c6f49b8d261">【版本选择】选择 64 位或 32 位版本的 Office</a></p>
-<p><a href="https://docs.microsoft.com/zh-cn/deployoffice/overview-update-channels">【通道区别】Microsoft 365 应用版的更新通道概述</a></p>
-<p><a href="https://docs.microsoft.com/zh-cn/officeupdates/update-history-microsoft365-apps-by-date">【通道更新历史】Microsoft 365 应用版的更新历史记录</a></p>
-<h3 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h3><p>如果本文内容有误或者有任何疑问，欢迎留言一起讨论。</p>
-<p>如果您觉得这篇文章对您有用的话，别忘了点个赞哦！</p>
-<p>坐等屏幕前的大帅哥、小姐姐打赏个鸡腿  :happy:</p>
-]]></content>
-      <tags>
-        <tag>Office</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>【激活 Office】 Office Tool Plus 入门教程</title>
     <url>/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/</url>
     <content><![CDATA[<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>正版用户一般情况下不需要使用 Office Tool Plus 进行激活，登录账号&#x2F;输入密钥即可激活 Office。</p>
@@ -1636,48 +1595,44 @@
       </tags>
   </entry>
   <entry>
-    <title>热血传奇幻境迷宫、屠龙殿、圣域地图走法图解</title>
-    <url>/2022/08/31/%E7%83%AD%E8%A1%80%E4%BC%A0%E5%A5%87%E5%B9%BB%E5%A2%83%E8%BF%B7%E5%AE%AB%E3%80%81%E5%B1%A0%E9%BE%99%E6%AE%BF%E3%80%81%E5%9C%A3%E5%9F%9F%E5%9C%B0%E5%9B%BE%E8%B5%B0%E6%B3%95%E5%9B%BE%E8%A7%A3/</url>
-    <content><![CDATA[<p>小编精心总结了热血传奇幻境从幻境一层—幻境迷宫—幻境十层—屠龙殿—圣域之门地图的全部走法攻略，通过图文解说+参考视频进行了详尽的描述，愿可以帮助到您。</p>
-<h2 id="热血传奇幻境一层走法："><a href="#热血传奇幻境一层走法：" class="headerlink" title="热血传奇幻境一层走法："></a>热血传奇幻境一层走法：</h2><p>从幻境老人处花费金币进入。</p>
+    <title>【 Office技能扩展】 Office Tool Plus 高级教程</title>
+    <url>/2022/09/27/%E6%8A%80%E8%83%BD%E6%89%A9%E5%B1%95Office/</url>
+    <content><![CDATA[<h3 id="遵循"><a href="#遵循" class="headerlink" title="遵循"></a>遵循</h3><p>请按照正确的步骤操作，否则可能出现意外的结果。</p>
+<p>同时为了避免出现一些未知的问题，请务必使用最新版的 Office Tool Plus。</p>
+<p><strong>在这里要清楚两个概念：</strong></p>
+<p>产品指的是 Office 2019，Microsoft 365 等。</p>
 <span id="more"></span>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310049612.jpeg" alt="img"></p>
-<h2 id="热血传奇幻境二层："><a href="#热血传奇幻境二层：" class="headerlink" title="热血传奇幻境二层："></a>热血传奇幻境二层：</h2><p>幻一地图左上角，坐标（12：11）</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310049678.jpeg" alt="img"></p>
-<h2 id="热血传奇幻境三层："><a href="#热血传奇幻境三层：" class="headerlink" title="热血传奇幻境三层："></a>热血传奇幻境三层：</h2><p>幻二地图右上角，坐标（362：230）</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310049989.jpeg" alt="img"></p>
-<h2 id="热血传奇幻境四层走法："><a href="#热血传奇幻境四层走法：" class="headerlink" title="热血传奇幻境四层走法："></a>热血传奇幻境四层走法：</h2><p>幻三一直向右走….</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310050797.jpeg" alt="img"></p>
-<p>坐标（83：83）点击幻境向导进入幻境四层</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310050225.jpeg" alt="img"></p>
-<h2 id="热血传奇幻境五层走法："><a href="#热血传奇幻境五层走法：" class="headerlink" title="热血传奇幻境五层走法："></a>热血传奇幻境五层走法：</h2><p>幻境四层地图右上角（191：123）进入</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310050461.jpeg" alt="img"></p>
-<h2 id="热血传奇幻境六层走法："><a href="#热血传奇幻境六层走法：" class="headerlink" title="热血传奇幻境六层走法："></a>热血传奇幻境六层走法：</h2><p>幻境五层地图下面坐标（38：228）进入</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310050589.jpeg" alt="img"></p>
-<h2 id="热血传奇幻境七层走法："><a href="#热血传奇幻境七层走法：" class="headerlink" title="热血传奇幻境七层走法："></a>热血传奇幻境七层走法：</h2><p>幻境六层地图坐标（82：26）走到这附近会跳出来古墓尸王，他出来的那个坑走进去就进入幻境七层了。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310050736.jpeg" alt="img"></p>
-<h2 id="热血传奇幻境迷宫入口："><a href="#热血传奇幻境迷宫入口：" class="headerlink" title="热血传奇幻境迷宫入口："></a>热血传奇幻境迷宫入口：</h2><p>幻境七层地图左上角（121：12）进入。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310051440.jpeg" alt="img"></p>
-<h2 id="幻境迷宫走法："><a href="#幻境迷宫走法：" class="headerlink" title="幻境迷宫走法："></a>幻境迷宫走法：</h2><h4 id="上——上——左——下——右——下，图中已标注具体方向。"><a href="#上——上——左——下——右——下，图中已标注具体方向。" class="headerlink" title="上——上——左——下——右——下，图中已标注具体方向。"></a>上——上——左——下——右——下，图中已标注具体方向。</h4><h2 id="热血传奇幻境八层走法："><a href="#热血传奇幻境八层走法：" class="headerlink" title="热血传奇幻境八层走法："></a>热血传奇幻境八层走法：</h2><p>幻境迷宫下一层进入</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310051118.jpeg" alt="img"></p>
-<h2 id="热血传奇幻境九层走法："><a href="#热血传奇幻境九层走法：" class="headerlink" title="热血传奇幻境九层走法："></a>热血传奇幻境九层走法：</h2><p>幻境八层左边（22：29）进入。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310051707.jpeg" alt="img"></p>
-<h2 id="热血传奇幻境十层屠龙殿走法："><a href="#热血传奇幻境十层屠龙殿走法：" class="headerlink" title="热血传奇幻境十层屠龙殿走法："></a>热血传奇幻境十层屠龙殿走法：</h2><p>幻境九层地图中上的位置坐标（151：105）进入，如图所示。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310051054.jpeg" alt="img"></p>
-<p>幻境十层屠龙殿…</p>
-<h2 id="热血传奇圣域之门入口："><a href="#热血传奇圣域之门入口：" class="headerlink" title="热血传奇圣域之门入口："></a>热血传奇圣域之门入口：</h2><p>在幻十地图最右边（370：374）点击NPC进入。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310051114.jpeg" alt="img"></p>
-<h2 id="热血传奇圣域之门走法："><a href="#热血传奇圣域之门走法：" class="headerlink" title="热血传奇圣域之门走法："></a>热血传奇圣域之门走法：</h2><p>从幻十传送到圣域之门时坐标是随机的，这时候就需要用到随机传送卷了（如果有传送戒指更佳），将自己的坐标放到9：11周围，但不能在9：11上。</p>
-<p>如图，我将自己坐标放在了9：10上，这时我向下走一步就进到圣域教主的房间里了。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310051458.jpeg" alt="img"></p>
+<p>而应用程序指的是产品附带的 Excel，PowerPoint，Word 等。</p>
+<h3 id="使用-Office-Tool-Plus-的进阶操作"><a href="#使用-Office-Tool-Plus-的进阶操作" class="headerlink" title="使用 Office Tool Plus 的进阶操作"></a>使用 Office Tool Plus 的进阶操作</h3><h5 id="增删应用程序（例如-Access，PowerPoint）"><a href="#增删应用程序（例如-Access，PowerPoint）" class="headerlink" title="增删应用程序（例如 Access，PowerPoint）"></a>增删应用程序（例如 Access，PowerPoint）</h5><p>在部署页面的应用程序卡片中，将自己想要的应用程序打勾，不想要的取消打勾，</p>
+<p>然后点击开始部署，即可增加&#x2F;卸载指定的应用程序。</p>
+<p>扩展：</p>
+<p>如果您想添加一个 Access，但是发现应用程序里面没有 Access 可以选？</p>
+<p>添加一个产品，选择 Access 即可，可以选择 Access 2019 - 批量版，好激活。</p>
+<h5 id="增删一个或多个产品（语言包同理）"><a href="#增删一个或多个产品（语言包同理）" class="headerlink" title="增删一个或多个产品（语言包同理）"></a>增删一个或多个产品（语言包同理）</h5><p>Office Tool Plus 中可以在已安装 Office 的情况下增加一个或者多个产品，</p>
+<p>添加完成后，直接开始部署即可。</p>
+<p>如果新增的产品需要激活，根据教程选取对应的激活代码，或者单独对其进行手动激活即可。</p>
+<p>在系统自带的程序管理中，我们可以一次性卸载单个产品。</p>
+<p>如果要一次性删除多个产品，在部署页面点击产品&#x2F;语言的卸载，然后开始部署即可。</p>
+<h5 id="在不卸载重装的情况下使用现有安装包更新-Office"><a href="#在不卸载重装的情况下使用现有安装包更新-Office" class="headerlink" title="在不卸载重装的情况下使用现有安装包更新 Office"></a>在不卸载重装的情况下使用现有安装包更新 Office</h5><p>使用此功能前，要确保 Office Tool Plus 中已加载并能识别现有的安装包。</p>
+<p>在部署页面添加跟现有的一摸一样的产品，然后开始部署即可。</p>
+<h5 id="一步到位迁移体系结构"><a href="#一步到位迁移体系结构" class="headerlink" title="一步到位迁移体系结构"></a>一步到位迁移体系结构</h5><p>如果要将 Office 从 32 位迁移到 64 位（反之同理），正常情况下需要人工值守完成卸载+重新安装的操作。</p>
+<p>而 Office 部署工具支持自动化执行此操作，只需在 Office Tool Plus 内做好配置即可。</p>
+<p>打开部署页面，做好以下操作：</p>
+<ol>
+<li>将体系结构换成自己想要的，比如从 32 迁移到 64 位，那么现在就选 64 位的。</li>
+<li>将 高级设置- 升级选项 - 迁移体系结构 打勾</li>
+</ol>
+<p>由于这是个重新安装的操作，因此建议使用下载后安装或指定 Office 安装文件源。</p>
+<h3 id="微软官方技术文档"><a href="#微软官方技术文档" class="headerlink" title="微软官方技术文档"></a>微软官方技术文档</h3><p>微软官方的技术文档中有一部分功能&#x2F;词汇的解释，如有需要可前去查看了解。</p>
+<p><a href="https://support.microsoft.com/zh-cn/office/%E9%80%89%E6%8B%A9-64-%E4%BD%8D%E6%88%96-32-%E4%BD%8D%E7%89%88%E6%9C%AC%E7%9A%84-office-2dee7807-8f95-4d0c-b5fe-6c6f49b8d261">【版本选择】选择 64 位或 32 位版本的 Office</a></p>
+<p><a href="https://docs.microsoft.com/zh-cn/deployoffice/overview-update-channels">【通道区别】Microsoft 365 应用版的更新通道概述</a></p>
+<p><a href="https://docs.microsoft.com/zh-cn/officeupdates/update-history-microsoft365-apps-by-date">【通道更新历史】Microsoft 365 应用版的更新历史记录</a></p>
+<h3 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h3><p>如果本文内容有误或者有任何疑问，欢迎留言一起讨论。</p>
+<p>如果您觉得这篇文章对您有用的话，别忘了点个赞哦！</p>
+<p>坐等屏幕前的大帅哥、小姐姐打赏个鸡腿  :happy:</p>
 ]]></content>
-      <categories>
-        <category>游戏</category>
-      </categories>
       <tags>
-        <tag>传奇</tag>
-        <tag>幻境</tag>
-        <tag>攻略</tag>
+        <tag>Office</tag>
       </tags>
   </entry>
   <entry>
@@ -1791,8 +1746,53 @@
       </categories>
       <tags>
         <tag>传奇</tag>
-        <tag>攻略</tag>
         <tag>魔龙</tag>
+        <tag>攻略</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>热血传奇幻境迷宫、屠龙殿、圣域地图走法图解</title>
+    <url>/2022/08/31/%E7%83%AD%E8%A1%80%E4%BC%A0%E5%A5%87%E5%B9%BB%E5%A2%83%E8%BF%B7%E5%AE%AB%E3%80%81%E5%B1%A0%E9%BE%99%E6%AE%BF%E3%80%81%E5%9C%A3%E5%9F%9F%E5%9C%B0%E5%9B%BE%E8%B5%B0%E6%B3%95%E5%9B%BE%E8%A7%A3/</url>
+    <content><![CDATA[<p>小编精心总结了热血传奇幻境从幻境一层—幻境迷宫—幻境十层—屠龙殿—圣域之门地图的全部走法攻略，通过图文解说+参考视频进行了详尽的描述，愿可以帮助到您。</p>
+<h2 id="热血传奇幻境一层走法："><a href="#热血传奇幻境一层走法：" class="headerlink" title="热血传奇幻境一层走法："></a>热血传奇幻境一层走法：</h2><p>从幻境老人处花费金币进入。</p>
+<span id="more"></span>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310049612.jpeg" alt="img"></p>
+<h2 id="热血传奇幻境二层："><a href="#热血传奇幻境二层：" class="headerlink" title="热血传奇幻境二层："></a>热血传奇幻境二层：</h2><p>幻一地图左上角，坐标（12：11）</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310049678.jpeg" alt="img"></p>
+<h2 id="热血传奇幻境三层："><a href="#热血传奇幻境三层：" class="headerlink" title="热血传奇幻境三层："></a>热血传奇幻境三层：</h2><p>幻二地图右上角，坐标（362：230）</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310049989.jpeg" alt="img"></p>
+<h2 id="热血传奇幻境四层走法："><a href="#热血传奇幻境四层走法：" class="headerlink" title="热血传奇幻境四层走法："></a>热血传奇幻境四层走法：</h2><p>幻三一直向右走….</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310050797.jpeg" alt="img"></p>
+<p>坐标（83：83）点击幻境向导进入幻境四层</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310050225.jpeg" alt="img"></p>
+<h2 id="热血传奇幻境五层走法："><a href="#热血传奇幻境五层走法：" class="headerlink" title="热血传奇幻境五层走法："></a>热血传奇幻境五层走法：</h2><p>幻境四层地图右上角（191：123）进入</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310050461.jpeg" alt="img"></p>
+<h2 id="热血传奇幻境六层走法："><a href="#热血传奇幻境六层走法：" class="headerlink" title="热血传奇幻境六层走法："></a>热血传奇幻境六层走法：</h2><p>幻境五层地图下面坐标（38：228）进入</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310050589.jpeg" alt="img"></p>
+<h2 id="热血传奇幻境七层走法："><a href="#热血传奇幻境七层走法：" class="headerlink" title="热血传奇幻境七层走法："></a>热血传奇幻境七层走法：</h2><p>幻境六层地图坐标（82：26）走到这附近会跳出来古墓尸王，他出来的那个坑走进去就进入幻境七层了。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310050736.jpeg" alt="img"></p>
+<h2 id="热血传奇幻境迷宫入口："><a href="#热血传奇幻境迷宫入口：" class="headerlink" title="热血传奇幻境迷宫入口："></a>热血传奇幻境迷宫入口：</h2><p>幻境七层地图左上角（121：12）进入。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310051440.jpeg" alt="img"></p>
+<h2 id="幻境迷宫走法："><a href="#幻境迷宫走法：" class="headerlink" title="幻境迷宫走法："></a>幻境迷宫走法：</h2><h4 id="上——上——左——下——右——下，图中已标注具体方向。"><a href="#上——上——左——下——右——下，图中已标注具体方向。" class="headerlink" title="上——上——左——下——右——下，图中已标注具体方向。"></a>上——上——左——下——右——下，图中已标注具体方向。</h4><h2 id="热血传奇幻境八层走法："><a href="#热血传奇幻境八层走法：" class="headerlink" title="热血传奇幻境八层走法："></a>热血传奇幻境八层走法：</h2><p>幻境迷宫下一层进入</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310051118.jpeg" alt="img"></p>
+<h2 id="热血传奇幻境九层走法："><a href="#热血传奇幻境九层走法：" class="headerlink" title="热血传奇幻境九层走法："></a>热血传奇幻境九层走法：</h2><p>幻境八层左边（22：29）进入。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310051707.jpeg" alt="img"></p>
+<h2 id="热血传奇幻境十层屠龙殿走法："><a href="#热血传奇幻境十层屠龙殿走法：" class="headerlink" title="热血传奇幻境十层屠龙殿走法："></a>热血传奇幻境十层屠龙殿走法：</h2><p>幻境九层地图中上的位置坐标（151：105）进入，如图所示。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310051054.jpeg" alt="img"></p>
+<p>幻境十层屠龙殿…</p>
+<h2 id="热血传奇圣域之门入口："><a href="#热血传奇圣域之门入口：" class="headerlink" title="热血传奇圣域之门入口："></a>热血传奇圣域之门入口：</h2><p>在幻十地图最右边（370：374）点击NPC进入。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310051114.jpeg" alt="img"></p>
+<h2 id="热血传奇圣域之门走法："><a href="#热血传奇圣域之门走法：" class="headerlink" title="热血传奇圣域之门走法："></a>热血传奇圣域之门走法：</h2><p>从幻十传送到圣域之门时坐标是随机的，这时候就需要用到随机传送卷了（如果有传送戒指更佳），将自己的坐标放到9：11周围，但不能在9：11上。</p>
+<p>如图，我将自己坐标放在了9：10上，这时我向下走一步就进到圣域教主的房间里了。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208310051458.jpeg" alt="img"></p>
+]]></content>
+      <categories>
+        <category>游戏</category>
+      </categories>
+      <tags>
+        <tag>传奇</tag>
+        <tag>攻略</tag>
+        <tag>幻境</tag>
       </tags>
   </entry>
   <entry>
@@ -1927,6 +1927,29 @@
       </tags>
   </entry>
   <entry>
+    <title>程序员的青春饭</title>
+    <url>/2022/10/24/%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E9%9D%92%E6%98%A5%E9%A5%AD/</url>
+    <content><![CDATA[<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210242036293.png" alt="img"></p>
+<blockquote>
+<p>　　&gt; 　　在程序员节这一天，我们与多位从业者进行了探讨。他们中很多人存在焦虑，尤其到了中年，面对职场与家庭的重重压力，他们的生活真的有不堪吗？</p>
+</blockquote>
+<span id="more"></span>
+<p>　　今天，1024程序员节如期而至。这一天，很多企业给自己的程序员准备了格子衫、特别演出以及丰富的下午茶……并且鼓励他们在这一天早早回家，拒绝加班。</p>
+<p>　　然而，个别节日的礼遇，改变不了长期高强度工作带给程序员们的心理压力和焦虑。在与《财瞭》沟通中，多位已在职场滚爬多年的程序员仍吐槽道，“工作强度太大了，感觉身体快要吃不消。”而在谈及35岁后的职场规划时，个别自觉升职无望的程序员更是担忧道，“想到那时候上有老下有下，职场上对大龄程序员也不太友好，真不知道如何自处。”</p>
+<p>　　35岁程序员的生活真的有那么不堪吗？在与多位年龄超过35岁的资深程序员交流后，我们得到了不一样的答案。</p>
+<p>　　<strong>程序员不是青春饭，不该存在年龄偏见</strong></p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210242037850.png" alt="img"></p>
+<p>在国内，由于工程师红利的存在，在有着相同的竞争优势下，企业自然希望优先选择那些刚毕业的学生。于是年龄大且相对缺乏竞争力的人，就不容易被友好地对待。本质上，这还是一个竞争的问题，并没有太多很好的手段从根本上去解决这些问题。</p>
+<p>“我们只能通过自己的改变去迎接这种现状，每个人都要面对这个问题，竞争是与生俱来的，我们只能提升自己。”廖浩表示。在一个高速竞争的环境下，对于软件行业的从业者而言，持续不断地提升自己不是可选项，而是必选项。“35岁的焦虑并不可怕，可怕的是因为焦虑而忘记了前进。”</p>
+<p>　　<strong>结语：关注程序员发展，不可涸泽而渔</strong></p>
+<p>　　当前，虽然最高人民法院、人力资源和社会保障部已向社会公开发布的《劳动人事争议典型案例》中明确指出，“996”严重违反法律关于延长工作时间上限的规定，相关公司规章制度应认定为无效。然而在众多互联网企业中，加班加点赶进度，昼夜不舍忙业务的现象仍层出不穷。尤其在程序开发领域，程序开发人员加班也成为了常态。</p>
+<p>　　在袁进辉看来，企业如果过于追求把程序员现有的能力发挥出来，但是忘记了为其提供相应的成长机会，程序员的发展也将会逐渐停滞不前，最终浮于表面同时被业务拖累。1024程序员节，企业在给予程序员们一时的优待与礼遇之时，也更应该考虑如何关注程序员们的长期可持续发展，而不是一味索求“涸泽而渔”。</p>
+]]></content>
+      <tags>
+        <tag>随笔</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>祖玛阁全地图走法汇总</title>
     <url>/2022/10/03/%E7%A5%96%E7%8E%9B%E9%98%81%E5%85%A8%E5%9C%B0%E5%9B%BE%E8%B5%B0%E6%B3%95%E6%B1%87%E6%80%BB/</url>
     <content><![CDATA[<p>在传奇游戏中祖玛阁是一个迷宫式的地图，玩家需要走出正确的进行路线才能前往下一层，每一个不同的走法都可能抵达不同的地点。熟悉走法的玩家来说这就是一个高效的练级圣地，对于不熟悉的玩家来说纵膈总共108个房间的祖玛阁怎么走?是最困扰玩家的问题之一。</p>
@@ -1955,29 +1978,6 @@
       </categories>
       <tags>
         <tag>传奇</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>程序员的青春饭</title>
-    <url>/2022/10/24/%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E9%9D%92%E6%98%A5%E9%A5%AD/</url>
-    <content><![CDATA[<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210242036293.png" alt="img"></p>
-<blockquote>
-<p>　　&gt; 　　在程序员节这一天，我们与多位从业者进行了探讨。他们中很多人存在焦虑，尤其到了中年，面对职场与家庭的重重压力，他们的生活真的有不堪吗？</p>
-</blockquote>
-<span id="more"></span>
-<p>　　今天，1024程序员节如期而至。这一天，很多企业给自己的程序员准备了格子衫、特别演出以及丰富的下午茶……并且鼓励他们在这一天早早回家，拒绝加班。</p>
-<p>　　然而，个别节日的礼遇，改变不了长期高强度工作带给程序员们的心理压力和焦虑。在与《财瞭》沟通中，多位已在职场滚爬多年的程序员仍吐槽道，“工作强度太大了，感觉身体快要吃不消。”而在谈及35岁后的职场规划时，个别自觉升职无望的程序员更是担忧道，“想到那时候上有老下有下，职场上对大龄程序员也不太友好，真不知道如何自处。”</p>
-<p>　　35岁程序员的生活真的有那么不堪吗？在与多位年龄超过35岁的资深程序员交流后，我们得到了不一样的答案。</p>
-<p>　　<strong>程序员不是青春饭，不该存在年龄偏见</strong></p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210242037850.png" alt="img"></p>
-<p>在国内，由于工程师红利的存在，在有着相同的竞争优势下，企业自然希望优先选择那些刚毕业的学生。于是年龄大且相对缺乏竞争力的人，就不容易被友好地对待。本质上，这还是一个竞争的问题，并没有太多很好的手段从根本上去解决这些问题。</p>
-<p>“我们只能通过自己的改变去迎接这种现状，每个人都要面对这个问题，竞争是与生俱来的，我们只能提升自己。”廖浩表示。在一个高速竞争的环境下，对于软件行业的从业者而言，持续不断地提升自己不是可选项，而是必选项。“35岁的焦虑并不可怕，可怕的是因为焦虑而忘记了前进。”</p>
-<p>　　<strong>结语：关注程序员发展，不可涸泽而渔</strong></p>
-<p>　　当前，虽然最高人民法院、人力资源和社会保障部已向社会公开发布的《劳动人事争议典型案例》中明确指出，“996”严重违反法律关于延长工作时间上限的规定，相关公司规章制度应认定为无效。然而在众多互联网企业中，加班加点赶进度，昼夜不舍忙业务的现象仍层出不穷。尤其在程序开发领域，程序开发人员加班也成为了常态。</p>
-<p>　　在袁进辉看来，企业如果过于追求把程序员现有的能力发挥出来，但是忘记了为其提供相应的成长机会，程序员的发展也将会逐渐停滞不前，最终浮于表面同时被业务拖累。1024程序员节，企业在给予程序员们一时的优待与礼遇之时，也更应该考虑如何关注程序员们的长期可持续发展，而不是一味索求“涸泽而渔”。</p>
-]]></content>
-      <tags>
-        <tag>随笔</tag>
       </tags>
   </entry>
   <entry>
