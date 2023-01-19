@@ -1,6 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>CDPUserSvc_***停止了工作，无法禁用服务</title>
+    <url>/2022/10/08/CDPUserSvc-%E5%81%9C%E6%AD%A2%E4%BA%86%E5%B7%A5%E4%BD%9C%EF%BC%8C%E6%97%A0%E6%B3%95%E7%A6%81%E7%94%A8%E6%9C%8D%E5%8A%A1/</url>
+    <content><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>今天跟大家讲解下有关电脑方面的小知识什么是CDPUserSvc?如何进行相关操作 ，相信对电脑感兴趣的小伙伴们对这个话题应该也很关注吧，小编也收集到了有关什么是CDPUserSvc?如何进行相关操作 的相关资料，希望大家看到了会喜欢。</p>
+<p>最近有用户反映，自己的Win10系统电脑在开机的时候出现了一个问题，CDPUserSvc停止了工作，第一次遇到这种情况，不知道是什么，自然野不会处理该问题， 　　</p>
+<p>在Win10系统中我们可能会看到CDPUserSvc_随机数字，这样的服务，很多用户不知道CDPUserSvc服务是什么，相要操作禁止启动，却提示参数错误，那么CDPUserSvc服务有什么作用，可以禁用吗 又如何禁用呢 当它运行出问题时又该如何决解 电脑配置网小编告诉大家这个问题的处理方式。</p>
+<span id="more"></span>
+<blockquote>
+<p>CDPUserSvc服务是什么官方描述：它是连接设备平台服务的一部分。CDP服务：此服务用于连接设备和通用glass场景 　　貌似普通用户没什么用，大家不禁用也好，如果要禁用可以参考下面方法。</p>
+</blockquote>
+<h3 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h3><p>CDPUserSvc服务禁用方法：运行regedit打开这个子项<code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\ </code>　</p>
+<p>将下面子项属性修改</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">OneSyncSvc的start属性修改为3 </span><br><span class="line">OneSyncSvc_随机数字 的start属性修改为3</span><br><span class="line">UserDataSvc的start属性修改为3</span><br><span class="line">UserDataSvc_随机数字 的start属性修改为3</span><br><span class="line">CDPSvc的start属性修改为3</span><br><span class="line">CDPUserSvc的start属性修改为3</span><br><span class="line">CDPUserSvc_随机数字 的start属性修改为3</span><br></pre></td></tr></table></figure>
+
+<p>　之的我们再重启，这个服务就不会启动了，如果要恢复，改回原值即可。</p>
+<p>以上事件是小编对什么是CDPUserSvc?如何进行相关操作 所了解到的所有相关资料希望能帮助到大家。</p>
+<h3 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h3><p>winserver10（win2016）系统开机会报：CDPUserSvc_随机字符 已停止了工作，打开服务查看发现，描述中显示错误，无法显示；禁用服务，同样报错，无法禁止；</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210080131480.png" alt="image-20221008004422112"></p>
+<p>我们到日志里面查看事件反映过来的错误信息</p>
+<p>对应OS事件台信息：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210080133470.png" alt="image-20221008004740315"></p>
+<p>禁止服务处理<br>CDP服务（Connected Devices Platform Service，CDPUserSvc），它是连接设备平台服务的一部分。CDP服务：此服务用于连接设备和通用glass场景；与其一起的还有一个服务为：OneSyncSvc_字符，此服务同步邮件、联系人、日历和其他各种用户数据。如停止该服务，依赖于此功能的邮件和其他应用程序将无法工作。而UserDataSvc_字符串，该服务提供应用程序访问结构化用户数据，包括联系人信息，日历、消息和其他内容。如果你停止服务，使用此数据的应用程序可能无法正常工作。</p>
+<p>CDP对应的dll文件：<code>C:\Windows\System32\cdpusersvc.dll</code>；CDPUserSvc后跟的字符串，是对于当前登录到服务器的每个用户，都生成一个唯一编号的服务副本；</p>
+<ol>
+<li>cmd输入：<code>get-service | where Name -like “cdpu*”</code> 确认该服务；或者<code>get-service | where Name -like “26211f6”</code> 列出CDPUserSvc后跟字符串相关的所有服务</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210080133589.png" alt="在这里插入图片描述"></p>
+<p>然后执行：<code>net stop CDPUserSvc_字符串</code>，关停服务</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:\Windows\system32&gt; get-service | where Name -like &quot;*26211f6*&quot;</span><br><span class="line"></span><br><span class="line">Status   Name               DisplayName                           </span><br><span class="line">------   ----               -----------                           </span><br><span class="line">Running  CDPUserSvc_26211f6 CDPUserSvc_26211f6                    </span><br><span class="line">Running  OneSyncSvc_26211f6 Sync Host_26211f6                     </span><br><span class="line">Stopped  PimIndexMainten... Contact Data_26211f6                  </span><br><span class="line">Stopped  UnistoreSvc_262... User Data Storage_26211f6             </span><br><span class="line">Stopped  UserDataSvc_262... User Data Access_26211f6              </span><br><span class="line">Stopped  WpnUserService_... Windows Push Notifications User Ser...</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>参考地址：<a href="https://gallery.technet.microsoft.com/Function-disabling-system-cfd6359e?redir=0">https://gallery.technet.microsoft.com/Function-disabling-system-cfd6359e?redir=0</a><br>另外cmd里输入：<br><code>sfc/scannow</code><br><code>DISM /Online /Cleanup-Image /RestoreHealth</code><br>执行完成后，再禁用尝试。</p>
+<ol start="2">
+<li><p>cmd输入<code>regedit</code>，打开注册表，定位到<code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\CDPUserSvc</code><br>将<code>Start</code> 项值从 <code>2</code> (Automatic) 修改为 <code>4</code> (Disabled).</p>
+</li>
+<li><p>其余服务：</p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">OneSyncSvc的start属性修改为3</span><br><span class="line"></span><br><span class="line">OneSyncSvc_随机数字 的start属性修改为3</span><br><span class="line"></span><br><span class="line">UserDataSvc的start属性修改为3</span><br><span class="line"></span><br><span class="line">UserDataSvc_随机数字 的start属性修改为3</span><br><span class="line"></span><br><span class="line">CDPSvc的start属性修改为3</span><br><span class="line"></span><br><span class="line">CDPUserSvc的start属性修改为3</span><br><span class="line"></span><br><span class="line">CDPUserSvc_随机数字 的start属性修改为3</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>实际微软对此，曾发布过补丁包：<a href="https://support.microsoft.com/en-us/help/4053579/windows-10-update-kb4053579">kb4053579</a>，安装该补丁可解决该问题。<br><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210080133733.png" alt="image-20221008005056443"></li>
+</ol>
+<p>该补丁包主要解决其中一项就是：<br>Addresses issue where, after you install KB4041688, KB4052231, or KB4048953, the error “CDPUserSvc_XXXX has stopped working” appears. Additionally, this resolves the logging of Event ID 1000 in the Application event log. It notes that svchost.exe_CDPUserSvc_XXXX stopped working and the faulting module name is “cdp.dll”.<br><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210080158321.png"></p>
+<p>关联信息介绍：<a href="https://www.tenforums.com/general-support/58863-connected-devices-platform-service-what-does-do.html?cf_chl_jschl_tk=44a45b4ffd2bfd1309834dda81453da70568ec1a-1604044379-0-AYNPBnMfVIxwosrLX0LWu1VrOq0MZaQfmsaF4cDbb6jSuDRxHB2XUw6opE7zTzPRAyyaEH37dv7ZIWcxe6XQmlIXhonh1noqYpvUAFn_ABNNbDlKIffgJj1zh7TtCxqhKvXzdLfsLuto0JWpUr6ZcRd6gX-l3hg6MUYMzBnIwg5xcciYBOxeiSAN0GRhGw43Fk7h2BOCrfiSyq_vNZg7FpQ88VvOVk09SfQxR9heSMddXqClssCpHGtyDZoOwlikYTmLaqaq2R_OW9ynrzawZisYOwtn2risLj72Ag9e9nicRYgWtbbZsDfQgyDbnYVsU2CMQ4TDJQHAKb0m2EOt7mSKzXJZLTG5d97tJjyz23CLTWIB1IN3DaNsJuiOpoeqnA#post763502">Connected Devices Platform Service - What does it do?</a><br>另外，安装此更新会触发其他问题：<br><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210080134435.png" alt="在这里插入图片描述"></p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210080134687.png" alt="在这里插入图片描述"></p>
+<ol start="5">
+<li>命令禁止：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sc config CDPUserSvc start= disabled</span><br><span class="line">reg add “HKLM\System\CurrentControlSet\Services\PimIndexMaintenanceSvc” /v “Start” /t REG_DWORD /d “4” /f</span><br><span class="line">reg add “HKLM\System\CurrentControlSet\Services\UserDataSvc” /v “Start” /t REG_DWORD /d “4” /f</span><br><span class="line">reg add “HKLM\System\CurrentControlSet\Services\UnistoreSvc” /v “Start” /t REG_DWORD /d “4” /f</span><br></pre></td></tr></table></figure>
+
+<p>脚本下载地址：<a href="https://download.csdn.net/download/ximenjianxue/13078314">DisablingServicesOnServer2016wDE.ps1</a>，可禁用windows server 2016无用的服务。</p>
+]]></content>
+      <tags>
+        <tag>Win</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Centos7安装时引导错误以及解决方案</title>
     <url>/2019/11/19/Centos7%E5%AE%89%E8%A3%85%E6%97%B6%E5%BC%95%E5%AF%BC%E9%94%99%E8%AF%AF%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</url>
     <content><![CDATA[<p>Centos7安装时引导错误以及解决方案<br>使用U盘刻录方式安装CentOS7.6，但是发现安装初始化时候发生错误，本以为是U盘刻录或者是镜像的问题，但是反复刻录多遍仍然出错。后来在CentOS中文社区，发现使用UltraISO刻录安装时就可能出现初始化引导错误1.一般情况下</p>
@@ -56,62 +112,6 @@
       </categories>
       <tags>
         <tag>微信</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>CDPUserSvc_***停止了工作，无法禁用服务</title>
-    <url>/2022/10/08/CDPUserSvc-%E5%81%9C%E6%AD%A2%E4%BA%86%E5%B7%A5%E4%BD%9C%EF%BC%8C%E6%97%A0%E6%B3%95%E7%A6%81%E7%94%A8%E6%9C%8D%E5%8A%A1/</url>
-    <content><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>今天跟大家讲解下有关电脑方面的小知识什么是CDPUserSvc?如何进行相关操作 ，相信对电脑感兴趣的小伙伴们对这个话题应该也很关注吧，小编也收集到了有关什么是CDPUserSvc?如何进行相关操作 的相关资料，希望大家看到了会喜欢。</p>
-<p>最近有用户反映，自己的Win10系统电脑在开机的时候出现了一个问题，CDPUserSvc停止了工作，第一次遇到这种情况，不知道是什么，自然野不会处理该问题， 　　</p>
-<p>在Win10系统中我们可能会看到CDPUserSvc_随机数字，这样的服务，很多用户不知道CDPUserSvc服务是什么，相要操作禁止启动，却提示参数错误，那么CDPUserSvc服务有什么作用，可以禁用吗 又如何禁用呢 当它运行出问题时又该如何决解 电脑配置网小编告诉大家这个问题的处理方式。</p>
-<span id="more"></span>
-<blockquote>
-<p>CDPUserSvc服务是什么官方描述：它是连接设备平台服务的一部分。CDP服务：此服务用于连接设备和通用glass场景 　　貌似普通用户没什么用，大家不禁用也好，如果要禁用可以参考下面方法。</p>
-</blockquote>
-<h3 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h3><p>CDPUserSvc服务禁用方法：运行regedit打开这个子项<code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\ </code>　</p>
-<p>将下面子项属性修改</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">OneSyncSvc的start属性修改为3 </span><br><span class="line">OneSyncSvc_随机数字 的start属性修改为3</span><br><span class="line">UserDataSvc的start属性修改为3</span><br><span class="line">UserDataSvc_随机数字 的start属性修改为3</span><br><span class="line">CDPSvc的start属性修改为3</span><br><span class="line">CDPUserSvc的start属性修改为3</span><br><span class="line">CDPUserSvc_随机数字 的start属性修改为3</span><br></pre></td></tr></table></figure>
-
-<p>　之的我们再重启，这个服务就不会启动了，如果要恢复，改回原值即可。</p>
-<p>以上事件是小编对什么是CDPUserSvc?如何进行相关操作 所了解到的所有相关资料希望能帮助到大家。</p>
-<h3 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h3><p>winserver10（win2016）系统开机会报：CDPUserSvc_随机字符 已停止了工作，打开服务查看发现，描述中显示错误，无法显示；禁用服务，同样报错，无法禁止；</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210080131480.png" alt="image-20221008004422112"></p>
-<p>我们到日志里面查看事件反映过来的错误信息</p>
-<p>对应OS事件台信息：</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210080133470.png" alt="image-20221008004740315"></p>
-<p>禁止服务处理<br>CDP服务（Connected Devices Platform Service，CDPUserSvc），它是连接设备平台服务的一部分。CDP服务：此服务用于连接设备和通用glass场景；与其一起的还有一个服务为：OneSyncSvc_字符，此服务同步邮件、联系人、日历和其他各种用户数据。如停止该服务，依赖于此功能的邮件和其他应用程序将无法工作。而UserDataSvc_字符串，该服务提供应用程序访问结构化用户数据，包括联系人信息，日历、消息和其他内容。如果你停止服务，使用此数据的应用程序可能无法正常工作。</p>
-<p>CDP对应的dll文件：<code>C:\Windows\System32\cdpusersvc.dll</code>；CDPUserSvc后跟的字符串，是对于当前登录到服务器的每个用户，都生成一个唯一编号的服务副本；</p>
-<ol>
-<li>cmd输入：<code>get-service | where Name -like “cdpu*”</code> 确认该服务；或者<code>get-service | where Name -like “26211f6”</code> 列出CDPUserSvc后跟字符串相关的所有服务</li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210080133589.png" alt="在这里插入图片描述"></p>
-<p>然后执行：<code>net stop CDPUserSvc_字符串</code>，关停服务</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:\Windows\system32&gt; get-service | where Name -like &quot;*26211f6*&quot;</span><br><span class="line"></span><br><span class="line">Status   Name               DisplayName                           </span><br><span class="line">------   ----               -----------                           </span><br><span class="line">Running  CDPUserSvc_26211f6 CDPUserSvc_26211f6                    </span><br><span class="line">Running  OneSyncSvc_26211f6 Sync Host_26211f6                     </span><br><span class="line">Stopped  PimIndexMainten... Contact Data_26211f6                  </span><br><span class="line">Stopped  UnistoreSvc_262... User Data Storage_26211f6             </span><br><span class="line">Stopped  UserDataSvc_262... User Data Access_26211f6              </span><br><span class="line">Stopped  WpnUserService_... Windows Push Notifications User Ser...</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>参考地址：<a href="https://gallery.technet.microsoft.com/Function-disabling-system-cfd6359e?redir=0">https://gallery.technet.microsoft.com/Function-disabling-system-cfd6359e?redir=0</a><br>另外cmd里输入：<br><code>sfc/scannow</code><br><code>DISM /Online /Cleanup-Image /RestoreHealth</code><br>执行完成后，再禁用尝试。</p>
-<ol start="2">
-<li><p>cmd输入<code>regedit</code>，打开注册表，定位到<code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\CDPUserSvc</code><br>将<code>Start</code> 项值从 <code>2</code> (Automatic) 修改为 <code>4</code> (Disabled).</p>
-</li>
-<li><p>其余服务：</p>
-</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">OneSyncSvc的start属性修改为3</span><br><span class="line"></span><br><span class="line">OneSyncSvc_随机数字 的start属性修改为3</span><br><span class="line"></span><br><span class="line">UserDataSvc的start属性修改为3</span><br><span class="line"></span><br><span class="line">UserDataSvc_随机数字 的start属性修改为3</span><br><span class="line"></span><br><span class="line">CDPSvc的start属性修改为3</span><br><span class="line"></span><br><span class="line">CDPUserSvc的start属性修改为3</span><br><span class="line"></span><br><span class="line">CDPUserSvc_随机数字 的start属性修改为3</span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li>实际微软对此，曾发布过补丁包：<a href="https://support.microsoft.com/en-us/help/4053579/windows-10-update-kb4053579">kb4053579</a>，安装该补丁可解决该问题。<br><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210080133733.png" alt="image-20221008005056443"></li>
-</ol>
-<p>该补丁包主要解决其中一项就是：<br>Addresses issue where, after you install KB4041688, KB4052231, or KB4048953, the error “CDPUserSvc_XXXX has stopped working” appears. Additionally, this resolves the logging of Event ID 1000 in the Application event log. It notes that svchost.exe_CDPUserSvc_XXXX stopped working and the faulting module name is “cdp.dll”.<br><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210080158321.png"></p>
-<p>关联信息介绍：<a href="https://www.tenforums.com/general-support/58863-connected-devices-platform-service-what-does-do.html?cf_chl_jschl_tk=44a45b4ffd2bfd1309834dda81453da70568ec1a-1604044379-0-AYNPBnMfVIxwosrLX0LWu1VrOq0MZaQfmsaF4cDbb6jSuDRxHB2XUw6opE7zTzPRAyyaEH37dv7ZIWcxe6XQmlIXhonh1noqYpvUAFn_ABNNbDlKIffgJj1zh7TtCxqhKvXzdLfsLuto0JWpUr6ZcRd6gX-l3hg6MUYMzBnIwg5xcciYBOxeiSAN0GRhGw43Fk7h2BOCrfiSyq_vNZg7FpQ88VvOVk09SfQxR9heSMddXqClssCpHGtyDZoOwlikYTmLaqaq2R_OW9ynrzawZisYOwtn2risLj72Ag9e9nicRYgWtbbZsDfQgyDbnYVsU2CMQ4TDJQHAKb0m2EOt7mSKzXJZLTG5d97tJjyz23CLTWIB1IN3DaNsJuiOpoeqnA#post763502">Connected Devices Platform Service - What does it do?</a><br>另外，安装此更新会触发其他问题：<br><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210080134435.png" alt="在这里插入图片描述"></p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210080134687.png" alt="在这里插入图片描述"></p>
-<ol start="5">
-<li>命令禁止：</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sc config CDPUserSvc start= disabled</span><br><span class="line">reg add “HKLM\System\CurrentControlSet\Services\PimIndexMaintenanceSvc” /v “Start” /t REG_DWORD /d “4” /f</span><br><span class="line">reg add “HKLM\System\CurrentControlSet\Services\UserDataSvc” /v “Start” /t REG_DWORD /d “4” /f</span><br><span class="line">reg add “HKLM\System\CurrentControlSet\Services\UnistoreSvc” /v “Start” /t REG_DWORD /d “4” /f</span><br></pre></td></tr></table></figure>
-
-<p>脚本下载地址：<a href="https://download.csdn.net/download/ximenjianxue/13078314">DisablingServicesOnServer2016wDE.ps1</a>，可禁用windows server 2016无用的服务。</p>
-]]></content>
-      <tags>
-        <tag>Win</tag>
       </tags>
   </entry>
   <entry>
@@ -175,6 +175,83 @@
 
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>  备份还原还是非常快的，中间除了在node的权限上卡了一下，基本上不到半小时既可以在本地快速搭建一个hexo的博客，十分方便。</p>
 <h3 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h3><p>建议每一个人有一个自己的博客，因为你不知道你的云笔记运营商哪一天会出问题，就好比之前的滴滴事件一样，另外注意平时多备份，不要像我一样傻不拉几的把硬盘格式化结果忘了把博客的内容拷出来结果全部要重写。。。。。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>技术</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo迁移备份</title>
+    <url>/2022/08/21/Hexo%E8%BF%81%E7%A7%BB%E5%A4%87%E4%BB%BD/</url>
+    <content><![CDATA[<h3 id="创建Git分支将Hexo博客迁移到其它电脑"><a href="#创建Git分支将Hexo博客迁移到其它电脑" class="headerlink" title="创建Git分支将Hexo博客迁移到其它电脑"></a>创建Git分支将Hexo博客迁移到其它电脑</h3><h3 id="反省"><a href="#反省" class="headerlink" title="反省"></a>反省</h3><p>有时候就会干些蠢事，换电脑忘记吧旧电脑博客的Hexo博客备份到移动硬盘上，一个格式化啥都没了，导致丢失了所有的博客资料。（博客内容要慢慢补） 一定要养成经常备份的好习惯。。。。。。。。</p>
+<span id="more"></span>
+<h3 id="迁移前准备：安装hexo博客必要的软件"><a href="#迁移前准备：安装hexo博客必要的软件" class="headerlink" title="迁移前准备：安装hexo博客必要的软件"></a>迁移前准备：安装hexo博客必要的软件</h3><ul>
+<li>下载安装Git客户端</li>
+<li>安装node js</li>
+<li>从git 仓库拉去原来的项目</li>
+</ul>
+<h3 id="采取方式"><a href="#采取方式" class="headerlink" title="采取方式"></a>采取方式</h3><ol>
+<li>采取新建仓库的方式</li>
+<li>分支存放源代码</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone 你的 github 博客地址，这里就不给地址给自己打广告了</span><br></pre></td></tr></table></figure>
+
+<h3 id="必备文件"><a href="#必备文件" class="headerlink" title="必备文件"></a>必备文件</h3><table>
+<thead>
+<tr>
+<th>文件(夹)</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>scaffolds&#x2F;</td>
+<td>博客文章模板</td>
+</tr>
+<tr>
+<td>source&#x2F;</td>
+<td>所有的博客文章</td>
+</tr>
+<tr>
+<td>themes&#x2F;</td>
+<td>网站主题</td>
+</tr>
+<tr>
+<td>.gitignore</td>
+<td>push时需忽略的文件</td>
+</tr>
+<tr>
+<td>package.json</td>
+<td>依赖包的名称和版本号</td>
+</tr>
+</tbody></table>
+<h3 id="备份流程"><a href="#备份流程" class="headerlink" title="备份流程"></a>备份流程</h3><h5 id="1-拉取已经部署上去的项目"><a href="#1-拉取已经部署上去的项目" class="headerlink" title="1. 拉取已经部署上去的项目"></a>1. 拉取已经部署上去的项目</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/lazyTimes/lazyTimes.github.io.git</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-拷贝需要备份的-原数据"><a href="#2-拷贝需要备份的-原数据" class="headerlink" title="2. 拷贝需要备份的 原数据"></a>2. 拷贝需要备份的 <font color="#000066">原数据</font></h5><p>具体查看上方的必备文件</p>
+<p>参考截图:</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211351777.png" alt="image-20220821135153686"></p>
+<h5 id="3-删除主题的-git-配置"><a href="#3-删除主题的-git-配置" class="headerlink" title="3. 删除主题的.git 配置"></a>3. 删除主题的.git 配置</h5><p>执行如下命令删除不必要的内容</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rm -rf thems/next/.git*</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-创建名为hexo的分支"><a href="#4-创建名为hexo的分支" class="headerlink" title="4. 创建名为hexo的分支"></a>4. 创建名为hexo的分支</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git checkout -b hexo</span><br></pre></td></tr></table></figure>
+
+<h5 id="5-把文件存放到暂存区"><a href="#5-把文件存放到暂存区" class="headerlink" title="5. 把文件存放到暂存区"></a>5. 把文件存放到暂存区</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git add --all</span><br></pre></td></tr></table></figure>
+
+<h5 id="6-提交变更"><a href="#6-提交变更" class="headerlink" title="6. 提交变更"></a>6. 提交变更</h5><p>先提交所有的改动内容</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git commit -m &quot;hexo-2&quot;</span><br></pre></td></tr></table></figure>
+
+<p>然后使用如下命令把内容推送到分支</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git push --set-upstream origin hexo</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果没有在Git config 设置用户名和密码，推送的时候会提示设置，根据提示设置用户名和密码即可</p>
+</blockquote>
+<h5 id="7-源码推到分支上"><a href="#7-源码推到分支上" class="headerlink" title="7. 源码推到分支上"></a>7. 源码推到分支上</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ git add .</span><br><span class="line">$ git commit -m &quot;xxxx&quot;</span><br><span class="line">$ git push origin hexo</span><br></pre></td></tr></table></figure>
+
+<h3 id="更加推荐的方式"><a href="#更加推荐的方式" class="headerlink" title="更加推荐的方式"></a>更加推荐的方式</h3><p>为了保证我们的源码的一些敏感配置不泄露，建议使用私有仓库进行存储，然而，我是无所谓&#x3D;-&#x3D;</p>
 ]]></content>
       <categories>
         <category>学习</category>
@@ -271,80 +348,57 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo迁移备份</title>
-    <url>/2022/08/21/Hexo%E8%BF%81%E7%A7%BB%E5%A4%87%E4%BB%BD/</url>
-    <content><![CDATA[<h3 id="创建Git分支将Hexo博客迁移到其它电脑"><a href="#创建Git分支将Hexo博客迁移到其它电脑" class="headerlink" title="创建Git分支将Hexo博客迁移到其它电脑"></a>创建Git分支将Hexo博客迁移到其它电脑</h3><h3 id="反省"><a href="#反省" class="headerlink" title="反省"></a>反省</h3><p>有时候就会干些蠢事，换电脑忘记吧旧电脑博客的Hexo博客备份到移动硬盘上，一个格式化啥都没了，导致丢失了所有的博客资料。（博客内容要慢慢补） 一定要养成经常备份的好习惯。。。。。。。。</p>
+    <title>Linux系统无线网卡配置</title>
+    <url>/2019/12/16/Linux%E7%B3%BB%E7%BB%9F%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h2 id="无线网卡配置"><a href="#无线网卡配置" class="headerlink" title="无线网卡配置"></a>无线网卡配置</h2><p>本文介绍在Linux 命令行界面中手动配置无线网卡的方法。目前流行的多数发行版都支持用图形界面的<code>network- manager</code>方便地进行配置，而无需使用本文所介绍的原始方法。</p>
+<p>下面介绍使用<code>iwconfig</code>和<code>ifconfig</code>等命令在命令行状态下配置无线网络。前题是无线网卡驱动已经正确安装，并被系统正确识别。</p>
 <span id="more"></span>
-<h3 id="迁移前准备：安装hexo博客必要的软件"><a href="#迁移前准备：安装hexo博客必要的软件" class="headerlink" title="迁移前准备：安装hexo博客必要的软件"></a>迁移前准备：安装hexo博客必要的软件</h3><ul>
-<li>下载安装Git客户端</li>
-<li>安装node js</li>
-<li>从git 仓库拉去原来的项目</li>
-</ul>
-<h3 id="采取方式"><a href="#采取方式" class="headerlink" title="采取方式"></a>采取方式</h3><ol>
-<li>采取新建仓库的方式</li>
-<li>分支存放源代码</li>
+<h2 id="大体思路"><a href="#大体思路" class="headerlink" title="大体思路"></a>大体思路</h2><p>工作的大体思路如下：</p>
+<ol>
+<li>用<code>iwconfig</code>开启无线网卡的电源，并查找区域内的无线网络</li>
+<li>连接到相应的无线网络</li>
+<li>通过<code>ifconfig</code>启用无线网卡，并获取IP（如果使用DHCP的话）</li>
 </ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone 你的 github 博客地址，这里就不给地址给自己打广告了</span><br></pre></td></tr></table></figure>
+<h2 id="具体过程"><a href="#具体过程" class="headerlink" title="具体过程"></a>具体过程</h2><ol>
+<li>打开无线网卡电源</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 txpower on</span><br></pre></td></tr></table></figure>
+<h4 id="无线网络的信号灯应该亮了。"><a href="#无线网络的信号灯应该亮了。" class="headerlink" title="无线网络的信号灯应该亮了。"></a>无线网络的信号灯应该亮了。</h4><ol start="2">
+<li>列出区域内的无线网络<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwlist wlan0 scan</span><br></pre></td></tr></table></figure></li>
+<li>假设要连接到网络MyHome（即essid为MyHome的网络），那么输入命令</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 essid <span class="string">&quot;MyHome&quot;</span> </span><br></pre></td></tr></table></figure>
+<p><em>#如果网络是加密的，密码是0123456789，那么就输入命令#</em></p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 essid <span class="string">&quot;MyHome&quot;</span> key <span class="number">0123</span><span class="literal">-4567-89</span></span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>如果正常的话，输入</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br></pre></td></tr></table></figure>
+<h4 id="就可以看到连接正常的各项参数了。"><a href="#就可以看到连接正常的各项参数了。" class="headerlink" title="就可以看到连接正常的各项参数了。"></a>就可以看到连接正常的各项参数了。</h4><ol start="5">
+<li>启用无线网卡</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ifconfig wlan0 up</span><br></pre></td></tr></table></figure>
 
-<h3 id="必备文件"><a href="#必备文件" class="headerlink" title="必备文件"></a>必备文件</h3><table>
-<thead>
-<tr>
-<th>文件(夹)</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>scaffolds&#x2F;</td>
-<td>博客文章模板</td>
-</tr>
-<tr>
-<td>source&#x2F;</td>
-<td>所有的博客文章</td>
-</tr>
-<tr>
-<td>themes&#x2F;</td>
-<td>网站主题</td>
-</tr>
-<tr>
-<td>.gitignore</td>
-<td>push时需忽略的文件</td>
-</tr>
-<tr>
-<td>package.json</td>
-<td>依赖包的名称和版本号</td>
-</tr>
-</tbody></table>
-<h3 id="备份流程"><a href="#备份流程" class="headerlink" title="备份流程"></a>备份流程</h3><h5 id="1-拉取已经部署上去的项目"><a href="#1-拉取已经部署上去的项目" class="headerlink" title="1. 拉取已经部署上去的项目"></a>1. 拉取已经部署上去的项目</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/lazyTimes/lazyTimes.github.io.git</span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li>如果是用DHCP获取IP的，那么用dhclient 或dhcpcd获取ip</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">dhcpcd wlan0</span><br></pre></td></tr></table></figure>
 
-<h5 id="2-拷贝需要备份的-原数据"><a href="#2-拷贝需要备份的-原数据" class="headerlink" title="2. 拷贝需要备份的 原数据"></a>2. 拷贝需要备份的 <font color="#000066">原数据</font></h5><p>具体查看上方的必备文件</p>
-<p>参考截图:</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211351777.png" alt="image-20220821135153686"></p>
-<h5 id="3-删除主题的-git-配置"><a href="#3-删除主题的-git-配置" class="headerlink" title="3. 删除主题的.git 配置"></a>3. 删除主题的.git 配置</h5><p>执行如下命令删除不必要的内容</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rm -rf thems/next/.git*</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">dhclient wlan0</span><br></pre></td></tr></table></figure>
 
-<h5 id="4-创建名为hexo的分支"><a href="#4-创建名为hexo的分支" class="headerlink" title="4. 创建名为hexo的分支"></a>4. 创建名为hexo的分支</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git checkout -b hexo</span><br></pre></td></tr></table></figure>
+<ol start="7">
+<li>现在无线网卡应该可以正常使用了。</li>
+</ol>
+<h3 id="PS"><a href="#PS" class="headerlink" title="PS:"></a>PS:</h3><p>   如果现在还不能联网。那么点击网络图标。选择链接到隐藏的无线网络。输入找到的网络的名字。<br>      图形化的网络管理程序是<code>System-&gt;Preferences-&gt;Network Connections</code>。打开程序后，点击无线网络项目，点击add增加一个新的无线网络。  给出任意的<code>Connection Name</code>。<code>SSID</code>中输入无限网络的名字。<code>wireless security</code>中选择一种合适的加密类型。key中输入无限网络的密码。 </p>
+<p>   其他字段都不修改。 执行后，应该能够链接无限网络。  可以使用<code>iwconfig wlan0</code>命令查看是否正确连接无线网络。</p>
+<h6 id="未正确链接无线网络的输出："><a href="#未正确链接无线网络的输出：" class="headerlink" title="未正确链接无线网络的输出："></a>未正确链接无线网络的输出：</h6><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br><span class="line">wlan0     IEEE <span class="number">802.11</span>abg  ESSID:off/any </span><br><span class="line">          Mode:Managed  Access Point: Not<span class="literal">-Associated</span>   Tx<span class="literal">-Power</span>=<span class="number">0</span> dBm  </span><br><span class="line">          Retry  long limit:<span class="number">7</span>   RTS thr:off   Fragment thr:off</span><br><span class="line">          Power Management:off</span><br></pre></td></tr></table></figure>
 
-<h5 id="5-把文件存放到暂存区"><a href="#5-把文件存放到暂存区" class="headerlink" title="5. 把文件存放到暂存区"></a>5. 把文件存放到暂存区</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git add --all</span><br></pre></td></tr></table></figure>
-
-<h5 id="6-提交变更"><a href="#6-提交变更" class="headerlink" title="6. 提交变更"></a>6. 提交变更</h5><p>先提交所有的改动内容</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git commit -m &quot;hexo-2&quot;</span><br></pre></td></tr></table></figure>
-
-<p>然后使用如下命令把内容推送到分支</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git push --set-upstream origin hexo</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>如果没有在Git config 设置用户名和密码，推送的时候会提示设置，根据提示设置用户名和密码即可</p>
-</blockquote>
-<h5 id="7-源码推到分支上"><a href="#7-源码推到分支上" class="headerlink" title="7. 源码推到分支上"></a>7. 源码推到分支上</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ git add .</span><br><span class="line">$ git commit -m &quot;xxxx&quot;</span><br><span class="line">$ git push origin hexo</span><br></pre></td></tr></table></figure>
-
-<h3 id="更加推荐的方式"><a href="#更加推荐的方式" class="headerlink" title="更加推荐的方式"></a>更加推荐的方式</h3><p>为了保证我们的源码的一些敏感配置不泄露，建议使用私有仓库进行存储，然而，我是无所谓&#x3D;-&#x3D;</p>
+<h6 id="正确链接无线网络后的输出："><a href="#正确链接无线网络后的输出：" class="headerlink" title="正确链接无线网络后的输出："></a>正确链接无线网络后的输出：</h6><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br><span class="line">wlan0     IEEE <span class="number">802.11</span>abg  ESSID:<span class="string">&quot;MyHome&quot;</span> </span><br><span class="line">          Mode:Managed  Frequency:<span class="number">2.437</span> GHz  Access Point: <span class="number">00</span>:<span class="number">26</span>:DS:<span class="number">43</span>:<span class="number">1</span>A:A8  </span><br><span class="line">          Bit Rate=<span class="number">54</span> Mb/s   Tx<span class="literal">-Power</span>=<span class="number">0</span> dBm  </span><br><span class="line">          Retry  long limit:<span class="number">7</span>   RTS thr:off   Fragment thr:off</span><br><span class="line">          Power Management:off</span><br><span class="line">          Link Quality=<span class="number">65</span>/<span class="number">70</span>  Signal level=<span class="literal">-45</span> dBm </span><br><span class="line">          Rx invalid nwid:<span class="number">0</span>  Rx invalid crypt:<span class="number">0</span>  Rx invalid frag:<span class="number">0</span></span><br><span class="line">          Tx excessive retries:<span class="number">0</span>  Invalid misc:<span class="number">0</span>   Missed beacon:<span class="number">0</span></span><br></pre></td></tr></table></figure>
 ]]></content>
-      <categories>
-        <category>学习</category>
-        <category>Hexo</category>
-      </categories>
       <tags>
-        <tag>技术</tag>
+        <tag>Linux</tag>
+        <tag>无线网卡</tag>
       </tags>
   </entry>
   <entry>
@@ -546,96 +600,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux系统无线网卡配置</title>
-    <url>/2019/12/16/Linux%E7%B3%BB%E7%BB%9F%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<h2 id="无线网卡配置"><a href="#无线网卡配置" class="headerlink" title="无线网卡配置"></a>无线网卡配置</h2><p>本文介绍在Linux 命令行界面中手动配置无线网卡的方法。目前流行的多数发行版都支持用图形界面的<code>network- manager</code>方便地进行配置，而无需使用本文所介绍的原始方法。</p>
-<p>下面介绍使用<code>iwconfig</code>和<code>ifconfig</code>等命令在命令行状态下配置无线网络。前题是无线网卡驱动已经正确安装，并被系统正确识别。</p>
-<span id="more"></span>
-<h2 id="大体思路"><a href="#大体思路" class="headerlink" title="大体思路"></a>大体思路</h2><p>工作的大体思路如下：</p>
-<ol>
-<li>用<code>iwconfig</code>开启无线网卡的电源，并查找区域内的无线网络</li>
-<li>连接到相应的无线网络</li>
-<li>通过<code>ifconfig</code>启用无线网卡，并获取IP（如果使用DHCP的话）</li>
-</ol>
-<h2 id="具体过程"><a href="#具体过程" class="headerlink" title="具体过程"></a>具体过程</h2><ol>
-<li>打开无线网卡电源</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 txpower on</span><br></pre></td></tr></table></figure>
-<h4 id="无线网络的信号灯应该亮了。"><a href="#无线网络的信号灯应该亮了。" class="headerlink" title="无线网络的信号灯应该亮了。"></a>无线网络的信号灯应该亮了。</h4><ol start="2">
-<li>列出区域内的无线网络<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwlist wlan0 scan</span><br></pre></td></tr></table></figure></li>
-<li>假设要连接到网络MyHome（即essid为MyHome的网络），那么输入命令</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 essid <span class="string">&quot;MyHome&quot;</span> </span><br></pre></td></tr></table></figure>
-<p><em>#如果网络是加密的，密码是0123456789，那么就输入命令#</em></p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 essid <span class="string">&quot;MyHome&quot;</span> key <span class="number">0123</span><span class="literal">-4567-89</span></span><br></pre></td></tr></table></figure>
-<ol start="4">
-<li>如果正常的话，输入</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br></pre></td></tr></table></figure>
-<h4 id="就可以看到连接正常的各项参数了。"><a href="#就可以看到连接正常的各项参数了。" class="headerlink" title="就可以看到连接正常的各项参数了。"></a>就可以看到连接正常的各项参数了。</h4><ol start="5">
-<li>启用无线网卡</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ifconfig wlan0 up</span><br></pre></td></tr></table></figure>
-
-<ol start="6">
-<li>如果是用DHCP获取IP的，那么用dhclient 或dhcpcd获取ip</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">dhcpcd wlan0</span><br></pre></td></tr></table></figure>
-
-<p>或</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">dhclient wlan0</span><br></pre></td></tr></table></figure>
-
-<ol start="7">
-<li>现在无线网卡应该可以正常使用了。</li>
-</ol>
-<h3 id="PS"><a href="#PS" class="headerlink" title="PS:"></a>PS:</h3><p>   如果现在还不能联网。那么点击网络图标。选择链接到隐藏的无线网络。输入找到的网络的名字。<br>      图形化的网络管理程序是<code>System-&gt;Preferences-&gt;Network Connections</code>。打开程序后，点击无线网络项目，点击add增加一个新的无线网络。  给出任意的<code>Connection Name</code>。<code>SSID</code>中输入无限网络的名字。<code>wireless security</code>中选择一种合适的加密类型。key中输入无限网络的密码。 </p>
-<p>   其他字段都不修改。 执行后，应该能够链接无限网络。  可以使用<code>iwconfig wlan0</code>命令查看是否正确连接无线网络。</p>
-<h6 id="未正确链接无线网络的输出："><a href="#未正确链接无线网络的输出：" class="headerlink" title="未正确链接无线网络的输出："></a>未正确链接无线网络的输出：</h6><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br><span class="line">wlan0     IEEE <span class="number">802.11</span>abg  ESSID:off/any </span><br><span class="line">          Mode:Managed  Access Point: Not<span class="literal">-Associated</span>   Tx<span class="literal">-Power</span>=<span class="number">0</span> dBm  </span><br><span class="line">          Retry  long limit:<span class="number">7</span>   RTS thr:off   Fragment thr:off</span><br><span class="line">          Power Management:off</span><br></pre></td></tr></table></figure>
-
-<h6 id="正确链接无线网络后的输出："><a href="#正确链接无线网络后的输出：" class="headerlink" title="正确链接无线网络后的输出："></a>正确链接无线网络后的输出：</h6><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br><span class="line">wlan0     IEEE <span class="number">802.11</span>abg  ESSID:<span class="string">&quot;MyHome&quot;</span> </span><br><span class="line">          Mode:Managed  Frequency:<span class="number">2.437</span> GHz  Access Point: <span class="number">00</span>:<span class="number">26</span>:DS:<span class="number">43</span>:<span class="number">1</span>A:A8  </span><br><span class="line">          Bit Rate=<span class="number">54</span> Mb/s   Tx<span class="literal">-Power</span>=<span class="number">0</span> dBm  </span><br><span class="line">          Retry  long limit:<span class="number">7</span>   RTS thr:off   Fragment thr:off</span><br><span class="line">          Power Management:off</span><br><span class="line">          Link Quality=<span class="number">65</span>/<span class="number">70</span>  Signal level=<span class="literal">-45</span> dBm </span><br><span class="line">          Rx invalid nwid:<span class="number">0</span>  Rx invalid crypt:<span class="number">0</span>  Rx invalid frag:<span class="number">0</span></span><br><span class="line">          Tx excessive retries:<span class="number">0</span>  Invalid misc:<span class="number">0</span>   Missed beacon:<span class="number">0</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>Linux</tag>
-        <tag>无线网卡</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux通过密钥对免密登录</title>
-    <url>/2022/09/21/Linux%E9%80%9A%E8%BF%87%E5%AF%86%E9%92%A5%E5%AF%B9%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/</url>
-    <content><![CDATA[<p>首先，说明一下我们要做的是，跳板机服务器的<code>usera</code>用户免密码登录B服务器的<code>userb</code>用户。<br>我们先使用<code>usera</code>登录跳板服务器</p>
-<blockquote>
-<p>首先生成密钥对如果有则跳过这一步</p>
-</blockquote>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
-<span id="more"></span>
-<p>操作演示</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">[sera@serverA ~]$ ssh-keygen -t rsa  <span class="comment">//使用rsa算法加密</span></span><br><span class="line"><span class="title class_">Generating</span> public/private rsa key pair.</span><br><span class="line"><span class="title class_">Enter</span> file <span class="keyword">in</span> which to save the key (<span class="regexp">/home/u</span>sera/.<span class="property">ssh</span>/id_rsa): <span class="comment">//私钥默认保存路径</span></span><br><span class="line"><span class="title class_">Created</span> directory <span class="string">&#x27;/home/usera/.ssh&#x27;</span>.</span><br><span class="line"><span class="title class_">Enter</span> passphrase (empty <span class="keyword">for</span> no passphrase): <span class="comment">//在这里输入密码如果这里输入密码以后登录需要密钥和密码才能登录这里建议直接回车也就是空</span></span><br><span class="line"><span class="title class_">Enter</span> same passphrase <span class="attr">again</span>:</span><br><span class="line"><span class="title class_">Your</span> identification has been saved <span class="keyword">in</span> /home/usera/.<span class="property">ssh</span>/id_rsa.</span><br><span class="line"><span class="title class_">Your</span> public key has been saved <span class="keyword">in</span> /home/usera/.<span class="property">ssh</span>/id_rsa.<span class="property">pub</span>. <span class="comment">//公钥保存路径</span></span><br><span class="line"><span class="title class_">The</span> key fingerprint <span class="attr">is</span>:</span><br><span class="line"><span class="number">39</span>:<span class="attr">f2</span>:<span class="attr">fc</span>:<span class="number">70</span>:<span class="attr">ef</span>:<span class="attr">e9</span>:<span class="attr">bd</span>:<span class="number">05</span>:<span class="number">40</span>:6<span class="attr">e</span>:<span class="number">64</span>:<span class="attr">b0</span>:<span class="number">99</span>:<span class="number">56</span>:6<span class="attr">e</span>:<span class="number">01</span> usera@serverA</span><br><span class="line"><span class="title class_">The</span> key<span class="string">&#x27;s randomart image is:</span></span><br><span class="line"><span class="string">+--[ RSA 2048]----+</span></span><br><span class="line"><span class="string">| Eo* |</span></span><br><span class="line"><span class="string">| @ . |</span></span><br><span class="line"><span class="string">| = * |</span></span><br><span class="line"><span class="string">| o o . |</span></span><br><span class="line"><span class="string">| . S . |</span></span><br><span class="line"><span class="string">| + . . |</span></span><br><span class="line"><span class="string">| + . .|</span></span><br><span class="line"><span class="string">| + . o . |</span></span><br><span class="line"><span class="string">| .o= o. |</span></span><br><span class="line"><span class="string">+-----------------+</span></span><br></pre></td></tr></table></figure>
-
-<p>以下是截图提示</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210216196.png"></p>
-<blockquote>
-<p>id_rsa是私钥，id_rsa.pub是公钥公钥在服务器私钥在自己手上</p>
-</blockquote>
-<p>此时会在<code>/home/usera/.ssh</code>目录下生成密钥对我们使用<code>ls</code>查看一下</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">root@<span class="attr">vultr</span>:~#  ls -la .<span class="property">ssh</span></span><br><span class="line">total <span class="number">16</span></span><br><span class="line">drwx------ <span class="number">2</span> root root <span class="number">4096</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> .</span><br><span class="line">drwx------ <span class="number">5</span> root root <span class="number">4096</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">00</span> ..</span><br><span class="line">-rw------- <span class="number">1</span> root root <span class="number">1675</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> id_rsa</span><br><span class="line">-rw-r--r-- <span class="number">1</span> root root  <span class="number">398</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> id_rsa.<span class="property">pub</span></span><br></pre></td></tr></table></figure>
-
-<p>然后将公钥上传到需要登录的服务器，并以<code>userb</code>用户登录<br>至于上传方式可以用<code>scp</code>以及<code>sz</code>命令这里就介绍了<br>可以参考这篇<a href="https://shagain.club/index.php/archives/111/">文章</a></p>
-<blockquote>
-<p>上传到用户目录下的.ssh文件夹下<code>authorized_keys</code>这个文件是用来存放公钥内容的我们使用<code>cat</code>把公钥追加到<code>authorized_keys</code>这个文件就好了</p>
-</blockquote>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">cat id_rsa.<span class="property">pub</span> &gt;&gt; ~<span class="regexp">/.ssh/</span>authorized_keys    <span class="comment">//cat 公钥路径 &gt;&gt; ~/.ssh/authorized_keys</span></span><br></pre></td></tr></table></figure>
-
-<p>这样子我们就配置好了<br>另外我们要注意，<code>.ssh</code>目录的权限为<code>700</code>，其下文件<code>authorized_keys</code>和私钥的权限为<code>600</code>。否则会因为权限问题导致无法免密码登录。我们可以看到登陆后会有<code>known_hosts</code>文件生成。</p>
-]]></content>
-      <categories>
-        <category>学习</category>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Motrix是一款开源免费且界面非常清爽简约的全能型下载软件</title>
     <url>/2022/11/11/Motrix%E6%98%AF%E4%B8%80%E6%AC%BE%E5%BC%80%E6%BA%90%E5%85%8D%E8%B4%B9%E4%B8%94%E7%95%8C%E9%9D%A2%E9%9D%9E%E5%B8%B8%E6%B8%85%E7%88%BD%E7%AE%80%E7%BA%A6%E7%9A%84%E5%85%A8%E8%83%BD%E5%9E%8B%E4%B8%8B%E8%BD%BD%E8%BD%AF%E4%BB%B6/</url>
     <content><![CDATA[<p><a href="https://motrix.app/">下载</a>软件有很多选择，网上就介绍过IDM、Folx、Photon、FDM、迅雷等等，一数一大堆。不过正所谓各花入个眼，还是有很多人想寻找不一样的下载工具。</p>
@@ -677,6 +641,42 @@
       <tags>
         <tag>下载</tag>
         <tag>工具</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux通过密钥对免密登录</title>
+    <url>/2022/09/21/Linux%E9%80%9A%E8%BF%87%E5%AF%86%E9%92%A5%E5%AF%B9%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/</url>
+    <content><![CDATA[<p>首先，说明一下我们要做的是，跳板机服务器的<code>usera</code>用户免密码登录B服务器的<code>userb</code>用户。<br>我们先使用<code>usera</code>登录跳板服务器</p>
+<blockquote>
+<p>首先生成密钥对如果有则跳过这一步</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<p>操作演示</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">[sera@serverA ~]$ ssh-keygen -t rsa  <span class="comment">//使用rsa算法加密</span></span><br><span class="line"><span class="title class_">Generating</span> public/private rsa key pair.</span><br><span class="line"><span class="title class_">Enter</span> file <span class="keyword">in</span> which to save the key (<span class="regexp">/home/u</span>sera/.<span class="property">ssh</span>/id_rsa): <span class="comment">//私钥默认保存路径</span></span><br><span class="line"><span class="title class_">Created</span> directory <span class="string">&#x27;/home/usera/.ssh&#x27;</span>.</span><br><span class="line"><span class="title class_">Enter</span> passphrase (empty <span class="keyword">for</span> no passphrase): <span class="comment">//在这里输入密码如果这里输入密码以后登录需要密钥和密码才能登录这里建议直接回车也就是空</span></span><br><span class="line"><span class="title class_">Enter</span> same passphrase <span class="attr">again</span>:</span><br><span class="line"><span class="title class_">Your</span> identification has been saved <span class="keyword">in</span> /home/usera/.<span class="property">ssh</span>/id_rsa.</span><br><span class="line"><span class="title class_">Your</span> public key has been saved <span class="keyword">in</span> /home/usera/.<span class="property">ssh</span>/id_rsa.<span class="property">pub</span>. <span class="comment">//公钥保存路径</span></span><br><span class="line"><span class="title class_">The</span> key fingerprint <span class="attr">is</span>:</span><br><span class="line"><span class="number">39</span>:<span class="attr">f2</span>:<span class="attr">fc</span>:<span class="number">70</span>:<span class="attr">ef</span>:<span class="attr">e9</span>:<span class="attr">bd</span>:<span class="number">05</span>:<span class="number">40</span>:6<span class="attr">e</span>:<span class="number">64</span>:<span class="attr">b0</span>:<span class="number">99</span>:<span class="number">56</span>:6<span class="attr">e</span>:<span class="number">01</span> usera@serverA</span><br><span class="line"><span class="title class_">The</span> key<span class="string">&#x27;s randomart image is:</span></span><br><span class="line"><span class="string">+--[ RSA 2048]----+</span></span><br><span class="line"><span class="string">| Eo* |</span></span><br><span class="line"><span class="string">| @ . |</span></span><br><span class="line"><span class="string">| = * |</span></span><br><span class="line"><span class="string">| o o . |</span></span><br><span class="line"><span class="string">| . S . |</span></span><br><span class="line"><span class="string">| + . . |</span></span><br><span class="line"><span class="string">| + . .|</span></span><br><span class="line"><span class="string">| + . o . |</span></span><br><span class="line"><span class="string">| .o= o. |</span></span><br><span class="line"><span class="string">+-----------------+</span></span><br></pre></td></tr></table></figure>
+
+<p>以下是截图提示</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210216196.png"></p>
+<blockquote>
+<p>id_rsa是私钥，id_rsa.pub是公钥公钥在服务器私钥在自己手上</p>
+</blockquote>
+<p>此时会在<code>/home/usera/.ssh</code>目录下生成密钥对我们使用<code>ls</code>查看一下</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">root@<span class="attr">vultr</span>:~#  ls -la .<span class="property">ssh</span></span><br><span class="line">total <span class="number">16</span></span><br><span class="line">drwx------ <span class="number">2</span> root root <span class="number">4096</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> .</span><br><span class="line">drwx------ <span class="number">5</span> root root <span class="number">4096</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">00</span> ..</span><br><span class="line">-rw------- <span class="number">1</span> root root <span class="number">1675</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> id_rsa</span><br><span class="line">-rw-r--r-- <span class="number">1</span> root root  <span class="number">398</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> id_rsa.<span class="property">pub</span></span><br></pre></td></tr></table></figure>
+
+<p>然后将公钥上传到需要登录的服务器，并以<code>userb</code>用户登录<br>至于上传方式可以用<code>scp</code>以及<code>sz</code>命令这里就介绍了<br>可以参考这篇<a href="https://shagain.club/index.php/archives/111/">文章</a></p>
+<blockquote>
+<p>上传到用户目录下的.ssh文件夹下<code>authorized_keys</code>这个文件是用来存放公钥内容的我们使用<code>cat</code>把公钥追加到<code>authorized_keys</code>这个文件就好了</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">cat id_rsa.<span class="property">pub</span> &gt;&gt; ~<span class="regexp">/.ssh/</span>authorized_keys    <span class="comment">//cat 公钥路径 &gt;&gt; ~/.ssh/authorized_keys</span></span><br></pre></td></tr></table></figure>
+
+<p>这样子我们就配置好了<br>另外我们要注意，<code>.ssh</code>目录的权限为<code>700</code>，其下文件<code>authorized_keys</code>和私钥的权限为<code>600</code>。否则会因为权限问题导致无法免密码登录。我们可以看到登陆后会有<code>known_hosts</code>文件生成。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -758,33 +758,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>hexo域名解析的两种方法</title>
-    <url>/2022/08/19/hexo%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>想要在浏览器里面输入域名到达某个地址。必不可少的一步就是要告诉全世界的电脑，这个域名现在指向这个地方啦。<br>而这一步就是由 dns 服务器来负责的。<br>我们需要做的就是将域名与固定的 ip 地址绑定起来 (A)，或者是与某已有域名绑定起来（CNAME）.</p>
-<p>下面我们以阿里云购买的域名为例</p>
-<h2 id="域名解析"><a href="#域名解析" class="headerlink" title="域名解析"></a>域名解析</h2><h3 id="方法一（不推荐）"><a href="#方法一（不推荐）" class="headerlink" title="方法一（不推荐）"></a>方法一（不推荐）</h3><p>首先获取自己 github 的二级域名的 IP 地址，win­dows 下直接在 cmd 里 Ping 一下自己的博客就会得到 IP 地址：</p>
-<span id="more"></span>
-
-<p><img src="https://movejian.github.io/images/20220819/cmd.png"></p>
-<p>我的 ip 是 185.199.111.153</p>
-<p>下面通过 DNS 域名解析将购买的域名指向 github 的二级域名：user­name.github.io，<br>进入阿里云的管理控制台 - 云解析 DNS，进入域名的解析设置，将得到的 IP 地址填到记录值一栏，点击确定就 OK 了。填完以后的解析列表会出现：</p>
-<p><img src="https://movejian.github.io/images/20220819/yumi.png"><br>记录值就是自己 github 的二级域名的 IP 地址。</p>
-<p>方法二（推荐）<br>直接解析域名的 CNAME 记录到你的 Git 二级域名，不要使用方法一中的 A 记录，因为 ip 地址可能会一段时间之后会改变 (由于网络地址转换协议 NAT)，所以建议记录类型选择 CNAME 进行解析，记录值填的就是 user­name.github.io，比如：</p>
-<p><img src="https://movejian.github.io/images/20220819/yumi2.png"></p>
-<p>如果你只用 github 的二级域名作为博客的地址，那么线路类型选择默认就可以了。</p>
-<h2 id="设置CNAME"><a href="#设置CNAME" class="headerlink" title="设置CNAME"></a>设置CNAME</h2><p>在 hexo 项目下，source 文件夹下面创建 CNAME 文件（没有后缀名的），在里面写上购买的域名。比如：<br>test­blog.top</p>
-<p><img src="https://movejian.github.io/images/20220819/CNAME.png"></p>
-<p>在 github 上面，打开 user­name.github.io 项目的（Set­tings）设置，然后在  Pages 选项,点击蓝色的按钮Add a domain 设置里填上购买的域名。比如：</p>
-<p><img src="https://movejian.github.io/images/20220819/domain.png"></p>
-<blockquote>
-<p>现在即可通过原二级域名和新域名访问hexo博客啦。</p>
-</blockquote>
-]]></content>
-      <tags>
-        <tag>域名</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>npm安装卸载命令</title>
     <url>/2022/08/23/npm%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BD%E5%91%BD%E4%BB%A4/</url>
     <content><![CDATA[<h2 id="npm安装模块"><a href="#npm安装模块" class="headerlink" title="npm安装模块"></a>npm安装模块</h2><p>利用 npm 安装xxx模块到当前命令行所在目录；</p>
@@ -813,6 +786,33 @@
       </tags>
   </entry>
   <entry>
+    <title>hexo域名解析的两种方法</title>
+    <url>/2022/08/19/hexo%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>想要在浏览器里面输入域名到达某个地址。必不可少的一步就是要告诉全世界的电脑，这个域名现在指向这个地方啦。<br>而这一步就是由 dns 服务器来负责的。<br>我们需要做的就是将域名与固定的 ip 地址绑定起来 (A)，或者是与某已有域名绑定起来（CNAME）.</p>
+<p>下面我们以阿里云购买的域名为例</p>
+<h2 id="域名解析"><a href="#域名解析" class="headerlink" title="域名解析"></a>域名解析</h2><h3 id="方法一（不推荐）"><a href="#方法一（不推荐）" class="headerlink" title="方法一（不推荐）"></a>方法一（不推荐）</h3><p>首先获取自己 github 的二级域名的 IP 地址，win­dows 下直接在 cmd 里 Ping 一下自己的博客就会得到 IP 地址：</p>
+<span id="more"></span>
+
+<p><img src="https://movejian.github.io/images/20220819/cmd.png"></p>
+<p>我的 ip 是 185.199.111.153</p>
+<p>下面通过 DNS 域名解析将购买的域名指向 github 的二级域名：user­name.github.io，<br>进入阿里云的管理控制台 - 云解析 DNS，进入域名的解析设置，将得到的 IP 地址填到记录值一栏，点击确定就 OK 了。填完以后的解析列表会出现：</p>
+<p><img src="https://movejian.github.io/images/20220819/yumi.png"><br>记录值就是自己 github 的二级域名的 IP 地址。</p>
+<p>方法二（推荐）<br>直接解析域名的 CNAME 记录到你的 Git 二级域名，不要使用方法一中的 A 记录，因为 ip 地址可能会一段时间之后会改变 (由于网络地址转换协议 NAT)，所以建议记录类型选择 CNAME 进行解析，记录值填的就是 user­name.github.io，比如：</p>
+<p><img src="https://movejian.github.io/images/20220819/yumi2.png"></p>
+<p>如果你只用 github 的二级域名作为博客的地址，那么线路类型选择默认就可以了。</p>
+<h2 id="设置CNAME"><a href="#设置CNAME" class="headerlink" title="设置CNAME"></a>设置CNAME</h2><p>在 hexo 项目下，source 文件夹下面创建 CNAME 文件（没有后缀名的），在里面写上购买的域名。比如：<br>test­blog.top</p>
+<p><img src="https://movejian.github.io/images/20220819/CNAME.png"></p>
+<p>在 github 上面，打开 user­name.github.io 项目的（Set­tings）设置，然后在  Pages 选项,点击蓝色的按钮Add a domain 设置里填上购买的域名。比如：</p>
+<p><img src="https://movejian.github.io/images/20220819/domain.png"></p>
+<blockquote>
+<p>现在即可通过原二级域名和新域名访问hexo博客啦。</p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>域名</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>win10系统电脑图标不见了</title>
     <url>/2022/10/08/win10%E7%B3%BB%E7%BB%9F%E7%94%B5%E8%84%91%E5%9B%BE%E6%A0%87%E4%B8%8D%E8%A7%81%E4%BA%86/</url>
     <content><![CDATA[<p>我的电脑图标没了怎么办？，恢复只需4步。刚安装了win10.刚打开的时候发现桌面上没有我的电脑图标，很多人都很不舒服，所以win我的电脑图标没了怎么办？现在小编教你怎么找回<code>我的电脑</code>图标。</p>
@@ -836,6 +836,56 @@
 ]]></content>
       <tags>
         <tag>Win</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用HEXO-GIT-BACKUP插件备份博客源文件</title>
+    <url>/2022/08/21/%E4%BD%BF%E7%94%A8HEXO-GIT-BACKUP%E6%8F%92%E4%BB%B6%E5%A4%87%E4%BB%BD%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/</url>
+    <content><![CDATA[<p>在搭建好hexo博客之后也要给自己的博客进行备份，文章丢失可是很麻烦的一件事情。我的博客的数据都是直接保存在cloudstudio，用的时候总是会感觉有点问题，生怕自己哪天不小心把工作空间给删除了，那就蛮麻烦了。所以我采用了 <a href="https://github.com/coneycode/hexo-git-backup">hexo-git-backup</a> 这个工具进行备份。</p>
+<h2 id="查看HEXO版本"><a href="#查看HEXO版本" class="headerlink" title="查看HEXO版本"></a>查看HEXO版本</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo version</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<p>第一行的hexo：xxx既为版本</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211933353.png" alt="查看hexo版本"></p>
+<p>如图，我的版本是6.2.0</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>如果你的版本是2.x.x使用这条命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-git-backup@0.0.91 --save</span><br></pre></td></tr></table></figure>
+
+<p>如果你的版本是3.x.x则使用这条命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-git-backup --save</span><br></pre></td></tr></table></figure>
+
+<p>这里我使用的是第二条命令，因为我的hexo版本为6.2.0</p>
+<h2 id="建立分支"><a href="#建立分支" class="headerlink" title="建立分支"></a>建立分支</h2><p>来到你的github仓库目录或者是coding的仓库目录，选择新建分支，因为我是双线部署，所以两个都要创建分支，我创建的分支名都为backup</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211919299.png" alt="查看所有分支和管理"></p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211921232.png" alt="新建分支"></p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211924488.png" alt="给分支取个名称"></p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>打开博客配置文件_config.yml</p>
+<p>在最下方添加</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># hexo-git-backup 插件，用来备份的</span><br><span class="line">backup:</span><br><span class="line">    type: git</span><br><span class="line">    repository:</span><br><span class="line">       github: git@github.com:xxx/xxx.git,branchName</span><br><span class="line">       coding: git@github.com:xxx/xxx.git,branchName</span><br><span class="line">12345</span><br></pre></td></tr></table></figure>
+
+<p>branchName为分支名（我的分支名称是blogbak），要和前面的仓库地址用英文逗号隔开。</p>
+<p>“coding: “是gitlag的库。</p>
+<p>这里就差不多配置完成了</p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo backup </span><br></pre></td></tr></table></figure>
+
+<p>or</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo b</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置项"><a href="#配置项" class="headerlink" title="配置项"></a>配置项</h2><p>如果你只是想备份主题目录，只需要添加theme属性</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">backup:</span><br><span class="line">    type: git</span><br><span class="line">    theme: coney,landscape,xxx</span><br><span class="line">    repository:</span><br><span class="line">       github: git@github.com:xxx/xxx.git,branchName</span><br><span class="line">       gitcafe: git@github.com:xxx/xxx.git,branchName</span><br></pre></td></tr></table></figure>
+
+<p>如果你想自定义提交的message信息，那么只需要添加message属性</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">backup:</span><br><span class="line">    type: git</span><br><span class="line">    message: update xxx</span><br><span class="line">    repository:</span><br><span class="line">       github: git@github.com:xxx/xxx.git,branchName</span><br><span class="line">       gitcafe: git@github.com:xxx/xxx.git,branchName</span><br></pre></td></tr></table></figure>
+
+<p>插件地址</p>
+<p><a href="https://github.com/coneycode/hexo-git-backup">hexo-git-backup</a></p>
+<h2 id="反省"><a href="#反省" class="headerlink" title="反省"></a>反省</h2><p>记得一定要做好备份，千万不要轻易重装系统，欲哭无泪！</p>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>插件</category>
+      </categories>
+      <tags>
+        <tag>插件</tag>
       </tags>
   </entry>
   <entry>
@@ -901,56 +951,6 @@
       <tags>
         <tag>传奇</tag>
         <tag>外挂</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用HEXO-GIT-BACKUP插件备份博客源文件</title>
-    <url>/2022/08/21/%E4%BD%BF%E7%94%A8HEXO-GIT-BACKUP%E6%8F%92%E4%BB%B6%E5%A4%87%E4%BB%BD%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/</url>
-    <content><![CDATA[<p>在搭建好hexo博客之后也要给自己的博客进行备份，文章丢失可是很麻烦的一件事情。我的博客的数据都是直接保存在cloudstudio，用的时候总是会感觉有点问题，生怕自己哪天不小心把工作空间给删除了，那就蛮麻烦了。所以我采用了 <a href="https://github.com/coneycode/hexo-git-backup">hexo-git-backup</a> 这个工具进行备份。</p>
-<h2 id="查看HEXO版本"><a href="#查看HEXO版本" class="headerlink" title="查看HEXO版本"></a>查看HEXO版本</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo version</span><br></pre></td></tr></table></figure>
-<span id="more"></span>
-<p>第一行的hexo：xxx既为版本</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211933353.png" alt="查看hexo版本"></p>
-<p>如图，我的版本是6.2.0</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>如果你的版本是2.x.x使用这条命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-git-backup@0.0.91 --save</span><br></pre></td></tr></table></figure>
-
-<p>如果你的版本是3.x.x则使用这条命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-git-backup --save</span><br></pre></td></tr></table></figure>
-
-<p>这里我使用的是第二条命令，因为我的hexo版本为6.2.0</p>
-<h2 id="建立分支"><a href="#建立分支" class="headerlink" title="建立分支"></a>建立分支</h2><p>来到你的github仓库目录或者是coding的仓库目录，选择新建分支，因为我是双线部署，所以两个都要创建分支，我创建的分支名都为backup</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211919299.png" alt="查看所有分支和管理"></p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211921232.png" alt="新建分支"></p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202208211924488.png" alt="给分支取个名称"></p>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>打开博客配置文件_config.yml</p>
-<p>在最下方添加</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># hexo-git-backup 插件，用来备份的</span><br><span class="line">backup:</span><br><span class="line">    type: git</span><br><span class="line">    repository:</span><br><span class="line">       github: git@github.com:xxx/xxx.git,branchName</span><br><span class="line">       coding: git@github.com:xxx/xxx.git,branchName</span><br><span class="line">12345</span><br></pre></td></tr></table></figure>
-
-<p>branchName为分支名（我的分支名称是blogbak），要和前面的仓库地址用英文逗号隔开。</p>
-<p>“coding: “是gitlag的库。</p>
-<p>这里就差不多配置完成了</p>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo backup </span><br></pre></td></tr></table></figure>
-
-<p>or</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo b</span><br></pre></td></tr></table></figure>
-
-<h2 id="配置项"><a href="#配置项" class="headerlink" title="配置项"></a>配置项</h2><p>如果你只是想备份主题目录，只需要添加theme属性</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">backup:</span><br><span class="line">    type: git</span><br><span class="line">    theme: coney,landscape,xxx</span><br><span class="line">    repository:</span><br><span class="line">       github: git@github.com:xxx/xxx.git,branchName</span><br><span class="line">       gitcafe: git@github.com:xxx/xxx.git,branchName</span><br></pre></td></tr></table></figure>
-
-<p>如果你想自定义提交的message信息，那么只需要添加message属性</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">backup:</span><br><span class="line">    type: git</span><br><span class="line">    message: update xxx</span><br><span class="line">    repository:</span><br><span class="line">       github: git@github.com:xxx/xxx.git,branchName</span><br><span class="line">       gitcafe: git@github.com:xxx/xxx.git,branchName</span><br></pre></td></tr></table></figure>
-
-<p>插件地址</p>
-<p><a href="https://github.com/coneycode/hexo-git-backup">hexo-git-backup</a></p>
-<h2 id="反省"><a href="#反省" class="headerlink" title="反省"></a>反省</h2><p>记得一定要做好备份，千万不要轻易重装系统，欲哭无泪！</p>
-]]></content>
-      <categories>
-        <category>技术</category>
-        <category>插件</category>
-      </categories>
-      <tags>
-        <tag>插件</tag>
       </tags>
   </entry>
   <entry>
@@ -1034,6 +1034,110 @@
       </categories>
       <tags>
         <tag>随笔</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【安装Office】 Office Tool Plus 入门教程</title>
+    <url>/2022/09/27/%E5%AE%89%E8%A3%85Office/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>安装 Office 是一件非常简单的事情，大家不必过于担心，更不必对自己没有信心。<br>本教程适用于需要全新安装 Office 的用户，若您需要修改 Office 请参阅 [<a href="https://movejian.github.io/2022/09/27/%E6%8A%80%E8%83%BD%E6%89%A9%E5%B1%95Office">技能扩展] Office Tool Plus 高级教程</a><br>任何人都可使用 Office Tool Plus 轻松地安装 Office，请认真阅读教程以避免因为疏忽出现问题。<br>如无特殊情况，文章中提到的 Windows 10 也适用于 Windows 11.</p>
+<span id="more"></span>
+
+<h3 id="1-开始使用"><a href="#1-开始使用" class="headerlink" title="1. 开始使用"></a>1. 开始使用</h3><p>请下载最新的包含框架的版本（with runtime），以确保你始终可以获得最好的体验。<br>在<a href="http://otp.landian.vip/">官网下载 Office Tool Plus</a> 后，将其解压至正常位置（例如桌面），双击 Office Tool Plus 以运行。<br>为了获得最佳体验，若 Office Tool Plus 提示有更新，请更新后继续操作。### 2. 注意事项</p>
+<h4 id="安装开始前，请知晓以下事情："><a href="#安装开始前，请知晓以下事情：" class="headerlink" title="安装开始前，请知晓以下事情："></a>安装开始前，请知晓以下事情：</h4><ol>
+<li>使用 Office Tool Plus 安装的 Office 是官方原版，非破解、非精简。</li>
+<li>教程没提到的产品就不要随便安装，别问，问就是不推荐。</li>
+<li>教程没提到的设置就不要随便乱动，别问，不懂就不要动。</li>
+<li>建议勾选下载后再部署，能避免因为网络不佳而卡住不动。</li>
+<li>安装 Office 出现问题时，请根据提供的错误信息排查问题；更详细的错误信息可以在 【工具箱】-&gt;【收集 Office 安装日志】获得。</li>
+</ol>
+<p>Office 安装程序出现问题跟我们没有太大关系哈。举个例子，你叫了个外卖，但是送到后你觉得太难吃，这能怪骑手吗？这不能。做人要讲理，不能随便污蔑别人。</p>
+<p>如果你有任何疑问，可前往 [<a href="https://movejian.github.io/2022/09/27/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94Office">疑难解答] Office Tool Plus 入门教程</a> 查看相关问题解答。</p>
+<h4 id="安装开始前，请做好以下事情："><a href="#安装开始前，请做好以下事情：" class="headerlink" title="安装开始前，请做好以下事情："></a>安装开始前，请做好以下事情：</h4><ol>
+<li>卸载 WPS，两者共存容易出问题（没有问题当我没说）。</li>
+<li>卸载旧版本 Office，按照标准流程操作，请勿直接强制移除。</li>
+<li>清除旧版本激活信息，在 [激活] -&gt; [许可证管理] -&gt; [子菜单] -&gt; [清除激活状态]。</li>
+<li>清除 Office 设置，在 [工具箱] -&gt; [重置 Office 为默认设置]。</li>
+</ol>
+<p>附图为清除激活信息：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270128402.png" alt="清除 Office 激活信息"></p>
+<p>附图为重置 Office 的设置：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270128335.png" alt="重置 Office 为默认设置"></p>
+<h3 id="3-部署-Office"><a href="#3-部署-Office" class="headerlink" title="3. 部署 Office"></a>3. 部署 Office</h3><p>不知道自己有没有正版 Office？个人用户 <a href="https://account.microsoft.com/services/">&gt;&gt;点击这里检查&lt;&lt;</a>，企业用户 <a href="https://portal.office.com/account/?ref=MeControl#subscriptions">&gt;&gt;点击这里检查&lt;&lt;</a>。</p>
+<p>需要使用正版 Office？<a href="https://otp.landian.vip/zh-cn/#store">点击这里查看详细信息</a>。</p>
+<p>以下提到的安装方法或者产品都是合适的（差不多），不会有任何问题，请放心使用。</p>
+<hr>
+<p>自动安装：</p>
+<h5 id="一键安装"><a href="#一键安装" class="headerlink" title="一键安装"></a>一键安装</h5><p>如果你什么都不懂，或者，你只是想要个能用的 Office，那么使用一键安装代码是最合适的：</p>
+<p>确保自己使用的是最新版的 Office Tool Plus，按下 Ctrl + Shift + P 打开命令框，输入以下命令：</p>
+<p>旧版本打开命令框的快捷方式为 Ctrl + P，最新版已修改。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270130407.png" alt="命令框"></p>
+<p>安装 Microsoft 365 企业应用版（Word, PowerPoint, Excel）：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy /addProduct O365ProPlusRetail_zh-cn_Access,Bing,Groove,Lync,OneDrive,OneNote,Outlook,Publisher,Teams /channel Current /downloadFirst</span><br></pre></td></tr></table></figure>
+
+<p>安装 Microsoft 365 企业应用版（Word, PowerPoint, Excel）+ Visio 2016：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy /addProduct O365ProPlusRetail_zh-cn_Access,Bing,Groove,Lync,OneDrive,OneNote,Outlook,Publisher,Teams /addProduct VisioProRetail_zh-cn_Groove,OneDrive /channel Current /downloadFirst</span><br></pre></td></tr></table></figure>
+
+<p>输入命令后请按回车（Enter）以执行命令，然后耐心等待安装完成。</p>
+<p>安装完成后，请务必使用 [<a href="https://movejian.github.io/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B">激活 Office] Office Tool Plus 入门教程</a> 中的一键激活代码进行激活</p>
+<hr>
+<p>手动安装：</p>
+<p>转到 Office Tool Plus 的部署页面，按照以下提示操作。</p>
+<h4 id="必须做的事情"><a href="#必须做的事情" class="headerlink" title="必须做的事情"></a>必须做的事情</h4><ol>
+<li>添加产品：看下面的选项，选一个合适自己的来学习。</li>
+<li>添加语言：点一下「添加语言」就行，软件会自动匹配合适的语言。不要把“仅部署校对工具”打勾，除非你知道这是什么。</li>
+</ol>
+<h5 id="我有正版-Office"><a href="#我有正版-Office" class="headerlink" title="我有正版 Office"></a>我有正版 Office</h5><p>如果你有 Office 正版，比如你自己购买了 Microsoft 365 家庭版，安装的时候选择这个即可。</p>
+<p>当然现在也有不少人去网上白嫖什么 365 订阅，基本都是安装 Microsoft 365 企业应用版（O365ProPlusRetail）。</p>
+<p>如果学校&#x2F;企业提供了 2019&#x2F;2021 批量许可授权，安装这个也可。</p>
+<p>无论如何，你必须要安装对应的产品，否则你将无法通过账户&#x2F;密钥激活你的 Office。</p>
+<p>如果你有 Office 的正版授权，但是没有 Visio，又想装？</p>
+<p>Office, Visio 和 Project 三个产品的授权是可以分开处理的，所以你不必担心搞 Visio 会影响 Office.</p>
+<h5 id="有什么好选择吗？"><a href="#有什么好选择吗？" class="headerlink" title="有什么好选择吗？"></a>有什么好选择吗？</h5><p>当然有啦~</p>
+<p>Office 选择：Microsoft 365 企业应用版 (O365ProPlusRetail)</p>
+<p>Visio 选择：Visio 专业版 2016 (VisioProRetail)</p>
+<p>Project 选择：Project 专业版 2016 (ProjectProRetail)</p>
+<p>当然，Visio 和 Project 是需要才选，不需要或者看不懂就不需要管啦。</p>
+<h5 id="我要安装年份版-Office（例如-Office-2021）"><a href="#我要安装年份版-Office（例如-Office-2021）" class="headerlink" title="我要安装年份版 Office（例如 Office 2021）"></a>我要安装年份版 Office（例如 Office 2021）</h5><p>有一说一，年份版没有你想的那么好的哦，如果不是强迫症建议看上面那条。</p>
+<p>针对非正版用户，你只可以安装批量许可产品以便使用 KMS 激活。</p>
+<p>安装批量版时，需要使用对应的 Office 2019&#x2F;2021 企业长期版通道，否则会无法安装。</p>
+<p>Office 2021：</p>
+<p>Office LTSC 专业增强版 2021 - 批量许可证 (ProPlus2021Volume)</p>
+<p>Visio LTSC 专业版 2021 - 批量许可证 (VisioPro2021Volume)</p>
+<p>Project 专业版 2021 - 批量许可证 (ProjectPro2021Volume)</p>
+<p>Office 2019：</p>
+<p>Office 专业增强版 2019 - 批量许可证 (ProPlus2019Volume)</p>
+<p>Visio 专业版 2019 - 批量许可证 (VisioPro2019Volume)</p>
+<p>Project 专业版 2019 - 批量许可证 (ProjectPro2019Volume)</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">PS：不要问我为什么 2021 叫 LTSC，名字是微软起的有问题问微软去。</span><br></pre></td></tr></table></figure>
+
+<h5 id="我是-Windows-7-x2F-8-x2F-8-1-用户"><a href="#我是-Windows-7-x2F-8-x2F-8-1-用户" class="headerlink" title="我是 Windows 7&#x2F;8&#x2F;8.1 用户"></a>我是 Windows 7&#x2F;8&#x2F;8.1 用户</h5><p>由于系统原因，我们推荐按照第二条选项进行处理，这样确保可以进行正常安装。</p>
+<p>不要问我 Office 2019&#x2F;2021 能不能装，问就是说不能，别人说可以的话你问别人去。</p>
+<h5 id="（额外补充内容）什么系统能装什么样的-Office？"><a href="#（额外补充内容）什么系统能装什么样的-Office？" class="headerlink" title="（额外补充内容）什么系统能装什么样的 Office？"></a>（额外补充内容）什么系统能装什么样的 Office？</h5><p>目前 Office Tool Plus 中有 Office 2016、2019、2021、365 可供安装。</p>
+<p>Windows 10 和 11 无限制，可以安装任何版本的 Office。</p>
+<p>Windows 8 和 8.1 只可以安装部分产品，如果将部署模块从「Office 部署工具」更改到「Office Tool Plus」也可以安装任意产品。</p>
+<p>Windows 7 只可以安装 Office 2016 或 365，并且只能够使用「当前通道」。即使你更改部署模块，Office 2019&#x2F;2021 也不一定能安装成功。</p>
+<p>如果你的安装包是从别的地方下载的，那，那就别来问我，我也不知道你下载的是什么。</p>
+<h4 id="可以做的事情"><a href="#可以做的事情" class="headerlink" title="可以做的事情"></a>可以做的事情</h4><ol>
+<li>应用程序：选自己能看懂的就行，一般就是 Word, PowerPoint, Excel.</li>
+<li>通道：“当前通道”就行，Office 2019&#x2F;2021 批量许可证请选 Office 2019&#x2F;2021 企业长期版。</li>
+<li>体系结构：32 位兼容性好；64 位兼容性稍差且体积大，但处理大数据能力稍强。</li>
+<li>部署模式：那肯定要选安装啊，要不然怎么安装。</li>
+<li>安装模块：如没有特殊要求，请勿选择 Office Tool Plus.</li>
+<li>下载后再部署：如果网不行，最好把这个选上，免得安装卡进度卡半天。</li>
+</ol>
+<p>产品和语言弄好后即可开始部署 Office，其余设置不需要更改。</p>
+<p>部署时请耐心等待，不要强制结束安装程序或重启计算机。</p>
+<h3 id="4-视频教程"><a href="#4-视频教程" class="headerlink" title="4. 视频教程"></a>4. 视频教程</h3><p>视频教程更新不及时，建议看本文即可。</p>
+<p>bilibili：<a href="https://www.bilibili.com/video/BV1eU4y1V7NU">https://www.bilibili.com/video/BV1eU4y1V7NU</a></p>
+<p>YouTube：<a href="https://www.youtube.com/watch?v=p90V9_D-8Go">https://www.youtube.com/watch?v=p90V9_D-8Go</a></p>
+<h3 id="5-离线安装包"><a href="#5-离线安装包" class="headerlink" title="5. 离线安装包"></a>5. 离线安装包</h3><p>如果因为网络问题下载缓慢或者无法下载 Office，你可以下载 ISO 文件使用。</p>
+<p><a href="https://otp.landian.vip/zh-cn/download.html">下载站点</a>（云图小镇、OneDrive）中包含有 Office ISO.</p>
+<p>Office ISO 文件不需要解压，双击打开即可挂载使用（Win 7 除外）。</p>
+<h3 id="6-激活-Office"><a href="#6-激活-Office" class="headerlink" title="6. 激活 Office"></a>6. 激活 Office</h3><p>如果你是正版用户，一般情况下是不需要借助 Office Tool Plus 激活 Office 的，在 Office 应用程序中登录自己的微软账号，或者输入你的正版密钥即可激活 Office。</p>
+<p><a href="https://movejian.github.io/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B">【点击此处】前往另一个教程查看如何激活 Office</a></p>
+]]></content>
+      <tags>
+        <tag>Office</tag>
       </tags>
   </entry>
   <entry>
@@ -1141,110 +1245,6 @@
 ]]></content>
       <tags>
         <tag>区块链</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【安装Office】 Office Tool Plus 入门教程</title>
-    <url>/2022/09/27/%E5%AE%89%E8%A3%85Office/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>安装 Office 是一件非常简单的事情，大家不必过于担心，更不必对自己没有信心。<br>本教程适用于需要全新安装 Office 的用户，若您需要修改 Office 请参阅 [<a href="https://movejian.github.io/2022/09/27/%E6%8A%80%E8%83%BD%E6%89%A9%E5%B1%95Office">技能扩展] Office Tool Plus 高级教程</a><br>任何人都可使用 Office Tool Plus 轻松地安装 Office，请认真阅读教程以避免因为疏忽出现问题。<br>如无特殊情况，文章中提到的 Windows 10 也适用于 Windows 11.</p>
-<span id="more"></span>
-
-<h3 id="1-开始使用"><a href="#1-开始使用" class="headerlink" title="1. 开始使用"></a>1. 开始使用</h3><p>请下载最新的包含框架的版本（with runtime），以确保你始终可以获得最好的体验。<br>在<a href="http://otp.landian.vip/">官网下载 Office Tool Plus</a> 后，将其解压至正常位置（例如桌面），双击 Office Tool Plus 以运行。<br>为了获得最佳体验，若 Office Tool Plus 提示有更新，请更新后继续操作。### 2. 注意事项</p>
-<h4 id="安装开始前，请知晓以下事情："><a href="#安装开始前，请知晓以下事情：" class="headerlink" title="安装开始前，请知晓以下事情："></a>安装开始前，请知晓以下事情：</h4><ol>
-<li>使用 Office Tool Plus 安装的 Office 是官方原版，非破解、非精简。</li>
-<li>教程没提到的产品就不要随便安装，别问，问就是不推荐。</li>
-<li>教程没提到的设置就不要随便乱动，别问，不懂就不要动。</li>
-<li>建议勾选下载后再部署，能避免因为网络不佳而卡住不动。</li>
-<li>安装 Office 出现问题时，请根据提供的错误信息排查问题；更详细的错误信息可以在 【工具箱】-&gt;【收集 Office 安装日志】获得。</li>
-</ol>
-<p>Office 安装程序出现问题跟我们没有太大关系哈。举个例子，你叫了个外卖，但是送到后你觉得太难吃，这能怪骑手吗？这不能。做人要讲理，不能随便污蔑别人。</p>
-<p>如果你有任何疑问，可前往 [<a href="https://movejian.github.io/2022/09/27/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94Office">疑难解答] Office Tool Plus 入门教程</a> 查看相关问题解答。</p>
-<h4 id="安装开始前，请做好以下事情："><a href="#安装开始前，请做好以下事情：" class="headerlink" title="安装开始前，请做好以下事情："></a>安装开始前，请做好以下事情：</h4><ol>
-<li>卸载 WPS，两者共存容易出问题（没有问题当我没说）。</li>
-<li>卸载旧版本 Office，按照标准流程操作，请勿直接强制移除。</li>
-<li>清除旧版本激活信息，在 [激活] -&gt; [许可证管理] -&gt; [子菜单] -&gt; [清除激活状态]。</li>
-<li>清除 Office 设置，在 [工具箱] -&gt; [重置 Office 为默认设置]。</li>
-</ol>
-<p>附图为清除激活信息：</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270128402.png" alt="清除 Office 激活信息"></p>
-<p>附图为重置 Office 的设置：</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270128335.png" alt="重置 Office 为默认设置"></p>
-<h3 id="3-部署-Office"><a href="#3-部署-Office" class="headerlink" title="3. 部署 Office"></a>3. 部署 Office</h3><p>不知道自己有没有正版 Office？个人用户 <a href="https://account.microsoft.com/services/">&gt;&gt;点击这里检查&lt;&lt;</a>，企业用户 <a href="https://portal.office.com/account/?ref=MeControl#subscriptions">&gt;&gt;点击这里检查&lt;&lt;</a>。</p>
-<p>需要使用正版 Office？<a href="https://otp.landian.vip/zh-cn/#store">点击这里查看详细信息</a>。</p>
-<p>以下提到的安装方法或者产品都是合适的（差不多），不会有任何问题，请放心使用。</p>
-<hr>
-<p>自动安装：</p>
-<h5 id="一键安装"><a href="#一键安装" class="headerlink" title="一键安装"></a>一键安装</h5><p>如果你什么都不懂，或者，你只是想要个能用的 Office，那么使用一键安装代码是最合适的：</p>
-<p>确保自己使用的是最新版的 Office Tool Plus，按下 Ctrl + Shift + P 打开命令框，输入以下命令：</p>
-<p>旧版本打开命令框的快捷方式为 Ctrl + P，最新版已修改。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270130407.png" alt="命令框"></p>
-<p>安装 Microsoft 365 企业应用版（Word, PowerPoint, Excel）：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy /addProduct O365ProPlusRetail_zh-cn_Access,Bing,Groove,Lync,OneDrive,OneNote,Outlook,Publisher,Teams /channel Current /downloadFirst</span><br></pre></td></tr></table></figure>
-
-<p>安装 Microsoft 365 企业应用版（Word, PowerPoint, Excel）+ Visio 2016：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy /addProduct O365ProPlusRetail_zh-cn_Access,Bing,Groove,Lync,OneDrive,OneNote,Outlook,Publisher,Teams /addProduct VisioProRetail_zh-cn_Groove,OneDrive /channel Current /downloadFirst</span><br></pre></td></tr></table></figure>
-
-<p>输入命令后请按回车（Enter）以执行命令，然后耐心等待安装完成。</p>
-<p>安装完成后，请务必使用 [<a href="https://movejian.github.io/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B">激活 Office] Office Tool Plus 入门教程</a> 中的一键激活代码进行激活</p>
-<hr>
-<p>手动安装：</p>
-<p>转到 Office Tool Plus 的部署页面，按照以下提示操作。</p>
-<h4 id="必须做的事情"><a href="#必须做的事情" class="headerlink" title="必须做的事情"></a>必须做的事情</h4><ol>
-<li>添加产品：看下面的选项，选一个合适自己的来学习。</li>
-<li>添加语言：点一下「添加语言」就行，软件会自动匹配合适的语言。不要把“仅部署校对工具”打勾，除非你知道这是什么。</li>
-</ol>
-<h5 id="我有正版-Office"><a href="#我有正版-Office" class="headerlink" title="我有正版 Office"></a>我有正版 Office</h5><p>如果你有 Office 正版，比如你自己购买了 Microsoft 365 家庭版，安装的时候选择这个即可。</p>
-<p>当然现在也有不少人去网上白嫖什么 365 订阅，基本都是安装 Microsoft 365 企业应用版（O365ProPlusRetail）。</p>
-<p>如果学校&#x2F;企业提供了 2019&#x2F;2021 批量许可授权，安装这个也可。</p>
-<p>无论如何，你必须要安装对应的产品，否则你将无法通过账户&#x2F;密钥激活你的 Office。</p>
-<p>如果你有 Office 的正版授权，但是没有 Visio，又想装？</p>
-<p>Office, Visio 和 Project 三个产品的授权是可以分开处理的，所以你不必担心搞 Visio 会影响 Office.</p>
-<h5 id="有什么好选择吗？"><a href="#有什么好选择吗？" class="headerlink" title="有什么好选择吗？"></a>有什么好选择吗？</h5><p>当然有啦~</p>
-<p>Office 选择：Microsoft 365 企业应用版 (O365ProPlusRetail)</p>
-<p>Visio 选择：Visio 专业版 2016 (VisioProRetail)</p>
-<p>Project 选择：Project 专业版 2016 (ProjectProRetail)</p>
-<p>当然，Visio 和 Project 是需要才选，不需要或者看不懂就不需要管啦。</p>
-<h5 id="我要安装年份版-Office（例如-Office-2021）"><a href="#我要安装年份版-Office（例如-Office-2021）" class="headerlink" title="我要安装年份版 Office（例如 Office 2021）"></a>我要安装年份版 Office（例如 Office 2021）</h5><p>有一说一，年份版没有你想的那么好的哦，如果不是强迫症建议看上面那条。</p>
-<p>针对非正版用户，你只可以安装批量许可产品以便使用 KMS 激活。</p>
-<p>安装批量版时，需要使用对应的 Office 2019&#x2F;2021 企业长期版通道，否则会无法安装。</p>
-<p>Office 2021：</p>
-<p>Office LTSC 专业增强版 2021 - 批量许可证 (ProPlus2021Volume)</p>
-<p>Visio LTSC 专业版 2021 - 批量许可证 (VisioPro2021Volume)</p>
-<p>Project 专业版 2021 - 批量许可证 (ProjectPro2021Volume)</p>
-<p>Office 2019：</p>
-<p>Office 专业增强版 2019 - 批量许可证 (ProPlus2019Volume)</p>
-<p>Visio 专业版 2019 - 批量许可证 (VisioPro2019Volume)</p>
-<p>Project 专业版 2019 - 批量许可证 (ProjectPro2019Volume)</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">PS：不要问我为什么 2021 叫 LTSC，名字是微软起的有问题问微软去。</span><br></pre></td></tr></table></figure>
-
-<h5 id="我是-Windows-7-x2F-8-x2F-8-1-用户"><a href="#我是-Windows-7-x2F-8-x2F-8-1-用户" class="headerlink" title="我是 Windows 7&#x2F;8&#x2F;8.1 用户"></a>我是 Windows 7&#x2F;8&#x2F;8.1 用户</h5><p>由于系统原因，我们推荐按照第二条选项进行处理，这样确保可以进行正常安装。</p>
-<p>不要问我 Office 2019&#x2F;2021 能不能装，问就是说不能，别人说可以的话你问别人去。</p>
-<h5 id="（额外补充内容）什么系统能装什么样的-Office？"><a href="#（额外补充内容）什么系统能装什么样的-Office？" class="headerlink" title="（额外补充内容）什么系统能装什么样的 Office？"></a>（额外补充内容）什么系统能装什么样的 Office？</h5><p>目前 Office Tool Plus 中有 Office 2016、2019、2021、365 可供安装。</p>
-<p>Windows 10 和 11 无限制，可以安装任何版本的 Office。</p>
-<p>Windows 8 和 8.1 只可以安装部分产品，如果将部署模块从「Office 部署工具」更改到「Office Tool Plus」也可以安装任意产品。</p>
-<p>Windows 7 只可以安装 Office 2016 或 365，并且只能够使用「当前通道」。即使你更改部署模块，Office 2019&#x2F;2021 也不一定能安装成功。</p>
-<p>如果你的安装包是从别的地方下载的，那，那就别来问我，我也不知道你下载的是什么。</p>
-<h4 id="可以做的事情"><a href="#可以做的事情" class="headerlink" title="可以做的事情"></a>可以做的事情</h4><ol>
-<li>应用程序：选自己能看懂的就行，一般就是 Word, PowerPoint, Excel.</li>
-<li>通道：“当前通道”就行，Office 2019&#x2F;2021 批量许可证请选 Office 2019&#x2F;2021 企业长期版。</li>
-<li>体系结构：32 位兼容性好；64 位兼容性稍差且体积大，但处理大数据能力稍强。</li>
-<li>部署模式：那肯定要选安装啊，要不然怎么安装。</li>
-<li>安装模块：如没有特殊要求，请勿选择 Office Tool Plus.</li>
-<li>下载后再部署：如果网不行，最好把这个选上，免得安装卡进度卡半天。</li>
-</ol>
-<p>产品和语言弄好后即可开始部署 Office，其余设置不需要更改。</p>
-<p>部署时请耐心等待，不要强制结束安装程序或重启计算机。</p>
-<h3 id="4-视频教程"><a href="#4-视频教程" class="headerlink" title="4. 视频教程"></a>4. 视频教程</h3><p>视频教程更新不及时，建议看本文即可。</p>
-<p>bilibili：<a href="https://www.bilibili.com/video/BV1eU4y1V7NU">https://www.bilibili.com/video/BV1eU4y1V7NU</a></p>
-<p>YouTube：<a href="https://www.youtube.com/watch?v=p90V9_D-8Go">https://www.youtube.com/watch?v=p90V9_D-8Go</a></p>
-<h3 id="5-离线安装包"><a href="#5-离线安装包" class="headerlink" title="5. 离线安装包"></a>5. 离线安装包</h3><p>如果因为网络问题下载缓慢或者无法下载 Office，你可以下载 ISO 文件使用。</p>
-<p><a href="https://otp.landian.vip/zh-cn/download.html">下载站点</a>（云图小镇、OneDrive）中包含有 Office ISO.</p>
-<p>Office ISO 文件不需要解压，双击打开即可挂载使用（Win 7 除外）。</p>
-<h3 id="6-激活-Office"><a href="#6-激活-Office" class="headerlink" title="6. 激活 Office"></a>6. 激活 Office</h3><p>如果你是正版用户，一般情况下是不需要借助 Office Tool Plus 激活 Office 的，在 Office 应用程序中登录自己的微软账号，或者输入你的正版密钥即可激活 Office。</p>
-<p><a href="https://movejian.github.io/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B">【点击此处】前往另一个教程查看如何激活 Office</a></p>
-]]></content>
-      <tags>
-        <tag>Office</tag>
       </tags>
   </entry>
   <entry>
@@ -1545,6 +1545,137 @@
       </tags>
   </entry>
   <entry>
+    <title>【疑难解答】 Office Tool Plus 入门教程</title>
+    <url>/2022/09/27/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94Office/</url>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>如果你的系统本身就有诸多毛病，建议直接重装原版系统，这是最有效最快的解决办法。</p>
+<p>下面的问题以及解决办法仅供参考，不一定有效，可能因系统环境等原因有些许不同。</p>
+<p>如无特殊情况，文章中提到的 Windows 10 也适用于 Windows 11.</p>
+<span id="more"></span>
+
+<h3 id="关于-Office-Tool-Plus-的问题"><a href="#关于-Office-Tool-Plus-的问题" class="headerlink" title="关于 Office Tool Plus 的问题"></a>关于 Office Tool Plus 的问题</h3><h5 id="安装了-NET-Runtime-框架，却依然无法打开-Office-Tool-Plus"><a href="#安装了-NET-Runtime-框架，却依然无法打开-Office-Tool-Plus" class="headerlink" title="安装了 .NET Runtime 框架，却依然无法打开 Office Tool Plus"></a>安装了 .NET Runtime 框架，却依然无法打开 Office Tool Plus</h5><p>这个要分为三种情况：</p>
+<ol>
+<li>双击打开，没有任何提示，只是鼠标转了一下圈圈。</li>
+<li>双击打开，报错，显示已停止运行。</li>
+<li>双击打开，提示需要 install .NET runtime</li>
+</ol>
+<p>以上三种情况，首先，1 和 2 是比较难搞的，这大多数是系统问题，并且出在 Win 7 上比较多。</p>
+<p>针对这个问题，首先去 Windows Update 把更新打满，Win 7 用户可以<a href="https://download.coolhub.top/Extensions/Win7_UpdatePack/">从这里下载更新包</a> (UpdatePack7R2) 使用。</p>
+<p>第三种情况又分为两种情况：</p>
+<p>第一：你可能框架装错了，最稳妥就是下载 Office Tool Plus with Runtime (自带框架) 的版本，这样基本能解决问题。</p>
+<p>第二：如果你确定你框架没装错，但还是打不开，首先你要确保你装的框架是 32 位的，即使在 64 位的系统上也是如此。并且框架不可以使用第三方管理器进行安装，否则可能会出现问题。</p>
+<p>第三：注册表的系统变量一定不能更改过，有没有问题的话，对一对下面的注册表截图就知道了：</p>
+<p><code>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion</code></p>
+<p>64 位 Windows 系统：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270110384.png" alt="img"></p>
+<p>32 位 Windows 系统：</p>
+<p>[暂无截图]</p>
+<p>如果对完发现，真的有问题，那么请首先卸载框架，然后把注册表改回去，再重新安装框架，这时候就没事了。</p>
+<h5 id="UCEERR-RENDERTHREADFAILURE-0x88980406"><a href="#UCEERR-RENDERTHREADFAILURE-0x88980406" class="headerlink" title="UCEERR_RENDERTHREADFAILURE (0x88980406)"></a><code>UCEERR_RENDERTHREADFAILURE (0x88980406)</code></h5><p>看下面那一条，解决办法是一样的。</p>
+<h5 id="打开程序，窗口完全透明，但实际上可以点击可以操作"><a href="#打开程序，窗口完全透明，但实际上可以点击可以操作" class="headerlink" title="打开程序，窗口完全透明，但实际上可以点击可以操作"></a>打开程序，窗口完全透明，但实际上可以点击可以操作</h5><p><strong>最好的办法是更新显卡驱动程序从根源上解决问题</strong>，不过在这里也还是有临时方案可以使用的。</p>
+<p>使用 CMD 或 PowerShell 启动程序，并附带上以下参数：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&quot;Office Tool Plus&quot; /enablehwacc false</span><br></pre></td></tr></table></figure>
+
+<p>以上命令会关闭 Office Tool Plus 的硬件加速，这可能会有一些性能上的小问题。</p>
+<h5 id="Insufficient-memory-to-continue-the-execution-of-the-program"><a href="#Insufficient-memory-to-continue-the-execution-of-the-program" class="headerlink" title="Insufficient memory to continue the execution of the program."></a><code>Insufficient memory to continue the execution of the program.</code></h5><p>最新版 Office Tool Plus 已解决此问题，请从<a href="https://otp.landian.vip/">官网</a>下载最新版本使用。</p>
+<p>如果问题依旧，请在断网状态下打开 Office Tool Plus，打开确认正常后再恢复网络链接。</p>
+<h3 id="关于安装的疑问"><a href="#关于安装的疑问" class="headerlink" title="关于安装的疑问"></a>关于安装的疑问</h3><h5 id="Office-Tool-Plus-安装的-Office-是正版吗？"><a href="#Office-Tool-Plus-安装的-Office-是正版吗？" class="headerlink" title="Office Tool Plus 安装的 Office 是正版吗？"></a>Office Tool Plus 安装的 Office 是正版吗？</h5><p>Office Tool Plus 下载&#x2F;安装的 Office 均为微软官方原版，非破解、非精简、非绿色版。</p>
+<p>至于你的 Office 是否正版，看你怎么激活，并不是用 Office Tool Plus 就一定是盗版，反之成立。</p>
+<p>即使你购买了正版 Office，你依然可以使用 Office Tool Plus 安装 Office。</p>
+<h5 id="Office-体系结构该如何选择？"><a href="#Office-体系结构该如何选择？" class="headerlink" title="Office 体系结构该如何选择？"></a>Office 体系结构该如何选择？</h5><p>一般情况下，默认 32 位的就可以了。</p>
+<p>如果你在日常使用中不会打开 1GB+ 的 PPT 或者几万行的 Excel 表，那没必要安装 64 位的 Office。</p>
+<p>主要是 32 位兼容性比较好（例如可以完美使用 Office Tool Plus 的文档转换功能）。</p>
+<p>具体可以<a href="https://support.microsoft.com/zh-cn/office/%E9%80%89%E6%8B%A9-64-%E4%BD%8D%E6%88%96-32-%E4%BD%8D%E7%89%88%E6%9C%AC%E7%9A%84-office-2dee7807-8f95-4d0c-b5fe-6c6f49b8d261">查看微软官网文档</a>中的解释。</p>
+<h5 id="Office-产品该如何选择？"><a href="#Office-产品该如何选择？" class="headerlink" title="Office 产品该如何选择？"></a>Office 产品该如何选择？</h5><p>对于正版用户来说，为了能正常激活 Office，要安装跟买的一样的，比如买的 Office 2019 家庭和学生版，那就安装这个版本。</p>
+<p>Microsoft 365 用户还需要特别注意自己账号授权和产品一定要对上，否则 Office 会自动更新为全家桶。</p>
+<p>对于非正版用户来说，请按照 [<a href="https://movejian.github.io/2022/09/27/%E5%AE%89%E8%A3%85Office">安装 Office] Office Tool Plus 入门教程</a> 操作。</p>
+<p>如果你有 Office 正版，但没有 Visio 或 Project 的正版，也可以按照安装教程中的说明操作。</p>
+<p>激活的时候，Office、Visio 和 Project 是分开处理的，并不会相互影响（特殊情况除外）。</p>
+<h5 id="Office-是否可以安装在其他盘？"><a href="#Office-是否可以安装在其他盘？" class="headerlink" title="Office 是否可以安装在其他盘？"></a>Office 是否可以安装在其他盘？</h5><p>由于微软限制，Office 只能安装在系统盘上，并且不可以使用其它软件强制迁移，否则会导致出错甚至难以修复。</p>
+<p>网上介绍的通过修改注册表来修改软件安装路径并不推荐大家使用。</p>
+<p>因为这个，我们在群里见过翻车的例子太多了。</p>
+<p>与其这样折腾还不如买个新硬盘扩容实在。</p>
+<p>别说什么有钱没钱的，自己的电脑就该买好一点，不是自己的电脑就将就用。</p>
+<h5 id="Office-Tool-Plus-下载的安装包在哪里？"><a href="#Office-Tool-Plus-下载的安装包在哪里？" class="headerlink" title="Office Tool Plus 下载的安装包在哪里？"></a>Office Tool Plus 下载的安装包在哪里？</h5><p>只有使用下载后再部署，Office Tool Plus 才会预先下载安装包并保存在电脑上。</p>
+<p>一般情况下，Office Tool Plus 会将 Office 安装包下载到 Office Tool Plus 的同目录中。</p>
+<p>也就是说，<code>Office Tool\Office\Data</code>下保存的就是 Office 的安装包。</p>
+<p>如果你更改了源路径属性，那么下载路径就是你更改后的路径。</p>
+<p>如果要共享安装包给别人用，请务必复制 Office 整个文件夹，而不是复制里面的子文件夹，这会导致无法识别。</p>
+<p>当然最佳方式是创建 ISO 文件共享给对方用。</p>
+<h3 id="关于安装的问题"><a href="#关于安装的问题" class="headerlink" title="关于安装的问题"></a>关于安装的问题</h3><h5 id="Value-cannot-be-null-Parameter-‘xxxx’"><a href="#Value-cannot-be-null-Parameter-‘xxxx’" class="headerlink" title="Value cannot be null. (Parameter ‘xxxx’)"></a>Value cannot be null. (Parameter ‘xxxx’)</h5><p>如果你是在使用 Office Tool Plus 作为安装模块（不是 Office 部署工具）时出现的这个问题，</p>
+<p>那就在工具箱内「修复系统变量」，修复完成后重启系统然后再尝试安装。</p>
+<h5 id="Office-安装长时间无反应-x2F-安装失败如何解决？"><a href="#Office-安装长时间无反应-x2F-安装失败如何解决？" class="headerlink" title="Office 安装长时间无反应&#x2F;安装失败如何解决？"></a>Office 安装长时间无反应&#x2F;安装失败如何解决？</h5><p>由于 Office 安装失败的原因实在……太复杂了，所以在此处我不一一列举。</p>
+<p>有一些问题是翻译一下文本就知道的错误，请通过修改配置来解决。</p>
+<p>一些需要深入研究并解决的问题可以进行如下操作：</p>
+<ol>
+<li>打开 Office Tool Plus</li>
+<li>转到工具箱</li>
+<li>使用收集 Office 安装程序日志功能收集日志并保存</li>
+</ol>
+<p>日志里面可能包含很多文件，需要针对性的查看与分析问题。</p>
+<p>ODT 或 C2R 日志可以通过搜索 Error 寻找错误信息，如果你技术过硬，可尝试自己解决问题。</p>
+<p>如果你不会解决问题，请发送日志给我，或者加群讨论解决（记得请我吃鸡腿 :sad: :good: ）。</p>
+<h3 id="关于激活的疑问"><a href="#关于激活的疑问" class="headerlink" title="关于激活的疑问"></a>关于激活的疑问</h3><h5 id="为什么有时候安装的和激活的产品不一样？"><a href="#为什么有时候安装的和激活的产品不一样？" class="headerlink" title="为什么有时候安装的和激活的产品不一样？"></a>为什么有时候安装的和激活的产品不一样？</h5><p>你需要知道两件事：</p>
+<ul>
+<li>产品是产品，许可证是许可证，两者虽然都有一样的名字，但不是同一个东西。</li>
+<li>理论上来说产品一般和许可证对应，但实际情况中可以不对应。</li>
+</ul>
+<p>为什么教程写的 Microsoft 365 配 Mondo 2016 Volume？</p>
+<p>因为这是最好的搭配，能让你体验 Office 所有的功能。</p>
+<h5 id="我想让激活的产品和安装的一样，如何操作？"><a href="#我想让激活的产品和安装的一样，如何操作？" class="headerlink" title="我想让激活的产品和安装的一样，如何操作？"></a>我想让激活的产品和安装的一样，如何操作？</h5><p>如果你是正版用户，出现这个问题的时候，应该前往 Office Tool Plus 的激活页面，在证书管理中，打开按钮的子菜单，选择清除激活信息，然后打开你的 Office 应用程序，按照提示修复并重新激活 Office。</p>
+<p>如果你是你是按照 [<a href="https://movejian.github.io/2022/09/27/%E5%AE%89%E8%A3%85Office">安装 Office] Office Tool Plus 入门教程</a> 操作的，那我觉得你完全没必要继续折腾。</p>
+<h5 id="如何激活-Microsoft-365？"><a href="#如何激活-Microsoft-365？" class="headerlink" title="如何激活 Microsoft 365？"></a>如何激活 Microsoft 365？</h5><p><a href="https://otp.landian.vip/zh-cn/#store">点击此处</a>解决问题。</p>
+<h5 id="Mondo-许可证是什么？"><a href="#Mondo-许可证是什么？" class="headerlink" title="Mondo 许可证是什么？"></a>Mondo 许可证是什么？</h5><p>2016 许可证可以用 2016 的功能，2019 能用 2019 的功能。</p>
+<p>比如 2019 的 PPT 平滑切换，2016 就没有。</p>
+<p>举个简单的例子：</p>
+<p>如果 2016 是普通身份，2019 是 VIP，那么 Mondo 就是 SVIP。</p>
+<p>Mondo 许可证可以让你体验并使用 Office 的所有功能。</p>
+<p>别看 Mondo 名字带一个 2016 就以为它逊，它强得很。</p>
+<p>不过从大局看，当然还是 Microsoft 365 正版许可最强啦，什么都有。</p>
+<h3 id="关于激活的问题"><a href="#关于激活的问题" class="headerlink" title="关于激活的问题"></a>关于激活的问题</h3><h5 id="激活时显示「产品激活成功」，打开-Office-时显示需要激活"><a href="#激活时显示「产品激活成功」，打开-Office-时显示需要激活" class="headerlink" title="激活时显示「产品激活成功」，打开 Office 时显示需要激活"></a>激活时显示「产品激活成功」，打开 Office 时显示需要激活</h5><p>具体表现为：在 Office Tool Plus 内激活的时候是显示的激活成功，但是打开 Office 却显示需要激活，并且显示的是 Microsoft 365，不是自己所安装的 Office 许可证。</p>
+<p>解决办法：在工具箱内「恢复 Office 设置为默认设置」，激活那边不需要操作，你只要确保已经激活成功就行了。</p>
+<h5 id="激活完成后显示「你的许可证有问题」"><a href="#激活完成后显示「你的许可证有问题」" class="headerlink" title="激活完成后显示「你的许可证有问题」"></a>激活完成后显示「你的许可证有问题」</h5><p>在工具箱内「修复 Office 许可证问题」即可。</p>
+<p>KMS 主机地址可以从激活教程获得，也可以通过查询激活信息找到你正在使用的 KMS 主机地址。</p>
+<h5 id="文件名、目录名或卷标语法不正确-0x8007007B-服务器运行失败-0x80080005-DNS-名称不存在-0x8007232B"><a href="#文件名、目录名或卷标语法不正确-0x8007007B-服务器运行失败-0x80080005-DNS-名称不存在-0x8007232B" class="headerlink" title="文件名、目录名或卷标语法不正确 (0x8007007B) | 服务器运行失败 (0x80080005) | DNS 名称不存在 (0x8007232B)"></a>文件名、目录名或卷标语法不正确 (0x8007007B) | 服务器运行失败 (0x80080005) | DNS 名称不存在 (0x8007232B)</h5><p>在工具箱内「重置 Software Protection 服务」，然后再次设置 KMS 主机，重试激活。</p>
+<h5 id="数据无效-0x8007000D"><a href="#数据无效-0x8007000D" class="headerlink" title="数据无效 (0x8007000D)"></a>数据无效 (0x8007000D)</h5><p>在工具箱内「重置 Software Protection 服务」，然后再次设置 KMS 主机，重试激活。</p>
+<p>如果上述操作不能解决你的问题，那就：</p>
+<p>尝试更换一个 KMS 主机，然后再次尝试激活。同时也要注意自己的系统时间是否正确。</p>
+<h5 id="软件授权服务报告无法激活该产品。无法联系任何密钥管理服务-0xC004F074"><a href="#软件授权服务报告无法激活该产品。无法联系任何密钥管理服务-0xC004F074" class="headerlink" title="软件授权服务报告无法激活该产品。无法联系任何密钥管理服务 (0xC004F074)"></a>软件授权服务报告无法激活该产品。无法联系任何密钥管理服务 (0xC004F074)</h5><p>卸载电脑上所有的 KMS 软件（如果有），例如：HEU 或者 KMS-VL-ALL.</p>
+<p>随后在工具箱内「重置 Software Protection 服务」。</p>
+<p>重新激活 Office 时，请填入 KMS 端口：1688</p>
+<h5 id="许可证使用失败-0xC004E015-令牌存储中的令牌包含无效的哈希-0x8004E108"><a href="#许可证使用失败-0xC004E015-令牌存储中的令牌包含无效的哈希-0x8004E108" class="headerlink" title="许可证使用失败 (0xC004E015) | 令牌存储中的令牌包含无效的哈希 (0x8004E108)"></a>许可证使用失败 (0xC004E015) | 令牌存储中的令牌包含无效的哈希 (0x8004E108)</h5><p>自动处理：在工具箱内「重建激活令牌」，然后重新开始激活。</p>
+<p>手动处理：请参阅帮助文档的<a href="https://help.coolhub.top/zh-cn/activate/faq.html">疑难解答</a>。</p>
+<h5 id="没有在此计算机上发现-Office-批量许可证"><a href="#没有在此计算机上发现-Office-批量许可证" class="headerlink" title="没有在此计算机上发现 Office 批量许可证"></a>没有在此计算机上发现 Office 批量许可证</h5><p>字面意思。</p>
+<p>安装批量许可证即可，可参考：[<a href="https://movejian.github.io/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B">激活 Office] Office Tool Plus 入门教程</a></p>
+<h5 id="软件授权服务报告许可证未安装-0xC004F015-amp-0xC004F017"><a href="#软件授权服务报告许可证未安装-0xC004F015-amp-0xC004F017" class="headerlink" title="软件授权服务报告许可证未安装 (0xC004F015 &amp; 0xC004F017)"></a>软件授权服务报告许可证未安装 (0xC004F015 &amp; 0xC004F017)</h5><p>不要被微软的表面意思所迷惑了。</p>
+<p>这句话表示许可证已安装，但尚未安装有效的密钥，所以无法使用。</p>
+<p>如果 Office 还没激活，换个许可证或者换个密钥（建议去看<a href="https://movejian.github.io/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B">激活教程</a>）；</p>
+<p>如果 Office 已经激活，不需要理会这条消息。</p>
+<h5 id="软件授权服务报告找不到产品-SKU-0xC004F069"><a href="#软件授权服务报告找不到产品-SKU-0xC004F069" class="headerlink" title="软件授权服务报告找不到产品 SKU (0xC004F069)"></a>软件授权服务报告找不到产品 SKU (0xC004F069)</h5><p>你正在尝试安装的密钥找不到对应的许可证。</p>
+<p>安装与密钥对应的许可证，然后重新尝试安装密钥。</p>
+<h5 id="该目录包含仅名称大小写有区别的条目-0x000001A8"><a href="#该目录包含仅名称大小写有区别的条目-0x000001A8" class="headerlink" title="该目录包含仅名称大小写有区别的条目 (0x000001A8)"></a>该目录包含仅名称大小写有区别的条目 (0x000001A8)</h5><p>在工具箱内「修复 WMI 组件」。</p>
+<p><strong>注意</strong>：该功能仅在 8.2.9.0 以上版本的 Office Tool Plus 中才有。</p>
+<h5 id="An-error-occurred-while-making-the-connection"><a href="#An-error-occurred-while-making-the-connection" class="headerlink" title="An error occurred while making the connection."></a>An error occurred while making the connection.</h5><p>在“<font size="5">服务</font>”中将 <code>Windows Management Instrumentation</code>服务启用，然后再次尝试操作。</p>
+<p>啊启动了也没办法？打扰了，我也不知道该咋办。</p>
+<h3 id="关于-Office-的问题"><a href="#关于-Office-的问题" class="headerlink" title="关于 Office 的问题"></a>关于 Office 的问题</h3><h5 id="打开后显示正在更新-Office，过会儿显示错误"><a href="#打开后显示正在更新-Office，过会儿显示错误" class="headerlink" title="打开后显示正在更新 Office，过会儿显示错误"></a>打开后显示正在更新 Office，过会儿显示错误</h5><p>老毛病了，老毛病了。具体原因我不知道，但我知道一个临时解决办法。</p>
+<p>打开任务管理器，找到 <code>Microsoft Office Click-to-Run</code> 进程，直接结束运行。</p>
+<p>其他的例如 Excel，Word 等等之类的应用程序也要结束运行。</p>
+<p>然后再尝试打开 Office，应该就没啥问题了。</p>
+<h5 id="我们注意到你更新了你的许可证。请重新启动……"><a href="#我们注意到你更新了你的许可证。请重新启动……" class="headerlink" title="我们注意到你更新了你的许可证。请重新启动……"></a>我们注意到你更新了你的许可证。请重新启动……</h5><p>这个问题发生在 Project 上比较多。反正重启了还是提示 </p>
+<p>解决办法：在工具箱内「恢复 Office 设置为默认设置」。</p>
+<h5 id="很抱歉，此功能看似已中断"><a href="#很抱歉，此功能看似已中断" class="headerlink" title="很抱歉，此功能看似已中断"></a>很抱歉，此功能看似已中断</h5><p>一般情况下，卸载 WPS 即可解决此问题。</p>
+<p>卸载之后可以使用一下 Office 的快速修复以免问题没有完全解决。</p>
+<p>不想卸？卸了也没用？那我也没有办法。</p>
+<h3 id="附录：尚无解决办法的问题"><a href="#附录：尚无解决办法的问题" class="headerlink" title="附录：尚无解决办法的问题"></a>附录：尚无解决办法的问题</h3><ul>
+<li>没有注册类，代码：0x80040154</li>
+<li>软件授权服务报告产品密钥不可用，代码：0xC004F014</li>
+<li>系统找不到指定的文件，代码：0x80070002</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Office</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>热血传奇幻境迷宫、屠龙殿、圣域地图走法图解</title>
     <url>/2022/08/31/%E7%83%AD%E8%A1%80%E4%BC%A0%E5%A5%87%E5%B9%BB%E5%A2%83%E8%BF%B7%E5%AE%AB%E3%80%81%E5%B1%A0%E9%BE%99%E6%AE%BF%E3%80%81%E5%9C%A3%E5%9F%9F%E5%9C%B0%E5%9B%BE%E8%B5%B0%E6%B3%95%E5%9B%BE%E8%A7%A3/</url>
     <content><![CDATA[<p>小编精心总结了热血传奇幻境从幻境一层—幻境迷宫—幻境十层—屠龙殿—圣域之门地图的全部走法攻略，通过图文解说+参考视频进行了详尽的描述，愿可以帮助到您。</p>
@@ -1702,137 +1833,6 @@
         <tag>传奇</tag>
         <tag>攻略</tag>
         <tag>魔龙</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【疑难解答】 Office Tool Plus 入门教程</title>
-    <url>/2022/09/27/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94Office/</url>
-    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>如果你的系统本身就有诸多毛病，建议直接重装原版系统，这是最有效最快的解决办法。</p>
-<p>下面的问题以及解决办法仅供参考，不一定有效，可能因系统环境等原因有些许不同。</p>
-<p>如无特殊情况，文章中提到的 Windows 10 也适用于 Windows 11.</p>
-<span id="more"></span>
-
-<h3 id="关于-Office-Tool-Plus-的问题"><a href="#关于-Office-Tool-Plus-的问题" class="headerlink" title="关于 Office Tool Plus 的问题"></a>关于 Office Tool Plus 的问题</h3><h5 id="安装了-NET-Runtime-框架，却依然无法打开-Office-Tool-Plus"><a href="#安装了-NET-Runtime-框架，却依然无法打开-Office-Tool-Plus" class="headerlink" title="安装了 .NET Runtime 框架，却依然无法打开 Office Tool Plus"></a>安装了 .NET Runtime 框架，却依然无法打开 Office Tool Plus</h5><p>这个要分为三种情况：</p>
-<ol>
-<li>双击打开，没有任何提示，只是鼠标转了一下圈圈。</li>
-<li>双击打开，报错，显示已停止运行。</li>
-<li>双击打开，提示需要 install .NET runtime</li>
-</ol>
-<p>以上三种情况，首先，1 和 2 是比较难搞的，这大多数是系统问题，并且出在 Win 7 上比较多。</p>
-<p>针对这个问题，首先去 Windows Update 把更新打满，Win 7 用户可以<a href="https://download.coolhub.top/Extensions/Win7_UpdatePack/">从这里下载更新包</a> (UpdatePack7R2) 使用。</p>
-<p>第三种情况又分为两种情况：</p>
-<p>第一：你可能框架装错了，最稳妥就是下载 Office Tool Plus with Runtime (自带框架) 的版本，这样基本能解决问题。</p>
-<p>第二：如果你确定你框架没装错，但还是打不开，首先你要确保你装的框架是 32 位的，即使在 64 位的系统上也是如此。并且框架不可以使用第三方管理器进行安装，否则可能会出现问题。</p>
-<p>第三：注册表的系统变量一定不能更改过，有没有问题的话，对一对下面的注册表截图就知道了：</p>
-<p><code>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion</code></p>
-<p>64 位 Windows 系统：</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270110384.png" alt="img"></p>
-<p>32 位 Windows 系统：</p>
-<p>[暂无截图]</p>
-<p>如果对完发现，真的有问题，那么请首先卸载框架，然后把注册表改回去，再重新安装框架，这时候就没事了。</p>
-<h5 id="UCEERR-RENDERTHREADFAILURE-0x88980406"><a href="#UCEERR-RENDERTHREADFAILURE-0x88980406" class="headerlink" title="UCEERR_RENDERTHREADFAILURE (0x88980406)"></a><code>UCEERR_RENDERTHREADFAILURE (0x88980406)</code></h5><p>看下面那一条，解决办法是一样的。</p>
-<h5 id="打开程序，窗口完全透明，但实际上可以点击可以操作"><a href="#打开程序，窗口完全透明，但实际上可以点击可以操作" class="headerlink" title="打开程序，窗口完全透明，但实际上可以点击可以操作"></a>打开程序，窗口完全透明，但实际上可以点击可以操作</h5><p><strong>最好的办法是更新显卡驱动程序从根源上解决问题</strong>，不过在这里也还是有临时方案可以使用的。</p>
-<p>使用 CMD 或 PowerShell 启动程序，并附带上以下参数：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&quot;Office Tool Plus&quot; /enablehwacc false</span><br></pre></td></tr></table></figure>
-
-<p>以上命令会关闭 Office Tool Plus 的硬件加速，这可能会有一些性能上的小问题。</p>
-<h5 id="Insufficient-memory-to-continue-the-execution-of-the-program"><a href="#Insufficient-memory-to-continue-the-execution-of-the-program" class="headerlink" title="Insufficient memory to continue the execution of the program."></a><code>Insufficient memory to continue the execution of the program.</code></h5><p>最新版 Office Tool Plus 已解决此问题，请从<a href="https://otp.landian.vip/">官网</a>下载最新版本使用。</p>
-<p>如果问题依旧，请在断网状态下打开 Office Tool Plus，打开确认正常后再恢复网络链接。</p>
-<h3 id="关于安装的疑问"><a href="#关于安装的疑问" class="headerlink" title="关于安装的疑问"></a>关于安装的疑问</h3><h5 id="Office-Tool-Plus-安装的-Office-是正版吗？"><a href="#Office-Tool-Plus-安装的-Office-是正版吗？" class="headerlink" title="Office Tool Plus 安装的 Office 是正版吗？"></a>Office Tool Plus 安装的 Office 是正版吗？</h5><p>Office Tool Plus 下载&#x2F;安装的 Office 均为微软官方原版，非破解、非精简、非绿色版。</p>
-<p>至于你的 Office 是否正版，看你怎么激活，并不是用 Office Tool Plus 就一定是盗版，反之成立。</p>
-<p>即使你购买了正版 Office，你依然可以使用 Office Tool Plus 安装 Office。</p>
-<h5 id="Office-体系结构该如何选择？"><a href="#Office-体系结构该如何选择？" class="headerlink" title="Office 体系结构该如何选择？"></a>Office 体系结构该如何选择？</h5><p>一般情况下，默认 32 位的就可以了。</p>
-<p>如果你在日常使用中不会打开 1GB+ 的 PPT 或者几万行的 Excel 表，那没必要安装 64 位的 Office。</p>
-<p>主要是 32 位兼容性比较好（例如可以完美使用 Office Tool Plus 的文档转换功能）。</p>
-<p>具体可以<a href="https://support.microsoft.com/zh-cn/office/%E9%80%89%E6%8B%A9-64-%E4%BD%8D%E6%88%96-32-%E4%BD%8D%E7%89%88%E6%9C%AC%E7%9A%84-office-2dee7807-8f95-4d0c-b5fe-6c6f49b8d261">查看微软官网文档</a>中的解释。</p>
-<h5 id="Office-产品该如何选择？"><a href="#Office-产品该如何选择？" class="headerlink" title="Office 产品该如何选择？"></a>Office 产品该如何选择？</h5><p>对于正版用户来说，为了能正常激活 Office，要安装跟买的一样的，比如买的 Office 2019 家庭和学生版，那就安装这个版本。</p>
-<p>Microsoft 365 用户还需要特别注意自己账号授权和产品一定要对上，否则 Office 会自动更新为全家桶。</p>
-<p>对于非正版用户来说，请按照 [<a href="https://movejian.github.io/2022/09/27/%E5%AE%89%E8%A3%85Office">安装 Office] Office Tool Plus 入门教程</a> 操作。</p>
-<p>如果你有 Office 正版，但没有 Visio 或 Project 的正版，也可以按照安装教程中的说明操作。</p>
-<p>激活的时候，Office、Visio 和 Project 是分开处理的，并不会相互影响（特殊情况除外）。</p>
-<h5 id="Office-是否可以安装在其他盘？"><a href="#Office-是否可以安装在其他盘？" class="headerlink" title="Office 是否可以安装在其他盘？"></a>Office 是否可以安装在其他盘？</h5><p>由于微软限制，Office 只能安装在系统盘上，并且不可以使用其它软件强制迁移，否则会导致出错甚至难以修复。</p>
-<p>网上介绍的通过修改注册表来修改软件安装路径并不推荐大家使用。</p>
-<p>因为这个，我们在群里见过翻车的例子太多了。</p>
-<p>与其这样折腾还不如买个新硬盘扩容实在。</p>
-<p>别说什么有钱没钱的，自己的电脑就该买好一点，不是自己的电脑就将就用。</p>
-<h5 id="Office-Tool-Plus-下载的安装包在哪里？"><a href="#Office-Tool-Plus-下载的安装包在哪里？" class="headerlink" title="Office Tool Plus 下载的安装包在哪里？"></a>Office Tool Plus 下载的安装包在哪里？</h5><p>只有使用下载后再部署，Office Tool Plus 才会预先下载安装包并保存在电脑上。</p>
-<p>一般情况下，Office Tool Plus 会将 Office 安装包下载到 Office Tool Plus 的同目录中。</p>
-<p>也就是说，<code>Office Tool\Office\Data</code>下保存的就是 Office 的安装包。</p>
-<p>如果你更改了源路径属性，那么下载路径就是你更改后的路径。</p>
-<p>如果要共享安装包给别人用，请务必复制 Office 整个文件夹，而不是复制里面的子文件夹，这会导致无法识别。</p>
-<p>当然最佳方式是创建 ISO 文件共享给对方用。</p>
-<h3 id="关于安装的问题"><a href="#关于安装的问题" class="headerlink" title="关于安装的问题"></a>关于安装的问题</h3><h5 id="Value-cannot-be-null-Parameter-‘xxxx’"><a href="#Value-cannot-be-null-Parameter-‘xxxx’" class="headerlink" title="Value cannot be null. (Parameter ‘xxxx’)"></a>Value cannot be null. (Parameter ‘xxxx’)</h5><p>如果你是在使用 Office Tool Plus 作为安装模块（不是 Office 部署工具）时出现的这个问题，</p>
-<p>那就在工具箱内「修复系统变量」，修复完成后重启系统然后再尝试安装。</p>
-<h5 id="Office-安装长时间无反应-x2F-安装失败如何解决？"><a href="#Office-安装长时间无反应-x2F-安装失败如何解决？" class="headerlink" title="Office 安装长时间无反应&#x2F;安装失败如何解决？"></a>Office 安装长时间无反应&#x2F;安装失败如何解决？</h5><p>由于 Office 安装失败的原因实在……太复杂了，所以在此处我不一一列举。</p>
-<p>有一些问题是翻译一下文本就知道的错误，请通过修改配置来解决。</p>
-<p>一些需要深入研究并解决的问题可以进行如下操作：</p>
-<ol>
-<li>打开 Office Tool Plus</li>
-<li>转到工具箱</li>
-<li>使用收集 Office 安装程序日志功能收集日志并保存</li>
-</ol>
-<p>日志里面可能包含很多文件，需要针对性的查看与分析问题。</p>
-<p>ODT 或 C2R 日志可以通过搜索 Error 寻找错误信息，如果你技术过硬，可尝试自己解决问题。</p>
-<p>如果你不会解决问题，请发送日志给我，或者加群讨论解决（记得请我吃鸡腿 :sad: :good: ）。</p>
-<h3 id="关于激活的疑问"><a href="#关于激活的疑问" class="headerlink" title="关于激活的疑问"></a>关于激活的疑问</h3><h5 id="为什么有时候安装的和激活的产品不一样？"><a href="#为什么有时候安装的和激活的产品不一样？" class="headerlink" title="为什么有时候安装的和激活的产品不一样？"></a>为什么有时候安装的和激活的产品不一样？</h5><p>你需要知道两件事：</p>
-<ul>
-<li>产品是产品，许可证是许可证，两者虽然都有一样的名字，但不是同一个东西。</li>
-<li>理论上来说产品一般和许可证对应，但实际情况中可以不对应。</li>
-</ul>
-<p>为什么教程写的 Microsoft 365 配 Mondo 2016 Volume？</p>
-<p>因为这是最好的搭配，能让你体验 Office 所有的功能。</p>
-<h5 id="我想让激活的产品和安装的一样，如何操作？"><a href="#我想让激活的产品和安装的一样，如何操作？" class="headerlink" title="我想让激活的产品和安装的一样，如何操作？"></a>我想让激活的产品和安装的一样，如何操作？</h5><p>如果你是正版用户，出现这个问题的时候，应该前往 Office Tool Plus 的激活页面，在证书管理中，打开按钮的子菜单，选择清除激活信息，然后打开你的 Office 应用程序，按照提示修复并重新激活 Office。</p>
-<p>如果你是你是按照 [<a href="https://movejian.github.io/2022/09/27/%E5%AE%89%E8%A3%85Office">安装 Office] Office Tool Plus 入门教程</a> 操作的，那我觉得你完全没必要继续折腾。</p>
-<h5 id="如何激活-Microsoft-365？"><a href="#如何激活-Microsoft-365？" class="headerlink" title="如何激活 Microsoft 365？"></a>如何激活 Microsoft 365？</h5><p><a href="https://otp.landian.vip/zh-cn/#store">点击此处</a>解决问题。</p>
-<h5 id="Mondo-许可证是什么？"><a href="#Mondo-许可证是什么？" class="headerlink" title="Mondo 许可证是什么？"></a>Mondo 许可证是什么？</h5><p>2016 许可证可以用 2016 的功能，2019 能用 2019 的功能。</p>
-<p>比如 2019 的 PPT 平滑切换，2016 就没有。</p>
-<p>举个简单的例子：</p>
-<p>如果 2016 是普通身份，2019 是 VIP，那么 Mondo 就是 SVIP。</p>
-<p>Mondo 许可证可以让你体验并使用 Office 的所有功能。</p>
-<p>别看 Mondo 名字带一个 2016 就以为它逊，它强得很。</p>
-<p>不过从大局看，当然还是 Microsoft 365 正版许可最强啦，什么都有。</p>
-<h3 id="关于激活的问题"><a href="#关于激活的问题" class="headerlink" title="关于激活的问题"></a>关于激活的问题</h3><h5 id="激活时显示「产品激活成功」，打开-Office-时显示需要激活"><a href="#激活时显示「产品激活成功」，打开-Office-时显示需要激活" class="headerlink" title="激活时显示「产品激活成功」，打开 Office 时显示需要激活"></a>激活时显示「产品激活成功」，打开 Office 时显示需要激活</h5><p>具体表现为：在 Office Tool Plus 内激活的时候是显示的激活成功，但是打开 Office 却显示需要激活，并且显示的是 Microsoft 365，不是自己所安装的 Office 许可证。</p>
-<p>解决办法：在工具箱内「恢复 Office 设置为默认设置」，激活那边不需要操作，你只要确保已经激活成功就行了。</p>
-<h5 id="激活完成后显示「你的许可证有问题」"><a href="#激活完成后显示「你的许可证有问题」" class="headerlink" title="激活完成后显示「你的许可证有问题」"></a>激活完成后显示「你的许可证有问题」</h5><p>在工具箱内「修复 Office 许可证问题」即可。</p>
-<p>KMS 主机地址可以从激活教程获得，也可以通过查询激活信息找到你正在使用的 KMS 主机地址。</p>
-<h5 id="文件名、目录名或卷标语法不正确-0x8007007B-服务器运行失败-0x80080005-DNS-名称不存在-0x8007232B"><a href="#文件名、目录名或卷标语法不正确-0x8007007B-服务器运行失败-0x80080005-DNS-名称不存在-0x8007232B" class="headerlink" title="文件名、目录名或卷标语法不正确 (0x8007007B) | 服务器运行失败 (0x80080005) | DNS 名称不存在 (0x8007232B)"></a>文件名、目录名或卷标语法不正确 (0x8007007B) | 服务器运行失败 (0x80080005) | DNS 名称不存在 (0x8007232B)</h5><p>在工具箱内「重置 Software Protection 服务」，然后再次设置 KMS 主机，重试激活。</p>
-<h5 id="数据无效-0x8007000D"><a href="#数据无效-0x8007000D" class="headerlink" title="数据无效 (0x8007000D)"></a>数据无效 (0x8007000D)</h5><p>在工具箱内「重置 Software Protection 服务」，然后再次设置 KMS 主机，重试激活。</p>
-<p>如果上述操作不能解决你的问题，那就：</p>
-<p>尝试更换一个 KMS 主机，然后再次尝试激活。同时也要注意自己的系统时间是否正确。</p>
-<h5 id="软件授权服务报告无法激活该产品。无法联系任何密钥管理服务-0xC004F074"><a href="#软件授权服务报告无法激活该产品。无法联系任何密钥管理服务-0xC004F074" class="headerlink" title="软件授权服务报告无法激活该产品。无法联系任何密钥管理服务 (0xC004F074)"></a>软件授权服务报告无法激活该产品。无法联系任何密钥管理服务 (0xC004F074)</h5><p>卸载电脑上所有的 KMS 软件（如果有），例如：HEU 或者 KMS-VL-ALL.</p>
-<p>随后在工具箱内「重置 Software Protection 服务」。</p>
-<p>重新激活 Office 时，请填入 KMS 端口：1688</p>
-<h5 id="许可证使用失败-0xC004E015-令牌存储中的令牌包含无效的哈希-0x8004E108"><a href="#许可证使用失败-0xC004E015-令牌存储中的令牌包含无效的哈希-0x8004E108" class="headerlink" title="许可证使用失败 (0xC004E015) | 令牌存储中的令牌包含无效的哈希 (0x8004E108)"></a>许可证使用失败 (0xC004E015) | 令牌存储中的令牌包含无效的哈希 (0x8004E108)</h5><p>自动处理：在工具箱内「重建激活令牌」，然后重新开始激活。</p>
-<p>手动处理：请参阅帮助文档的<a href="https://help.coolhub.top/zh-cn/activate/faq.html">疑难解答</a>。</p>
-<h5 id="没有在此计算机上发现-Office-批量许可证"><a href="#没有在此计算机上发现-Office-批量许可证" class="headerlink" title="没有在此计算机上发现 Office 批量许可证"></a>没有在此计算机上发现 Office 批量许可证</h5><p>字面意思。</p>
-<p>安装批量许可证即可，可参考：[<a href="https://movejian.github.io/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B">激活 Office] Office Tool Plus 入门教程</a></p>
-<h5 id="软件授权服务报告许可证未安装-0xC004F015-amp-0xC004F017"><a href="#软件授权服务报告许可证未安装-0xC004F015-amp-0xC004F017" class="headerlink" title="软件授权服务报告许可证未安装 (0xC004F015 &amp; 0xC004F017)"></a>软件授权服务报告许可证未安装 (0xC004F015 &amp; 0xC004F017)</h5><p>不要被微软的表面意思所迷惑了。</p>
-<p>这句话表示许可证已安装，但尚未安装有效的密钥，所以无法使用。</p>
-<p>如果 Office 还没激活，换个许可证或者换个密钥（建议去看<a href="https://movejian.github.io/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B">激活教程</a>）；</p>
-<p>如果 Office 已经激活，不需要理会这条消息。</p>
-<h5 id="软件授权服务报告找不到产品-SKU-0xC004F069"><a href="#软件授权服务报告找不到产品-SKU-0xC004F069" class="headerlink" title="软件授权服务报告找不到产品 SKU (0xC004F069)"></a>软件授权服务报告找不到产品 SKU (0xC004F069)</h5><p>你正在尝试安装的密钥找不到对应的许可证。</p>
-<p>安装与密钥对应的许可证，然后重新尝试安装密钥。</p>
-<h5 id="该目录包含仅名称大小写有区别的条目-0x000001A8"><a href="#该目录包含仅名称大小写有区别的条目-0x000001A8" class="headerlink" title="该目录包含仅名称大小写有区别的条目 (0x000001A8)"></a>该目录包含仅名称大小写有区别的条目 (0x000001A8)</h5><p>在工具箱内「修复 WMI 组件」。</p>
-<p><strong>注意</strong>：该功能仅在 8.2.9.0 以上版本的 Office Tool Plus 中才有。</p>
-<h5 id="An-error-occurred-while-making-the-connection"><a href="#An-error-occurred-while-making-the-connection" class="headerlink" title="An error occurred while making the connection."></a>An error occurred while making the connection.</h5><p>在“<font size="5">服务</font>”中将 <code>Windows Management Instrumentation</code>服务启用，然后再次尝试操作。</p>
-<p>啊启动了也没办法？打扰了，我也不知道该咋办。</p>
-<h3 id="关于-Office-的问题"><a href="#关于-Office-的问题" class="headerlink" title="关于 Office 的问题"></a>关于 Office 的问题</h3><h5 id="打开后显示正在更新-Office，过会儿显示错误"><a href="#打开后显示正在更新-Office，过会儿显示错误" class="headerlink" title="打开后显示正在更新 Office，过会儿显示错误"></a>打开后显示正在更新 Office，过会儿显示错误</h5><p>老毛病了，老毛病了。具体原因我不知道，但我知道一个临时解决办法。</p>
-<p>打开任务管理器，找到 <code>Microsoft Office Click-to-Run</code> 进程，直接结束运行。</p>
-<p>其他的例如 Excel，Word 等等之类的应用程序也要结束运行。</p>
-<p>然后再尝试打开 Office，应该就没啥问题了。</p>
-<h5 id="我们注意到你更新了你的许可证。请重新启动……"><a href="#我们注意到你更新了你的许可证。请重新启动……" class="headerlink" title="我们注意到你更新了你的许可证。请重新启动……"></a>我们注意到你更新了你的许可证。请重新启动……</h5><p>这个问题发生在 Project 上比较多。反正重启了还是提示 </p>
-<p>解决办法：在工具箱内「恢复 Office 设置为默认设置」。</p>
-<h5 id="很抱歉，此功能看似已中断"><a href="#很抱歉，此功能看似已中断" class="headerlink" title="很抱歉，此功能看似已中断"></a>很抱歉，此功能看似已中断</h5><p>一般情况下，卸载 WPS 即可解决此问题。</p>
-<p>卸载之后可以使用一下 Office 的快速修复以免问题没有完全解决。</p>
-<p>不想卸？卸了也没用？那我也没有办法。</p>
-<h3 id="附录：尚无解决办法的问题"><a href="#附录：尚无解决办法的问题" class="headerlink" title="附录：尚无解决办法的问题"></a>附录：尚无解决办法的问题</h3><ul>
-<li>没有注册类，代码：0x80040154</li>
-<li>软件授权服务报告产品密钥不可用，代码：0xC004F014</li>
-<li>系统找不到指定的文件，代码：0x80070002</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>Office</tag>
       </tags>
   </entry>
   <entry>
