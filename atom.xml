@@ -314,48 +314,6 @@
   </entry>
   
   <entry>
-    <title>Kali的DDoS攻击方法</title>
-    <link href="http://example.com/2022/09/21/Kali%E7%9A%84DDoS%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95/"/>
-    <id>http://example.com/2022/09/21/Kali%E7%9A%84DDoS%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95/</id>
-    <published>2022-09-21T12:44:25.000Z</published>
-    <updated>2023-01-19T18:14:46.722Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212049992.jpeg&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;本文章使用的是Kali Linux的2021-4-installer-amd64版本&lt;/strong&gt; &lt;strong&gt;Kali Linux的安装过程本文章不做过多说明，请自行百度&lt;/strong&gt; &lt;strong&gt;本帖子如果涉及侵权请联系我&lt;/strong&gt;  &lt;/p&gt;</summary>
-    
-    
-    
-    <category term="学习" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/"/>
-    
-    
-    <category term="Linux" scheme="http://example.com/tags/Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>实战kali破解wifi密码 全网最详细的保姆级教程</title>
-    <link href="http://example.com/2022/09/21/%E5%AE%9E%E6%88%98kali%E7%A0%B4%E8%A7%A3wifi%E5%AF%86%E7%A0%81/"/>
-    <id>http://example.com/2022/09/21/%E5%AE%9E%E6%88%98kali%E7%A0%B4%E8%A7%A3wifi%E5%AF%86%E7%A0%81/</id>
-    <published>2022-09-20T19:43:19.000Z</published>
-    <updated>2023-01-19T18:15:06.881Z</updated>
-    
-    
-    <summary type="html">&lt;h2 id=&quot;kali官网&quot;&gt;&lt;a href=&quot;#kali官网&quot; class=&quot;headerlink&quot; title=&quot;kali官网&quot;&gt;&lt;/a&gt;kali官网&lt;/h2&gt;&lt;hr&gt;
-&lt;p&gt;kali是什么？&lt;br&gt; ——kali就是一个专门用于渗透行业的Linux发行版本，里面的工具非常丰富，本文就是建立在kali系统的支持之上的&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.kali.org/get-kali/#kali-virtual-machines&quot;&gt;https://www.kali.org/get-kali/#kali-virtual-machines&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;下载了vm文件后可以直接用VMware打开，开机后&lt;br&gt; &lt;strong&gt;用户名：kali&lt;br&gt; 密码：kali&lt;/strong&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="学习" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/"/>
-    
-    
-    <category term="Linux" scheme="http://example.com/tags/Linux/"/>
-    
-  </entry>
-  
-  <entry>
     <title>HOOK微信获取聊天消息</title>
     <link href="http://example.com/2022/09/21/HOOK%E5%BE%AE%E4%BF%A1%E8%8E%B7%E5%8F%96%E8%81%8A%E5%A4%A9%E6%B6%88%E6%81%AF/"/>
     <id>http://example.com/2022/09/21/HOOK%E5%BE%AE%E4%BF%A1%E8%8E%B7%E5%8F%96%E8%81%8A%E5%A4%A9%E6%B6%88%E6%81%AF/</id>
@@ -420,6 +378,46 @@
     
     
     <category term="Linux" scheme="http://example.com/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>如何用区块链技术解决信任问题 Fabric 架构深度解读</title>
+    <link href="http://example.com/2022/09/21/%E5%A6%82%E4%BD%95%E7%94%A8%E5%8C%BA%E5%9D%97%E9%93%BE%E6%8A%80%E6%9C%AF%E8%A7%A3%E5%86%B3%E4%BF%A1%E4%BB%BB%E9%97%AE%E9%A2%98/"/>
+    <id>http://example.com/2022/09/21/%E5%A6%82%E4%BD%95%E7%94%A8%E5%8C%BA%E5%9D%97%E9%93%BE%E6%8A%80%E6%9C%AF%E8%A7%A3%E5%86%B3%E4%BF%A1%E4%BB%BB%E9%97%AE%E9%A2%98/</id>
+    <published>2022-09-20T16:07:09.000Z</published>
+    <updated>2022-09-20T16:11:04.865Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;阿里妹导读：区块链技术，随着比特币的兴起而为大家所知。但是具体到技术本身，大家相对熟悉的几个词可能是“数据不可篡改”、“公开链”、“分布式数据”、“共识机制”等。&lt;/p&gt;
+&lt;p&gt;这篇文章将抛砖引玉，通过深度解读Hyperledger Project旗下的Fabric，介绍区块链适合的应用场景，如何从技术上去解决实际业务中的问题，希望能和大家一起探讨、学习。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;&lt;strong&gt;前言&lt;/strong&gt;&lt;/h2&gt;&lt;p&gt;Hyperledger Project 由Linux基金会创办于2015年10月，是一个开源的区块链研发孵化项目，致力于提供可协同开发以区块链为底层的分布式账本。旗下的Fabric项目目标为打造一个提供分布式账本解决方案的平台。&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="区块链" scheme="http://example.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>将Windows打印机变成网络打印机</title>
+    <link href="http://example.com/2022/09/11/%E5%B0%86Windows%E6%89%93%E5%8D%B0%E6%9C%BA%E5%8F%98%E6%88%90%E7%BD%91%E7%BB%9C%E6%89%93%E5%8D%B0%E6%9C%BA/"/>
+    <id>http://example.com/2022/09/11/%E5%B0%86Windows%E6%89%93%E5%8D%B0%E6%9C%BA%E5%8F%98%E6%88%90%E7%BD%91%E7%BB%9C%E6%89%93%E5%8D%B0%E6%9C%BA/</id>
+    <published>2022-09-11T13:50:04.000Z</published>
+    <updated>2022-09-11T13:57:56.821Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;大家都知道Windows的打印共享一直属于玄学，2000&amp;#x2F;XP&amp;#x2F;2003（NT 5.x）及以前的时代基本还算正常，经过简单的设置总能搞定，自从Vista开始的NT 6.x，尤其到了win10&amp;#x2F;win11时代，Windows的打印共享基本上就变成了玄学，姑且不说很难搞定，就算搞定了，一个补丁也可能把它搞残废。另外，Windows的共享服务一直存在各种安全漏洞，曾经一度被勒索病毒利用，尤其是win7（不能打补丁那种），为了安全，我一般都禁用server服务。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="技术" scheme="http://example.com/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="技术" scheme="http://example.com/tags/%E6%8A%80%E6%9C%AF/"/>
     
   </entry>
   
