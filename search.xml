@@ -290,7 +290,7 @@
         <category>学习</category>
       </categories>
       <tags>
-        <tag>Kali</tag>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -377,6 +377,60 @@
       </categories>
       <tags>
         <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux系统无线网卡配置</title>
+    <url>/2019/12/16/Linux%E7%B3%BB%E7%BB%9F%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h2 id="无线网卡配置"><a href="#无线网卡配置" class="headerlink" title="无线网卡配置"></a>无线网卡配置</h2><p>本文介绍在Linux 命令行界面中手动配置无线网卡的方法。目前流行的多数发行版都支持用图形界面的<code>network- manager</code>方便地进行配置，而无需使用本文所介绍的原始方法。</p>
+<p>下面介绍使用<code>iwconfig</code>和<code>ifconfig</code>等命令在命令行状态下配置无线网络。前题是无线网卡驱动已经正确安装，并被系统正确识别。</p>
+<span id="more"></span>
+<h2 id="大体思路"><a href="#大体思路" class="headerlink" title="大体思路"></a>大体思路</h2><p>工作的大体思路如下：</p>
+<ol>
+<li>用<code>iwconfig</code>开启无线网卡的电源，并查找区域内的无线网络</li>
+<li>连接到相应的无线网络</li>
+<li>通过<code>ifconfig</code>启用无线网卡，并获取IP（如果使用DHCP的话）</li>
+</ol>
+<h2 id="具体过程"><a href="#具体过程" class="headerlink" title="具体过程"></a>具体过程</h2><ol>
+<li>打开无线网卡电源</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 txpower on</span><br></pre></td></tr></table></figure>
+<h4 id="无线网络的信号灯应该亮了。"><a href="#无线网络的信号灯应该亮了。" class="headerlink" title="无线网络的信号灯应该亮了。"></a>无线网络的信号灯应该亮了。</h4><ol start="2">
+<li>列出区域内的无线网络<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwlist wlan0 scan</span><br></pre></td></tr></table></figure></li>
+<li>假设要连接到网络MyHome（即essid为MyHome的网络），那么输入命令</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 essid <span class="string">&quot;MyHome&quot;</span> </span><br></pre></td></tr></table></figure>
+<p><em>#如果网络是加密的，密码是0123456789，那么就输入命令#</em></p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 essid <span class="string">&quot;MyHome&quot;</span> key <span class="number">0123</span><span class="literal">-4567-89</span></span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>如果正常的话，输入</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br></pre></td></tr></table></figure>
+<h4 id="就可以看到连接正常的各项参数了。"><a href="#就可以看到连接正常的各项参数了。" class="headerlink" title="就可以看到连接正常的各项参数了。"></a>就可以看到连接正常的各项参数了。</h4><ol start="5">
+<li>启用无线网卡</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ifconfig wlan0 up</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>如果是用DHCP获取IP的，那么用dhclient 或dhcpcd获取ip</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">dhcpcd wlan0</span><br></pre></td></tr></table></figure>
+
+<p>或</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">dhclient wlan0</span><br></pre></td></tr></table></figure>
+
+<ol start="7">
+<li>现在无线网卡应该可以正常使用了。</li>
+</ol>
+<h3 id="PS"><a href="#PS" class="headerlink" title="PS:"></a>PS:</h3><p>   如果现在还不能联网。那么点击网络图标。选择链接到隐藏的无线网络。输入找到的网络的名字。<br>      图形化的网络管理程序是<code>System-&gt;Preferences-&gt;Network Connections</code>。打开程序后，点击无线网络项目，点击add增加一个新的无线网络。  给出任意的<code>Connection Name</code>。<code>SSID</code>中输入无限网络的名字。<code>wireless security</code>中选择一种合适的加密类型。key中输入无限网络的密码。 </p>
+<p>   其他字段都不修改。 执行后，应该能够链接无限网络。  可以使用<code>iwconfig wlan0</code>命令查看是否正确连接无线网络。</p>
+<h6 id="未正确链接无线网络的输出："><a href="#未正确链接无线网络的输出：" class="headerlink" title="未正确链接无线网络的输出："></a>未正确链接无线网络的输出：</h6><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br><span class="line">wlan0     IEEE <span class="number">802.11</span>abg  ESSID:off/any </span><br><span class="line">          Mode:Managed  Access Point: Not<span class="literal">-Associated</span>   Tx<span class="literal">-Power</span>=<span class="number">0</span> dBm  </span><br><span class="line">          Retry  long limit:<span class="number">7</span>   RTS thr:off   Fragment thr:off</span><br><span class="line">          Power Management:off</span><br></pre></td></tr></table></figure>
+
+<h6 id="正确链接无线网络后的输出："><a href="#正确链接无线网络后的输出：" class="headerlink" title="正确链接无线网络后的输出："></a>正确链接无线网络后的输出：</h6><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br><span class="line">wlan0     IEEE <span class="number">802.11</span>abg  ESSID:<span class="string">&quot;MyHome&quot;</span> </span><br><span class="line">          Mode:Managed  Frequency:<span class="number">2.437</span> GHz  Access Point: <span class="number">00</span>:<span class="number">26</span>:DS:<span class="number">43</span>:<span class="number">1</span>A:A8  </span><br><span class="line">          Bit Rate=<span class="number">54</span> Mb/s   Tx<span class="literal">-Power</span>=<span class="number">0</span> dBm  </span><br><span class="line">          Retry  long limit:<span class="number">7</span>   RTS thr:off   Fragment thr:off</span><br><span class="line">          Power Management:off</span><br><span class="line">          Link Quality=<span class="number">65</span>/<span class="number">70</span>  Signal level=<span class="literal">-45</span> dBm </span><br><span class="line">          Rx invalid nwid:<span class="number">0</span>  Rx invalid crypt:<span class="number">0</span>  Rx invalid frag:<span class="number">0</span></span><br><span class="line">          Tx excessive retries:<span class="number">0</span>  Invalid misc:<span class="number">0</span>   Missed beacon:<span class="number">0</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>Linux</tag>
+        <tag>无线网卡</tag>
       </tags>
   </entry>
   <entry>
@@ -578,60 +632,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux系统无线网卡配置</title>
-    <url>/2019/12/16/Linux%E7%B3%BB%E7%BB%9F%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<h2 id="无线网卡配置"><a href="#无线网卡配置" class="headerlink" title="无线网卡配置"></a>无线网卡配置</h2><p>本文介绍在Linux 命令行界面中手动配置无线网卡的方法。目前流行的多数发行版都支持用图形界面的<code>network- manager</code>方便地进行配置，而无需使用本文所介绍的原始方法。</p>
-<p>下面介绍使用<code>iwconfig</code>和<code>ifconfig</code>等命令在命令行状态下配置无线网络。前题是无线网卡驱动已经正确安装，并被系统正确识别。</p>
-<span id="more"></span>
-<h2 id="大体思路"><a href="#大体思路" class="headerlink" title="大体思路"></a>大体思路</h2><p>工作的大体思路如下：</p>
-<ol>
-<li>用<code>iwconfig</code>开启无线网卡的电源，并查找区域内的无线网络</li>
-<li>连接到相应的无线网络</li>
-<li>通过<code>ifconfig</code>启用无线网卡，并获取IP（如果使用DHCP的话）</li>
-</ol>
-<h2 id="具体过程"><a href="#具体过程" class="headerlink" title="具体过程"></a>具体过程</h2><ol>
-<li>打开无线网卡电源</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 txpower on</span><br></pre></td></tr></table></figure>
-<h4 id="无线网络的信号灯应该亮了。"><a href="#无线网络的信号灯应该亮了。" class="headerlink" title="无线网络的信号灯应该亮了。"></a>无线网络的信号灯应该亮了。</h4><ol start="2">
-<li>列出区域内的无线网络<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwlist wlan0 scan</span><br></pre></td></tr></table></figure></li>
-<li>假设要连接到网络MyHome（即essid为MyHome的网络），那么输入命令</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 essid <span class="string">&quot;MyHome&quot;</span> </span><br></pre></td></tr></table></figure>
-<p><em>#如果网络是加密的，密码是0123456789，那么就输入命令#</em></p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0 essid <span class="string">&quot;MyHome&quot;</span> key <span class="number">0123</span><span class="literal">-4567-89</span></span><br></pre></td></tr></table></figure>
-<ol start="4">
-<li>如果正常的话，输入</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br></pre></td></tr></table></figure>
-<h4 id="就可以看到连接正常的各项参数了。"><a href="#就可以看到连接正常的各项参数了。" class="headerlink" title="就可以看到连接正常的各项参数了。"></a>就可以看到连接正常的各项参数了。</h4><ol start="5">
-<li>启用无线网卡</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">ifconfig wlan0 up</span><br></pre></td></tr></table></figure>
-
-<ol start="6">
-<li>如果是用DHCP获取IP的，那么用dhclient 或dhcpcd获取ip</li>
-</ol>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">dhcpcd wlan0</span><br></pre></td></tr></table></figure>
-
-<p>或</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">dhclient wlan0</span><br></pre></td></tr></table></figure>
-
-<ol start="7">
-<li>现在无线网卡应该可以正常使用了。</li>
-</ol>
-<h3 id="PS"><a href="#PS" class="headerlink" title="PS:"></a>PS:</h3><p>   如果现在还不能联网。那么点击网络图标。选择链接到隐藏的无线网络。输入找到的网络的名字。<br>      图形化的网络管理程序是<code>System-&gt;Preferences-&gt;Network Connections</code>。打开程序后，点击无线网络项目，点击add增加一个新的无线网络。  给出任意的<code>Connection Name</code>。<code>SSID</code>中输入无限网络的名字。<code>wireless security</code>中选择一种合适的加密类型。key中输入无限网络的密码。 </p>
-<p>   其他字段都不修改。 执行后，应该能够链接无限网络。  可以使用<code>iwconfig wlan0</code>命令查看是否正确连接无线网络。</p>
-<h6 id="未正确链接无线网络的输出："><a href="#未正确链接无线网络的输出：" class="headerlink" title="未正确链接无线网络的输出："></a>未正确链接无线网络的输出：</h6><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br><span class="line">wlan0     IEEE <span class="number">802.11</span>abg  ESSID:off/any </span><br><span class="line">          Mode:Managed  Access Point: Not<span class="literal">-Associated</span>   Tx<span class="literal">-Power</span>=<span class="number">0</span> dBm  </span><br><span class="line">          Retry  long limit:<span class="number">7</span>   RTS thr:off   Fragment thr:off</span><br><span class="line">          Power Management:off</span><br></pre></td></tr></table></figure>
-
-<h6 id="正确链接无线网络后的输出："><a href="#正确链接无线网络后的输出：" class="headerlink" title="正确链接无线网络后的输出："></a>正确链接无线网络后的输出：</h6><figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">iwconfig wlan0</span><br><span class="line">wlan0     IEEE <span class="number">802.11</span>abg  ESSID:<span class="string">&quot;MyHome&quot;</span> </span><br><span class="line">          Mode:Managed  Frequency:<span class="number">2.437</span> GHz  Access Point: <span class="number">00</span>:<span class="number">26</span>:DS:<span class="number">43</span>:<span class="number">1</span>A:A8  </span><br><span class="line">          Bit Rate=<span class="number">54</span> Mb/s   Tx<span class="literal">-Power</span>=<span class="number">0</span> dBm  </span><br><span class="line">          Retry  long limit:<span class="number">7</span>   RTS thr:off   Fragment thr:off</span><br><span class="line">          Power Management:off</span><br><span class="line">          Link Quality=<span class="number">65</span>/<span class="number">70</span>  Signal level=<span class="literal">-45</span> dBm </span><br><span class="line">          Rx invalid nwid:<span class="number">0</span>  Rx invalid crypt:<span class="number">0</span>  Rx invalid frag:<span class="number">0</span></span><br><span class="line">          Tx excessive retries:<span class="number">0</span>  Invalid misc:<span class="number">0</span>   Missed beacon:<span class="number">0</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>Linux</tag>
-        <tag>无线网卡</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Linux通过密钥对免密登录</title>
     <url>/2022/09/21/Linux%E9%80%9A%E8%BF%87%E5%AF%86%E9%92%A5%E5%AF%B9%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/</url>
     <content><![CDATA[<p>首先，说明一下我们要做的是，跳板机服务器的<code>usera</code>用户免密码登录B服务器的<code>userb</code>用户。<br>我们先使用<code>usera</code>登录跳板服务器</p>
@@ -764,32 +764,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>gpt与mbr分区两者区别</title>
-    <url>/2022/10/06/gpt%E4%B8%8Embr%E5%88%86%E5%8C%BA%E4%B8%A4%E8%80%85%E5%8C%BA%E5%88%AB/</url>
-    <content><![CDATA[<blockquote>
-<p>1、mbr最多支持2T，而gpt理论上是无限制的；2、mbr最多支持四个主分区，gpt没有限制；3、win7只能用mbr分区，从Win8开始微软建议你使用gpt；4、gpt是由uefi启动的，兼容性和稳定性不如bios+mbr。</p>
-</blockquote>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210070127792.jpg"></p>
-<span id="more"></span>
-<p><strong>MBR分区</strong></p>
-<p>MBR的意思是“主引导记录”，是IBM公司早年间提出的。它是存在于磁盘驱动器开始部分的一个特殊的启动扇区。这个扇区包含了已安装的操作系统系统信息，并用一小段代码来启动系统。如果你安装了Windows，其启动信息就放在这一段代码中——如果MBR的信息损坏或误删就不能正常启动Windows，这时候你就需要找一个引导修复软件工具来修复它就可以了。Linux系统中MBR通常会是GRUB加载器。MBR。当一台电脑启动时，它会先启动主板自带的BIOS系统，bios加载MBR，MBR再启动Windows，这就是mbr的启动过程。</p>
-<p><strong>GPT分区</strong></p>
-<p>GPT的意思是GUID Partition Table，即“全局唯一标识磁盘分区表”。他是另外一种更加先进新颖的磁盘组织方式，一种使用<code>UEFI</code>启动的磁盘组织方式。最开始是为了更好的兼容性，后来因为其更大的支持内存（mbr分区最多支持2T的磁盘），更多的兼容而被广泛使用，特别是苹果的MAC系统全部使用gpt分区。gtp不在有分区的概念，所有CDEF盘都在一段信息中存储。可以简单的理解为更先进但是使用不够广泛的技术。</p>
-<p><strong>两者区别</strong></p>
-<p>内存支持：mbr最多支持2T，而gpt理论上是无限制的。</p>
-<p>分区：mbr最多支持四个主分区，gpt没有限制。如果你想跑多系统，mbr最多4个而gpt没有限制。</p>
-<p>系统：win7只能用mbr分区，从Win8开始微软建议你使用gpt。</p>
-<p>其它：gpt是由<code>uefi</code>启动的，而<code>uefi</code>是后来才提出的概念，兼容性和稳定性不如bios+mbr。</p>
-]]></content>
-      <categories>
-        <category>技术</category>
-        <category>Win</category>
-      </categories>
-      <tags>
-        <tag>技术</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>hexo域名解析的两种方法</title>
     <url>/2022/08/19/hexo%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>想要在浏览器里面输入域名到达某个地址。必不可少的一步就是要告诉全世界的电脑，这个域名现在指向这个地方啦。<br>而这一步就是由 dns 服务器来负责的。<br>我们需要做的就是将域名与固定的 ip 地址绑定起来 (A)，或者是与某已有域名绑定起来（CNAME）.</p>
@@ -814,34 +788,6 @@
 ]]></content>
       <tags>
         <tag>域名</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>npm安装卸载命令</title>
-    <url>/2022/08/23/npm%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BD%E5%91%BD%E4%BB%A4/</url>
-    <content><![CDATA[<h2 id="npm安装模块"><a href="#npm安装模块" class="headerlink" title="npm安装模块"></a>npm安装模块</h2><p>利用 npm 安装xxx模块到当前命令行所在目录；</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install xxx</span><br></pre></td></tr></table></figure>
-<span id="more"></span>
-<p>利用npm安装全局模块xxx；</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install -g xxx</span><br></pre></td></tr></table></figure>
-
-<h2 id="本地安装时将模块写入package-json中："><a href="#本地安装时将模块写入package-json中：" class="headerlink" title="本地安装时将模块写入package.json中："></a>本地安装时将模块写入package.json中：</h2><p>安装但不写入package.json；</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install xxx</span><br></pre></td></tr></table></figure>
-
-<p>安装并写入package.json的”dependencies”中；</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install xxx –save</span><br></pre></td></tr></table></figure>
-
-<p>安装并写入package.json的”devDependencies”中。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install xxx –save-dev</span><br></pre></td></tr></table></figure>
-
-<h2 id="npm-删除模块"><a href="#npm-删除模块" class="headerlink" title="npm 删除模块"></a>npm 删除模块</h2><p>删除xxx模块；</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm uninstall xxx</span><br></pre></td></tr></table></figure>
-
-<p>删除全局模块xxx；</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm uninstall -g xxx</span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>命令</tag>
       </tags>
   </entry>
   <entry>
@@ -890,6 +836,34 @@
       </tags>
   </entry>
   <entry>
+    <title>npm安装卸载命令</title>
+    <url>/2022/08/23/npm%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BD%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<h2 id="npm安装模块"><a href="#npm安装模块" class="headerlink" title="npm安装模块"></a>npm安装模块</h2><p>利用 npm 安装xxx模块到当前命令行所在目录；</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install xxx</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<p>利用npm安装全局模块xxx；</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install -g xxx</span><br></pre></td></tr></table></figure>
+
+<h2 id="本地安装时将模块写入package-json中："><a href="#本地安装时将模块写入package-json中：" class="headerlink" title="本地安装时将模块写入package.json中："></a>本地安装时将模块写入package.json中：</h2><p>安装但不写入package.json；</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install xxx</span><br></pre></td></tr></table></figure>
+
+<p>安装并写入package.json的”dependencies”中；</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install xxx –save</span><br></pre></td></tr></table></figure>
+
+<p>安装并写入package.json的”devDependencies”中。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install xxx –save-dev</span><br></pre></td></tr></table></figure>
+
+<h2 id="npm-删除模块"><a href="#npm-删除模块" class="headerlink" title="npm 删除模块"></a>npm 删除模块</h2><p>删除xxx模块；</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm uninstall xxx</span><br></pre></td></tr></table></figure>
+
+<p>删除全局模块xxx；</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm uninstall -g xxx</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>命令</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>win10系统电脑图标不见了</title>
     <url>/2022/10/08/win10%E7%B3%BB%E7%BB%9F%E7%94%B5%E8%84%91%E5%9B%BE%E6%A0%87%E4%B8%8D%E8%A7%81%E4%BA%86/</url>
     <content><![CDATA[<p>我的电脑图标没了怎么办？，恢复只需4步。刚安装了win10.刚打开的时候发现桌面上没有我的电脑图标，很多人都很不舒服，所以win我的电脑图标没了怎么办？现在小编教你怎么找回<code>我的电脑</code>图标。</p>
@@ -916,23 +890,29 @@
       </tags>
   </entry>
   <entry>
-    <title>传奇内挂垃圾物品过滤</title>
-    <url>/2022/09/03/%E4%BC%A0%E5%A5%87%E5%86%85%E6%8C%82%E5%9E%83%E5%9C%BE%E7%89%A9%E5%93%81%E8%BF%87%E6%BB%A4/</url>
-    <content><![CDATA[<p> 传奇内挂过滤垃圾。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209031601159.png" alt="image-20220903160139387"></p>
-<p>先打开传奇目录 <code>D:\传奇私服\Config </code>   修改DAT档案文件，把下面内容复制粘贴进去保存即可：</p>
+    <title>gpt与mbr分区两者区别</title>
+    <url>/2022/10/06/gpt%E4%B8%8Embr%E5%88%86%E5%8C%BA%E4%B8%A4%E8%80%85%E5%8C%BA%E5%88%AB/</url>
+    <content><![CDATA[<blockquote>
+<p>1、mbr最多支持2T，而gpt理论上是无限制的；2、mbr最多支持四个主分区，gpt没有限制；3、win7只能用mbr分区，从Win8开始微软建议你使用gpt；4、gpt是由uefi启动的，兼容性和稳定性不如bios+mbr。</p>
+</blockquote>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210070127792.jpg"></p>
 <span id="more"></span>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">金创药(小量),药品类,0,0,0,0</span><br><span class="line">魔法药(小量),药品类,0,0,0,0</span><br><span class="line">肉,其它类,0,0,0,0</span><br><span class="line">布衣(男),服装类,0,0,0,0</span><br><span class="line">布衣(女),服装类,0,0,0,0</span><br><span class="line">木剑,武器类,0,0,0,0</span><br><span class="line">铁剑,武器类,0,0,0,0</span><br><span class="line">青铜剑,武器类,0,0,0,0</span><br><span class="line">轻型盔甲(男),服装类,0,0,0,0</span><br><span class="line">轻型盔甲(女),服装类,0,0,0,0</span><br><span class="line">凝霜,武器类,0,0,0,0</span><br><span class="line">短剑,武器类,0,0,0,0</span><br><span class="line">青铜斧,武器类,0,0,0,0</span><br><span class="line">重盔甲(女),服装类,0,0,0,0</span><br><span class="line">魔法长袍(女),服装类,0,0,0,0</span><br><span class="line">灵魂战衣(女),服装类,0,0,0,0</span><br><span class="line">重盔甲(男),服装类,0,0,0,0</span><br><span class="line">魔法长袍(男),服装类,0,0,0,0</span><br><span class="line">灵魂战衣(男),服装类,0,0,0,0</span><br><span class="line">海魂,武器类,0,0,0,0</span><br><span class="line">修罗,武器类,0,0,0,0</span><br><span class="line">破魂,武器类,0,0,0,0</span><br><span class="line">斩马刀,武器类,0,0,0,0</span><br><span class="line">青铜头盔,首饰类,0,0,0,0</span><br><span class="line">金项链,首饰类,0,0,0,0</span><br><span class="line">铁手镯,首饰类,0,0,0,0</span><br><span class="line">灰色药粉(中量),药品类,0,0,0,0</span><br><span class="line">黄色药粉(中量),药品类,0,0,0,0</span><br><span class="line">八荒,武器类,0,0,0,0</span><br><span class="line">玻璃戒指,首饰类,0,0,0,0</span><br><span class="line">牛角戒指,首饰类,0,0,0,0</span><br><span class="line">蓝色水晶戒指,首饰类,0,0,0,0</span><br><span class="line">黑檀项链,首饰类,0,0,0,0</span><br><span class="line">黄色水晶项链,首饰类,0,0,0,0</span><br><span class="line">黑色水晶项链,首饰类,0,0,0,0</span><br><span class="line">半月,武器类,0,0,0,0</span><br><span class="line">皮制手套,首饰类,0,0,0,0</span><br><span class="line">钢手镯,首饰类,0,0,0,0</span><br><span class="line">生铁戒指,首饰类,0,0,0,0</span><br><span class="line">金戒指,首饰类,0,0,0,0</span><br><span class="line">灯笼项链,首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链,首饰类,1,1,1,0</span><br><span class="line">魅力戒指,首饰类,0,0,0,0</span><br><span class="line">道德戒指,首饰类,0,0,0,0</span><br><span class="line">白金项链,首饰类,0,0,0,0</span><br><span class="line">降妖除魔戒指,首饰类,0,0,0,0</span><br><span class="line">偃月,武器类,0,0,0,0</span><br><span class="line">降魔,武器类,0,0,0,0</span><br><span class="line">小手镯,首饰类,0,0,0,0</span><br><span class="line">银手镯,首饰类,0,0,0,0</span><br><span class="line">大手镯,首饰类,0,0,0,0</span><br><span class="line">金创药(中量),药品类,0,0,0,0</span><br><span class="line">魔法药(中量),药品类,0,0,0,0</span><br><span class="line">黑色水晶戒指,首饰类,0,0,0,0</span><br><span class="line">魔鬼项链,首饰类,0,0,0,0</span><br><span class="line">珊瑚戒指,首饰类,0,0,0,0</span><br><span class="line">蓝翡翠项链,首饰类,0,0,0,0</span><br><span class="line">蛇眼戒指,首饰类,0,0,0,0</span><br><span class="line">琥珀项链,首饰类,0,0,0,0</span><br><span class="line">放大镜,首饰类,0,0,0,0</span><br><span class="line">珍珠戒指,首饰类,0,0,0,0</span><br><span class="line">竹笛,首饰类,0,0,0,0</span><br><span class="line">骷髅戒指,首饰类,0,0,0,0</span><br><span class="line">死神手套,首饰类,0,0,0,0</span><br><span class="line">骷髅头盔,首饰类,0,0,0,0</span><br><span class="line">魔法手镯,首饰类,0,0,0,0</span><br><span class="line">金手镯,首饰类,0,0,0,0</span><br><span class="line">道士头盔,首饰类,0,0,0,0</span><br><span class="line">凤凰明珠,首饰类,0,0,0,0</span><br><span class="line">道士手镯,首饰类,0,0,0,0</span><br><span class="line">黑檀手镯,首饰类,0,0,0,0</span><br><span class="line">铁矿,其它类,0,0,0,0</span><br><span class="line">黑铁矿,其它类,0,0,0,0</span><br><span class="line">困魔咒,其它类,0,0,0,0</span><br><span class="line">召唤骷髅,其它类,0,0,0,0</span><br><span class="line">地狱雷光,其它类,0,0,0,0</span><br><span class="line">半月弯刀,其它类,0,0,0,0</span><br><span class="line">太阳水,药品类,0,1,0,0</span><br><span class="line">强效金创药,药品类,0,1,0,0</span><br><span class="line">强效魔法药,药品类,0,1,0,0</span><br><span class="line">野蛮冲撞,其它类,0,0,0,0</span><br><span class="line">群体治疗术,其它类,0,0,0,0</span><br><span class="line">圣言术,其它类,0,0,0,0</span><br><span class="line">强效太阳水,药品类,0,1,0,0</span><br><span class="line">魔力手镯,首饰类,0,0,0,0</span><br><span class="line">攻击力药水,其它类,0,0,0,0</span><br><span class="line">道术力药水,其它类,0,0,0,0</span><br><span class="line">疾风药水,其它类,0,0,0,0</span><br><span class="line">体力强化水,其它类,0,0,0,0</span><br><span class="line">魔力强化水,其它类,0,0,0,0</span><br><span class="line">战神盔甲(男),服装类,0,0,0,0</span><br><span class="line">战神盔甲(女),服装类,0,0,0,0</span><br><span class="line">幽灵战衣(男),服装类,0,0,0,0</span><br><span class="line">幽灵战衣(女),服装类,0,0,0,0</span><br><span class="line">恶魔长袍(男),服装类,0,0,0,0</span><br><span class="line">恶魔长袍(女),服装类,0,0,0,0</span><br><span class="line">中型盔甲(男),服装类,0,0,0,0</span><br><span class="line">灯笼项链②,首饰类,1,1,1,0</span><br><span class="line">灯笼项链[残],首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链[残],首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链②,首饰类,1,1,1,0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
+<p><strong>MBR分区</strong></p>
+<p>MBR的意思是“主引导记录”，是IBM公司早年间提出的。它是存在于磁盘驱动器开始部分的一个特殊的启动扇区。这个扇区包含了已安装的操作系统系统信息，并用一小段代码来启动系统。如果你安装了Windows，其启动信息就放在这一段代码中——如果MBR的信息损坏或误删就不能正常启动Windows，这时候你就需要找一个引导修复软件工具来修复它就可以了。Linux系统中MBR通常会是GRUB加载器。MBR。当一台电脑启动时，它会先启动主板自带的BIOS系统，bios加载MBR，MBR再启动Windows，这就是mbr的启动过程。</p>
+<p><strong>GPT分区</strong></p>
+<p>GPT的意思是GUID Partition Table，即“全局唯一标识磁盘分区表”。他是另外一种更加先进新颖的磁盘组织方式，一种使用<code>UEFI</code>启动的磁盘组织方式。最开始是为了更好的兼容性，后来因为其更大的支持内存（mbr分区最多支持2T的磁盘），更多的兼容而被广泛使用，特别是苹果的MAC系统全部使用gpt分区。gtp不在有分区的概念，所有CDEF盘都在一段信息中存储。可以简单的理解为更先进但是使用不够广泛的技术。</p>
+<p><strong>两者区别</strong></p>
+<p>内存支持：mbr最多支持2T，而gpt理论上是无限制的。</p>
+<p>分区：mbr最多支持四个主分区，gpt没有限制。如果你想跑多系统，mbr最多4个而gpt没有限制。</p>
+<p>系统：win7只能用mbr分区，从Win8开始微软建议你使用gpt。</p>
+<p>其它：gpt是由<code>uefi</code>启动的，而<code>uefi</code>是后来才提出的概念，兼容性和稳定性不如bios+mbr。</p>
 ]]></content>
       <categories>
-        <category>游戏</category>
-        <category>传奇</category>
+        <category>技术</category>
+        <category>Win</category>
       </categories>
       <tags>
-        <tag>传奇</tag>
-        <tag>外挂</tag>
+        <tag>技术</tag>
       </tags>
   </entry>
   <entry>
@@ -986,6 +966,47 @@
       </tags>
   </entry>
   <entry>
+    <title>传奇内挂垃圾物品过滤</title>
+    <url>/2022/09/03/%E4%BC%A0%E5%A5%87%E5%86%85%E6%8C%82%E5%9E%83%E5%9C%BE%E7%89%A9%E5%93%81%E8%BF%87%E6%BB%A4/</url>
+    <content><![CDATA[<p> 传奇内挂过滤垃圾。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209031601159.png" alt="image-20220903160139387"></p>
+<p>先打开传奇目录 <code>D:\传奇私服\Config </code>   修改DAT档案文件，把下面内容复制粘贴进去保存即可：</p>
+<span id="more"></span>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">金创药(小量),药品类,0,0,0,0</span><br><span class="line">魔法药(小量),药品类,0,0,0,0</span><br><span class="line">肉,其它类,0,0,0,0</span><br><span class="line">布衣(男),服装类,0,0,0,0</span><br><span class="line">布衣(女),服装类,0,0,0,0</span><br><span class="line">木剑,武器类,0,0,0,0</span><br><span class="line">铁剑,武器类,0,0,0,0</span><br><span class="line">青铜剑,武器类,0,0,0,0</span><br><span class="line">轻型盔甲(男),服装类,0,0,0,0</span><br><span class="line">轻型盔甲(女),服装类,0,0,0,0</span><br><span class="line">凝霜,武器类,0,0,0,0</span><br><span class="line">短剑,武器类,0,0,0,0</span><br><span class="line">青铜斧,武器类,0,0,0,0</span><br><span class="line">重盔甲(女),服装类,0,0,0,0</span><br><span class="line">魔法长袍(女),服装类,0,0,0,0</span><br><span class="line">灵魂战衣(女),服装类,0,0,0,0</span><br><span class="line">重盔甲(男),服装类,0,0,0,0</span><br><span class="line">魔法长袍(男),服装类,0,0,0,0</span><br><span class="line">灵魂战衣(男),服装类,0,0,0,0</span><br><span class="line">海魂,武器类,0,0,0,0</span><br><span class="line">修罗,武器类,0,0,0,0</span><br><span class="line">破魂,武器类,0,0,0,0</span><br><span class="line">斩马刀,武器类,0,0,0,0</span><br><span class="line">青铜头盔,首饰类,0,0,0,0</span><br><span class="line">金项链,首饰类,0,0,0,0</span><br><span class="line">铁手镯,首饰类,0,0,0,0</span><br><span class="line">灰色药粉(中量),药品类,0,0,0,0</span><br><span class="line">黄色药粉(中量),药品类,0,0,0,0</span><br><span class="line">八荒,武器类,0,0,0,0</span><br><span class="line">玻璃戒指,首饰类,0,0,0,0</span><br><span class="line">牛角戒指,首饰类,0,0,0,0</span><br><span class="line">蓝色水晶戒指,首饰类,0,0,0,0</span><br><span class="line">黑檀项链,首饰类,0,0,0,0</span><br><span class="line">黄色水晶项链,首饰类,0,0,0,0</span><br><span class="line">黑色水晶项链,首饰类,0,0,0,0</span><br><span class="line">半月,武器类,0,0,0,0</span><br><span class="line">皮制手套,首饰类,0,0,0,0</span><br><span class="line">钢手镯,首饰类,0,0,0,0</span><br><span class="line">生铁戒指,首饰类,0,0,0,0</span><br><span class="line">金戒指,首饰类,0,0,0,0</span><br><span class="line">灯笼项链,首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链,首饰类,1,1,1,0</span><br><span class="line">魅力戒指,首饰类,0,0,0,0</span><br><span class="line">道德戒指,首饰类,0,0,0,0</span><br><span class="line">白金项链,首饰类,0,0,0,0</span><br><span class="line">降妖除魔戒指,首饰类,0,0,0,0</span><br><span class="line">偃月,武器类,0,0,0,0</span><br><span class="line">降魔,武器类,0,0,0,0</span><br><span class="line">小手镯,首饰类,0,0,0,0</span><br><span class="line">银手镯,首饰类,0,0,0,0</span><br><span class="line">大手镯,首饰类,0,0,0,0</span><br><span class="line">金创药(中量),药品类,0,0,0,0</span><br><span class="line">魔法药(中量),药品类,0,0,0,0</span><br><span class="line">黑色水晶戒指,首饰类,0,0,0,0</span><br><span class="line">魔鬼项链,首饰类,0,0,0,0</span><br><span class="line">珊瑚戒指,首饰类,0,0,0,0</span><br><span class="line">蓝翡翠项链,首饰类,0,0,0,0</span><br><span class="line">蛇眼戒指,首饰类,0,0,0,0</span><br><span class="line">琥珀项链,首饰类,0,0,0,0</span><br><span class="line">放大镜,首饰类,0,0,0,0</span><br><span class="line">珍珠戒指,首饰类,0,0,0,0</span><br><span class="line">竹笛,首饰类,0,0,0,0</span><br><span class="line">骷髅戒指,首饰类,0,0,0,0</span><br><span class="line">死神手套,首饰类,0,0,0,0</span><br><span class="line">骷髅头盔,首饰类,0,0,0,0</span><br><span class="line">魔法手镯,首饰类,0,0,0,0</span><br><span class="line">金手镯,首饰类,0,0,0,0</span><br><span class="line">道士头盔,首饰类,0,0,0,0</span><br><span class="line">凤凰明珠,首饰类,0,0,0,0</span><br><span class="line">道士手镯,首饰类,0,0,0,0</span><br><span class="line">黑檀手镯,首饰类,0,0,0,0</span><br><span class="line">铁矿,其它类,0,0,0,0</span><br><span class="line">黑铁矿,其它类,0,0,0,0</span><br><span class="line">困魔咒,其它类,0,0,0,0</span><br><span class="line">召唤骷髅,其它类,0,0,0,0</span><br><span class="line">地狱雷光,其它类,0,0,0,0</span><br><span class="line">半月弯刀,其它类,0,0,0,0</span><br><span class="line">太阳水,药品类,0,1,0,0</span><br><span class="line">强效金创药,药品类,0,1,0,0</span><br><span class="line">强效魔法药,药品类,0,1,0,0</span><br><span class="line">野蛮冲撞,其它类,0,0,0,0</span><br><span class="line">群体治疗术,其它类,0,0,0,0</span><br><span class="line">圣言术,其它类,0,0,0,0</span><br><span class="line">强效太阳水,药品类,0,1,0,0</span><br><span class="line">魔力手镯,首饰类,0,0,0,0</span><br><span class="line">攻击力药水,其它类,0,0,0,0</span><br><span class="line">道术力药水,其它类,0,0,0,0</span><br><span class="line">疾风药水,其它类,0,0,0,0</span><br><span class="line">体力强化水,其它类,0,0,0,0</span><br><span class="line">魔力强化水,其它类,0,0,0,0</span><br><span class="line">战神盔甲(男),服装类,0,0,0,0</span><br><span class="line">战神盔甲(女),服装类,0,0,0,0</span><br><span class="line">幽灵战衣(男),服装类,0,0,0,0</span><br><span class="line">幽灵战衣(女),服装类,0,0,0,0</span><br><span class="line">恶魔长袍(男),服装类,0,0,0,0</span><br><span class="line">恶魔长袍(女),服装类,0,0,0,0</span><br><span class="line">中型盔甲(男),服装类,0,0,0,0</span><br><span class="line">灯笼项链②,首饰类,1,1,1,0</span><br><span class="line">灯笼项链[残],首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链[残],首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链②,首饰类,1,1,1,0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>游戏</category>
+        <category>传奇</category>
+      </categories>
+      <tags>
+        <tag>传奇</tag>
+        <tag>外挂</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>删除爱奇艺热播视频图标(牛氓)</title>
+    <url>/2022/10/03/%E5%88%A0%E9%99%A4%E7%88%B1%E5%A5%87%E8%89%BA%E7%83%AD%E6%92%AD%E8%A7%86%E9%A2%91%E5%9B%BE%E6%A0%87/</url>
+    <content><![CDATA[<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210030104950.png" alt="image-20221003010451506"></p>
+<span id="more"></span>
+<p><strong>第一步丶</strong>在开始→运行中输入 :<code>regedit</code>点击确定（或者回车）打开注册表编辑器</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210030101210.png" alt="image-20221003010050614"></p>
+<p><strong>第二步丶</strong>如果是Windows 10操作系统，没有开始菜单，可以使用快捷键调出运行：Win+R依次定位到：</p>
+<p><code>计算机\HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace</code></p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210030105035.png" alt="image-20221003010143205"></p>
+<p>（代码文字或有不同，直接删掉就可以）此位置还有在我的电脑文件夹中其他的图标。</p>
+<p><strong>第三步丶</strong>如有异常，也可删除对应的项：PPS图标→ 360云盘图标→ 百度云盘图标→ 如果还是赖着不走，不妨再在注册表中按F3键，调出查找，输入关键词：爱奇艺视频，进行搜索，见一个，删除一个。清理干净之后，右键点击图标就能删除了。</p>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>Win</category>
+      </categories>
+      <tags>
+        <tag>Win</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>修改hosts文件(win系统)</title>
     <url>/2022/10/07/%E4%BF%AE%E6%94%B9hosts%E6%96%87%E4%BB%B6/</url>
     <content><![CDATA[<h3 id="hosts作用介绍"><a href="#hosts作用介绍" class="headerlink" title="hosts作用介绍"></a>hosts作用介绍</h3><p>hosts是一个没有扩展名的系统文件，可以用记事本等工具打开，<strong>其作用就是将一些常用的网址域名与其对应的IP地址建立一个关联“数据库”</strong>，当用户在浏览器中输入一个需要登录的网址时，系统会首先自动从Hosts文件中寻找对应的IP地址，一旦找到，系统会立即打开对应网页，如果没有找到，则系统会再将网址提交DNS域名解析服务器进行IP地址的解析。</p>
@@ -1018,54 +1039,107 @@
       </tags>
   </entry>
   <entry>
-    <title>删除爱奇艺热播视频图标(牛氓)</title>
-    <url>/2022/10/03/%E5%88%A0%E9%99%A4%E7%88%B1%E5%A5%87%E8%89%BA%E7%83%AD%E6%92%AD%E8%A7%86%E9%A2%91%E5%9B%BE%E6%A0%87/</url>
-    <content><![CDATA[<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210030104950.png" alt="image-20221003010451506"></p>
+    <title>【安装Office】 Office Tool Plus 入门教程</title>
+    <url>/2022/09/27/%E5%AE%89%E8%A3%85Office/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>安装 Office 是一件非常简单的事情，大家不必过于担心，更不必对自己没有信心。<br>本教程适用于需要全新安装 Office 的用户，若您需要修改 Office 请参阅 [<a href="https://movejian.github.io/2022/09/27/%E6%8A%80%E8%83%BD%E6%89%A9%E5%B1%95Office">技能扩展] Office Tool Plus 高级教程</a><br>任何人都可使用 Office Tool Plus 轻松地安装 Office，请认真阅读教程以避免因为疏忽出现问题。<br>如无特殊情况，文章中提到的 Windows 10 也适用于 Windows 11.</p>
 <span id="more"></span>
-<p><strong>第一步丶</strong>在开始→运行中输入 :<code>regedit</code>点击确定（或者回车）打开注册表编辑器</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210030101210.png" alt="image-20221003010050614"></p>
-<p><strong>第二步丶</strong>如果是Windows 10操作系统，没有开始菜单，可以使用快捷键调出运行：Win+R依次定位到：</p>
-<p><code>计算机\HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace</code></p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202210030105035.png" alt="image-20221003010143205"></p>
-<p>（代码文字或有不同，直接删掉就可以）此位置还有在我的电脑文件夹中其他的图标。</p>
-<p><strong>第三步丶</strong>如有异常，也可删除对应的项：PPS图标→ 360云盘图标→ 百度云盘图标→ 如果还是赖着不走，不妨再在注册表中按F3键，调出查找，输入关键词：爱奇艺视频，进行搜索，见一个，删除一个。清理干净之后，右键点击图标就能删除了。</p>
-]]></content>
-      <categories>
-        <category>技术</category>
-        <category>Win</category>
-      </categories>
-      <tags>
-        <tag>Win</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>十年之约，一个人的寂寞，一群人的狂欢</title>
-    <url>/2022/08/21/%E5%8D%81%E5%B9%B4%E4%B9%8B%E7%BA%A6%EF%BC%8C%E4%B8%80%E4%B8%AA%E4%BA%BA%E7%9A%84%E5%AF%82%E5%AF%9E%EF%BC%8C%E4%B8%80%E7%BE%A4%E4%BA%BA%E7%9A%84%E7%8B%82%E6%AC%A2/</url>
-    <content><![CDATA[<p>​       在网络逐步转向手机端的今天，web博客网站似乎已经失去了活力，高昂的服务器费用，还需要技术基础以搭建起网站，忙前忙后设计维护着自己的网站，远不如朋友圈一样说发就发，但真相真的如此吗？我原本也这样理解，直到我发现了这样一个组织-十年之约。</p>
-<p>​       <strong>十年之约</strong>是由“十年之约”项目组维护的非营利性、自愿加入的博客活动。加入“十 年之约”可锻炼您的写作能力，进而提升您的思考、观察、记录、分享等能力，是 一项非常有意义的活动。“十年之约”的宗旨是：我们的博客十年不关闭或者更久， 并保持更新和活力。</p>
-<p><img src="https://movejian.github.io/images/20220821/1.png"></p>
-<span id="more"></span>
-<p>​      这是十年之约的官方网站，页面设计很简约，但信息量并不少，经过简单的浏览，我大致了解到”十年之约”所约定的内容–“十年之约，即从加入这个活动起，我们的博客十年不关闭，保持更新和活力！”</p>
-<p><img src="https://movejian.github.io/images/20220821/2.png"></p>
-<p>​       这是十年之约的规则，不多， 守法 平等 互访 互敬 互助 活力 真诚。</p>
-<img src="https://movejian.github.io/images/20220821/4.jpeg" style="zoom:25%;" />
 
-<p>​      想来，我的博龄也有两年多了，从最初的天涯、新浪、到自己搭建<a href="https://www.zblogcn.com/"><strong>ZBlog</strong></a>和使用VPS在<strong>Linux</strong>下的<strong>Centos</strong>利用<a href="https://bt.cn/"><strong>宝塔</strong></a>搭建<a href="https://typecho.org/"><strong>Typecho</strong></a>，从之前的纯技术文章，到现在加入生活琐事杂文，写博客给了我不少寄托，可以毫不夸张的说，要不是写博客，自学php我是坚持不下来的，写博客能给我一种反馈，带来成就感，自己提升的同时，也可以帮助他人，自己的文章得到了他人的认可，甚至影响到了别人，让别人也像我这样去帮助别人，可能这就是我坚持下去的意义吧。</p>
-<p>​      有人说，一个个人博客能坚持下去唯一的理由就是盈利，确实，服务器的价格、时间、精力，要想一直坚持下去，很难，所在之后的博客放弃了VPS，虽然目前使用的是<strong>GitHub</strong>，尽可能在不影响阅读的情况下少投放AD，不知道是否会一直保持更新，但我至少现在在坚持，现在在保持更新！</p>
-<ul>
-<li>任意点开一个成员网站，多以技术文章为主，确实体现了认真性。同时在这里，我看到了技术博主的希望。</li>
-</ul>
-<p> 十年后，希望变成自己想成为的样子，十年后，望可通过博客回首过往，十年后相遇，再来共叙那年记忆！到来年，暮然回首间，流年清浅，岁月安好！</p>
-<p>​      人生能有多少个十年，身边除了家人，又有多少人能陪伴你十年，一辈子很短，能坚持的事不多。我一直觉得，人活下去的动力就是期待，期待明天，期待未来，期待下一个十年，期待以后的生活。上一个十年就这样过去了，下一个十年会是怎样，我很想知道，那就记录下来吧！</p>
-<ul>
-<li>许个约定，就十年，听起来也很浪漫！下一个十年，我在未来等你！</li>
-</ul>
+<h3 id="1-开始使用"><a href="#1-开始使用" class="headerlink" title="1. 开始使用"></a>1. 开始使用</h3><p>请下载最新的包含框架的版本（with runtime），以确保你始终可以获得最好的体验。<br>在<a href="http://otp.landian.vip/">官网下载 Office Tool Plus</a> 后，将其解压至正常位置（例如桌面），双击 Office Tool Plus 以运行。<br>为了获得最佳体验，若 Office Tool Plus 提示有更新，请更新后继续操作。### 2. 注意事项</p>
+<h4 id="安装开始前，请知晓以下事情："><a href="#安装开始前，请知晓以下事情：" class="headerlink" title="安装开始前，请知晓以下事情："></a>安装开始前，请知晓以下事情：</h4><ol>
+<li>使用 Office Tool Plus 安装的 Office 是官方原版，非破解、非精简。</li>
+<li>教程没提到的产品就不要随便安装，别问，问就是不推荐。</li>
+<li>教程没提到的设置就不要随便乱动，别问，不懂就不要动。</li>
+<li>建议勾选下载后再部署，能避免因为网络不佳而卡住不动。</li>
+<li>安装 Office 出现问题时，请根据提供的错误信息排查问题；更详细的错误信息可以在 【工具箱】-&gt;【收集 Office 安装日志】获得。</li>
+</ol>
+<p>Office 安装程序出现问题跟我们没有太大关系哈。举个例子，你叫了个外卖，但是送到后你觉得太难吃，这能怪骑手吗？这不能。做人要讲理，不能随便污蔑别人。</p>
+<p>如果你有任何疑问，可前往 [<a href="https://movejian.github.io/2022/09/27/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94Office">疑难解答] Office Tool Plus 入门教程</a> 查看相关问题解答。</p>
+<h4 id="安装开始前，请做好以下事情："><a href="#安装开始前，请做好以下事情：" class="headerlink" title="安装开始前，请做好以下事情："></a>安装开始前，请做好以下事情：</h4><ol>
+<li>卸载 WPS，两者共存容易出问题（没有问题当我没说）。</li>
+<li>卸载旧版本 Office，按照标准流程操作，请勿直接强制移除。</li>
+<li>清除旧版本激活信息，在 [激活] -&gt; [许可证管理] -&gt; [子菜单] -&gt; [清除激活状态]。</li>
+<li>清除 Office 设置，在 [工具箱] -&gt; [重置 Office 为默认设置]。</li>
+</ol>
+<p>附图为清除激活信息：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270128402.png" alt="清除 Office 激活信息"></p>
+<p>附图为重置 Office 的设置：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270128335.png" alt="重置 Office 为默认设置"></p>
+<h3 id="3-部署-Office"><a href="#3-部署-Office" class="headerlink" title="3. 部署 Office"></a>3. 部署 Office</h3><p>不知道自己有没有正版 Office？个人用户 <a href="https://account.microsoft.com/services/">&gt;&gt;点击这里检查&lt;&lt;</a>，企业用户 <a href="https://portal.office.com/account/?ref=MeControl#subscriptions">&gt;&gt;点击这里检查&lt;&lt;</a>。</p>
+<p>需要使用正版 Office？<a href="https://otp.landian.vip/zh-cn/#store">点击这里查看详细信息</a>。</p>
+<p>以下提到的安装方法或者产品都是合适的（差不多），不会有任何问题，请放心使用。</p>
+<hr>
+<p>自动安装：</p>
+<h5 id="一键安装"><a href="#一键安装" class="headerlink" title="一键安装"></a>一键安装</h5><p>如果你什么都不懂，或者，你只是想要个能用的 Office，那么使用一键安装代码是最合适的：</p>
+<p>确保自己使用的是最新版的 Office Tool Plus，按下 Ctrl + Shift + P 打开命令框，输入以下命令：</p>
+<p>旧版本打开命令框的快捷方式为 Ctrl + P，最新版已修改。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270130407.png" alt="命令框"></p>
+<p>安装 Microsoft 365 企业应用版（Word, PowerPoint, Excel）：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy /addProduct O365ProPlusRetail_zh-cn_Access,Bing,Groove,Lync,OneDrive,OneNote,Outlook,Publisher,Teams /channel Current /downloadFirst</span><br></pre></td></tr></table></figure>
+
+<p>安装 Microsoft 365 企业应用版（Word, PowerPoint, Excel）+ Visio 2016：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy /addProduct O365ProPlusRetail_zh-cn_Access,Bing,Groove,Lync,OneDrive,OneNote,Outlook,Publisher,Teams /addProduct VisioProRetail_zh-cn_Groove,OneDrive /channel Current /downloadFirst</span><br></pre></td></tr></table></figure>
+
+<p>输入命令后请按回车（Enter）以执行命令，然后耐心等待安装完成。</p>
+<p>安装完成后，请务必使用 [<a href="https://movejian.github.io/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B">激活 Office] Office Tool Plus 入门教程</a> 中的一键激活代码进行激活</p>
+<hr>
+<p>手动安装：</p>
+<p>转到 Office Tool Plus 的部署页面，按照以下提示操作。</p>
+<h4 id="必须做的事情"><a href="#必须做的事情" class="headerlink" title="必须做的事情"></a>必须做的事情</h4><ol>
+<li>添加产品：看下面的选项，选一个合适自己的来学习。</li>
+<li>添加语言：点一下「添加语言」就行，软件会自动匹配合适的语言。不要把“仅部署校对工具”打勾，除非你知道这是什么。</li>
+</ol>
+<h5 id="我有正版-Office"><a href="#我有正版-Office" class="headerlink" title="我有正版 Office"></a>我有正版 Office</h5><p>如果你有 Office 正版，比如你自己购买了 Microsoft 365 家庭版，安装的时候选择这个即可。</p>
+<p>当然现在也有不少人去网上白嫖什么 365 订阅，基本都是安装 Microsoft 365 企业应用版（O365ProPlusRetail）。</p>
+<p>如果学校&#x2F;企业提供了 2019&#x2F;2021 批量许可授权，安装这个也可。</p>
+<p>无论如何，你必须要安装对应的产品，否则你将无法通过账户&#x2F;密钥激活你的 Office。</p>
+<p>如果你有 Office 的正版授权，但是没有 Visio，又想装？</p>
+<p>Office, Visio 和 Project 三个产品的授权是可以分开处理的，所以你不必担心搞 Visio 会影响 Office.</p>
+<h5 id="有什么好选择吗？"><a href="#有什么好选择吗？" class="headerlink" title="有什么好选择吗？"></a>有什么好选择吗？</h5><p>当然有啦~</p>
+<p>Office 选择：Microsoft 365 企业应用版 (O365ProPlusRetail)</p>
+<p>Visio 选择：Visio 专业版 2016 (VisioProRetail)</p>
+<p>Project 选择：Project 专业版 2016 (ProjectProRetail)</p>
+<p>当然，Visio 和 Project 是需要才选，不需要或者看不懂就不需要管啦。</p>
+<h5 id="我要安装年份版-Office（例如-Office-2021）"><a href="#我要安装年份版-Office（例如-Office-2021）" class="headerlink" title="我要安装年份版 Office（例如 Office 2021）"></a>我要安装年份版 Office（例如 Office 2021）</h5><p>有一说一，年份版没有你想的那么好的哦，如果不是强迫症建议看上面那条。</p>
+<p>针对非正版用户，你只可以安装批量许可产品以便使用 KMS 激活。</p>
+<p>安装批量版时，需要使用对应的 Office 2019&#x2F;2021 企业长期版通道，否则会无法安装。</p>
+<p>Office 2021：</p>
+<p>Office LTSC 专业增强版 2021 - 批量许可证 (ProPlus2021Volume)</p>
+<p>Visio LTSC 专业版 2021 - 批量许可证 (VisioPro2021Volume)</p>
+<p>Project 专业版 2021 - 批量许可证 (ProjectPro2021Volume)</p>
+<p>Office 2019：</p>
+<p>Office 专业增强版 2019 - 批量许可证 (ProPlus2019Volume)</p>
+<p>Visio 专业版 2019 - 批量许可证 (VisioPro2019Volume)</p>
+<p>Project 专业版 2019 - 批量许可证 (ProjectPro2019Volume)</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">PS：不要问我为什么 2021 叫 LTSC，名字是微软起的有问题问微软去。</span><br></pre></td></tr></table></figure>
+
+<h5 id="我是-Windows-7-x2F-8-x2F-8-1-用户"><a href="#我是-Windows-7-x2F-8-x2F-8-1-用户" class="headerlink" title="我是 Windows 7&#x2F;8&#x2F;8.1 用户"></a>我是 Windows 7&#x2F;8&#x2F;8.1 用户</h5><p>由于系统原因，我们推荐按照第二条选项进行处理，这样确保可以进行正常安装。</p>
+<p>不要问我 Office 2019&#x2F;2021 能不能装，问就是说不能，别人说可以的话你问别人去。</p>
+<h5 id="（额外补充内容）什么系统能装什么样的-Office？"><a href="#（额外补充内容）什么系统能装什么样的-Office？" class="headerlink" title="（额外补充内容）什么系统能装什么样的 Office？"></a>（额外补充内容）什么系统能装什么样的 Office？</h5><p>目前 Office Tool Plus 中有 Office 2016、2019、2021、365 可供安装。</p>
+<p>Windows 10 和 11 无限制，可以安装任何版本的 Office。</p>
+<p>Windows 8 和 8.1 只可以安装部分产品，如果将部署模块从「Office 部署工具」更改到「Office Tool Plus」也可以安装任意产品。</p>
+<p>Windows 7 只可以安装 Office 2016 或 365，并且只能够使用「当前通道」。即使你更改部署模块，Office 2019&#x2F;2021 也不一定能安装成功。</p>
+<p>如果你的安装包是从别的地方下载的，那，那就别来问我，我也不知道你下载的是什么。</p>
+<h4 id="可以做的事情"><a href="#可以做的事情" class="headerlink" title="可以做的事情"></a>可以做的事情</h4><ol>
+<li>应用程序：选自己能看懂的就行，一般就是 Word, PowerPoint, Excel.</li>
+<li>通道：“当前通道”就行，Office 2019&#x2F;2021 批量许可证请选 Office 2019&#x2F;2021 企业长期版。</li>
+<li>体系结构：32 位兼容性好；64 位兼容性稍差且体积大，但处理大数据能力稍强。</li>
+<li>部署模式：那肯定要选安装啊，要不然怎么安装。</li>
+<li>安装模块：如没有特殊要求，请勿选择 Office Tool Plus.</li>
+<li>下载后再部署：如果网不行，最好把这个选上，免得安装卡进度卡半天。</li>
+</ol>
+<p>产品和语言弄好后即可开始部署 Office，其余设置不需要更改。</p>
+<p>部署时请耐心等待，不要强制结束安装程序或重启计算机。</p>
+<h3 id="4-视频教程"><a href="#4-视频教程" class="headerlink" title="4. 视频教程"></a>4. 视频教程</h3><p>视频教程更新不及时，建议看本文即可。</p>
+<p>bilibili：<a href="https://www.bilibili.com/video/BV1eU4y1V7NU">https://www.bilibili.com/video/BV1eU4y1V7NU</a></p>
+<p>YouTube：<a href="https://www.youtube.com/watch?v=p90V9_D-8Go">https://www.youtube.com/watch?v=p90V9_D-8Go</a></p>
+<h3 id="5-离线安装包"><a href="#5-离线安装包" class="headerlink" title="5. 离线安装包"></a>5. 离线安装包</h3><p>如果因为网络问题下载缓慢或者无法下载 Office，你可以下载 ISO 文件使用。</p>
+<p><a href="https://otp.landian.vip/zh-cn/download.html">下载站点</a>（云图小镇、OneDrive）中包含有 Office ISO.</p>
+<p>Office ISO 文件不需要解压，双击打开即可挂载使用（Win 7 除外）。</p>
+<h3 id="6-激活-Office"><a href="#6-激活-Office" class="headerlink" title="6. 激活 Office"></a>6. 激活 Office</h3><p>如果你是正版用户，一般情况下是不需要借助 Office Tool Plus 激活 Office 的，在 Office 应用程序中登录自己的微软账号，或者输入你的正版密钥即可激活 Office。</p>
+<p><a href="https://movejian.github.io/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B">【点击此处】前往另一个教程查看如何激活 Office</a></p>
 ]]></content>
-      <categories>
-        <category>转载</category>
-      </categories>
       <tags>
-        <tag>随笔</tag>
+        <tag>Office</tag>
       </tags>
   </entry>
   <entry>
@@ -1176,110 +1250,6 @@
       </tags>
   </entry>
   <entry>
-    <title>【安装Office】 Office Tool Plus 入门教程</title>
-    <url>/2022/09/27/%E5%AE%89%E8%A3%85Office/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>安装 Office 是一件非常简单的事情，大家不必过于担心，更不必对自己没有信心。<br>本教程适用于需要全新安装 Office 的用户，若您需要修改 Office 请参阅 [<a href="https://movejian.github.io/2022/09/27/%E6%8A%80%E8%83%BD%E6%89%A9%E5%B1%95Office">技能扩展] Office Tool Plus 高级教程</a><br>任何人都可使用 Office Tool Plus 轻松地安装 Office，请认真阅读教程以避免因为疏忽出现问题。<br>如无特殊情况，文章中提到的 Windows 10 也适用于 Windows 11.</p>
-<span id="more"></span>
-
-<h3 id="1-开始使用"><a href="#1-开始使用" class="headerlink" title="1. 开始使用"></a>1. 开始使用</h3><p>请下载最新的包含框架的版本（with runtime），以确保你始终可以获得最好的体验。<br>在<a href="http://otp.landian.vip/">官网下载 Office Tool Plus</a> 后，将其解压至正常位置（例如桌面），双击 Office Tool Plus 以运行。<br>为了获得最佳体验，若 Office Tool Plus 提示有更新，请更新后继续操作。### 2. 注意事项</p>
-<h4 id="安装开始前，请知晓以下事情："><a href="#安装开始前，请知晓以下事情：" class="headerlink" title="安装开始前，请知晓以下事情："></a>安装开始前，请知晓以下事情：</h4><ol>
-<li>使用 Office Tool Plus 安装的 Office 是官方原版，非破解、非精简。</li>
-<li>教程没提到的产品就不要随便安装，别问，问就是不推荐。</li>
-<li>教程没提到的设置就不要随便乱动，别问，不懂就不要动。</li>
-<li>建议勾选下载后再部署，能避免因为网络不佳而卡住不动。</li>
-<li>安装 Office 出现问题时，请根据提供的错误信息排查问题；更详细的错误信息可以在 【工具箱】-&gt;【收集 Office 安装日志】获得。</li>
-</ol>
-<p>Office 安装程序出现问题跟我们没有太大关系哈。举个例子，你叫了个外卖，但是送到后你觉得太难吃，这能怪骑手吗？这不能。做人要讲理，不能随便污蔑别人。</p>
-<p>如果你有任何疑问，可前往 [<a href="https://movejian.github.io/2022/09/27/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94Office">疑难解答] Office Tool Plus 入门教程</a> 查看相关问题解答。</p>
-<h4 id="安装开始前，请做好以下事情："><a href="#安装开始前，请做好以下事情：" class="headerlink" title="安装开始前，请做好以下事情："></a>安装开始前，请做好以下事情：</h4><ol>
-<li>卸载 WPS，两者共存容易出问题（没有问题当我没说）。</li>
-<li>卸载旧版本 Office，按照标准流程操作，请勿直接强制移除。</li>
-<li>清除旧版本激活信息，在 [激活] -&gt; [许可证管理] -&gt; [子菜单] -&gt; [清除激活状态]。</li>
-<li>清除 Office 设置，在 [工具箱] -&gt; [重置 Office 为默认设置]。</li>
-</ol>
-<p>附图为清除激活信息：</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270128402.png" alt="清除 Office 激活信息"></p>
-<p>附图为重置 Office 的设置：</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270128335.png" alt="重置 Office 为默认设置"></p>
-<h3 id="3-部署-Office"><a href="#3-部署-Office" class="headerlink" title="3. 部署 Office"></a>3. 部署 Office</h3><p>不知道自己有没有正版 Office？个人用户 <a href="https://account.microsoft.com/services/">&gt;&gt;点击这里检查&lt;&lt;</a>，企业用户 <a href="https://portal.office.com/account/?ref=MeControl#subscriptions">&gt;&gt;点击这里检查&lt;&lt;</a>。</p>
-<p>需要使用正版 Office？<a href="https://otp.landian.vip/zh-cn/#store">点击这里查看详细信息</a>。</p>
-<p>以下提到的安装方法或者产品都是合适的（差不多），不会有任何问题，请放心使用。</p>
-<hr>
-<p>自动安装：</p>
-<h5 id="一键安装"><a href="#一键安装" class="headerlink" title="一键安装"></a>一键安装</h5><p>如果你什么都不懂，或者，你只是想要个能用的 Office，那么使用一键安装代码是最合适的：</p>
-<p>确保自己使用的是最新版的 Office Tool Plus，按下 Ctrl + Shift + P 打开命令框，输入以下命令：</p>
-<p>旧版本打开命令框的快捷方式为 Ctrl + P，最新版已修改。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270130407.png" alt="命令框"></p>
-<p>安装 Microsoft 365 企业应用版（Word, PowerPoint, Excel）：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy /addProduct O365ProPlusRetail_zh-cn_Access,Bing,Groove,Lync,OneDrive,OneNote,Outlook,Publisher,Teams /channel Current /downloadFirst</span><br></pre></td></tr></table></figure>
-
-<p>安装 Microsoft 365 企业应用版（Word, PowerPoint, Excel）+ Visio 2016：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy /addProduct O365ProPlusRetail_zh-cn_Access,Bing,Groove,Lync,OneDrive,OneNote,Outlook,Publisher,Teams /addProduct VisioProRetail_zh-cn_Groove,OneDrive /channel Current /downloadFirst</span><br></pre></td></tr></table></figure>
-
-<p>输入命令后请按回车（Enter）以执行命令，然后耐心等待安装完成。</p>
-<p>安装完成后，请务必使用 [<a href="https://movejian.github.io/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B">激活 Office] Office Tool Plus 入门教程</a> 中的一键激活代码进行激活</p>
-<hr>
-<p>手动安装：</p>
-<p>转到 Office Tool Plus 的部署页面，按照以下提示操作。</p>
-<h4 id="必须做的事情"><a href="#必须做的事情" class="headerlink" title="必须做的事情"></a>必须做的事情</h4><ol>
-<li>添加产品：看下面的选项，选一个合适自己的来学习。</li>
-<li>添加语言：点一下「添加语言」就行，软件会自动匹配合适的语言。不要把“仅部署校对工具”打勾，除非你知道这是什么。</li>
-</ol>
-<h5 id="我有正版-Office"><a href="#我有正版-Office" class="headerlink" title="我有正版 Office"></a>我有正版 Office</h5><p>如果你有 Office 正版，比如你自己购买了 Microsoft 365 家庭版，安装的时候选择这个即可。</p>
-<p>当然现在也有不少人去网上白嫖什么 365 订阅，基本都是安装 Microsoft 365 企业应用版（O365ProPlusRetail）。</p>
-<p>如果学校&#x2F;企业提供了 2019&#x2F;2021 批量许可授权，安装这个也可。</p>
-<p>无论如何，你必须要安装对应的产品，否则你将无法通过账户&#x2F;密钥激活你的 Office。</p>
-<p>如果你有 Office 的正版授权，但是没有 Visio，又想装？</p>
-<p>Office, Visio 和 Project 三个产品的授权是可以分开处理的，所以你不必担心搞 Visio 会影响 Office.</p>
-<h5 id="有什么好选择吗？"><a href="#有什么好选择吗？" class="headerlink" title="有什么好选择吗？"></a>有什么好选择吗？</h5><p>当然有啦~</p>
-<p>Office 选择：Microsoft 365 企业应用版 (O365ProPlusRetail)</p>
-<p>Visio 选择：Visio 专业版 2016 (VisioProRetail)</p>
-<p>Project 选择：Project 专业版 2016 (ProjectProRetail)</p>
-<p>当然，Visio 和 Project 是需要才选，不需要或者看不懂就不需要管啦。</p>
-<h5 id="我要安装年份版-Office（例如-Office-2021）"><a href="#我要安装年份版-Office（例如-Office-2021）" class="headerlink" title="我要安装年份版 Office（例如 Office 2021）"></a>我要安装年份版 Office（例如 Office 2021）</h5><p>有一说一，年份版没有你想的那么好的哦，如果不是强迫症建议看上面那条。</p>
-<p>针对非正版用户，你只可以安装批量许可产品以便使用 KMS 激活。</p>
-<p>安装批量版时，需要使用对应的 Office 2019&#x2F;2021 企业长期版通道，否则会无法安装。</p>
-<p>Office 2021：</p>
-<p>Office LTSC 专业增强版 2021 - 批量许可证 (ProPlus2021Volume)</p>
-<p>Visio LTSC 专业版 2021 - 批量许可证 (VisioPro2021Volume)</p>
-<p>Project 专业版 2021 - 批量许可证 (ProjectPro2021Volume)</p>
-<p>Office 2019：</p>
-<p>Office 专业增强版 2019 - 批量许可证 (ProPlus2019Volume)</p>
-<p>Visio 专业版 2019 - 批量许可证 (VisioPro2019Volume)</p>
-<p>Project 专业版 2019 - 批量许可证 (ProjectPro2019Volume)</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">PS：不要问我为什么 2021 叫 LTSC，名字是微软起的有问题问微软去。</span><br></pre></td></tr></table></figure>
-
-<h5 id="我是-Windows-7-x2F-8-x2F-8-1-用户"><a href="#我是-Windows-7-x2F-8-x2F-8-1-用户" class="headerlink" title="我是 Windows 7&#x2F;8&#x2F;8.1 用户"></a>我是 Windows 7&#x2F;8&#x2F;8.1 用户</h5><p>由于系统原因，我们推荐按照第二条选项进行处理，这样确保可以进行正常安装。</p>
-<p>不要问我 Office 2019&#x2F;2021 能不能装，问就是说不能，别人说可以的话你问别人去。</p>
-<h5 id="（额外补充内容）什么系统能装什么样的-Office？"><a href="#（额外补充内容）什么系统能装什么样的-Office？" class="headerlink" title="（额外补充内容）什么系统能装什么样的 Office？"></a>（额外补充内容）什么系统能装什么样的 Office？</h5><p>目前 Office Tool Plus 中有 Office 2016、2019、2021、365 可供安装。</p>
-<p>Windows 10 和 11 无限制，可以安装任何版本的 Office。</p>
-<p>Windows 8 和 8.1 只可以安装部分产品，如果将部署模块从「Office 部署工具」更改到「Office Tool Plus」也可以安装任意产品。</p>
-<p>Windows 7 只可以安装 Office 2016 或 365，并且只能够使用「当前通道」。即使你更改部署模块，Office 2019&#x2F;2021 也不一定能安装成功。</p>
-<p>如果你的安装包是从别的地方下载的，那，那就别来问我，我也不知道你下载的是什么。</p>
-<h4 id="可以做的事情"><a href="#可以做的事情" class="headerlink" title="可以做的事情"></a>可以做的事情</h4><ol>
-<li>应用程序：选自己能看懂的就行，一般就是 Word, PowerPoint, Excel.</li>
-<li>通道：“当前通道”就行，Office 2019&#x2F;2021 批量许可证请选 Office 2019&#x2F;2021 企业长期版。</li>
-<li>体系结构：32 位兼容性好；64 位兼容性稍差且体积大，但处理大数据能力稍强。</li>
-<li>部署模式：那肯定要选安装啊，要不然怎么安装。</li>
-<li>安装模块：如没有特殊要求，请勿选择 Office Tool Plus.</li>
-<li>下载后再部署：如果网不行，最好把这个选上，免得安装卡进度卡半天。</li>
-</ol>
-<p>产品和语言弄好后即可开始部署 Office，其余设置不需要更改。</p>
-<p>部署时请耐心等待，不要强制结束安装程序或重启计算机。</p>
-<h3 id="4-视频教程"><a href="#4-视频教程" class="headerlink" title="4. 视频教程"></a>4. 视频教程</h3><p>视频教程更新不及时，建议看本文即可。</p>
-<p>bilibili：<a href="https://www.bilibili.com/video/BV1eU4y1V7NU">https://www.bilibili.com/video/BV1eU4y1V7NU</a></p>
-<p>YouTube：<a href="https://www.youtube.com/watch?v=p90V9_D-8Go">https://www.youtube.com/watch?v=p90V9_D-8Go</a></p>
-<h3 id="5-离线安装包"><a href="#5-离线安装包" class="headerlink" title="5. 离线安装包"></a>5. 离线安装包</h3><p>如果因为网络问题下载缓慢或者无法下载 Office，你可以下载 ISO 文件使用。</p>
-<p><a href="https://otp.landian.vip/zh-cn/download.html">下载站点</a>（云图小镇、OneDrive）中包含有 Office ISO.</p>
-<p>Office ISO 文件不需要解压，双击打开即可挂载使用（Win 7 除外）。</p>
-<h3 id="6-激活-Office"><a href="#6-激活-Office" class="headerlink" title="6. 激活 Office"></a>6. 激活 Office</h3><p>如果你是正版用户，一般情况下是不需要借助 Office Tool Plus 激活 Office 的，在 Office 应用程序中登录自己的微软账号，或者输入你的正版密钥即可激活 Office。</p>
-<p><a href="https://movejian.github.io/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B">【点击此处】前往另一个教程查看如何激活 Office</a></p>
-]]></content>
-      <tags>
-        <tag>Office</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>实战kali破解wifi密码 全网最详细的保姆级教程</title>
     <url>/2022/09/21/%E5%AE%9E%E6%88%98kali%E7%A0%B4%E8%A7%A3wifi%E5%AF%86%E7%A0%81/</url>
     <content><![CDATA[<h2 id="kali官网"><a href="#kali官网" class="headerlink" title="kali官网"></a>kali官网</h2><hr>
@@ -1335,7 +1305,7 @@
         <category>学习</category>
       </categories>
       <tags>
-        <tag>kali</tag>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -1407,6 +1377,36 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hashcat.exe -m 13000 -w 4 -a 3 $rar5$16$abb7ce8bab9f25d639093498227aa09c$15$4d38ee3db279154fa08fc6849a80acce$8$ab10d17b2291bf4d -o password.txt </span><br></pre></td></tr></table></figure>
 
 ]]></content>
+  </entry>
+  <entry>
+    <title>十年之约，一个人的寂寞，一群人的狂欢</title>
+    <url>/2022/08/21/%E5%8D%81%E5%B9%B4%E4%B9%8B%E7%BA%A6%EF%BC%8C%E4%B8%80%E4%B8%AA%E4%BA%BA%E7%9A%84%E5%AF%82%E5%AF%9E%EF%BC%8C%E4%B8%80%E7%BE%A4%E4%BA%BA%E7%9A%84%E7%8B%82%E6%AC%A2/</url>
+    <content><![CDATA[<p>​       在网络逐步转向手机端的今天，web博客网站似乎已经失去了活力，高昂的服务器费用，还需要技术基础以搭建起网站，忙前忙后设计维护着自己的网站，远不如朋友圈一样说发就发，但真相真的如此吗？我原本也这样理解，直到我发现了这样一个组织-十年之约。</p>
+<p>​       <strong>十年之约</strong>是由“十年之约”项目组维护的非营利性、自愿加入的博客活动。加入“十 年之约”可锻炼您的写作能力，进而提升您的思考、观察、记录、分享等能力，是 一项非常有意义的活动。“十年之约”的宗旨是：我们的博客十年不关闭或者更久， 并保持更新和活力。</p>
+<p><img src="https://movejian.github.io/images/20220821/1.png"></p>
+<span id="more"></span>
+<p>​      这是十年之约的官方网站，页面设计很简约，但信息量并不少，经过简单的浏览，我大致了解到”十年之约”所约定的内容–“十年之约，即从加入这个活动起，我们的博客十年不关闭，保持更新和活力！”</p>
+<p><img src="https://movejian.github.io/images/20220821/2.png"></p>
+<p>​       这是十年之约的规则，不多， 守法 平等 互访 互敬 互助 活力 真诚。</p>
+<img src="https://movejian.github.io/images/20220821/4.jpeg" style="zoom:25%;" />
+
+<p>​      想来，我的博龄也有两年多了，从最初的天涯、新浪、到自己搭建<a href="https://www.zblogcn.com/"><strong>ZBlog</strong></a>和使用VPS在<strong>Linux</strong>下的<strong>Centos</strong>利用<a href="https://bt.cn/"><strong>宝塔</strong></a>搭建<a href="https://typecho.org/"><strong>Typecho</strong></a>，从之前的纯技术文章，到现在加入生活琐事杂文，写博客给了我不少寄托，可以毫不夸张的说，要不是写博客，自学php我是坚持不下来的，写博客能给我一种反馈，带来成就感，自己提升的同时，也可以帮助他人，自己的文章得到了他人的认可，甚至影响到了别人，让别人也像我这样去帮助别人，可能这就是我坚持下去的意义吧。</p>
+<p>​      有人说，一个个人博客能坚持下去唯一的理由就是盈利，确实，服务器的价格、时间、精力，要想一直坚持下去，很难，所在之后的博客放弃了VPS，虽然目前使用的是<strong>GitHub</strong>，尽可能在不影响阅读的情况下少投放AD，不知道是否会一直保持更新，但我至少现在在坚持，现在在保持更新！</p>
+<ul>
+<li>任意点开一个成员网站，多以技术文章为主，确实体现了认真性。同时在这里，我看到了技术博主的希望。</li>
+</ul>
+<p> 十年后，希望变成自己想成为的样子，十年后，望可通过博客回首过往，十年后相遇，再来共叙那年记忆！到来年，暮然回首间，流年清浅，岁月安好！</p>
+<p>​      人生能有多少个十年，身边除了家人，又有多少人能陪伴你十年，一辈子很短，能坚持的事不多。我一直觉得，人活下去的动力就是期待，期待明天，期待未来，期待下一个十年，期待以后的生活。上一个十年就这样过去了，下一个十年会是怎样，我很想知道，那就记录下来吧！</p>
+<ul>
+<li>许个约定，就十年，听起来也很浪漫！下一个十年，我在未来等你！</li>
+</ul>
+]]></content>
+      <categories>
+        <category>转载</category>
+      </categories>
+      <tags>
+        <tag>随笔</tag>
+      </tags>
   </entry>
   <entry>
     <title>将Windows打印机变成网络打印机</title>
@@ -1796,137 +1796,6 @@
       </tags>
   </entry>
   <entry>
-    <title>【疑难解答】 Office Tool Plus 入门教程</title>
-    <url>/2022/09/27/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94Office/</url>
-    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>如果你的系统本身就有诸多毛病，建议直接重装原版系统，这是最有效最快的解决办法。</p>
-<p>下面的问题以及解决办法仅供参考，不一定有效，可能因系统环境等原因有些许不同。</p>
-<p>如无特殊情况，文章中提到的 Windows 10 也适用于 Windows 11.</p>
-<span id="more"></span>
-
-<h3 id="关于-Office-Tool-Plus-的问题"><a href="#关于-Office-Tool-Plus-的问题" class="headerlink" title="关于 Office Tool Plus 的问题"></a>关于 Office Tool Plus 的问题</h3><h5 id="安装了-NET-Runtime-框架，却依然无法打开-Office-Tool-Plus"><a href="#安装了-NET-Runtime-框架，却依然无法打开-Office-Tool-Plus" class="headerlink" title="安装了 .NET Runtime 框架，却依然无法打开 Office Tool Plus"></a>安装了 .NET Runtime 框架，却依然无法打开 Office Tool Plus</h5><p>这个要分为三种情况：</p>
-<ol>
-<li>双击打开，没有任何提示，只是鼠标转了一下圈圈。</li>
-<li>双击打开，报错，显示已停止运行。</li>
-<li>双击打开，提示需要 install .NET runtime</li>
-</ol>
-<p>以上三种情况，首先，1 和 2 是比较难搞的，这大多数是系统问题，并且出在 Win 7 上比较多。</p>
-<p>针对这个问题，首先去 Windows Update 把更新打满，Win 7 用户可以<a href="https://download.coolhub.top/Extensions/Win7_UpdatePack/">从这里下载更新包</a> (UpdatePack7R2) 使用。</p>
-<p>第三种情况又分为两种情况：</p>
-<p>第一：你可能框架装错了，最稳妥就是下载 Office Tool Plus with Runtime (自带框架) 的版本，这样基本能解决问题。</p>
-<p>第二：如果你确定你框架没装错，但还是打不开，首先你要确保你装的框架是 32 位的，即使在 64 位的系统上也是如此。并且框架不可以使用第三方管理器进行安装，否则可能会出现问题。</p>
-<p>第三：注册表的系统变量一定不能更改过，有没有问题的话，对一对下面的注册表截图就知道了：</p>
-<p><code>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion</code></p>
-<p>64 位 Windows 系统：</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270110384.png" alt="img"></p>
-<p>32 位 Windows 系统：</p>
-<p>[暂无截图]</p>
-<p>如果对完发现，真的有问题，那么请首先卸载框架，然后把注册表改回去，再重新安装框架，这时候就没事了。</p>
-<h5 id="UCEERR-RENDERTHREADFAILURE-0x88980406"><a href="#UCEERR-RENDERTHREADFAILURE-0x88980406" class="headerlink" title="UCEERR_RENDERTHREADFAILURE (0x88980406)"></a><code>UCEERR_RENDERTHREADFAILURE (0x88980406)</code></h5><p>看下面那一条，解决办法是一样的。</p>
-<h5 id="打开程序，窗口完全透明，但实际上可以点击可以操作"><a href="#打开程序，窗口完全透明，但实际上可以点击可以操作" class="headerlink" title="打开程序，窗口完全透明，但实际上可以点击可以操作"></a>打开程序，窗口完全透明，但实际上可以点击可以操作</h5><p><strong>最好的办法是更新显卡驱动程序从根源上解决问题</strong>，不过在这里也还是有临时方案可以使用的。</p>
-<p>使用 CMD 或 PowerShell 启动程序，并附带上以下参数：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&quot;Office Tool Plus&quot; /enablehwacc false</span><br></pre></td></tr></table></figure>
-
-<p>以上命令会关闭 Office Tool Plus 的硬件加速，这可能会有一些性能上的小问题。</p>
-<h5 id="Insufficient-memory-to-continue-the-execution-of-the-program"><a href="#Insufficient-memory-to-continue-the-execution-of-the-program" class="headerlink" title="Insufficient memory to continue the execution of the program."></a><code>Insufficient memory to continue the execution of the program.</code></h5><p>最新版 Office Tool Plus 已解决此问题，请从<a href="https://otp.landian.vip/">官网</a>下载最新版本使用。</p>
-<p>如果问题依旧，请在断网状态下打开 Office Tool Plus，打开确认正常后再恢复网络链接。</p>
-<h3 id="关于安装的疑问"><a href="#关于安装的疑问" class="headerlink" title="关于安装的疑问"></a>关于安装的疑问</h3><h5 id="Office-Tool-Plus-安装的-Office-是正版吗？"><a href="#Office-Tool-Plus-安装的-Office-是正版吗？" class="headerlink" title="Office Tool Plus 安装的 Office 是正版吗？"></a>Office Tool Plus 安装的 Office 是正版吗？</h5><p>Office Tool Plus 下载&#x2F;安装的 Office 均为微软官方原版，非破解、非精简、非绿色版。</p>
-<p>至于你的 Office 是否正版，看你怎么激活，并不是用 Office Tool Plus 就一定是盗版，反之成立。</p>
-<p>即使你购买了正版 Office，你依然可以使用 Office Tool Plus 安装 Office。</p>
-<h5 id="Office-体系结构该如何选择？"><a href="#Office-体系结构该如何选择？" class="headerlink" title="Office 体系结构该如何选择？"></a>Office 体系结构该如何选择？</h5><p>一般情况下，默认 32 位的就可以了。</p>
-<p>如果你在日常使用中不会打开 1GB+ 的 PPT 或者几万行的 Excel 表，那没必要安装 64 位的 Office。</p>
-<p>主要是 32 位兼容性比较好（例如可以完美使用 Office Tool Plus 的文档转换功能）。</p>
-<p>具体可以<a href="https://support.microsoft.com/zh-cn/office/%E9%80%89%E6%8B%A9-64-%E4%BD%8D%E6%88%96-32-%E4%BD%8D%E7%89%88%E6%9C%AC%E7%9A%84-office-2dee7807-8f95-4d0c-b5fe-6c6f49b8d261">查看微软官网文档</a>中的解释。</p>
-<h5 id="Office-产品该如何选择？"><a href="#Office-产品该如何选择？" class="headerlink" title="Office 产品该如何选择？"></a>Office 产品该如何选择？</h5><p>对于正版用户来说，为了能正常激活 Office，要安装跟买的一样的，比如买的 Office 2019 家庭和学生版，那就安装这个版本。</p>
-<p>Microsoft 365 用户还需要特别注意自己账号授权和产品一定要对上，否则 Office 会自动更新为全家桶。</p>
-<p>对于非正版用户来说，请按照 [<a href="https://movejian.github.io/2022/09/27/%E5%AE%89%E8%A3%85Office">安装 Office] Office Tool Plus 入门教程</a> 操作。</p>
-<p>如果你有 Office 正版，但没有 Visio 或 Project 的正版，也可以按照安装教程中的说明操作。</p>
-<p>激活的时候，Office、Visio 和 Project 是分开处理的，并不会相互影响（特殊情况除外）。</p>
-<h5 id="Office-是否可以安装在其他盘？"><a href="#Office-是否可以安装在其他盘？" class="headerlink" title="Office 是否可以安装在其他盘？"></a>Office 是否可以安装在其他盘？</h5><p>由于微软限制，Office 只能安装在系统盘上，并且不可以使用其它软件强制迁移，否则会导致出错甚至难以修复。</p>
-<p>网上介绍的通过修改注册表来修改软件安装路径并不推荐大家使用。</p>
-<p>因为这个，我们在群里见过翻车的例子太多了。</p>
-<p>与其这样折腾还不如买个新硬盘扩容实在。</p>
-<p>别说什么有钱没钱的，自己的电脑就该买好一点，不是自己的电脑就将就用。</p>
-<h5 id="Office-Tool-Plus-下载的安装包在哪里？"><a href="#Office-Tool-Plus-下载的安装包在哪里？" class="headerlink" title="Office Tool Plus 下载的安装包在哪里？"></a>Office Tool Plus 下载的安装包在哪里？</h5><p>只有使用下载后再部署，Office Tool Plus 才会预先下载安装包并保存在电脑上。</p>
-<p>一般情况下，Office Tool Plus 会将 Office 安装包下载到 Office Tool Plus 的同目录中。</p>
-<p>也就是说，<code>Office Tool\Office\Data</code>下保存的就是 Office 的安装包。</p>
-<p>如果你更改了源路径属性，那么下载路径就是你更改后的路径。</p>
-<p>如果要共享安装包给别人用，请务必复制 Office 整个文件夹，而不是复制里面的子文件夹，这会导致无法识别。</p>
-<p>当然最佳方式是创建 ISO 文件共享给对方用。</p>
-<h3 id="关于安装的问题"><a href="#关于安装的问题" class="headerlink" title="关于安装的问题"></a>关于安装的问题</h3><h5 id="Value-cannot-be-null-Parameter-‘xxxx’"><a href="#Value-cannot-be-null-Parameter-‘xxxx’" class="headerlink" title="Value cannot be null. (Parameter ‘xxxx’)"></a>Value cannot be null. (Parameter ‘xxxx’)</h5><p>如果你是在使用 Office Tool Plus 作为安装模块（不是 Office 部署工具）时出现的这个问题，</p>
-<p>那就在工具箱内「修复系统变量」，修复完成后重启系统然后再尝试安装。</p>
-<h5 id="Office-安装长时间无反应-x2F-安装失败如何解决？"><a href="#Office-安装长时间无反应-x2F-安装失败如何解决？" class="headerlink" title="Office 安装长时间无反应&#x2F;安装失败如何解决？"></a>Office 安装长时间无反应&#x2F;安装失败如何解决？</h5><p>由于 Office 安装失败的原因实在……太复杂了，所以在此处我不一一列举。</p>
-<p>有一些问题是翻译一下文本就知道的错误，请通过修改配置来解决。</p>
-<p>一些需要深入研究并解决的问题可以进行如下操作：</p>
-<ol>
-<li>打开 Office Tool Plus</li>
-<li>转到工具箱</li>
-<li>使用收集 Office 安装程序日志功能收集日志并保存</li>
-</ol>
-<p>日志里面可能包含很多文件，需要针对性的查看与分析问题。</p>
-<p>ODT 或 C2R 日志可以通过搜索 Error 寻找错误信息，如果你技术过硬，可尝试自己解决问题。</p>
-<p>如果你不会解决问题，请发送日志给我，或者加群讨论解决（记得请我吃鸡腿 :sad: :good: ）。</p>
-<h3 id="关于激活的疑问"><a href="#关于激活的疑问" class="headerlink" title="关于激活的疑问"></a>关于激活的疑问</h3><h5 id="为什么有时候安装的和激活的产品不一样？"><a href="#为什么有时候安装的和激活的产品不一样？" class="headerlink" title="为什么有时候安装的和激活的产品不一样？"></a>为什么有时候安装的和激活的产品不一样？</h5><p>你需要知道两件事：</p>
-<ul>
-<li>产品是产品，许可证是许可证，两者虽然都有一样的名字，但不是同一个东西。</li>
-<li>理论上来说产品一般和许可证对应，但实际情况中可以不对应。</li>
-</ul>
-<p>为什么教程写的 Microsoft 365 配 Mondo 2016 Volume？</p>
-<p>因为这是最好的搭配，能让你体验 Office 所有的功能。</p>
-<h5 id="我想让激活的产品和安装的一样，如何操作？"><a href="#我想让激活的产品和安装的一样，如何操作？" class="headerlink" title="我想让激活的产品和安装的一样，如何操作？"></a>我想让激活的产品和安装的一样，如何操作？</h5><p>如果你是正版用户，出现这个问题的时候，应该前往 Office Tool Plus 的激活页面，在证书管理中，打开按钮的子菜单，选择清除激活信息，然后打开你的 Office 应用程序，按照提示修复并重新激活 Office。</p>
-<p>如果你是你是按照 [<a href="https://movejian.github.io/2022/09/27/%E5%AE%89%E8%A3%85Office">安装 Office] Office Tool Plus 入门教程</a> 操作的，那我觉得你完全没必要继续折腾。</p>
-<h5 id="如何激活-Microsoft-365？"><a href="#如何激活-Microsoft-365？" class="headerlink" title="如何激活 Microsoft 365？"></a>如何激活 Microsoft 365？</h5><p><a href="https://otp.landian.vip/zh-cn/#store">点击此处</a>解决问题。</p>
-<h5 id="Mondo-许可证是什么？"><a href="#Mondo-许可证是什么？" class="headerlink" title="Mondo 许可证是什么？"></a>Mondo 许可证是什么？</h5><p>2016 许可证可以用 2016 的功能，2019 能用 2019 的功能。</p>
-<p>比如 2019 的 PPT 平滑切换，2016 就没有。</p>
-<p>举个简单的例子：</p>
-<p>如果 2016 是普通身份，2019 是 VIP，那么 Mondo 就是 SVIP。</p>
-<p>Mondo 许可证可以让你体验并使用 Office 的所有功能。</p>
-<p>别看 Mondo 名字带一个 2016 就以为它逊，它强得很。</p>
-<p>不过从大局看，当然还是 Microsoft 365 正版许可最强啦，什么都有。</p>
-<h3 id="关于激活的问题"><a href="#关于激活的问题" class="headerlink" title="关于激活的问题"></a>关于激活的问题</h3><h5 id="激活时显示「产品激活成功」，打开-Office-时显示需要激活"><a href="#激活时显示「产品激活成功」，打开-Office-时显示需要激活" class="headerlink" title="激活时显示「产品激活成功」，打开 Office 时显示需要激活"></a>激活时显示「产品激活成功」，打开 Office 时显示需要激活</h5><p>具体表现为：在 Office Tool Plus 内激活的时候是显示的激活成功，但是打开 Office 却显示需要激活，并且显示的是 Microsoft 365，不是自己所安装的 Office 许可证。</p>
-<p>解决办法：在工具箱内「恢复 Office 设置为默认设置」，激活那边不需要操作，你只要确保已经激活成功就行了。</p>
-<h5 id="激活完成后显示「你的许可证有问题」"><a href="#激活完成后显示「你的许可证有问题」" class="headerlink" title="激活完成后显示「你的许可证有问题」"></a>激活完成后显示「你的许可证有问题」</h5><p>在工具箱内「修复 Office 许可证问题」即可。</p>
-<p>KMS 主机地址可以从激活教程获得，也可以通过查询激活信息找到你正在使用的 KMS 主机地址。</p>
-<h5 id="文件名、目录名或卷标语法不正确-0x8007007B-服务器运行失败-0x80080005-DNS-名称不存在-0x8007232B"><a href="#文件名、目录名或卷标语法不正确-0x8007007B-服务器运行失败-0x80080005-DNS-名称不存在-0x8007232B" class="headerlink" title="文件名、目录名或卷标语法不正确 (0x8007007B) | 服务器运行失败 (0x80080005) | DNS 名称不存在 (0x8007232B)"></a>文件名、目录名或卷标语法不正确 (0x8007007B) | 服务器运行失败 (0x80080005) | DNS 名称不存在 (0x8007232B)</h5><p>在工具箱内「重置 Software Protection 服务」，然后再次设置 KMS 主机，重试激活。</p>
-<h5 id="数据无效-0x8007000D"><a href="#数据无效-0x8007000D" class="headerlink" title="数据无效 (0x8007000D)"></a>数据无效 (0x8007000D)</h5><p>在工具箱内「重置 Software Protection 服务」，然后再次设置 KMS 主机，重试激活。</p>
-<p>如果上述操作不能解决你的问题，那就：</p>
-<p>尝试更换一个 KMS 主机，然后再次尝试激活。同时也要注意自己的系统时间是否正确。</p>
-<h5 id="软件授权服务报告无法激活该产品。无法联系任何密钥管理服务-0xC004F074"><a href="#软件授权服务报告无法激活该产品。无法联系任何密钥管理服务-0xC004F074" class="headerlink" title="软件授权服务报告无法激活该产品。无法联系任何密钥管理服务 (0xC004F074)"></a>软件授权服务报告无法激活该产品。无法联系任何密钥管理服务 (0xC004F074)</h5><p>卸载电脑上所有的 KMS 软件（如果有），例如：HEU 或者 KMS-VL-ALL.</p>
-<p>随后在工具箱内「重置 Software Protection 服务」。</p>
-<p>重新激活 Office 时，请填入 KMS 端口：1688</p>
-<h5 id="许可证使用失败-0xC004E015-令牌存储中的令牌包含无效的哈希-0x8004E108"><a href="#许可证使用失败-0xC004E015-令牌存储中的令牌包含无效的哈希-0x8004E108" class="headerlink" title="许可证使用失败 (0xC004E015) | 令牌存储中的令牌包含无效的哈希 (0x8004E108)"></a>许可证使用失败 (0xC004E015) | 令牌存储中的令牌包含无效的哈希 (0x8004E108)</h5><p>自动处理：在工具箱内「重建激活令牌」，然后重新开始激活。</p>
-<p>手动处理：请参阅帮助文档的<a href="https://help.coolhub.top/zh-cn/activate/faq.html">疑难解答</a>。</p>
-<h5 id="没有在此计算机上发现-Office-批量许可证"><a href="#没有在此计算机上发现-Office-批量许可证" class="headerlink" title="没有在此计算机上发现 Office 批量许可证"></a>没有在此计算机上发现 Office 批量许可证</h5><p>字面意思。</p>
-<p>安装批量许可证即可，可参考：[<a href="https://movejian.github.io/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B">激活 Office] Office Tool Plus 入门教程</a></p>
-<h5 id="软件授权服务报告许可证未安装-0xC004F015-amp-0xC004F017"><a href="#软件授权服务报告许可证未安装-0xC004F015-amp-0xC004F017" class="headerlink" title="软件授权服务报告许可证未安装 (0xC004F015 &amp; 0xC004F017)"></a>软件授权服务报告许可证未安装 (0xC004F015 &amp; 0xC004F017)</h5><p>不要被微软的表面意思所迷惑了。</p>
-<p>这句话表示许可证已安装，但尚未安装有效的密钥，所以无法使用。</p>
-<p>如果 Office 还没激活，换个许可证或者换个密钥（建议去看<a href="https://movejian.github.io/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B">激活教程</a>）；</p>
-<p>如果 Office 已经激活，不需要理会这条消息。</p>
-<h5 id="软件授权服务报告找不到产品-SKU-0xC004F069"><a href="#软件授权服务报告找不到产品-SKU-0xC004F069" class="headerlink" title="软件授权服务报告找不到产品 SKU (0xC004F069)"></a>软件授权服务报告找不到产品 SKU (0xC004F069)</h5><p>你正在尝试安装的密钥找不到对应的许可证。</p>
-<p>安装与密钥对应的许可证，然后重新尝试安装密钥。</p>
-<h5 id="该目录包含仅名称大小写有区别的条目-0x000001A8"><a href="#该目录包含仅名称大小写有区别的条目-0x000001A8" class="headerlink" title="该目录包含仅名称大小写有区别的条目 (0x000001A8)"></a>该目录包含仅名称大小写有区别的条目 (0x000001A8)</h5><p>在工具箱内「修复 WMI 组件」。</p>
-<p><strong>注意</strong>：该功能仅在 8.2.9.0 以上版本的 Office Tool Plus 中才有。</p>
-<h5 id="An-error-occurred-while-making-the-connection"><a href="#An-error-occurred-while-making-the-connection" class="headerlink" title="An error occurred while making the connection."></a>An error occurred while making the connection.</h5><p>在“<font size="5">服务</font>”中将 <code>Windows Management Instrumentation</code>服务启用，然后再次尝试操作。</p>
-<p>啊启动了也没办法？打扰了，我也不知道该咋办。</p>
-<h3 id="关于-Office-的问题"><a href="#关于-Office-的问题" class="headerlink" title="关于 Office 的问题"></a>关于 Office 的问题</h3><h5 id="打开后显示正在更新-Office，过会儿显示错误"><a href="#打开后显示正在更新-Office，过会儿显示错误" class="headerlink" title="打开后显示正在更新 Office，过会儿显示错误"></a>打开后显示正在更新 Office，过会儿显示错误</h5><p>老毛病了，老毛病了。具体原因我不知道，但我知道一个临时解决办法。</p>
-<p>打开任务管理器，找到 <code>Microsoft Office Click-to-Run</code> 进程，直接结束运行。</p>
-<p>其他的例如 Excel，Word 等等之类的应用程序也要结束运行。</p>
-<p>然后再尝试打开 Office，应该就没啥问题了。</p>
-<h5 id="我们注意到你更新了你的许可证。请重新启动……"><a href="#我们注意到你更新了你的许可证。请重新启动……" class="headerlink" title="我们注意到你更新了你的许可证。请重新启动……"></a>我们注意到你更新了你的许可证。请重新启动……</h5><p>这个问题发生在 Project 上比较多。反正重启了还是提示 </p>
-<p>解决办法：在工具箱内「恢复 Office 设置为默认设置」。</p>
-<h5 id="很抱歉，此功能看似已中断"><a href="#很抱歉，此功能看似已中断" class="headerlink" title="很抱歉，此功能看似已中断"></a>很抱歉，此功能看似已中断</h5><p>一般情况下，卸载 WPS 即可解决此问题。</p>
-<p>卸载之后可以使用一下 Office 的快速修复以免问题没有完全解决。</p>
-<p>不想卸？卸了也没用？那我也没有办法。</p>
-<h3 id="附录：尚无解决办法的问题"><a href="#附录：尚无解决办法的问题" class="headerlink" title="附录：尚无解决办法的问题"></a>附录：尚无解决办法的问题</h3><ul>
-<li>没有注册类，代码：0x80040154</li>
-<li>软件授权服务报告产品密钥不可用，代码：0xC004F014</li>
-<li>系统找不到指定的文件，代码：0x80070002</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>Office</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>祖玛阁全地图走法汇总</title>
     <url>/2022/10/03/%E7%A5%96%E7%8E%9B%E9%98%81%E5%85%A8%E5%9C%B0%E5%9B%BE%E8%B5%B0%E6%B3%95%E6%B1%87%E6%80%BB/</url>
     <content><![CDATA[<p>在传奇游戏中祖玛阁是一个迷宫式的地图，玩家需要走出正确的进行路线才能前往下一层，每一个不同的走法都可能抵达不同的地点。熟悉走法的玩家来说这就是一个高效的练级圣地，对于不熟悉的玩家来说纵膈总共108个房间的祖玛阁怎么走?是最困扰玩家的问题之一。</p>
@@ -2075,6 +1944,137 @@
       </categories>
       <tags>
         <tag>技术</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【疑难解答】 Office Tool Plus 入门教程</title>
+    <url>/2022/09/27/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94Office/</url>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>如果你的系统本身就有诸多毛病，建议直接重装原版系统，这是最有效最快的解决办法。</p>
+<p>下面的问题以及解决办法仅供参考，不一定有效，可能因系统环境等原因有些许不同。</p>
+<p>如无特殊情况，文章中提到的 Windows 10 也适用于 Windows 11.</p>
+<span id="more"></span>
+
+<h3 id="关于-Office-Tool-Plus-的问题"><a href="#关于-Office-Tool-Plus-的问题" class="headerlink" title="关于 Office Tool Plus 的问题"></a>关于 Office Tool Plus 的问题</h3><h5 id="安装了-NET-Runtime-框架，却依然无法打开-Office-Tool-Plus"><a href="#安装了-NET-Runtime-框架，却依然无法打开-Office-Tool-Plus" class="headerlink" title="安装了 .NET Runtime 框架，却依然无法打开 Office Tool Plus"></a>安装了 .NET Runtime 框架，却依然无法打开 Office Tool Plus</h5><p>这个要分为三种情况：</p>
+<ol>
+<li>双击打开，没有任何提示，只是鼠标转了一下圈圈。</li>
+<li>双击打开，报错，显示已停止运行。</li>
+<li>双击打开，提示需要 install .NET runtime</li>
+</ol>
+<p>以上三种情况，首先，1 和 2 是比较难搞的，这大多数是系统问题，并且出在 Win 7 上比较多。</p>
+<p>针对这个问题，首先去 Windows Update 把更新打满，Win 7 用户可以<a href="https://download.coolhub.top/Extensions/Win7_UpdatePack/">从这里下载更新包</a> (UpdatePack7R2) 使用。</p>
+<p>第三种情况又分为两种情况：</p>
+<p>第一：你可能框架装错了，最稳妥就是下载 Office Tool Plus with Runtime (自带框架) 的版本，这样基本能解决问题。</p>
+<p>第二：如果你确定你框架没装错，但还是打不开，首先你要确保你装的框架是 32 位的，即使在 64 位的系统上也是如此。并且框架不可以使用第三方管理器进行安装，否则可能会出现问题。</p>
+<p>第三：注册表的系统变量一定不能更改过，有没有问题的话，对一对下面的注册表截图就知道了：</p>
+<p><code>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion</code></p>
+<p>64 位 Windows 系统：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209270110384.png" alt="img"></p>
+<p>32 位 Windows 系统：</p>
+<p>[暂无截图]</p>
+<p>如果对完发现，真的有问题，那么请首先卸载框架，然后把注册表改回去，再重新安装框架，这时候就没事了。</p>
+<h5 id="UCEERR-RENDERTHREADFAILURE-0x88980406"><a href="#UCEERR-RENDERTHREADFAILURE-0x88980406" class="headerlink" title="UCEERR_RENDERTHREADFAILURE (0x88980406)"></a><code>UCEERR_RENDERTHREADFAILURE (0x88980406)</code></h5><p>看下面那一条，解决办法是一样的。</p>
+<h5 id="打开程序，窗口完全透明，但实际上可以点击可以操作"><a href="#打开程序，窗口完全透明，但实际上可以点击可以操作" class="headerlink" title="打开程序，窗口完全透明，但实际上可以点击可以操作"></a>打开程序，窗口完全透明，但实际上可以点击可以操作</h5><p><strong>最好的办法是更新显卡驱动程序从根源上解决问题</strong>，不过在这里也还是有临时方案可以使用的。</p>
+<p>使用 CMD 或 PowerShell 启动程序，并附带上以下参数：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&quot;Office Tool Plus&quot; /enablehwacc false</span><br></pre></td></tr></table></figure>
+
+<p>以上命令会关闭 Office Tool Plus 的硬件加速，这可能会有一些性能上的小问题。</p>
+<h5 id="Insufficient-memory-to-continue-the-execution-of-the-program"><a href="#Insufficient-memory-to-continue-the-execution-of-the-program" class="headerlink" title="Insufficient memory to continue the execution of the program."></a><code>Insufficient memory to continue the execution of the program.</code></h5><p>最新版 Office Tool Plus 已解决此问题，请从<a href="https://otp.landian.vip/">官网</a>下载最新版本使用。</p>
+<p>如果问题依旧，请在断网状态下打开 Office Tool Plus，打开确认正常后再恢复网络链接。</p>
+<h3 id="关于安装的疑问"><a href="#关于安装的疑问" class="headerlink" title="关于安装的疑问"></a>关于安装的疑问</h3><h5 id="Office-Tool-Plus-安装的-Office-是正版吗？"><a href="#Office-Tool-Plus-安装的-Office-是正版吗？" class="headerlink" title="Office Tool Plus 安装的 Office 是正版吗？"></a>Office Tool Plus 安装的 Office 是正版吗？</h5><p>Office Tool Plus 下载&#x2F;安装的 Office 均为微软官方原版，非破解、非精简、非绿色版。</p>
+<p>至于你的 Office 是否正版，看你怎么激活，并不是用 Office Tool Plus 就一定是盗版，反之成立。</p>
+<p>即使你购买了正版 Office，你依然可以使用 Office Tool Plus 安装 Office。</p>
+<h5 id="Office-体系结构该如何选择？"><a href="#Office-体系结构该如何选择？" class="headerlink" title="Office 体系结构该如何选择？"></a>Office 体系结构该如何选择？</h5><p>一般情况下，默认 32 位的就可以了。</p>
+<p>如果你在日常使用中不会打开 1GB+ 的 PPT 或者几万行的 Excel 表，那没必要安装 64 位的 Office。</p>
+<p>主要是 32 位兼容性比较好（例如可以完美使用 Office Tool Plus 的文档转换功能）。</p>
+<p>具体可以<a href="https://support.microsoft.com/zh-cn/office/%E9%80%89%E6%8B%A9-64-%E4%BD%8D%E6%88%96-32-%E4%BD%8D%E7%89%88%E6%9C%AC%E7%9A%84-office-2dee7807-8f95-4d0c-b5fe-6c6f49b8d261">查看微软官网文档</a>中的解释。</p>
+<h5 id="Office-产品该如何选择？"><a href="#Office-产品该如何选择？" class="headerlink" title="Office 产品该如何选择？"></a>Office 产品该如何选择？</h5><p>对于正版用户来说，为了能正常激活 Office，要安装跟买的一样的，比如买的 Office 2019 家庭和学生版，那就安装这个版本。</p>
+<p>Microsoft 365 用户还需要特别注意自己账号授权和产品一定要对上，否则 Office 会自动更新为全家桶。</p>
+<p>对于非正版用户来说，请按照 [<a href="https://movejian.github.io/2022/09/27/%E5%AE%89%E8%A3%85Office">安装 Office] Office Tool Plus 入门教程</a> 操作。</p>
+<p>如果你有 Office 正版，但没有 Visio 或 Project 的正版，也可以按照安装教程中的说明操作。</p>
+<p>激活的时候，Office、Visio 和 Project 是分开处理的，并不会相互影响（特殊情况除外）。</p>
+<h5 id="Office-是否可以安装在其他盘？"><a href="#Office-是否可以安装在其他盘？" class="headerlink" title="Office 是否可以安装在其他盘？"></a>Office 是否可以安装在其他盘？</h5><p>由于微软限制，Office 只能安装在系统盘上，并且不可以使用其它软件强制迁移，否则会导致出错甚至难以修复。</p>
+<p>网上介绍的通过修改注册表来修改软件安装路径并不推荐大家使用。</p>
+<p>因为这个，我们在群里见过翻车的例子太多了。</p>
+<p>与其这样折腾还不如买个新硬盘扩容实在。</p>
+<p>别说什么有钱没钱的，自己的电脑就该买好一点，不是自己的电脑就将就用。</p>
+<h5 id="Office-Tool-Plus-下载的安装包在哪里？"><a href="#Office-Tool-Plus-下载的安装包在哪里？" class="headerlink" title="Office Tool Plus 下载的安装包在哪里？"></a>Office Tool Plus 下载的安装包在哪里？</h5><p>只有使用下载后再部署，Office Tool Plus 才会预先下载安装包并保存在电脑上。</p>
+<p>一般情况下，Office Tool Plus 会将 Office 安装包下载到 Office Tool Plus 的同目录中。</p>
+<p>也就是说，<code>Office Tool\Office\Data</code>下保存的就是 Office 的安装包。</p>
+<p>如果你更改了源路径属性，那么下载路径就是你更改后的路径。</p>
+<p>如果要共享安装包给别人用，请务必复制 Office 整个文件夹，而不是复制里面的子文件夹，这会导致无法识别。</p>
+<p>当然最佳方式是创建 ISO 文件共享给对方用。</p>
+<h3 id="关于安装的问题"><a href="#关于安装的问题" class="headerlink" title="关于安装的问题"></a>关于安装的问题</h3><h5 id="Value-cannot-be-null-Parameter-‘xxxx’"><a href="#Value-cannot-be-null-Parameter-‘xxxx’" class="headerlink" title="Value cannot be null. (Parameter ‘xxxx’)"></a>Value cannot be null. (Parameter ‘xxxx’)</h5><p>如果你是在使用 Office Tool Plus 作为安装模块（不是 Office 部署工具）时出现的这个问题，</p>
+<p>那就在工具箱内「修复系统变量」，修复完成后重启系统然后再尝试安装。</p>
+<h5 id="Office-安装长时间无反应-x2F-安装失败如何解决？"><a href="#Office-安装长时间无反应-x2F-安装失败如何解决？" class="headerlink" title="Office 安装长时间无反应&#x2F;安装失败如何解决？"></a>Office 安装长时间无反应&#x2F;安装失败如何解决？</h5><p>由于 Office 安装失败的原因实在……太复杂了，所以在此处我不一一列举。</p>
+<p>有一些问题是翻译一下文本就知道的错误，请通过修改配置来解决。</p>
+<p>一些需要深入研究并解决的问题可以进行如下操作：</p>
+<ol>
+<li>打开 Office Tool Plus</li>
+<li>转到工具箱</li>
+<li>使用收集 Office 安装程序日志功能收集日志并保存</li>
+</ol>
+<p>日志里面可能包含很多文件，需要针对性的查看与分析问题。</p>
+<p>ODT 或 C2R 日志可以通过搜索 Error 寻找错误信息，如果你技术过硬，可尝试自己解决问题。</p>
+<p>如果你不会解决问题，请发送日志给我，或者加群讨论解决（记得请我吃鸡腿 :sad: :good: ）。</p>
+<h3 id="关于激活的疑问"><a href="#关于激活的疑问" class="headerlink" title="关于激活的疑问"></a>关于激活的疑问</h3><h5 id="为什么有时候安装的和激活的产品不一样？"><a href="#为什么有时候安装的和激活的产品不一样？" class="headerlink" title="为什么有时候安装的和激活的产品不一样？"></a>为什么有时候安装的和激活的产品不一样？</h5><p>你需要知道两件事：</p>
+<ul>
+<li>产品是产品，许可证是许可证，两者虽然都有一样的名字，但不是同一个东西。</li>
+<li>理论上来说产品一般和许可证对应，但实际情况中可以不对应。</li>
+</ul>
+<p>为什么教程写的 Microsoft 365 配 Mondo 2016 Volume？</p>
+<p>因为这是最好的搭配，能让你体验 Office 所有的功能。</p>
+<h5 id="我想让激活的产品和安装的一样，如何操作？"><a href="#我想让激活的产品和安装的一样，如何操作？" class="headerlink" title="我想让激活的产品和安装的一样，如何操作？"></a>我想让激活的产品和安装的一样，如何操作？</h5><p>如果你是正版用户，出现这个问题的时候，应该前往 Office Tool Plus 的激活页面，在证书管理中，打开按钮的子菜单，选择清除激活信息，然后打开你的 Office 应用程序，按照提示修复并重新激活 Office。</p>
+<p>如果你是你是按照 [<a href="https://movejian.github.io/2022/09/27/%E5%AE%89%E8%A3%85Office">安装 Office] Office Tool Plus 入门教程</a> 操作的，那我觉得你完全没必要继续折腾。</p>
+<h5 id="如何激活-Microsoft-365？"><a href="#如何激活-Microsoft-365？" class="headerlink" title="如何激活 Microsoft 365？"></a>如何激活 Microsoft 365？</h5><p><a href="https://otp.landian.vip/zh-cn/#store">点击此处</a>解决问题。</p>
+<h5 id="Mondo-许可证是什么？"><a href="#Mondo-许可证是什么？" class="headerlink" title="Mondo 许可证是什么？"></a>Mondo 许可证是什么？</h5><p>2016 许可证可以用 2016 的功能，2019 能用 2019 的功能。</p>
+<p>比如 2019 的 PPT 平滑切换，2016 就没有。</p>
+<p>举个简单的例子：</p>
+<p>如果 2016 是普通身份，2019 是 VIP，那么 Mondo 就是 SVIP。</p>
+<p>Mondo 许可证可以让你体验并使用 Office 的所有功能。</p>
+<p>别看 Mondo 名字带一个 2016 就以为它逊，它强得很。</p>
+<p>不过从大局看，当然还是 Microsoft 365 正版许可最强啦，什么都有。</p>
+<h3 id="关于激活的问题"><a href="#关于激活的问题" class="headerlink" title="关于激活的问题"></a>关于激活的问题</h3><h5 id="激活时显示「产品激活成功」，打开-Office-时显示需要激活"><a href="#激活时显示「产品激活成功」，打开-Office-时显示需要激活" class="headerlink" title="激活时显示「产品激活成功」，打开 Office 时显示需要激活"></a>激活时显示「产品激活成功」，打开 Office 时显示需要激活</h5><p>具体表现为：在 Office Tool Plus 内激活的时候是显示的激活成功，但是打开 Office 却显示需要激活，并且显示的是 Microsoft 365，不是自己所安装的 Office 许可证。</p>
+<p>解决办法：在工具箱内「恢复 Office 设置为默认设置」，激活那边不需要操作，你只要确保已经激活成功就行了。</p>
+<h5 id="激活完成后显示「你的许可证有问题」"><a href="#激活完成后显示「你的许可证有问题」" class="headerlink" title="激活完成后显示「你的许可证有问题」"></a>激活完成后显示「你的许可证有问题」</h5><p>在工具箱内「修复 Office 许可证问题」即可。</p>
+<p>KMS 主机地址可以从激活教程获得，也可以通过查询激活信息找到你正在使用的 KMS 主机地址。</p>
+<h5 id="文件名、目录名或卷标语法不正确-0x8007007B-服务器运行失败-0x80080005-DNS-名称不存在-0x8007232B"><a href="#文件名、目录名或卷标语法不正确-0x8007007B-服务器运行失败-0x80080005-DNS-名称不存在-0x8007232B" class="headerlink" title="文件名、目录名或卷标语法不正确 (0x8007007B) | 服务器运行失败 (0x80080005) | DNS 名称不存在 (0x8007232B)"></a>文件名、目录名或卷标语法不正确 (0x8007007B) | 服务器运行失败 (0x80080005) | DNS 名称不存在 (0x8007232B)</h5><p>在工具箱内「重置 Software Protection 服务」，然后再次设置 KMS 主机，重试激活。</p>
+<h5 id="数据无效-0x8007000D"><a href="#数据无效-0x8007000D" class="headerlink" title="数据无效 (0x8007000D)"></a>数据无效 (0x8007000D)</h5><p>在工具箱内「重置 Software Protection 服务」，然后再次设置 KMS 主机，重试激活。</p>
+<p>如果上述操作不能解决你的问题，那就：</p>
+<p>尝试更换一个 KMS 主机，然后再次尝试激活。同时也要注意自己的系统时间是否正确。</p>
+<h5 id="软件授权服务报告无法激活该产品。无法联系任何密钥管理服务-0xC004F074"><a href="#软件授权服务报告无法激活该产品。无法联系任何密钥管理服务-0xC004F074" class="headerlink" title="软件授权服务报告无法激活该产品。无法联系任何密钥管理服务 (0xC004F074)"></a>软件授权服务报告无法激活该产品。无法联系任何密钥管理服务 (0xC004F074)</h5><p>卸载电脑上所有的 KMS 软件（如果有），例如：HEU 或者 KMS-VL-ALL.</p>
+<p>随后在工具箱内「重置 Software Protection 服务」。</p>
+<p>重新激活 Office 时，请填入 KMS 端口：1688</p>
+<h5 id="许可证使用失败-0xC004E015-令牌存储中的令牌包含无效的哈希-0x8004E108"><a href="#许可证使用失败-0xC004E015-令牌存储中的令牌包含无效的哈希-0x8004E108" class="headerlink" title="许可证使用失败 (0xC004E015) | 令牌存储中的令牌包含无效的哈希 (0x8004E108)"></a>许可证使用失败 (0xC004E015) | 令牌存储中的令牌包含无效的哈希 (0x8004E108)</h5><p>自动处理：在工具箱内「重建激活令牌」，然后重新开始激活。</p>
+<p>手动处理：请参阅帮助文档的<a href="https://help.coolhub.top/zh-cn/activate/faq.html">疑难解答</a>。</p>
+<h5 id="没有在此计算机上发现-Office-批量许可证"><a href="#没有在此计算机上发现-Office-批量许可证" class="headerlink" title="没有在此计算机上发现 Office 批量许可证"></a>没有在此计算机上发现 Office 批量许可证</h5><p>字面意思。</p>
+<p>安装批量许可证即可，可参考：[<a href="https://movejian.github.io/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B">激活 Office] Office Tool Plus 入门教程</a></p>
+<h5 id="软件授权服务报告许可证未安装-0xC004F015-amp-0xC004F017"><a href="#软件授权服务报告许可证未安装-0xC004F015-amp-0xC004F017" class="headerlink" title="软件授权服务报告许可证未安装 (0xC004F015 &amp; 0xC004F017)"></a>软件授权服务报告许可证未安装 (0xC004F015 &amp; 0xC004F017)</h5><p>不要被微软的表面意思所迷惑了。</p>
+<p>这句话表示许可证已安装，但尚未安装有效的密钥，所以无法使用。</p>
+<p>如果 Office 还没激活，换个许可证或者换个密钥（建议去看<a href="https://movejian.github.io/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B">激活教程</a>）；</p>
+<p>如果 Office 已经激活，不需要理会这条消息。</p>
+<h5 id="软件授权服务报告找不到产品-SKU-0xC004F069"><a href="#软件授权服务报告找不到产品-SKU-0xC004F069" class="headerlink" title="软件授权服务报告找不到产品 SKU (0xC004F069)"></a>软件授权服务报告找不到产品 SKU (0xC004F069)</h5><p>你正在尝试安装的密钥找不到对应的许可证。</p>
+<p>安装与密钥对应的许可证，然后重新尝试安装密钥。</p>
+<h5 id="该目录包含仅名称大小写有区别的条目-0x000001A8"><a href="#该目录包含仅名称大小写有区别的条目-0x000001A8" class="headerlink" title="该目录包含仅名称大小写有区别的条目 (0x000001A8)"></a>该目录包含仅名称大小写有区别的条目 (0x000001A8)</h5><p>在工具箱内「修复 WMI 组件」。</p>
+<p><strong>注意</strong>：该功能仅在 8.2.9.0 以上版本的 Office Tool Plus 中才有。</p>
+<h5 id="An-error-occurred-while-making-the-connection"><a href="#An-error-occurred-while-making-the-connection" class="headerlink" title="An error occurred while making the connection."></a>An error occurred while making the connection.</h5><p>在“<font size="5">服务</font>”中将 <code>Windows Management Instrumentation</code>服务启用，然后再次尝试操作。</p>
+<p>啊启动了也没办法？打扰了，我也不知道该咋办。</p>
+<h3 id="关于-Office-的问题"><a href="#关于-Office-的问题" class="headerlink" title="关于 Office 的问题"></a>关于 Office 的问题</h3><h5 id="打开后显示正在更新-Office，过会儿显示错误"><a href="#打开后显示正在更新-Office，过会儿显示错误" class="headerlink" title="打开后显示正在更新 Office，过会儿显示错误"></a>打开后显示正在更新 Office，过会儿显示错误</h5><p>老毛病了，老毛病了。具体原因我不知道，但我知道一个临时解决办法。</p>
+<p>打开任务管理器，找到 <code>Microsoft Office Click-to-Run</code> 进程，直接结束运行。</p>
+<p>其他的例如 Excel，Word 等等之类的应用程序也要结束运行。</p>
+<p>然后再尝试打开 Office，应该就没啥问题了。</p>
+<h5 id="我们注意到你更新了你的许可证。请重新启动……"><a href="#我们注意到你更新了你的许可证。请重新启动……" class="headerlink" title="我们注意到你更新了你的许可证。请重新启动……"></a>我们注意到你更新了你的许可证。请重新启动……</h5><p>这个问题发生在 Project 上比较多。反正重启了还是提示 </p>
+<p>解决办法：在工具箱内「恢复 Office 设置为默认设置」。</p>
+<h5 id="很抱歉，此功能看似已中断"><a href="#很抱歉，此功能看似已中断" class="headerlink" title="很抱歉，此功能看似已中断"></a>很抱歉，此功能看似已中断</h5><p>一般情况下，卸载 WPS 即可解决此问题。</p>
+<p>卸载之后可以使用一下 Office 的快速修复以免问题没有完全解决。</p>
+<p>不想卸？卸了也没用？那我也没有办法。</p>
+<h3 id="附录：尚无解决办法的问题"><a href="#附录：尚无解决办法的问题" class="headerlink" title="附录：尚无解决办法的问题"></a>附录：尚无解决办法的问题</h3><ul>
+<li>没有注册类，代码：0x80040154</li>
+<li>软件授权服务报告产品密钥不可用，代码：0xC004F014</li>
+<li>系统找不到指定的文件，代码：0x80070002</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Office</tag>
       </tags>
   </entry>
 </search>
