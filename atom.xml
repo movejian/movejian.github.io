@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-11-21T15:48:05.088Z</updated>
+  <updated>2023-01-26T15:30:36.625Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>在Win环境安装下载神器Aria2</title>
+    <link href="http://example.com/2023/01/26/%E5%9C%A8Win%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E4%B8%8B%E8%BD%BD%E7%A5%9E%E5%99%A8Aria2/"/>
+    <id>http://example.com/2023/01/26/%E5%9C%A8Win%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E4%B8%8B%E8%BD%BD%E7%A5%9E%E5%99%A8Aria2/</id>
+    <published>2023-01-26T15:17:04.000Z</published>
+    <updated>2023-01-26T15:30:36.625Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;Aria2-介绍&quot;&gt;&lt;a href=&quot;#Aria2-介绍&quot; class=&quot;headerlink&quot; title=&quot;Aria2 介绍&quot;&gt;&lt;/a&gt;Aria2 介绍&lt;/h3&gt;&lt;p&gt;Aria2 是一个多平台轻量级，支持 HTTP、FTP、BitTorrent</summary>
+        
+      
+    
+    
+    
+    <category term="技术" scheme="http://example.com/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    <category term="Aria2" scheme="http://example.com/categories/%E6%8A%80%E6%9C%AF/Aria2/"/>
+    
+    
+    <category term="Aria2" scheme="http://example.com/tags/Aria2/"/>
+    
+  </entry>
   
   <entry>
     <title>密码破解—Hashcat【RAR密码破解】</title>
@@ -390,27 +417,6 @@
 &lt;p&gt;首先生成密钥对如果有则跳过这一步&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;ssh-keygen -t rsa&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</summary>
-    
-    
-    
-    <category term="学习" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/"/>
-    
-    <category term="Linux" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/Linux/"/>
-    
-    
-    <category term="Linux" scheme="http://example.com/tags/Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux中的挂载命令mount</title>
-    <link href="http://example.com/2022/09/21/Linux%E4%B8%AD%E7%9A%84%E6%8C%82%E8%BD%BD%E5%91%BD%E4%BB%A4mount/"/>
-    <id>http://example.com/2022/09/21/Linux%E4%B8%AD%E7%9A%84%E6%8C%82%E8%BD%BD%E5%91%BD%E4%BB%A4mount/</id>
-    <published>2022-09-20T16:52:41.000Z</published>
-    <updated>2022-09-20T17:59:39.283Z</updated>
-    
-    
-    <summary type="html">&lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;在 Linux GUI 中，我们通常理所当然地认为，当我们插入 USB 闪存驱动器、硬盘驱动器甚至 DVD 磁盘时，它们就可以使用了。但是在后台有一个过程，设备被安装（准备好使用）并分配了一个安装点。当使用服务器或远程连接时，并不能确定某个设备是否会自动可用，那么我们如何挂载自己的设备呢？下面我们一起来看一下！&lt;/p&gt;</summary>
     
     
     
