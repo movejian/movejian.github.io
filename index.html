@@ -145,6 +145,86 @@ var _hmt = _hmt || [];
     
     
     <article
+  id="post-CentOS7查找挂载新数据盘并设置开机自启动挂载"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/01/26/CentOS7%E6%9F%A5%E6%89%BE%E6%8C%82%E8%BD%BD%E6%96%B0%E6%95%B0%E6%8D%AE%E7%9B%98%E5%B9%B6%E8%AE%BE%E7%BD%AE%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8%E6%8C%82%E8%BD%BD/"
+    >CentOS 7 查找挂载新数据盘并设置开机自启动挂载</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/01/26/CentOS7%E6%9F%A5%E6%89%BE%E6%8C%82%E8%BD%BD%E6%96%B0%E6%95%B0%E6%8D%AE%E7%9B%98%E5%B9%B6%E8%AE%BE%E7%BD%AE%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8%E6%8C%82%E8%BD%BD/" class="article-date">
+  <time datetime="2023-01-26T15:36:45.000Z" itemprop="datePublished">2023-01-26 23:36:45</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a> / <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0/Linux/">Linux</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="查看磁盘信息"><a href="#查看磁盘信息" class="headerlink" title="查看磁盘信息"></a>查看磁盘信息</h2><p>使用<code>df -TH</code>指令查看当前系统挂载的磁盘信息：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202301262350581.png" alt="img"></p>
+<p>使用<code>fdisk -l</code>指令查看服务器上的硬盘情况：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202301262350602.png" alt="img"></p>
+<p>可以看到出现了路径为<code>/dev/sda</code>的274.9 GB硬盘存在。</p>
+<h2 id="挂载硬盘"><a href="#挂载硬盘" class="headerlink" title="挂载硬盘"></a>挂载硬盘</h2><p>执行命令<code>fdisk /dev/sda</code>，进入<code>fdisk</code>模式，开始对新增数据盘执行分区操作：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202301262350828.png" alt="img"></p>
+<p>在<code>Command (m for help): </code>的回传信息中输入<code>n</code>后回车，在接下来的引导指令中直接回车使用默认配置，当回传信息显示硬盘分区创建好后，输入<code>p</code>来查看新建分区的详细信息，确认无误后输入<code>w</code>将配置进行保存。</p>
+<p>然后执行命令<code>partprobe</code>将新的数据盘分区表变更同步到系统中。</p>
+<p>接着执行命令<code>mkfs -t ext4 /dev/sda1</code>将创建好的数据盘文件系统设置为所需格式：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202301262350544.png" alt="img"></p>
+<p>一路回车使用默认配置即可。</p>
+<p>执行依次以下指令，将创建好的数据盘分区挂载到指定文件目录下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 新建一个名为 datadisk 的文件夹</span></span><br><span class="line"><span class="built_in">mkdir</span> /mnt/datadisk</span><br><span class="line"><span class="comment"># 将数据盘挂载到这个文件夹路径下</span></span><br><span class="line">mount /dev/sda1 /mnt/datadisk</span><br></pre></td></tr></table></figure>
+
+<p>然后执行<code>df -TH</code>命令查看数据盘挂载情况：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202301262350988.png" alt="img"></p>
+<p>如图所示，挂载成功。</p>
+<h2 id="设置开机启动自动挂载"><a href="#设置开机启动自动挂载" class="headerlink" title="设置开机启动自动挂载"></a>设置开机启动自动挂载</h2><p>为了以后方便使用，还需要设置开机自动挂载数据盘，这里使用<code>UUID</code>的配置方式实现结果：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看数据盘分区的 UUID</span></span><br><span class="line">blkid /dev/sda1</span><br><span class="line"><span class="comment"># 将回传显示的 UUID 结果记录下来，编辑 fstab 配置</span></span><br><span class="line">vi /etc/fstab</span><br></pre></td></tr></table></figure>
+
+<p>在<code>/etc/fstab</code>的文件末尾增加一行，写入以下信息并保存：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UUID=xxxx-xxx-xxx-xxx-xxxx /mnt/datadisk ext4 defaults 1 1 </span><br></pre></td></tr></table></figure>
+
+<p>这样开机启动后自动挂载数据盘的设置就完成了，重启系统查看配置结果：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202301262350390.png" alt="img"></p>
+<p>以上。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Centos7/" rel="tag">Centos7</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
   id="post-在Win环境安装下载神器Aria2"
   class="article article-type-post"
   itemscope
@@ -688,70 +768,13 @@ var _hmt = _hmt || [];
 </article>
 
     
-    <article
-  id="post-祖玛阁全地图走法汇总"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2022/10/03/%E7%A5%96%E7%8E%9B%E9%98%81%E5%85%A8%E5%9C%B0%E5%9B%BE%E8%B5%B0%E6%B3%95%E6%B1%87%E6%80%BB/"
-    >祖玛阁全地图走法汇总</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2022/10/03/%E7%A5%96%E7%8E%9B%E9%98%81%E5%85%A8%E5%9C%B0%E5%9B%BE%E8%B5%B0%E6%B3%95%E6%B1%87%E6%80%BB/" class="article-date">
-  <time datetime="2022-10-03T08:35:58.000Z" itemprop="datePublished">2022-10-03 16:35:58</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E6%B8%B8%E6%88%8F/">游戏</a> / <a class="article-category-link" href="/categories/%E6%B8%B8%E6%88%8F/%E4%BC%A0%E5%A5%87/">传奇</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <p>在传奇游戏中祖玛阁是一个迷宫式的地图，玩家需要走出正确的进行路线才能前往下一层，每一个不同的走法都可能抵达不同的地点。熟悉走法的玩家来说这就是一个高效的练级圣地，对于不熟悉的玩家来说纵膈总共108个房间的祖玛阁怎么走?是最困扰玩家的问题之一。</p> 
-      <a class="article-more-link" href="/2022/10/03/%E7%A5%96%E7%8E%9B%E9%98%81%E5%85%A8%E5%9C%B0%E5%9B%BE%E8%B5%B0%E6%B3%95%E6%B1%87%E6%80%BB/"
-        >阅读更多...</a
-      >
-       
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BC%A0%E5%A5%87/" rel="tag">传奇</a></li></ul>
-
-    </footer>
-  </div>
-
-    
- 
-    
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
   </nav>
   
 </section>

