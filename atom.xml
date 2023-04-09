@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2023-01-26T15:52:49.633Z</updated>
+  <updated>2023-04-09T17:53:43.410Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ChatGPT的魔法咒语</title>
+    <link href="http://example.com/2023/04/10/ChatGPT%E7%9A%84%E9%AD%94%E6%B3%95%E5%92%92%E8%AF%AD/"/>
+    <id>http://example.com/2023/04/10/ChatGPT%E7%9A%84%E9%AD%94%E6%B3%95%E5%92%92%E8%AF%AD/</id>
+    <published>2023-04-09T17:51:00.000Z</published>
+    <updated>2023-04-09T17:53:43.410Z</updated>
+    
+    
+    <summary type="html">&lt;ul&gt;
+&lt;li&gt;魔法咒语</summary>
+    
+    
+    
+    <category term="转载" scheme="http://example.com/categories/%E8%BD%AC%E8%BD%BD/"/>
+    
+    
+    <category term="ChatGPT" scheme="http://example.com/tags/ChatGPT/"/>
+    
+  </entry>
   
   <entry>
     <title>CentOS 7 查找挂载新数据盘并设置开机自启动挂载</title>
@@ -397,28 +417,6 @@
     
     
     <category term="Kali" scheme="http://example.com/tags/Kali/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>HOOK微信获取聊天消息</title>
-    <link href="http://example.com/2022/09/21/HOOK%E5%BE%AE%E4%BF%A1%E8%8E%B7%E5%8F%96%E8%81%8A%E5%A4%A9%E6%B6%88%E6%81%AF/"/>
-    <id>http://example.com/2022/09/21/HOOK%E5%BE%AE%E4%BF%A1%E8%8E%B7%E5%8F%96%E8%81%8A%E5%A4%A9%E6%B6%88%E6%81%AF/</id>
-    <published>2022-09-20T18:31:38.000Z</published>
-    <updated>2022-09-20T19:37:32.066Z</updated>
-    
-    
-    <summary type="html">&lt;blockquote&gt;
-&lt;div class=&quot;wp-block-argon-admonition admonition shadow-sm&quot; style=&quot;border-left-color:#660000&quot;&gt;&lt;div class=&quot;admonition-title&quot; style=&quot;background-color:#dd0000&quot;&gt;&lt;span&gt;警告&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;admonition-body&quot;&gt;&lt;font color=red&gt;网络不是法外之地，本篇文章仅供技术交流，相关具体实现过程我将省略！&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&quot;获取微信处理消息的函数&quot;&gt;&lt;a href=&quot;#获取微信处理消息的函数&quot; class=&quot;headerlink&quot; title=&quot;获取微信处理消息的函数&quot;&gt;&lt;/a&gt;获取微信处理消息的函数&lt;/h2&gt;&lt;p&gt;我们可以反复向通过CE搜索消息，获取消息所在的内存地址，然后下硬件写入断点，在栈里找到相关函数，这里你可以自行按上面方法进行搜索。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="技术" scheme="http://example.com/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-    
-    <category term="微信" scheme="http://example.com/tags/%E5%BE%AE%E4%BF%A1/"/>
     
   </entry>
   
