@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2023-04-09T17:53:43.410Z</updated>
+  <updated>2023-04-23T18:20:30.784Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,24 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>狼蛛捍卫者RGB全彩背光机械键盘评测</title>
+    <link href="http://example.com/2023/04/24/%E7%8B%BC%E8%9B%9B%E6%8D%8D%E5%8D%AB%E8%80%85RGB%E5%85%A8%E5%BD%A9%E8%83%8C%E5%85%89%E6%9C%BA%E6%A2%B0%E9%94%AE%E7%9B%98%E8%AF%84%E6%B5%8B/"/>
+    <id>http://example.com/2023/04/24/%E7%8B%BC%E8%9B%9B%E6%8D%8D%E5%8D%AB%E8%80%85RGB%E5%85%A8%E5%BD%A9%E8%83%8C%E5%85%89%E6%9C%BA%E6%A2%B0%E9%94%AE%E7%9B%98%E8%AF%84%E6%B5%8B/</id>
+    <published>2023-04-23T17:54:47.000Z</published>
+    <updated>2023-04-23T18:20:30.784Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerlink&quot; title=&quot;介绍&quot;&gt;&lt;/a&gt;介绍&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/movejian/images/main/movejian/images202304240217492.jpg&quot; alt=&quot;狼蛛捍卫者RGB全彩背光机械键盘评测&quot;&gt;&lt;/p&gt;
+&lt;p&gt;　　随着机械键盘RGB背光设计方案趋于成熟，近年来市面上涌现出了一大批搭载RGB背光机械键盘产品，其中价格还相当亲民。狼蛛扞卫者也就是其中一款平价RGB背光机械键盘，其背光颜色支持自定义，同时预设了多达10种动态背光模式，在同价位产品中灯效元素设计会相对丰富。&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="测评" scheme="http://example.com/tags/%E6%B5%8B%E8%AF%84/"/>
+    
+  </entry>
   
   <entry>
     <title>ChatGPT的魔法咒语</title>
@@ -388,28 +406,6 @@
     
     <summary type="html">&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212049992.jpeg&quot;&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;本文章使用的是Kali Linux的2021-4-installer-amd64版本，Kali Linux的安装过程本文章不做过多说明(博主之前做过一篇如何破解WIFI密码，不会的可自行查阅)，请自行百度本帖子如果涉及侵权请联系我&lt;/strong&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="学习" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/"/>
-    
-    
-    <category term="Kali" scheme="http://example.com/tags/Kali/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>实战kali破解wifi密码 全网最详细的保姆级教程</title>
-    <link href="http://example.com/2022/09/21/%E5%AE%9E%E6%88%98kali%E7%A0%B4%E8%A7%A3wifi%E5%AF%86%E7%A0%81/"/>
-    <id>http://example.com/2022/09/21/%E5%AE%9E%E6%88%98kali%E7%A0%B4%E8%A7%A3wifi%E5%AF%86%E7%A0%81/</id>
-    <published>2022-09-20T19:43:19.000Z</published>
-    <updated>2023-01-20T07:58:57.405Z</updated>
-    
-    
-    <summary type="html">&lt;h2 id=&quot;kali官网&quot;&gt;&lt;a href=&quot;#kali官网&quot; class=&quot;headerlink&quot; title=&quot;kali官网&quot;&gt;&lt;/a&gt;kali官网&lt;/h2&gt;&lt;hr&gt;
-&lt;p&gt;kali是什么？&lt;br&gt; ——kali就是一个专门用于渗透行业的Linux发行版本，里面的工具非常丰富，本文就是建立在kali系统的支持之上的&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.kali.org/get-kali/#kali-virtual-machines&quot;&gt;https://www.kali.org/get-kali/#kali-virtual-machines&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;下载了vm文件后可以直接用VMware打开，开机后(在Kali系统里所有默认ID和密码都为kali)&lt;br&gt; &lt;strong&gt;用户名：kali&lt;br&gt; 密码：kali&lt;/strong&gt;&lt;/p&gt;</summary>
     
     
     
