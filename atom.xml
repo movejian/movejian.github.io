@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2023-04-23T18:20:30.784Z</updated>
+  <updated>2023-06-11T13:53:00.762Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,25 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>找回Win7系统照片查看器</title>
+    <link href="http://example.com/2023/06/11/%E6%89%BE%E5%9B%9EWin7%E7%B3%BB%E7%BB%9F%E7%85%A7%E7%89%87%E6%9F%A5%E7%9C%8B%E5%99%A8/"/>
+    <id>http://example.com/2023/06/11/%E6%89%BE%E5%9B%9EWin7%E7%B3%BB%E7%BB%9F%E7%85%A7%E7%89%87%E6%9F%A5%E7%9C%8B%E5%99%A8/</id>
+    <published>2023-06-11T13:41:11.000Z</published>
+    <updated>2023-06-11T13:53:00.762Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;问题&quot;&gt;&lt;a href=&quot;#问题&quot; class=&quot;headerlink&quot; title=&quot;问题&quot;&gt;&lt;/a&gt;问题&lt;/h2&gt;&lt;p&gt;​         当我们使用Win7电脑下载一些图片的时候，都会使用系统自带的Windows照片查看器打开图片，但是最近有Win7系统用户反映说自己电脑的Windows照片查看器不见了，这是什么情况，非常烦恼，这有可能是一些软件程序冲突导致的，下面小编就为大家介绍一下Win7系统找回Windows照片查看器的办法。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="Win" scheme="http://example.com/categories/Win/"/>
+    
+    
+    <category term="Win" scheme="http://example.com/tags/Win/"/>
+    
+  </entry>
   
   <entry>
     <title>狼蛛捍卫者RGB全彩背光机械键盘评测</title>
@@ -393,26 +412,6 @@
     
     
     <category term="Office" scheme="http://example.com/tags/Office/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Kali的DDoS攻击方法</title>
-    <link href="http://example.com/2022/09/21/Kali%E7%9A%84DDoS%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95/"/>
-    <id>http://example.com/2022/09/21/Kali%E7%9A%84DDoS%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95/</id>
-    <published>2022-09-21T12:44:25.000Z</published>
-    <updated>2023-01-20T08:01:42.282Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/movejian/images/main/movejian/images202209212049992.jpeg&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;本文章使用的是Kali Linux的2021-4-installer-amd64版本，Kali Linux的安装过程本文章不做过多说明(博主之前做过一篇如何破解WIFI密码，不会的可自行查阅)，请自行百度本帖子如果涉及侵权请联系我&lt;/strong&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="学习" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/"/>
-    
-    
-    <category term="Kali" scheme="http://example.com/tags/Kali/"/>
     
   </entry>
   
