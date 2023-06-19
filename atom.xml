@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2023-06-19T11:16:57.933Z</updated>
+  <updated>2023-06-19T11:21:13.591Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -21,17 +21,12 @@
     <link href="http://example.com/2023/06/19/Windows%E5%91%BD%E4%BB%A4%E8%A1%8Croute%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E5%9B%BE%E8%A7%A3/"/>
     <id>http://example.com/2023/06/19/Windows%E5%91%BD%E4%BB%A4%E8%A1%8Croute%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E5%9B%BE%E8%A7%A3/</id>
     <published>2023-06-19T10:34:54.000Z</published>
-    <updated>2023-06-19T11:16:57.933Z</updated>
+    <updated>2023-06-19T11:21:13.591Z</updated>
     
     
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;route命令用于显示和操作IP路由表。要实现两个不同的子网之间的通信，需要一台连接两个网络的路由器，或者同时位于两个网络的网关来实现。&lt;/p&gt;
-&lt;p&gt;route命令主要用来管理本机路由表，可以查看，添加、修改或删除路由表条目，也就是说可以让哪些ip地址可以访问网络，哪些i</summary>
-        
-      
+    <summary type="html">&lt;p&gt;‘route’命令用于显示和操作IP路由表。要实现两个不同的子网之间的通信，需要一台连接两个网络的路由器，或者同时位于两个网络的网关来实现。&lt;/p&gt;
+&lt;p&gt;‘route’命令主要用来管理本机路由表，可以查看，添加、修改或删除路由表条目，也就是说可以让哪些ip地址可以访问网络，哪些ip段不能访问网络。&lt;/p&gt;
+&lt;p&gt;在我们做项目时，经常可能会用到外网与外网切换使用，这样就造成了插拔网线在切换内外网，极其麻烦，经常有朋友问题，能否内网和外网同时接入到笔记本，不用每次拔网线呢？&lt;br&gt;&lt;img src=&quot;https://raw.githubusercontent.com/movejian/images/main/movejian/images202306191842007.jpg&quot; alt=&quot;route命令的详细用法&quot;&gt;&lt;/p&gt;</summary>
     
     
     

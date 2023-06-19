@@ -172,87 +172,13 @@ var _hmt = _hmt || [];
       
     <div class="article-entry" itemprop="articleBody">
        
-  <p>route命令用于显示和操作IP路由表。要实现两个不同的子网之间的通信，需要一台连接两个网络的路由器，或者同时位于两个网络的网关来实现。</p>
-<p>route命令主要用来管理本机路由表，可以查看，添加、修改或删除路由表条目，也就是说可以让哪些ip地址可以访问网络，哪些ip段不能访问网络。</p>
-<p>在我们做项目时，经常可能会用到外网与外网切换使用，这样就造成了插拔网线在切换内外网，极其麻烦，经常有朋友问题，能否内网和外网同时接入到笔记本，不用每次拔网线呢？<br><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202306191842007.jpg" alt="ping、arp、tracert、route这四大命令的详细用法，用途很广"></p>
-<h3 id="一-操作实例"><a href="#一-操作实例" class="headerlink" title="一 操作实例"></a>一 操作实例</h3><p>查看当前本机的路由表；<br>有三部分，接口列表，IPv4路由表，IPv6路由表；</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202306191909987.png" alt="img"></p>
-<p>查看0.打头的路由表信息；</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202306191909833.png" alt="img"></p>
-<p>添加一条 添加默认网关地址为192.168.12.1的默认路由 ；</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202306191909893.png" alt="img"></p>
-<p>删除前面添加的路由；</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202306191909699.png" alt="img"></p>
-<p> 添加跃点数为7的路由；</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202306191909969.png" alt="img"></p>
-<p>删除之；</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202306191909216.png" alt="img"></p>
-<p>添加接口索引为某个值的路由，不知为何失败；下次再搞；</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202306191909668.png" alt="img"></p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202306191909983.png" alt="img"></p>
-<p>修改下一个跃点；</p>
-<p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202306191909470.png" alt="img"></p>
-<h3 id="二-route命令详解"><a href="#二-route命令详解" class="headerlink" title="二 route命令详解"></a>二 route命令详解</h3><p>‘route命令用于在本地IP路由表中显示和修改条目。使用不带参数的ROUTE可以显示帮助。</p>
-<p> 语法:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">route [-f] [-p] [command [destination] [mask netmask] [gateway] [metric] [if interface]</span><br></pre></td></tr></table></figure>
-
-<p> 参数说明:</p>
-<p> ‘-f’</p>
-<p>清除所有不是主路由(子网掩码为255.255.255.255的路由)、环回网络路由(目标为127.0.0.0，子网掩码为 255.255.255.0的路由)或多播路由(目标为224.0.0.0，子网掩码为240.0.0.0的路由)的条目的路由表。如果它与命令之一(例如Add、Change或Delete)结合使用，表会在运行命令之前清除。</p>
-<p> ‘-p’</p>
-<p>与Add命令共同使用时，指定路由被添加到注册表并在启动TCP&#x2F;IP协议的时候初始化IP路由表。默认情况下，启动TCP&#x2F;IP协议时不会保存添加的路由,与Print命令一起使用时，则显示永久路由列表。所有其他的命令都忽略此参数。永久路由存储在注册表中的位置是 ‘HKEY_LOCAL_MACH&#x2F;SYSTEM&#x2F;CurrentControlSet&#x2F;Services&#x2F;Tcpip&#x2F;Parameters&#x2F;PersistentRoutes’</p>
-<p>‘command’</p>
-<p>指定要运行的命令。下表列出了有效的命令。</p>
-<p> ‘destination’</p>
-<p>指定路由的网络目标地址。目标地址可以是一个IP网络地址(其中网络地址的主机地址位设置为0)，对于主机路由是IP地址，对于默认路由是0.0.0.0。mask</p>
-<p> ‘subnetmask’</p>
-<p>指定与网络目标地址相关联的网掩码(又称子网掩码)。子网掩码对于IP网络地址可以是一适当的子网掩码，对于主机路由是’255.255.255.255</p>
-<p>，对于默认路由是’0.0.0.0。如果忽略，则使用子网掩码’255.255.255.255。定义路由时由于目标地址和子网掩码之间的关系，目标地址不能比它对应的子网掩码更为详细。换句话说，如果子网掩码的一位是’0，则目标地址中的对应位就不能设置为’1。</p>
-<p>  ‘gateway’</p>
-<p>指定超过由网络目标和子网掩码定义的可达到的地址集的前一个或下一个跃点IP地址。对于本地连接的子网路由，网关地址是分配给连子网接口的IP地址。对于要经过一个或多个路由器才可用到的远程路由，网关地址是一个分配给相邻路由器的、可直接达到的IP地址。</p>
-<p>‘metric metric’</p>
-<p>为路由指定所需跃点数的整数值(范围是1～9999)，它用来在路由表里的多个路由中选择与转发包中的目标地址最为匹配的路由。所选的路由具有最少的跃点数。跃点数能够反映跃点的数量、路径的速度、路径可靠性、路径吞吐量以及管理属性。</p>
-<p>‘if interface’ 指定目标可以到达的接口的接口索引。使用’Route print命令可以显示接口及其对应接口索引的列表。对于接口索引可以使用十进制或十六进制的值。对于十六进制值，要在十六进制数的前面加上’0x。忽略if参数时，接口由网关地址确定。</p>
-<blockquote>
-<h3 id="注意⚠"><a href="#注意⚠" class="headerlink" title=" 注意⚠"></a><font style="background: yellow" size="6"> 注意⚠</font></h3></blockquote>
-<p>​          路由表中跃点数一列的值较大是由于允许TCP&#x2F;IP根据每个LAN接口的IP地址、子网掩码和默认网关的配置自动确定路由表中路由的跃点数造成的。默认启动的自动确定接口跃点数确定了每个接口的速度，调整了每个接口的路由跃点数，因此最快接口所创建的路由具有最低的跃点数。要删除大跃点数，请在每个 LAN连接的TCP&#x2F;IP协议的高级属性中禁用自动确定接口跃点数。</p>
-<p>如果在’systemrootSystem32DriversEtc’文件夹的本地网络文件中存在适当的条目，名称可以用于’Destination’。只要名称可以通过“域名系统”(DNS)查询这样的标准主机名解析技术分解为IP地址，就可以将其用于Gateway，DNS查询使用存储在 ‘systemrootSystem32DriversEtc’</p>
-<p>文件夹下的本地主机文件和’NetBIOS’ 名称解析。</p>
-<p>如果是’Print’或’Delete’命令，可以忽略’Gateway’参数，使用通配符来表示目标和网关。’Destination’的值可以是由星号(<em>)指定的通配符。如果指定目标含有一个星号(</em>)或问号(?)，它被看作是通配符，只打印或删除匹配的目标路由。星号代表任意一字符序列，问号代表任一字符。例如， ‘10.*.1、192.168.<em>、127.</em>‘和’<em>224</em>‘都是星号通配符的有效使用。</p>
-<p>使用了无效的目标和子网掩码(网掩码)值的组合，会显示“Route bad gateway address netmask”错误消息。目标中有一位或多位设置为1，而其在子网掩码中的对应位设置为0时会发生这个错误。可以通过二进制表示法表示目标和子网掩码来检查这种情况。以二进制表示的子网掩码包括表示目标网络地址部分的一连串的1和表示目标主机地址部分的一连串的0两个部分。查看目标以确定目标的主机地址部分(由子网掩码所定义)是否有些位设置成了1。</p>
-<p>只有当TCP&#x2F;IP协议在网络连接中安装为网络适配器属性的组件时，该命令才可用。</p>
-<p>例举说明:</p>
-<p>例子1：要显示IP路由表的完整内容，执行以下命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">route print</span><br></pre></td></tr></table></figure>
-
-<p>例子2：要显示IP路由表中以10.开始的路由，执行以下命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">route print 10.*</span><br></pre></td></tr></table></figure>
-
-<p>例子3：要添加默认网关地址为192.168.12.1的默认路由，执行以下命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">route add 0.0.0.0 mask 0.0.0.0 192.168.12.1</span><br></pre></td></tr></table></figure>
-
-<p>例子4：要添加目标为10.41.0.0，子网掩码为255.255.0.0，下一个跃点地址为10.27.0.1的路由，执行以下命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">route add 10.41.0.0 mask 255.255.0.0 10.27.0.1</span><br></pre></td></tr></table></figure>
-
-<p>例子5：要添加目标为10.41.0.0，子网掩码为255.255.0.0，下一个跃点地址为10.27.0.1的永久路由，执行以下命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">route -p add 10.41.0.0 mask 255.255.0.0 10.27.0.1</span><br></pre></td></tr></table></figure>
-
-<p>例子6：要添加目标为10.41.0.0，子网掩码为255.255.0.0，下一个跃点地址为10.27.0.1，跃点数为7的路由，执行以下命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">route add 10.41.0.0 mask 255.255.0.0 10.27.0.1 metric 7</span><br></pre></td></tr></table></figure>
-
-<p>例子7：要添加目标为10.41.0.0，子网掩码为255.255.0.0，下一个跃点地址为10.27.0.1，接口索引为0x3的路由，执行以下命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">route add 10.41.0.0 mask 255.255.0.0 10.27.0.1 if 0x3</span><br></pre></td></tr></table></figure>
-
-<p>例子8：要删除目标为10.41.0.0，子网掩码为255.255.0.0的路由，执行以下命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">route delete 10.41.0.0 mask 255.255.0.0</span><br></pre></td></tr></table></figure>
-
-<p>例子9：要删除IP路由表中以10.开始的所有路由，执行以下命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">route delete 10.*</span><br></pre></td></tr></table></figure>
-
-<p>例子10：要将目标为10.41.0.0，子网掩码为255.255.0.0的路由的下一个跃点地址由10.27.0.1更改为10.27.0.25，执行以下命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">route change 10.41.0.0 mask 255.255.0.0 10.27.0.25</span><br></pre></td></tr></table></figure>
-
- 
+  <p>‘route’命令用于显示和操作IP路由表。要实现两个不同的子网之间的通信，需要一台连接两个网络的路由器，或者同时位于两个网络的网关来实现。</p>
+<p>‘route’命令主要用来管理本机路由表，可以查看，添加、修改或删除路由表条目，也就是说可以让哪些ip地址可以访问网络，哪些ip段不能访问网络。</p>
+<p>在我们做项目时，经常可能会用到外网与外网切换使用，这样就造成了插拔网线在切换内外网，极其麻烦，经常有朋友问题，能否内网和外网同时接入到笔记本，不用每次拔网线呢？<br><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202306191842007.jpg" alt="route命令的详细用法"></p> 
+      <a class="article-more-link" href="/2023/06/19/Windows%E5%91%BD%E4%BB%A4%E8%A1%8Croute%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E5%9B%BE%E8%A7%A3/"
+        >阅读更多...</a
+      >
+       
       <!-- reward -->
       
     </div>

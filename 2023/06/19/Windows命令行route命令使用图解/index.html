@@ -115,9 +115,10 @@ var _hmt = _hmt || [];
   
     <div class="article-entry" itemprop="articleBody">
        
-  <p>route命令用于显示和操作IP路由表。要实现两个不同的子网之间的通信，需要一台连接两个网络的路由器，或者同时位于两个网络的网关来实现。</p>
-<p>route命令主要用来管理本机路由表，可以查看，添加、修改或删除路由表条目，也就是说可以让哪些ip地址可以访问网络，哪些ip段不能访问网络。</p>
-<p>在我们做项目时，经常可能会用到外网与外网切换使用，这样就造成了插拔网线在切换内外网，极其麻烦，经常有朋友问题，能否内网和外网同时接入到笔记本，不用每次拔网线呢？<br><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202306191842007.jpg" alt="ping、arp、tracert、route这四大命令的详细用法，用途很广"></p>
+  <p>‘route’命令用于显示和操作IP路由表。要实现两个不同的子网之间的通信，需要一台连接两个网络的路由器，或者同时位于两个网络的网关来实现。</p>
+<p>‘route’命令主要用来管理本机路由表，可以查看，添加、修改或删除路由表条目，也就是说可以让哪些ip地址可以访问网络，哪些ip段不能访问网络。</p>
+<p>在我们做项目时，经常可能会用到外网与外网切换使用，这样就造成了插拔网线在切换内外网，极其麻烦，经常有朋友问题，能否内网和外网同时接入到笔记本，不用每次拔网线呢？<br><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202306191842007.jpg" alt="route命令的详细用法"></p>
+<span id="more"></span>
 <h3 id="一-操作实例"><a href="#一-操作实例" class="headerlink" title="一 操作实例"></a>一 操作实例</h3><p>查看当前本机的路由表；<br>有三部分，接口列表，IPv4路由表，IPv6路由表；</p>
 <p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202306191909987.png" alt="img"></p>
 <p>查看0.打头的路由表信息；</p>
@@ -135,7 +136,7 @@ var _hmt = _hmt || [];
 <p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202306191909983.png" alt="img"></p>
 <p>修改下一个跃点；</p>
 <p><img src="https://raw.githubusercontent.com/movejian/images/main/movejian/images202306191909470.png" alt="img"></p>
-<h3 id="二-route命令详解"><a href="#二-route命令详解" class="headerlink" title="二 route命令详解"></a>二 route命令详解</h3><p>‘route命令用于在本地IP路由表中显示和修改条目。使用不带参数的ROUTE可以显示帮助。</p>
+<h3 id="二-route命令详解"><a href="#二-route命令详解" class="headerlink" title="二 route命令详解"></a>二 route命令详解</h3><p>‘route’命令用于在本地IP路由表中显示和修改条目。使用不带参数的ROUTE可以显示帮助。</p>
 <p> 语法:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">route [-f] [-p] [command [destination] [mask netmask] [gateway] [metric] [if interface]</span><br></pre></td></tr></table></figure>
 
@@ -195,6 +196,7 @@ var _hmt = _hmt || [];
 <p>例子10：要将目标为10.41.0.0，子网掩码为255.255.0.0的路由的下一个跃点地址由10.27.0.1更改为10.27.0.25，执行以下命令：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">route change 10.41.0.0 mask 255.255.0.0 10.27.0.25</span><br></pre></td></tr></table></figure>
 
+<p>下期有时间再编辑另外ping、arp、tracert命令的广大用途。希望对你有所帮助!</p>
  
       <!-- reward -->
       
