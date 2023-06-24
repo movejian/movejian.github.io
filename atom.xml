@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2023-06-19T11:21:13.591Z</updated>
+  <updated>2023-06-24T12:19:38.576Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://example.com/2023/06/19/Windows%E5%91%BD%E4%BB%A4%E8%A1%8Croute%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E5%9B%BE%E8%A7%A3/"/>
     <id>http://example.com/2023/06/19/Windows%E5%91%BD%E4%BB%A4%E8%A1%8Croute%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E5%9B%BE%E8%A7%A3/</id>
     <published>2023-06-19T10:34:54.000Z</published>
-    <updated>2023-06-19T11:21:13.591Z</updated>
+    <updated>2023-06-24T12:19:38.576Z</updated>
     
     
     <summary type="html">&lt;p&gt;‘route’命令用于显示和操作IP路由表。要实现两个不同的子网之间的通信，需要一台连接两个网络的路由器，或者同时位于两个网络的网关来实现。&lt;/p&gt;
@@ -29,6 +29,10 @@
 &lt;p&gt;在我们做项目时，经常可能会用到外网与外网切换使用，这样就造成了插拔网线在切换内外网，极其麻烦，经常有朋友问题，能否内网和外网同时接入到笔记本，不用每次拔网线呢？&lt;br&gt;&lt;img src=&quot;https://raw.githubusercontent.com/movejian/images/main/movejian/images202306191842007.jpg&quot; alt=&quot;route命令的详细用法&quot;&gt;&lt;/p&gt;</summary>
     
     
+    
+    <category term="技术" scheme="http://example.com/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    <category term="Win" scheme="http://example.com/categories/%E6%8A%80%E6%9C%AF/Win/"/>
     
     
   </entry>
@@ -38,14 +42,16 @@
     <link href="http://example.com/2023/06/11/%E6%89%BE%E5%9B%9EWin7%E7%B3%BB%E7%BB%9F%E7%85%A7%E7%89%87%E6%9F%A5%E7%9C%8B%E5%99%A8/"/>
     <id>http://example.com/2023/06/11/%E6%89%BE%E5%9B%9EWin7%E7%B3%BB%E7%BB%9F%E7%85%A7%E7%89%87%E6%9F%A5%E7%9C%8B%E5%99%A8/</id>
     <published>2023-06-11T13:41:11.000Z</published>
-    <updated>2023-06-11T14:02:30.178Z</updated>
+    <updated>2023-06-24T12:20:08.908Z</updated>
     
     
     <summary type="html">&lt;h2 id=&quot;问题&quot;&gt;&lt;a href=&quot;#问题&quot; class=&quot;headerlink&quot; title=&quot;问题&quot;&gt;&lt;/a&gt;问题&lt;/h2&gt;&lt;p&gt;　　当我们使用Win7电脑下载一些图片的时候，都会使用系统自带的Windows照片查看器打开图片，但是最近有Win7系统用户反映说自己电脑的Windows照片查看器不见了，这是什么情况，非常烦恼，这有可能是一些软件程序冲突导致的，&lt;br&gt;　　最近一位雨林木风win7系统用户跟博主反应自己电脑桌面右键的Windows图片查看器不见了，这是怎么回事呢？遇到这样的问题一般是用户的误操作导致的，又或者是系统错乱，那么该怎么找回win7图片查看器呢?下面小编给大家带来win7图片查看器修复教程。　　&lt;br&gt;　　下面博主就为大家介绍一下Win7系统找回Windows照片查看器的办法。&lt;/p&gt;</summary>
     
     
     
-    <category term="Win" scheme="http://example.com/categories/Win/"/>
+    <category term="技术" scheme="http://example.com/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    <category term="Win" scheme="http://example.com/categories/%E6%8A%80%E6%9C%AF/Win/"/>
     
     
     <category term="Win" scheme="http://example.com/tags/Win/"/>
