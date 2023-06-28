@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2023-06-24T12:19:38.576Z</updated>
+  <updated>2023-06-28T10:53:10.179Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Windows右键菜单管理</title>
+    <link href="http://example.com/2023/06/28/Windows%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95%E7%AE%A1%E7%90%86/"/>
+    <id>http://example.com/2023/06/28/Windows%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95%E7%AE%A1%E7%90%86/</id>
+    <published>2023-06-28T10:44:56.000Z</published>
+    <updated>2023-06-28T10:53:10.179Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;win10的右键菜单是最方便的菜单之一，我们经常会使用它刷新或打开软件和设置，这时候我们想要管理菜单内容，那么win10右键菜单管理在哪打开呢。&lt;/p&gt;
+&lt;h3 id=&quot;win10右键菜单管理在哪打开：&quot;&gt;&lt;a href=&quot;#win10右键菜单管理在哪打开：&quot; class=&quot;headerlink&quot; title=&quot;win10右键菜单管理在哪打开：&quot;&gt;&lt;/a&gt;win10右键菜单管理在哪打开：&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;方法一：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1、首先按下键盘“&lt;strong&gt;Win+R&lt;/strong&gt;”打开运行。&lt;/p&gt;
+&lt;p&gt;![img](D:\Program Files\PicGo\临时储存\20220408100041_57717.jpg)&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="技术" scheme="http://example.com/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    <category term="Win" scheme="http://example.com/categories/%E6%8A%80%E6%9C%AF/Win/"/>
+    
+    
+    <category term="Win" scheme="http://example.com/tags/Win/"/>
+    
+  </entry>
   
   <entry>
     <title>Windows命令行route命令使用图解</title>
@@ -394,28 +418,6 @@
     
     
     
-    
-    <category term="Office" scheme="http://example.com/tags/Office/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Office用C2R工具在线安装激活</title>
-    <link href="http://example.com/2022/09/27/Office%E7%94%A8C2R%E5%B7%A5%E5%85%B7%E5%9C%A8%E7%BA%BF%E5%AE%89%E8%A3%85%E6%BF%80%E6%B4%BB/"/>
-    <id>http://example.com/2022/09/27/Office%E7%94%A8C2R%E5%B7%A5%E5%85%B7%E5%9C%A8%E7%BA%BF%E5%AE%89%E8%A3%85%E6%BF%80%E6%B4%BB/</id>
-    <published>2022-09-26T16:34:40.000Z</published>
-    <updated>2022-10-03T09:40:46.295Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;C2R工具下载地址：&lt;a href=&quot;https://wwt.lanzouw.com/b03pbhjri#52pj&quot;&gt;https://wwt.lanzouw.com/b03pbhjri#52pj&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;以下来自吾爱破解论坛：&lt;br&gt;Win11 22H2 最新版本官网镜像下载地址（来自微软官网免费链接，不同镜像的区别就是包含的版本不同）：&lt;br&gt;百度网盘：&lt;a href=&quot;https://pan.baidu.com/s/1zZUVDc0wMdzoBehTfEPobQ?pwd=sy71&quot;&gt;https://pan.baidu.com/s/1zZUVDc0wMdzoBehTfEPobQ?pwd=sy71&lt;/a&gt;&lt;br&gt;提取码:sy71&lt;br&gt;123云盘：&lt;a href=&quot;https://www.123pan.com/s/HfxDVv-xZQ7d&quot;&gt;https://www.123pan.com/s/HfxDVv-xZQ7d&lt;/a&gt; 提取码：BGio&lt;br&gt;TechBench：&lt;a href=&quot;https://techbench.betaworld.cn/get.php?id=2360&quot;&gt;https://techbench.betaworld.cn/get.php?id=2360&lt;/a&gt;&lt;br&gt;微软官网：&lt;a href=&quot;https://www.microsoft.com/zh-cn/software-download/windows11/&quot;&gt;https://www.microsoft.com/zh-cn/software-download/windows11/&lt;/a&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="转载" scheme="http://example.com/categories/%E8%BD%AC%E8%BD%BD/"/>
-    
-    
-    <category term="Win" scheme="http://example.com/tags/Win/"/>
     
     <category term="Office" scheme="http://example.com/tags/Office/"/>
     
