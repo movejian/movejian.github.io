@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2023-07-15T18:20:50.882Z</updated>
+  <updated>2023-07-15T19:59:44.724Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -17,11 +17,31 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Markdown表格合并单元格及颜色</title>
+    <link href="http://example.com/2023/07/16/Markdown%E8%A1%A8%E6%A0%BC%E5%90%88%E5%B9%B6%E5%8D%95%E5%85%83%E6%A0%BC%E5%8F%8A%E9%A2%9C%E8%89%B2/"/>
+    <id>http://example.com/2023/07/16/Markdown%E8%A1%A8%E6%A0%BC%E5%90%88%E5%B9%B6%E5%8D%95%E5%85%83%E6%A0%BC%E5%8F%8A%E9%A2%9C%E8%89%B2/</id>
+    <published>2023-07-15T18:54:25.000Z</published>
+    <updated>2023-07-15T19:59:44.724Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;1-基础：-Markdown-本体表格语法&quot;&gt;&lt;a href=&quot;#1-基础：-Markdown-本体表格语法&quot; class=&quot;headerlink&quot; title=&quot;1. 基础：[Markdown]本体表格语法&quot;&gt;&lt;/a&gt;1. 基础：[Markdown]本体表格语法&lt;/h2&gt;&lt;p&gt;Markdown本身的表格语法比较简单，支持任意行列数的表格的绘制，其中第一行固定为表头，文字加粗，底色为浅蓝色。其他行文字不加粗，底色白灰 (对应颜色代码#F7F7F7) 相间。行高、列宽自动分布，不支持调整。支持文本居左、居中、居右的调整，但每一列的文本位置保持一致。字号比正文小一号，不支持调整。&lt;/p&gt;
+&lt;p&gt;换行就是换行&lt;br&gt;单元格之间以&lt;code&gt;|&lt;/code&gt; 相隔&lt;br&gt;表头和表格内容之间固定有一行 &lt;code&gt;-&lt;/code&gt; (数量不限几个都行)，左边加&lt;code&gt;:&lt;/code&gt; 就是居左，右边加 &lt;code&gt;:&lt;/code&gt; 就是居右，两边都不加或者都加 &lt;code&gt;:&lt;/code&gt; 就是居中&lt;br&gt;不赘述，直接上两个Markdown官方示例：&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;官方示例1&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight plaintext&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;项目     | Value&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;-------- | -----&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;电脑  | $1600&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;手机  | $12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;导管  | $1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</summary>
+    
+    
+    
+    
+    <category term="表格" scheme="http://example.com/tags/%E8%A1%A8%E6%A0%BC/"/>
+    
+  </entry>
+  
+  <entry>
     <title>文件搜索神器Everything保姆手册</title>
     <link href="http://example.com/2023/07/16/%E6%96%87%E4%BB%B6%E6%90%9C%E7%B4%A2%E7%A5%9E%E5%99%A8Everything%E4%BF%9D%E5%A7%86%E6%89%8B%E5%86%8C/"/>
     <id>http://example.com/2023/07/16/%E6%96%87%E4%BB%B6%E6%90%9C%E7%B4%A2%E7%A5%9E%E5%99%A8Everything%E4%BF%9D%E5%A7%86%E6%89%8B%E5%86%8C/</id>
     <published>2023-07-15T17:42:53.000Z</published>
-    <updated>2023-07-15T18:20:50.882Z</updated>
+    <updated>2023-07-15T18:40:22.820Z</updated>
     
     
     <summary type="html">&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/movejian/images/main/movejian/images202307160207386.png&quot; alt=&quot;img&quot;&gt;&lt;/p&gt;
@@ -154,9 +174,9 @@
     <category term="Linux" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/Linux/"/>
     
     
-    <category term="Linux" scheme="http://example.com/tags/Linux/"/>
-    
     <category term="Centos7" scheme="http://example.com/tags/Centos7/"/>
+    
+    <category term="Linux" scheme="http://example.com/tags/Linux/"/>
     
   </entry>
   
@@ -392,25 +412,6 @@
 &lt;p&gt;同时为了避免出现一些未知的问题，请务必使用最新版的 Office Tool Plus。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;在这里要清楚两个概念：&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;产品指的是 Office 2019，Microsoft 365 等。&lt;/p&gt;</summary>
-    
-    
-    
-    
-    <category term="Office" scheme="http://example.com/tags/Office/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【疑难解答】 Office Tool Plus 入门教程</title>
-    <link href="http://example.com/2022/09/27/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94Office/"/>
-    <id>http://example.com/2022/09/27/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94Office/</id>
-    <published>2022-09-26T17:28:32.000Z</published>
-    <updated>2022-09-26T17:54:50.075Z</updated>
-    
-    
-    <summary type="html">&lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;如果你的系统本身就有诸多毛病，建议直接重装原版系统，这是最有效最快的解决办法。&lt;/p&gt;
-&lt;p&gt;下面的问题以及解决办法仅供参考，不一定有效，可能因系统环境等原因有些许不同。&lt;/p&gt;
-&lt;p&gt;如无特殊情况，文章中提到的 Windows 10 也适用于 Windows 11.&lt;/p&gt;</summary>
     
     
     
