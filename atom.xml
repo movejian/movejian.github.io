@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2023-06-28T11:59:53.641Z</updated>
+  <updated>2023-07-15T18:08:34.280Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,22 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>文件搜索神器Everything保姆手册</title>
+    <link href="http://example.com/2023/07/16/%E6%96%87%E4%BB%B6%E6%90%9C%E7%B4%A2%E7%A5%9E%E5%99%A8Everything%E4%BF%9D%E5%A7%86%E6%89%8B%E5%86%8C/"/>
+    <id>http://example.com/2023/07/16/%E6%96%87%E4%BB%B6%E6%90%9C%E7%B4%A2%E7%A5%9E%E5%99%A8Everything%E4%BF%9D%E5%A7%86%E6%89%8B%E5%86%8C/</id>
+    <published>2023-07-15T17:42:53.000Z</published>
+    <updated>2023-07-15T18:08:34.280Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/movejian/images/main/movejian/images202307160207386.png&quot; alt=&quot;img&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Everything作为一款备受推崇的文件搜索工具，可谓是家喻户晓了。它有着轻量的软件体积，专业的搜索功能，超快的搜索速度，能帮你快速找到想要的文件，实乃居家旅行虾仁放火之必备。&lt;/p&gt;</summary>
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>Windows右键菜单管理</title>
@@ -138,9 +154,9 @@
     <category term="Linux" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/Linux/"/>
     
     
-    <category term="Linux" scheme="http://example.com/tags/Linux/"/>
-    
     <category term="Centos7" scheme="http://example.com/tags/Centos7/"/>
+    
+    <category term="Linux" scheme="http://example.com/tags/Linux/"/>
     
   </entry>
   
@@ -395,26 +411,6 @@
     <summary type="html">&lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;如果你的系统本身就有诸多毛病，建议直接重装原版系统，这是最有效最快的解决办法。&lt;/p&gt;
 &lt;p&gt;下面的问题以及解决办法仅供参考，不一定有效，可能因系统环境等原因有些许不同。&lt;/p&gt;
 &lt;p&gt;如无特殊情况，文章中提到的 Windows 10 也适用于 Windows 11.&lt;/p&gt;</summary>
-    
-    
-    
-    
-    <category term="Office" scheme="http://example.com/tags/Office/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【激活 Office】 Office Tool Plus 入门教程</title>
-    <link href="http://example.com/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/"/>
-    <id>http://example.com/2022/09/27/%E6%BF%80%E6%B4%BBOffice%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/</id>
-    <published>2022-09-26T16:55:58.000Z</published>
-    <updated>2022-09-26T18:16:58.204Z</updated>
-    
-    
-    <summary type="html">&lt;h4 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h4&gt;&lt;p&gt;正版用户一般情况下不需要使用 Office Tool Plus 进行激活，登录账号&amp;#x2F;输入密钥即可激活 Office。&lt;/p&gt;
-&lt;p&gt;如果你是从安装教程来到这一步的，那么在这里继续跟着教程来就行。&lt;/p&gt;
-&lt;p&gt;需要使用正版 Office？&lt;a href=&quot;https://otp.landian.vip/zh-cn/#store&quot;&gt;点击这里查看详细信息&lt;/a&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;font style=&quot;background: green&quot; size=&quot;6&quot;&gt;如无特殊情况，文章中提到的 Windows 10 也适用于 Windows 11.&lt;/font&gt;&lt;/p&gt;</summary>
     
     
     
