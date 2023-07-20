@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2023-07-18T17:34:44.861Z</updated>
+  <updated>2023-07-20T17:56:29.611Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://example.com/2023/07/17/%E6%B8%85%E9%99%A4%E5%BA%94%E7%94%A8%E5%92%8C%E5%8A%9F%E8%83%BD%E5%88%97%E8%A1%A8%E4%B8%AD%E5%B7%B2%E5%8D%B8%E8%BD%BD%E7%9A%84%E8%BD%AF%E4%BB%B6/"/>
     <id>http://example.com/2023/07/17/%E6%B8%85%E9%99%A4%E5%BA%94%E7%94%A8%E5%92%8C%E5%8A%9F%E8%83%BD%E5%88%97%E8%A1%A8%E4%B8%AD%E5%B7%B2%E5%8D%B8%E8%BD%BD%E7%9A%84%E8%BD%AF%E4%BB%B6/</id>
     <published>2023-07-17T15:45:47.000Z</published>
-    <updated>2023-07-18T17:34:44.861Z</updated>
+    <updated>2023-07-20T17:56:29.611Z</updated>
     
     <content type="html"><![CDATA[<p>​      朋友做外贸生意,最近很火的美客多,帮他在操作账户的时候需要用到紫鸟浏览器,使用完后卸载,发现浏览器卸载干净了,但是应用和功能列列表中依然显示紫鸟浏览器.造成这种原因可能是因为程序在卸载过程没有删除干净注册表.所以我第一想到的是查看注册表中信息.根据信息仔细检查相关路径,确认是否卸载干净,再去删除注册表残留下来的无用列表.</p><p>解决方法：涉及注册表操作，无经验者建议先备份注册表</p><ol><li>在注册表中定位到<code>计算机\HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall</code>在该子文件夹中通过右侧信息进行确认，删除已卸载软件的失效注册表项 <span id="more"></span></li><li>若方法①中路径下没有相关注册表项，就在注册表中ctrl+f搜索已卸载软件的关键字最终定位到母文件夹与①中有所不同的子文件夹<code>计算机\HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall</code>在该子文件夹中删除已卸载软件的失效注册表项即可</li></ol>]]></content>
     
@@ -210,9 +210,9 @@
     <category term="Linux" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/Linux/"/>
     
     
-    <category term="Centos7" scheme="http://example.com/tags/Centos7/"/>
-    
     <category term="Linux" scheme="http://example.com/tags/Linux/"/>
+    
+    <category term="Centos7" scheme="http://example.com/tags/Centos7/"/>
     
   </entry>
   
