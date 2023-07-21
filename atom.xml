@@ -210,9 +210,9 @@
     <category term="Linux" scheme="http://example.com/categories/%E5%AD%A6%E4%B9%A0/Linux/"/>
     
     
-    <category term="Centos7" scheme="http://example.com/tags/Centos7/"/>
-    
     <category term="Linux" scheme="http://example.com/tags/Linux/"/>
+    
+    <category term="Centos7" scheme="http://example.com/tags/Centos7/"/>
     
   </entry>
   
