@@ -156,6 +156,57 @@ var _hmt = _hmt || [];
     
     
     <article
+  id="post-Ayer主题默认隐藏侧边栏"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2023/07/23/Ayer%E4%B8%BB%E9%A2%98%E9%BB%98%E8%AE%A4%E9%9A%90%E8%97%8F%E4%BE%A7%E8%BE%B9%E6%A0%8F/"
+    >Ayer主题默认隐藏侧边栏</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2023/07/23/Ayer%E4%B8%BB%E9%A2%98%E9%BB%98%E8%AE%A4%E9%9A%90%E8%97%8F%E4%BE%A7%E8%BE%B9%E6%A0%8F/" class="article-date">
+  <time datetime="2023-07-22T17:23:40.000Z" itemprop="datePublished">2023-07-23 01:23:40</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>在 <code>theme/ayer/layout</code>下的<code>layout.ejs</code>做如下更改：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">-&lt;main class=&quot;content on&quot;&gt;</span><br><span class="line">+&lt;main class=&quot;content&quot;&gt;</span><br><span class="line">      &lt;%- body %&gt;</span><br><span class="line">      &lt;%- partial(&#x27;_partial/footer&#x27;, null, &#123;cache: !config.relative_link&#125;) %&gt;</span><br><span class="line">      &lt;div class=&quot;float_btns&quot;&gt;</span><br><span class="line">        &lt;%- partial(&#x27;_partial/totop&#x27;) %&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    &lt;/main&gt;</span><br><span class="line">-    &lt;aside class=&quot;sidebar on&quot;&gt;</span><br><span class="line">+    &lt;aside class=&quot;sidebar&quot;&gt;</span><br><span class="line">      &lt;%- partial(&#x27;_partial/sidebar&#x27;) %&gt;</span><br><span class="line">    &lt;/aside&gt;</span><br><span class="line">-    &lt;script&gt;</span><br><span class="line">-      if (window.matchMedia(&quot;(max-width: 768px)&quot;).matches) &#123;</span><br><span class="line">-        document.querySelector(&#x27;.content&#x27;).classList.remove(&#x27;on&#x27;);</span><br><span class="line">-        document.querySelector(&#x27;.sidebar&#x27;).classList.remove(&#x27;on&#x27;);</span><br><span class="line">-      &#125;</span><br><span class="line">-    &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这样的话侧边栏菜单在打开网页的时候就是默认关闭的了。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
   id="post-清除应用和功能列表中已卸载的软件"
   class="article article-type-post"
   itemscope
@@ -661,70 +712,13 @@ var _hmt = _hmt || [];
 </article>
 
     
-    <article
-  id="post-在Win环境安装下载神器Aria2"
-  class="article article-type-post"
-  itemscope
-  itemprop="blogPost"
-  data-scroll-reveal
->
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2023/01/26/%E5%9C%A8Win%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E4%B8%8B%E8%BD%BD%E7%A5%9E%E5%99%A8Aria2/"
-    >在Win环境安装下载神器Aria2</a> 
-</h2>
- 
-
-      
-    </header>
-     
-    <div class="article-meta">
-      <a href="/2023/01/26/%E5%9C%A8Win%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E4%B8%8B%E8%BD%BD%E7%A5%9E%E5%99%A8Aria2/" class="article-date">
-  <time datetime="2023-01-26T15:17:04.000Z" itemprop="datePublished">2023-01-26 23:17:04</time>
-</a> 
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a> / <a class="article-category-link" href="/categories/%E6%8A%80%E6%9C%AF/Win/">Win</a>
-  </div>
-   
-    </div>
-      
-    <div class="article-entry" itemprop="articleBody">
-       
-  <h3 id="Aria2-介绍"><a href="#Aria2-介绍" class="headerlink" title="Aria2 介绍"></a>Aria2 介绍</h3><p>Aria2 是一个多平台轻量级，支持 HTTP、FTP、BitTorrent 等多协议、多来源的命令行下载工具。Aria2 可以从多个来源、多个协议下载资源，最大的程度上利用了你的带宽。Aria2 有着非常小的资源占用，在关闭磁盘缓存的情况下，物理内存占用通常为 4M（正常 HTTP&#x2F;FTP 下载的情况下），BitTorrent 下载每秒2.8M&#x2F;S的情况下，CPU 占有率约为 6%。Aria2 支持 JSON-RPC 和 XML-RPC 接口远程调用。总之一句话就是简洁，<strong>简</strong>到连个界面都没有。</p> 
-      <a class="article-more-link" href="/2023/01/26/%E5%9C%A8Win%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E4%B8%8B%E8%BD%BD%E7%A5%9E%E5%99%A8Aria2/"
-        >阅读更多...</a
-      >
-       
-      <!-- reward -->
-      
-    </div>
-    
-
-    <!-- copyright -->
-    
-    <footer class="article-footer">
-       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Aria2/" rel="tag">Aria2</a></li></ul>
-
-    </footer>
-  </div>
-
-    
- 
-    
-</article>
-
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
   </nav>
   
 </section>
